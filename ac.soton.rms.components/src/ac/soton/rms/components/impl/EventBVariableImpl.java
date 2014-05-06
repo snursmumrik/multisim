@@ -9,17 +9,14 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.EventBVariable;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eventb.emf.core.machine.Variable;
+
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.EventBVariable;
 
 /**
  * <!-- begin-user-doc -->

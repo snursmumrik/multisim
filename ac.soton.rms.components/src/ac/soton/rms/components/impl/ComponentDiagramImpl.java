@@ -9,10 +9,8 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.rms.components.Component;
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsPackage;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,6 +21,10 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
 
+import ac.soton.rms.components.Component;
+import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.rms.components.ComponentsPackage;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Component Diagram</b></em>'.
@@ -32,7 +34,6 @@ import org.eventb.emf.core.impl.EventBNamedImpl;
  * <ul>
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getStopTime <em>Stop Time</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getTime <em>Time</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getStartTime <em>Start Time</em>}</li>
  * </ul>
  * </p>
@@ -65,7 +66,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @generated
 	 * @ordered
 	 */
-	protected static final double STOP_TIME_EDEFAULT = 0.0;
+	protected static final int STOP_TIME_EDEFAULT = 0;
 
 	/**
 	 * The cached value of the '{@link #getStopTime() <em>Stop Time</em>}' attribute.
@@ -75,27 +76,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @generated
 	 * @ordered
 	 */
-	protected double stopTime = STOP_TIME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getTime() <em>Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTime()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final double TIME_EDEFAULT = 0.0;
-
-	/**
-	 * The cached value of the '{@link #getTime() <em>Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTime()
-	 * @generated
-	 * @ordered
-	 */
-	protected double time = TIME_EDEFAULT;
+	protected int stopTime = STOP_TIME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getStartTime() <em>Start Time</em>}' attribute.
@@ -105,7 +86,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @generated
 	 * @ordered
 	 */
-	protected static final double START_TIME_EDEFAULT = 0.0;
+	protected static final int START_TIME_EDEFAULT = 0;
 
 	/**
 	 * The cached value of the '{@link #getStartTime() <em>Start Time</em>}' attribute.
@@ -115,7 +96,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @generated
 	 * @ordered
 	 */
-	protected double startTime = START_TIME_EDEFAULT;
+	protected int startTime = START_TIME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -153,7 +134,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public double getStopTime() {
+	public int getStopTime() {
 		return stopTime;
 	}
 
@@ -162,8 +143,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStopTime(double newStopTime) {
-		double oldStopTime = stopTime;
+	public void setStopTime(int newStopTime) {
+		int oldStopTime = stopTime;
 		stopTime = newStopTime;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.COMPONENT_DIAGRAM__STOP_TIME, oldStopTime, stopTime));
@@ -174,28 +155,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public double getTime() {
-		return time;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTime(double newTime) {
-		double oldTime = time;
-		time = newTime;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.COMPONENT_DIAGRAM__TIME, oldTime, time));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public double getStartTime() {
+	public int getStartTime() {
 		return startTime;
 	}
 
@@ -204,8 +164,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStartTime(double newStartTime) {
-		double oldStartTime = startTime;
+	public void setStartTime(int newStartTime) {
+		int oldStartTime = startTime;
 		startTime = newStartTime;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.COMPONENT_DIAGRAM__START_TIME, oldStartTime, startTime));
@@ -237,8 +197,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return getComponents();
 			case ComponentsPackage.COMPONENT_DIAGRAM__STOP_TIME:
 				return getStopTime();
-			case ComponentsPackage.COMPONENT_DIAGRAM__TIME:
-				return getTime();
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				return getStartTime();
 		}
@@ -259,13 +217,10 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				getComponents().addAll((Collection<? extends Component>)newValue);
 				return;
 			case ComponentsPackage.COMPONENT_DIAGRAM__STOP_TIME:
-				setStopTime((Double)newValue);
-				return;
-			case ComponentsPackage.COMPONENT_DIAGRAM__TIME:
-				setTime((Double)newValue);
+				setStopTime((Integer)newValue);
 				return;
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
-				setStartTime((Double)newValue);
+				setStartTime((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -284,9 +239,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return;
 			case ComponentsPackage.COMPONENT_DIAGRAM__STOP_TIME:
 				setStopTime(STOP_TIME_EDEFAULT);
-				return;
-			case ComponentsPackage.COMPONENT_DIAGRAM__TIME:
-				setTime(TIME_EDEFAULT);
 				return;
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				setStartTime(START_TIME_EDEFAULT);
@@ -307,8 +259,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return components != null && !components.isEmpty();
 			case ComponentsPackage.COMPONENT_DIAGRAM__STOP_TIME:
 				return stopTime != STOP_TIME_EDEFAULT;
-			case ComponentsPackage.COMPONENT_DIAGRAM__TIME:
-				return time != TIME_EDEFAULT;
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				return startTime != START_TIME_EDEFAULT;
 		}
@@ -327,8 +277,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (stopTime: ");
 		result.append(stopTime);
-		result.append(", time: ");
-		result.append(time);
 		result.append(", startTime: ");
 		result.append(startTime);
 		result.append(')');

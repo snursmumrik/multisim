@@ -10,14 +10,13 @@
 package ac.soton.rms.components.provider;
 
 
-import ac.soton.rms.components.FMUVariable;
-
+import ac.soton.rms.components.ComponentsPackage;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -27,6 +26,10 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+import ac.soton.rms.components.FMUVariable;
 
 /**
  * This is the item provider adapter for a {@link ac.soton.rms.components.FMUVariable} object.
@@ -73,8 +76,31 @@ public class FMUVariableItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addFmiScalarVarPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Fmi Scalar Var feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addFmiScalarVarPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_FMUVariable_fmiScalarVar_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_FMUVariable_fmiScalarVar_feature", "_UI_FMUVariable_type"),
+				 ComponentsPackage.Literals.FMU_VARIABLE__FMI_SCALAR_VAR,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -112,6 +138,12 @@ public class FMUVariableItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(FMUVariable.class)) {
+			case ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

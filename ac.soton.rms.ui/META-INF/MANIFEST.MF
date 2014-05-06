@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RMS UI
+Bundle-SymbolicName: ac.soton.rms.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: ac.soton.rms.ui.RmsUIActivator
+Bundle-Vendor: University of Southampton
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.transaction;bundle-version="1.4.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.5.0",
+ ac.soton.rms.master;bundle-version="1.0.0",
+ ac.soton.rms.components;bundle-version="0.1.0",
+ ac.soton.rms.components.diagram;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

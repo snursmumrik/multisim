@@ -9,21 +9,29 @@
  */
 package ac.soton.rms.components.util;
 
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
-
-import ac.soton.rms.components.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
+import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
+import ac.soton.rms.components.AbstractVariable;
+import ac.soton.rms.components.Component;
+import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.DisplayComponent;
+import ac.soton.rms.components.DisplayPort;
+import ac.soton.rms.components.EventBComponent;
+import ac.soton.rms.components.EventBPort;
+import ac.soton.rms.components.EventBVariable;
+import ac.soton.rms.components.FMUComponent;
+import ac.soton.rms.components.FMUParameter;
+import ac.soton.rms.components.FMUPort;
+import ac.soton.rms.components.FMUVariable;
+import ac.soton.rms.components.Port;
 
 /**
  * <!-- begin-user-doc -->

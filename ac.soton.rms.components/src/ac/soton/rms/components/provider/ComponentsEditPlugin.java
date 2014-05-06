@@ -9,15 +9,12 @@
  */
 package ac.soton.rms.components.provider;
 
-import ac.soton.eventb.emf.core.extension.coreextension.provider.EventbcoreextensionEditPlugin;
-
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-
 import org.eventb.emf.core.provider.EventbcoreEditPlugin;
+
+import ac.soton.eventb.emf.core.extension.coreextension.provider.EventbcoreextensionEditPlugin;
 
 /**
  * This is the central singleton for the Components edit plugin.

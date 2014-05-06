@@ -9,16 +9,27 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.rms.components.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.ptolemy.fmi.FMIScalarVariable;
+import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.rms.components.ComponentsFactory;
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.DisplayComponent;
+import ac.soton.rms.components.DisplayPort;
+import ac.soton.rms.components.EventBComponent;
+import ac.soton.rms.components.EventBPort;
+import ac.soton.rms.components.EventBVariable;
+import ac.soton.rms.components.FMUComponent;
+import ac.soton.rms.components.FMUParameter;
+import ac.soton.rms.components.FMUPort;
+import ac.soton.rms.components.FMUVariable;
+import ac.soton.rms.components.VariableCausality;
+import ac.soton.rms.components.VariableType;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,6 +109,8 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 				return createVariableTypeFromString(eDataType, initialValue);
 			case ComponentsPackage.VARIABLE_CAUSALITY:
 				return createVariableCausalityFromString(eDataType, initialValue);
+			case ComponentsPackage.FMI_SCALAR_VARIABLE:
+				return createFMIScalarVariableFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -115,6 +128,8 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 				return convertVariableTypeToString(eDataType, instanceValue);
 			case ComponentsPackage.VARIABLE_CAUSALITY:
 				return convertVariableCausalityToString(eDataType, instanceValue);
+			case ComponentsPackage.FMI_SCALAR_VARIABLE:
+				return convertFMIScalarVariableToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -258,6 +273,24 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 	 */
 	public String convertVariableCausalityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FMIScalarVariable createFMIScalarVariableFromString(EDataType eDataType, String initialValue) {
+		return (FMIScalarVariable)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertFMIScalarVariableToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

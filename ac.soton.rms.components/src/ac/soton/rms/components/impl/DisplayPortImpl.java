@@ -9,10 +9,10 @@
  */
 package ac.soton.rms.components.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayPort;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

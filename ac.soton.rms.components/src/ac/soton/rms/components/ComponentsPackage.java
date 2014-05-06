@@ -9,14 +9,15 @@
  */
 package ac.soton.rms.components;
 
-import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eventb.emf.core.CorePackage;
+
+import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -111,22 +112,13 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT_DIAGRAM__STOP_TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_DIAGRAM__TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Start Time</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM__START_TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
+	int COMPONENT_DIAGRAM__START_TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Component Diagram</em>' class.
@@ -135,13 +127,13 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
+	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link ac.soton.rms.components.impl.ComponentImpl <em>Component</em>}' class.
+	 * The meta object id for the '{@link ac.soton.rms.components.Component <em>Component</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see ac.soton.rms.components.impl.ComponentImpl
+	 * @see ac.soton.rms.components.Component
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getComponent()
 	 * @generated
 	 */
@@ -157,22 +149,13 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT__NAME = CorePackage.EVENT_BNAMED__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT__STEP_PERIOD = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__INPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
+	int COMPONENT__INPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
@@ -181,7 +164,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
+	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -190,7 +173,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__VARIABLES = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
+	int COMPONENT__VARIABLES = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Component</em>' class.
@@ -199,7 +182,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
+	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -293,22 +276,13 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__NAME = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__INPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 2;
+	int EVENT_BCOMPONENT__INPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
@@ -317,7 +291,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__OUTPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
+	int EVENT_BCOMPONENT__OUTPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -326,7 +300,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__VARIABLES = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
+	int EVENT_BCOMPONENT__VARIABLES = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Machine</b></em>' reference.
@@ -335,7 +309,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
+	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Composed</b></em>' attribute.
@@ -344,7 +318,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
+	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Trace File Path</b></em>' attribute.
@@ -353,25 +327,61 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__TRACE_FILE_PATH = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
+	int EVENT_BCOMPONENT__TRACE_FILE_PATH = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Read Input Events</b></em>' reference.
+	 * The feature id for the '<em><b>Read Input Events</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
+	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Wait Events</b></em>' reference.
+	 * The feature id for the '<em><b>Wait Events</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
+	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Check Invariants</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__CHECK_INVARIANTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Compare Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__COMPARE_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 12;
 
 	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
@@ -380,7 +390,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
+	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 13;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -400,15 +410,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FMU_COMPONENT__NAME = COMPONENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -456,13 +457,22 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT__PARAMETERS = COMPONENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Fmu</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_COMPONENT__FMU = COMPONENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>FMU Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 2;
+	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.AbstractVariableImpl <em>Abstract Variable</em>}' class.
@@ -666,13 +676,22 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_VARIABLE__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
 
 	/**
+	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_VARIABLE__FMI_SCALAR_VAR = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>FMU Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_VARIABLE_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
+	int FMU_VARIABLE_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
@@ -803,6 +822,15 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PARAMETER__DESCRIPTION = FMU_VARIABLE__DESCRIPTION;
 
 	/**
+	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PARAMETER__FMI_SCALAR_VAR = FMU_VARIABLE__FMI_SCALAR_VAR;
+
+	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -903,13 +931,22 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PORT__OUT = PORT__OUT;
 
 	/**
+	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PORT__FMI_SCALAR_VAR = PORT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>FMU Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 0;
+	int FMU_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBPortImpl <em>Event BPort</em>}' class.
@@ -1038,15 +1075,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @ordered
 	 */
 	int DISPLAY_COMPONENT__NAME = COMPONENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DISPLAY_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -1188,6 +1216,36 @@ public interface ComponentsPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '<em>IStatus</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.core.runtime.IStatus
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getIStatus()
+	 * @generated
+	 */
+	int ISTATUS = 15;
+
+	/**
+	 * The meta object id for the '<em>FMU</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.prob.cosimulation.FMU
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMU()
+	 * @generated
+	 */
+	int FMU = 16;
+
+	/**
+	 * The meta object id for the '<em>FMI Scalar Variable</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.ptolemy.fmi.FMIScalarVariable
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMIScalarVariable()
+	 * @generated
+	 */
+	int FMI_SCALAR_VARIABLE = 17;
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.ComponentDiagram <em>Component Diagram</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1220,17 +1278,6 @@ public interface ComponentsPackage extends EPackage {
 	EAttribute getComponentDiagram_StopTime();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.ComponentDiagram#getTime <em>Time</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Time</em>'.
-	 * @see ac.soton.rms.components.ComponentDiagram#getTime()
-	 * @see #getComponentDiagram()
-	 * @generated
-	 */
-	EAttribute getComponentDiagram_Time();
-
-	/**
 	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.ComponentDiagram#getStartTime <em>Start Time</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1250,17 +1297,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getComponent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Step Period</em>'.
-	 * @see ac.soton.rms.components.Component#getStepPeriod()
-	 * @see #getComponent()
-	 * @generated
-	 */
-	EAttribute getComponent_StepPeriod();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link ac.soton.rms.components.Component#getInputs <em>Inputs</em>}'.
@@ -1339,10 +1375,10 @@ public interface ComponentsPackage extends EPackage {
 	EAttribute getEventBComponent_TraceFilePath();
 
 	/**
-	 * Returns the meta object for the reference '{@link ac.soton.rms.components.EventBComponent#getReadInputEvents <em>Read Input Events</em>}'.
+	 * Returns the meta object for the reference list '{@link ac.soton.rms.components.EventBComponent#getReadInputEvents <em>Read Input Events</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Read Input Events</em>'.
+	 * @return the meta object for the reference list '<em>Read Input Events</em>'.
 	 * @see ac.soton.rms.components.EventBComponent#getReadInputEvents()
 	 * @see #getEventBComponent()
 	 * @generated
@@ -1350,15 +1386,59 @@ public interface ComponentsPackage extends EPackage {
 	EReference getEventBComponent_ReadInputEvents();
 
 	/**
-	 * Returns the meta object for the reference '{@link ac.soton.rms.components.EventBComponent#getWaitEvents <em>Wait Events</em>}'.
+	 * Returns the meta object for the reference list '{@link ac.soton.rms.components.EventBComponent#getWaitEvents <em>Wait Events</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Wait Events</em>'.
+	 * @return the meta object for the reference list '<em>Wait Events</em>'.
 	 * @see ac.soton.rms.components.EventBComponent#getWaitEvents()
 	 * @see #getEventBComponent()
 	 * @generated
 	 */
 	EReference getEventBComponent_WaitEvents();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Step Period</em>'.
+	 * @see ac.soton.rms.components.EventBComponent#getStepPeriod()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_StepPeriod();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isCheckInvariants <em>Check Invariants</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Check Invariants</em>'.
+	 * @see ac.soton.rms.components.EventBComponent#isCheckInvariants()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_CheckInvariants();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isCompareTrace <em>Compare Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Compare Trace</em>'.
+	 * @see ac.soton.rms.components.EventBComponent#isCompareTrace()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_CompareTrace();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isRecordTrace <em>Record Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Record Trace</em>'.
+	 * @see ac.soton.rms.components.EventBComponent#isRecordTrace()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_RecordTrace();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.FMUComponent <em>FMU Component</em>}'.
@@ -1391,6 +1471,17 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFMUComponent_Parameters();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUComponent#getFmu <em>Fmu</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fmu</em>'.
+	 * @see ac.soton.rms.components.FMUComponent#getFmu()
+	 * @see #getFMUComponent()
+	 * @generated
+	 */
+	EAttribute getFMUComponent_Fmu();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.Port <em>Port</em>}'.
@@ -1489,6 +1580,17 @@ public interface ComponentsPackage extends EPackage {
 	EClass getFMUVariable();
 
 	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUVariable#getFmiScalarVar <em>Fmi Scalar Var</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fmi Scalar Var</em>'.
+	 * @see ac.soton.rms.components.FMUVariable#getFmiScalarVar()
+	 * @see #getFMUVariable()
+	 * @generated
+	 */
+	EAttribute getFMUVariable_FmiScalarVar();
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBVariable <em>Event BVariable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1550,6 +1652,17 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getFMUPort();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUPort#getFmiScalarVar <em>Fmi Scalar Var</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fmi Scalar Var</em>'.
+	 * @see ac.soton.rms.components.FMUPort#getFmiScalarVar()
+	 * @see #getFMUPort()
+	 * @generated
+	 */
+	EAttribute getFMUPort_FmiScalarVar();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBPort <em>Event BPort</em>}'.
@@ -1635,6 +1748,39 @@ public interface ComponentsPackage extends EPackage {
 	EEnum getVariableCausality();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.core.runtime.IStatus <em>IStatus</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>IStatus</em>'.
+	 * @see org.eclipse.core.runtime.IStatus
+	 * @model instanceClass="org.eclipse.core.runtime.IStatus" serializeable="false"
+	 * @generated
+	 */
+	EDataType getIStatus();
+
+	/**
+	 * Returns the meta object for data type '{@link de.prob.cosimulation.FMU <em>FMU</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>FMU</em>'.
+	 * @see de.prob.cosimulation.FMU
+	 * @model instanceClass="de.prob.cosimulation.FMU" serializeable="false"
+	 * @generated
+	 */
+	EDataType getFMU();
+
+	/**
+	 * Returns the meta object for data type '{@link org.ptolemy.fmi.FMIScalarVariable <em>FMI Scalar Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>FMI Scalar Variable</em>'.
+	 * @see org.ptolemy.fmi.FMIScalarVariable
+	 * @model instanceClass="org.ptolemy.fmi.FMIScalarVariable"
+	 * @generated
+	 */
+	EDataType getFMIScalarVariable();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1683,14 +1829,6 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute COMPONENT_DIAGRAM__STOP_TIME = eINSTANCE.getComponentDiagram_StopTime();
 
 		/**
-		 * The meta object literal for the '<em><b>Time</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMPONENT_DIAGRAM__TIME = eINSTANCE.getComponentDiagram_Time();
-
-		/**
 		 * The meta object literal for the '<em><b>Start Time</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1699,22 +1837,14 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute COMPONENT_DIAGRAM__START_TIME = eINSTANCE.getComponentDiagram_StartTime();
 
 		/**
-		 * The meta object literal for the '{@link ac.soton.rms.components.impl.ComponentImpl <em>Component</em>}' class.
+		 * The meta object literal for the '{@link ac.soton.rms.components.Component <em>Component</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see ac.soton.rms.components.impl.ComponentImpl
+		 * @see ac.soton.rms.components.Component
 		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getComponent()
 		 * @generated
 		 */
 		EClass COMPONENT = eINSTANCE.getComponent();
-
-		/**
-		 * The meta object literal for the '<em><b>Step Period</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMPONENT__STEP_PERIOD = eINSTANCE.getComponent_StepPeriod();
 
 		/**
 		 * The meta object literal for the '<em><b>Inputs</b></em>' containment reference list feature.
@@ -1775,7 +1905,7 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute EVENT_BCOMPONENT__TRACE_FILE_PATH = eINSTANCE.getEventBComponent_TraceFilePath();
 
 		/**
-		 * The meta object literal for the '<em><b>Read Input Events</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Read Input Events</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1783,12 +1913,44 @@ public interface ComponentsPackage extends EPackage {
 		EReference EVENT_BCOMPONENT__READ_INPUT_EVENTS = eINSTANCE.getEventBComponent_ReadInputEvents();
 
 		/**
-		 * The meta object literal for the '<em><b>Wait Events</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Wait Events</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference EVENT_BCOMPONENT__WAIT_EVENTS = eINSTANCE.getEventBComponent_WaitEvents();
+
+		/**
+		 * The meta object literal for the '<em><b>Step Period</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__STEP_PERIOD = eINSTANCE.getEventBComponent_StepPeriod();
+
+		/**
+		 * The meta object literal for the '<em><b>Check Invariants</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__CHECK_INVARIANTS = eINSTANCE.getEventBComponent_CheckInvariants();
+
+		/**
+		 * The meta object literal for the '<em><b>Compare Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__COMPARE_TRACE = eINSTANCE.getEventBComponent_CompareTrace();
+
+		/**
+		 * The meta object literal for the '<em><b>Record Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__RECORD_TRACE = eINSTANCE.getEventBComponent_RecordTrace();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -1815,6 +1977,14 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FMU_COMPONENT__PARAMETERS = eINSTANCE.getFMUComponent_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Fmu</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FMU_COMPONENT__FMU = eINSTANCE.getFMUComponent_Fmu();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.PortImpl <em>Port</em>}' class.
@@ -1895,6 +2065,14 @@ public interface ComponentsPackage extends EPackage {
 		EClass FMU_VARIABLE = eINSTANCE.getFMUVariable();
 
 		/**
+		 * The meta object literal for the '<em><b>Fmi Scalar Var</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FMU_VARIABLE__FMI_SCALAR_VAR = eINSTANCE.getFMUVariable_FmiScalarVar();
+
+		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1947,6 +2125,14 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FMU_PORT = eINSTANCE.getFMUPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Fmi Scalar Var</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FMU_PORT__FMI_SCALAR_VAR = eINSTANCE.getFMUPort_FmiScalarVar();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBPortImpl <em>Event BPort</em>}' class.
@@ -2021,6 +2207,36 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum VARIABLE_CAUSALITY = eINSTANCE.getVariableCausality();
+
+		/**
+		 * The meta object literal for the '<em>IStatus</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.core.runtime.IStatus
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getIStatus()
+		 * @generated
+		 */
+		EDataType ISTATUS = eINSTANCE.getIStatus();
+
+		/**
+		 * The meta object literal for the '<em>FMU</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.prob.cosimulation.FMU
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMU()
+		 * @generated
+		 */
+		EDataType FMU = eINSTANCE.getFMU();
+
+		/**
+		 * The meta object literal for the '<em>FMI Scalar Variable</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.ptolemy.fmi.FMIScalarVariable
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMIScalarVariable()
+		 * @generated
+		 */
+		EDataType FMI_SCALAR_VARIABLE = eINSTANCE.getFMIScalarVariable();
 
 	}
 

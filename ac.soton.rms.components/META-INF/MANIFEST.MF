@@ -11,11 +11,15 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: ac.soton.rms.components,
  ac.soton.rms.components.impl,
  ac.soton.rms.components.provider,
- ac.soton.rms.components.util
+ ac.soton.rms.components.util,
+ ac.soton.rms.components.util.custom
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.eclipse.emf.ecore.edit;visibility:=reexport,
+ org.eclipse.emf.workspace;bundle-version="1.5.1",
+ org.eventb.core;bundle-version="2.5.1",
  org.eventb.emf.core;visibility:=reexport,
  ac.soton.eventb.emf.core.extension;visibility:=reexport,
- org.eclipse.emf.edit;visibility:=reexport,
- org.eclipse.emf.ecore.edit;visibility:=reexport
+ de.prob.core;bundle-version="9.4.0"
 Bundle-ActivationPolicy: lazy

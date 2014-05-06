@@ -9,6 +9,7 @@
  */
 package ac.soton.rms.components;
 
+import de.prob.cosimulation.FMU;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -21,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link ac.soton.rms.components.FMUComponent#getPath <em>Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.FMUComponent#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link ac.soton.rms.components.FMUComponent#getFmu <em>Fmu</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +79,31 @@ public interface FMUComponent extends Component {
 	 * @generated
 	 */
 	EList<FMUParameter> getParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Fmu</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Fmu</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Fmu</em>' attribute.
+	 * @see #setFmu(FMU)
+	 * @see ac.soton.rms.components.ComponentsPackage#getFMUComponent_Fmu()
+	 * @model dataType="ac.soton.rms.components.FMU" transient="true"
+	 * @generated
+	 */
+	FMU getFmu();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.rms.components.FMUComponent#getFmu <em>Fmu</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Fmu</em>' attribute.
+	 * @see #getFmu()
+	 * @generated
+	 */
+	void setFmu(FMU value);
 
 } // FMUComponent

@@ -9,8 +9,8 @@
  */
 package ac.soton.rms.components;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
-
 import org.eventb.emf.core.EventBNamed;
 
 /**
@@ -21,7 +21,6 @@ import org.eventb.emf.core.EventBNamed;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.Component#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.Component#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.Component#getVariables <em>Variables</em>}</li>
@@ -29,7 +28,7 @@ import org.eventb.emf.core.EventBNamed;
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getComponent()
- * @model abstract="true"
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Component extends EventBNamed {
@@ -39,32 +38,6 @@ public interface Component extends EventBNamed {
 	 * @generated
 	 */
 	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
-
-	/**
-	 * Returns the value of the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Step Period</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Step Period</em>' attribute.
-	 * @see #setStepPeriod(double)
-	 * @see ac.soton.rms.components.ComponentsPackage#getComponent_StepPeriod()
-	 * @model
-	 * @generated
-	 */
-	double getStepPeriod();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Step Period</em>' attribute.
-	 * @see #getStepPeriod()
-	 * @generated
-	 */
-	void setStepPeriod(double value);
 
 	/**
 	 * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
@@ -117,49 +90,49 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void instantiate();
+	IStatus instantiate();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void initialise(double tStart, double tStop);
+	IStatus initialise(double tStart, double tStop);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void readInputs();
+	IStatus readInputs();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void writeOutputs();
+	IStatus writeOutputs();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void doStep(double time, double step);
+	IStatus doStep(double time, double step);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	void terminate();
+	IStatus terminate();
 
 } // Component

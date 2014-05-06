@@ -9,18 +9,16 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.EventBPort;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eventb.emf.core.machine.Parameter;
 import org.eventb.emf.core.machine.Variable;
+
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.EventBPort;
+import ac.soton.rms.components.VariableCausality;
 
 /**
  * <!-- begin-user-doc -->
@@ -295,6 +293,14 @@ public class EventBPortImpl extends PortImpl implements EventBPort {
 		result.append(intToReal);
 		result.append(')');
 		return result.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl#getLabel()
+	 */
+	@Override
+	public String getLabel() {
+		return getCausality() == VariableCausality.INPUT ? getParameter().getName() : getVariable().getName();
 	}
 
 } //EventBPortImpl

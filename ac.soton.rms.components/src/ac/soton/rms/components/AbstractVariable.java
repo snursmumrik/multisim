@@ -107,7 +107,7 @@ public interface AbstractVariable extends EventBLabeled {
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(Object)
 	 * @see ac.soton.rms.components.ComponentsPackage#getAbstractVariable_Value()
-	 * @model
+	 * @model transient="true"
 	 * @generated
 	 */
 	Object getValue();

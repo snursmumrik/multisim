@@ -24,14 +24,13 @@
       <genEnumLiterals ecoreEnumLiteral="components.ecore#//VariableCausality/Internal"/>
       <genEnumLiterals ecoreEnumLiteral="components.ecore#//VariableCausality/None"/>
     </genEnums>
+    <genDataTypes ecoreDataType="components.ecore#//SE"/>
     <genClasses ecoreClass="components.ecore#//ComponentDiagram">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference components.ecore#//ComponentDiagram/components"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//ComponentDiagram/stopTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//ComponentDiagram/time"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//ComponentDiagram/startTime"/>
     </genClasses>
     <genClasses image="false" ecoreClass="components.ecore#//Component">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//Component/stepPeriod"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference components.ecore#//Component/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference components.ecore#//Component/outputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference components.ecore#//Component/variables"/>
@@ -54,6 +53,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/traceFilePath"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBComponent/readInputEvents"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBComponent/waitEvents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/stepPeriod"/>
     </genClasses>
     <genClasses ecoreClass="components.ecore#//FMUComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUComponent/path"/>

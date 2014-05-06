@@ -5,24 +5,23 @@
   <eClassifiers xsi:type="ecore:EClass" name="ComponentDiagram" eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
     <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
         eType="#//Component" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopTime" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopTime" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
-    <eOperations name="instantiate"/>
-    <eOperations name="initialise">
+  <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" interface="true"
+      eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
+    <eOperations name="instantiate" eType="#//IStatus"/>
+    <eOperations name="initialise" eType="#//IStatus">
       <eParameters name="tStart" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
       <eParameters name="tStop" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
     </eOperations>
-    <eOperations name="readInputs"/>
-    <eOperations name="writeOutputs"/>
-    <eOperations name="doStep">
+    <eOperations name="readInputs" eType="#//IStatus"/>
+    <eOperations name="writeOutputs" eType="#//IStatus"/>
+    <eOperations name="doStep" eType="#//IStatus">
       <eParameters name="time" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
       <eParameters name="step" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
     </eOperations>
-    <eOperations name="terminate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepPeriod" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
+    <eOperations name="terminate" eType="#//IStatus"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
         eType="#//Port" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
@@ -36,13 +35,20 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="composed" lowerBound="1"
         eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="traceFilePath" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="readInputEvents" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="waitEvents" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="readInputEvents" upperBound="-1"
+        eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waitEvents" upperBound="-1"
+        eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepPeriod" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkInvariants" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="compareTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FMUComponent" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//FMUParameter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmu" eType="#//FMU" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Port" abstract="true" eSuperTypes="#//AbstractVariable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//Port" eOpposite="#//Port/out"/>
@@ -53,7 +59,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//VariableType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="causality" lowerBound="1"
         eType="#//VariableCausality"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
+        transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VariableType">
@@ -68,7 +75,9 @@
     <eLiterals name="Internal" value="2"/>
     <eLiterals name="None" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUVariable" eSuperTypes="#//AbstractVariable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FMUVariable" eSuperTypes="#//AbstractVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiScalarVar" eType="#//FMIScalarVariable"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventBVariable" eSuperTypes="#//AbstractVariable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
         eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Variable"/>
@@ -77,7 +86,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiScalarVar" eType="#//FMIScalarVariable"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventBPort" eSuperTypes="#//Port">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Parameter"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Variable"/>
@@ -85,4 +96,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DisplayComponent" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="DisplayPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IStatus" instanceClassName="org.eclipse.core.runtime.IStatus"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="FMU" instanceClassName="de.prob.cosimulation.FMU"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="FMIScalarVariable" instanceClassName="org.ptolemy.fmi.FMIScalarVariable"/>
 </ecore:EPackage>

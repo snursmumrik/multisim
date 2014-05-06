@@ -9,12 +9,10 @@
  */
 package ac.soton.rms.components.provider;
 
-import ac.soton.rms.components.ComponentsFactory;
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.util.ComponentsAdapterFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -42,6 +40,10 @@ import org.eventb.emf.core.Annotation;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.util.CoreSwitch;
+
+import ac.soton.rms.components.ComponentsFactory;
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.util.ComponentsAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.

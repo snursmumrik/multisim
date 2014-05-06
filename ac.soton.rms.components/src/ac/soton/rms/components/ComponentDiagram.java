@@ -22,7 +22,6 @@ import org.eventb.emf.core.EventBNamed;
  * <ul>
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getStopTime <em>Stop Time</em>}</li>
- *   <li>{@link ac.soton.rms.components.ComponentDiagram#getTime <em>Time</em>}</li>
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getStartTime <em>Start Time</em>}</li>
  * </ul>
  * </p>
@@ -64,12 +63,12 @@ public interface ComponentDiagram extends EventBNamed {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stop Time</em>' attribute.
-	 * @see #setStopTime(double)
+	 * @see #setStopTime(int)
 	 * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram_StopTime()
 	 * @model
 	 * @generated
 	 */
-	double getStopTime();
+	int getStopTime();
 
 	/**
 	 * Sets the value of the '{@link ac.soton.rms.components.ComponentDiagram#getStopTime <em>Stop Time</em>}' attribute.
@@ -79,33 +78,7 @@ public interface ComponentDiagram extends EventBNamed {
 	 * @see #getStopTime()
 	 * @generated
 	 */
-	void setStopTime(double value);
-
-	/**
-	 * Returns the value of the '<em><b>Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Time</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Time</em>' attribute.
-	 * @see #setTime(double)
-	 * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram_Time()
-	 * @model
-	 * @generated
-	 */
-	double getTime();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.rms.components.ComponentDiagram#getTime <em>Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Time</em>' attribute.
-	 * @see #getTime()
-	 * @generated
-	 */
-	void setTime(double value);
+	void setStopTime(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Start Time</b></em>' attribute.
@@ -116,12 +89,12 @@ public interface ComponentDiagram extends EventBNamed {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Time</em>' attribute.
-	 * @see #setStartTime(double)
+	 * @see #setStartTime(int)
 	 * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram_StartTime()
 	 * @model
 	 * @generated
 	 */
-	double getStartTime();
+	int getStartTime();
 
 	/**
 	 * Sets the value of the '{@link ac.soton.rms.components.ComponentDiagram#getStartTime <em>Start Time</em>}' attribute.
@@ -131,6 +104,6 @@ public interface ComponentDiagram extends EventBNamed {
 	 * @see #getStartTime()
 	 * @generated
 	 */
-	void setStartTime(double value);
+	void setStartTime(int value);
 
 } // ComponentDiagram

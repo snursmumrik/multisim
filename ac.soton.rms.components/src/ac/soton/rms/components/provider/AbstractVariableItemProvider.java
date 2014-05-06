@@ -10,17 +10,11 @@
 package ac.soton.rms.components.provider;
 
 
-import ac.soton.eventb.emf.core.extension.coreextension.provider.EventBLabeledItemProvider;
-
-import ac.soton.rms.components.AbstractVariable;
-import ac.soton.rms.components.ComponentsPackage;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -33,6 +27,10 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import ac.soton.eventb.emf.core.extension.coreextension.provider.EventBLabeledItemProvider;
+import ac.soton.rms.components.AbstractVariable;
+import ac.soton.rms.components.ComponentsPackage;
 
 /**
  * This is the item provider adapter for a {@link ac.soton.rms.components.AbstractVariable} object.
