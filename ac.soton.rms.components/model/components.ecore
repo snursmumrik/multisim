@@ -31,26 +31,36 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventBComponent" eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//AbstractExtension #//Component">
     <eAnnotations source="org.eventb.emf.core.extendedMetaClasses" references="../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Machine"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="machine" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Machine"/>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="consistentReadEvents"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="machine" lowerBound="1"
+        eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Machine"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="composed" lowerBound="1"
         eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="traceFilePath" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="readInputEvents" upperBound="-1"
         eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="waitEvents" upperBound="-1"
-        eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waitEvents" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Event"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepPeriod" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkInvariants" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="compareTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FMUComponent" eSuperTypes="#//Component">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="validPath"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//FMUParameter"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmu" eType="#//FMU" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Port" abstract="true" eSuperTypes="#//AbstractVariable">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="compatibleType"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//Port" eOpposite="#//Port/out"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="out" upperBound="-1" eType="#//Port"
         eOpposite="#//Port/in"/>
@@ -87,9 +97,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiScalarVar" eType="#//FMIScalarVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiScalarVar" lowerBound="1"
+        eType="#//FMIScalarVariable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventBPort" eSuperTypes="#//Port">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="validEventBReference"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Parameter"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Variable"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intToReal" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>

@@ -27,7 +27,7 @@ import org.eventb.emf.core.machine.Variable;
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getEventBPort()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='validEventBReference'"
  * @generated
  */
 public interface EventBPort extends Port {

@@ -47,7 +47,7 @@ public interface FMUPort extends Port {
 	 * @return the value of the '<em>Fmi Scalar Var</em>' attribute.
 	 * @see #setFmiScalarVar(FMIScalarVariable)
 	 * @see ac.soton.rms.components.ComponentsPackage#getFMUPort_FmiScalarVar()
-	 * @model dataType="ac.soton.rms.components.FMIScalarVariable"
+	 * @model dataType="ac.soton.rms.components.FMIScalarVariable" required="true"
 	 * @generated
 	 */
 	FMIScalarVariable getFmiScalarVar();

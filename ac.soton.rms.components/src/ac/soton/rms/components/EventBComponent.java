@@ -35,7 +35,7 @@ import org.eventb.emf.core.machine.Machine;
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='consistentReadEvents'"
  * @generated
  */
 public interface EventBComponent extends AbstractExtension, Component {
@@ -57,7 +57,7 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * @return the value of the '<em>Machine</em>' reference.
 	 * @see #setMachine(Machine)
 	 * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent_Machine()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	Machine getMachine();
@@ -151,7 +151,7 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Wait Events</em>' reference list.
 	 * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent_WaitEvents()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	EList<Event> getWaitEvents();

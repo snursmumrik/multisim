@@ -24,7 +24,9 @@
       <genEnumLiterals ecoreEnumLiteral="components.ecore#//VariableCausality/Internal"/>
       <genEnumLiterals ecoreEnumLiteral="components.ecore#//VariableCausality/None"/>
     </genEnums>
-    <genDataTypes ecoreDataType="components.ecore#//SE"/>
+    <genDataTypes ecoreDataType="components.ecore#//IStatus"/>
+    <genDataTypes ecoreDataType="components.ecore#//FMU"/>
+    <genDataTypes ecoreDataType="components.ecore#//FMIScalarVariable"/>
     <genClasses ecoreClass="components.ecore#//ComponentDiagram">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference components.ecore#//ComponentDiagram/components"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//ComponentDiagram/stopTime"/>
@@ -54,10 +56,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBComponent/readInputEvents"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBComponent/waitEvents"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/stepPeriod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/checkInvariants"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/compareTrace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//EventBComponent/recordTrace"/>
     </genClasses>
     <genClasses ecoreClass="components.ecore#//FMUComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUComponent/path"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//FMUComponent/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUComponent/fmu"/>
     </genClasses>
     <genClasses image="false" ecoreClass="components.ecore#//Port">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//Port/in"/>
@@ -69,7 +75,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//AbstractVariable/value"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//AbstractVariable/description"/>
     </genClasses>
-    <genClasses ecoreClass="components.ecore#//FMUVariable"/>
+    <genClasses ecoreClass="components.ecore#//FMUVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUVariable/fmiScalarVar"/>
+    </genClasses>
     <genClasses ecoreClass="components.ecore#//EventBVariable">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBVariable/variable"/>
     </genClasses>
@@ -77,7 +85,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUParameter/defaultValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUParameter/startValue"/>
     </genClasses>
-    <genClasses ecoreClass="components.ecore#//FMUPort"/>
+    <genClasses ecoreClass="components.ecore#//FMUPort">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute components.ecore#//FMUPort/fmiScalarVar"/>
+    </genClasses>
     <genClasses ecoreClass="components.ecore#//EventBPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBPort/parameter"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference components.ecore#//EventBPort/variable"/>

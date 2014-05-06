@@ -27,7 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getFMUComponent()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='validPath'"
  * @generated
  */
 public interface FMUComponent extends Component {

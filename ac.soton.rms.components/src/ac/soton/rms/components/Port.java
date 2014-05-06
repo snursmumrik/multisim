@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see ac.soton.rms.components.ComponentsPackage#getPort()
  * @model abstract="true"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='compatibleType'"
  * @generated
  */
 public interface Port extends AbstractVariable {
