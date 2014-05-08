@@ -8,6 +8,7 @@ Bundle-Activator: ac.soton.rms.components.diagram.part.ComponentsDiagramEditorPl
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: ac.soton.rms.components.diagram.edit.parts,
+ ac.soton.rms.components.diagram.navigator,
  ac.soton.rms.components.diagram.part,
  ac.soton.rms.components.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,
