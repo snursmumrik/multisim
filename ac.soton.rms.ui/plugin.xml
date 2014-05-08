@@ -221,6 +221,9 @@
             <actionExtension
                   pattern="ac.soton.rms.ui.navigator.actions.diagram">
             </actionExtension>
+            <actionExtension
+                  pattern="ac.soton.rms.ui.navigator.actions.eventb">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
    </extension>
@@ -268,6 +271,18 @@
                   </test>
                </adapt>
             </and>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            class="ac.soton.rms.ui.navigator.EventBComponentNavigatorActionProvider"
+            id="ac.soton.rms.ui.navigator.actions.eventb">
+         <enablement>
+            <adapt
+                  type="org.eclipse.emf.ecore.EObject">
+               <instanceof
+                     value="ac.soton.rms.components.EventBComponent">
+               </instanceof>
+            </adapt>
          </enablement>
       </actionProvider>
    </extension>
