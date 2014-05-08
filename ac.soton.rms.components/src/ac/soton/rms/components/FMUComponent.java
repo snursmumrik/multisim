@@ -65,7 +65,7 @@ public interface FMUComponent extends Component {
 	void setPath(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' reference list.
+	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
 	 * The list contents are of type {@link ac.soton.rms.components.FMUParameter}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -73,9 +73,9 @@ public interface FMUComponent extends Component {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' reference list.
+	 * @return the value of the '<em>Parameters</em>' containment reference list.
 	 * @see ac.soton.rms.components.ComponentsPackage#getFMUComponent_Parameters()
-	 * @model
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	EList<FMUParameter> getParameters();

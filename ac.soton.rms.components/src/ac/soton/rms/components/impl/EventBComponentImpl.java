@@ -1136,4 +1136,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		return result.toString();
 	}
 
+	@Override
+	public String getExtensionId() {
+		return ComponentsPackage.COMPONENTS_EXTENSION_ID;
+	}
+
 } //EventBComponentImpl

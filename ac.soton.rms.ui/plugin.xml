@@ -32,6 +32,11 @@
             id="ac.soton.rms.ui.commands.pause"
             name="Pause">
       </command>
+      <command
+            categoryId="ac.soton.rms.ui.commands"
+            id="ac.soton.rms.ui.commands.validate"
+            name="Validate">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -41,6 +46,21 @@
          <toolbar
                id="ac.soton.rms.ui.toolbar"
                label="RMS Toolbar">
+            <command
+                  commandId="ac.soton.rms.ui.commands.validate"
+                  icon="icons/Validate.gif"
+                  label="Validate"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activePartId">
+                     <equals
+                           value="ac.soton.rms.components.diagram.part.ComponentsDiagramEditorID">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
             <command
                   commandId="ac.soton.rms.ui.commands.simulate"
                   icon="icons/Simulate.gif"
@@ -136,6 +156,18 @@
                </equals>
             </with></activeWhen>
       </handler>
+      <handler
+            class="ac.soton.rms.ui.commands.ValidateCommand"
+            commandId="ac.soton.rms.ui.commands.validate">
+         <activeWhen>
+            <with
+                  variable="ac.soton.rms.ui.commands.simulation.active">
+               <equals
+                     value="INACTIVE">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -146,6 +178,32 @@
                priorityLevel="workbench">
          </variable>
       </sourceProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="ac.soton.rms.ui.contributions.fmuComponent"
+            objectClass="ac.soton.rms.components.diagram.edit.parts.FMUComponentEditPart">
+         <action
+               class="ac.soton.rms.ui.actions.SetParameters"
+               enablesFor="1"
+               icon="icons/Parameters.png"
+               id="ac.soton.rms.ui.actions.setParameters"
+               label="&amp;Parameters">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="ac.soton.rms.ui.contributions.eventBComponent"
+            objectClass="ac.soton.rms.components.diagram.edit.parts.EventBComponentEditPart">
+         <action
+               class="ac.soton.rms.ui.actions.OpenMachine"
+               icon="icons/Machine.png"
+               id="ac.soton.rms.ui.actions.openMachine"
+               label="&amp;Machine">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>

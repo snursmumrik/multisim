@@ -295,12 +295,12 @@ public class EventBPortImpl extends PortImpl implements EventBPort {
 		return result.toString();
 	}
 
-	/* (non-Javadoc)
-	 * @see ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl#getLabel()
-	 */
 	@Override
 	public String getLabel() {
-		return getCausality() == VariableCausality.INPUT ? getParameter().getName() : getVariable().getName();
+		String noName = "";
+		return getCausality() == VariableCausality.INPUT ? 
+				(getParameter() == null ? noName : getParameter().getName())
+				: (getVariable() == null ? noName : getVariable().getName());
 	}
 
 } //EventBPortImpl

@@ -165,4 +165,9 @@ public class EventBVariableImpl extends AbstractVariableImpl implements EventBVa
 		return super.eIsSet(featureID);
 	}
 
+	@Override
+	public String getLabel() {
+		return getVariable() == null ? "" : getVariable().getName();
+	}
+
 } //EventBVariableImpl

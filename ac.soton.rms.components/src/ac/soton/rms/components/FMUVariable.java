@@ -9,7 +9,6 @@
  */
 package ac.soton.rms.components;
 
-import org.ptolemy.fmi.FMIScalarVariable;
 
 
 /**
@@ -20,7 +19,7 @@ import org.ptolemy.fmi.FMIScalarVariable;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link ac.soton.rms.components.FMUVariable#getFmiScalarVar <em>Fmi Scalar Var</em>}</li>
+ *   <li>{@link ac.soton.rms.components.FMUVariable#getFmiName <em>Fmi Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,29 +36,29 @@ public interface FMUVariable extends AbstractVariable {
 	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
-	 * Returns the value of the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * Returns the value of the '<em><b>Fmi Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Fmi Scalar Var</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Fmi Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fmi Scalar Var</em>' attribute.
-	 * @see #setFmiScalarVar(FMIScalarVariable)
-	 * @see ac.soton.rms.components.ComponentsPackage#getFMUVariable_FmiScalarVar()
-	 * @model dataType="ac.soton.rms.components.FMIScalarVariable"
+	 * @return the value of the '<em>Fmi Name</em>' attribute.
+	 * @see #setFmiName(String)
+	 * @see ac.soton.rms.components.ComponentsPackage#getFMUVariable_FmiName()
+	 * @model required="true"
 	 * @generated
 	 */
-	FMIScalarVariable getFmiScalarVar();
+	String getFmiName();
 
 	/**
-	 * Sets the value of the '{@link ac.soton.rms.components.FMUVariable#getFmiScalarVar <em>Fmi Scalar Var</em>}' attribute.
+	 * Sets the value of the '{@link ac.soton.rms.components.FMUVariable#getFmiName <em>Fmi Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fmi Scalar Var</em>' attribute.
-	 * @see #getFmiScalarVar()
+	 * @param value the new value of the '<em>Fmi Name</em>' attribute.
+	 * @see #getFmiName()
 	 * @generated
 	 */
-	void setFmiScalarVar(FMIScalarVariable value);
+	void setFmiName(String value);
 
 } // FMUVariable

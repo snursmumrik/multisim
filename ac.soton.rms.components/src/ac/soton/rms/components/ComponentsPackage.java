@@ -448,7 +448,7 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT__PATH = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Parameters</b></em>' reference list.
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -676,13 +676,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_VARIABLE__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_VARIABLE__FMI_SCALAR_VAR = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
+	int FMU_VARIABLE__FMI_NAME = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>FMU Variable</em>' class.
@@ -822,13 +822,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PARAMETER__DESCRIPTION = FMU_VARIABLE__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER__FMI_SCALAR_VAR = FMU_VARIABLE__FMI_SCALAR_VAR;
+	int FMU_PARAMETER__FMI_NAME = FMU_VARIABLE__FMI_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
@@ -931,13 +931,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PORT__OUT = PORT__OUT;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Scalar Var</b></em>' attribute.
+	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PORT__FMI_SCALAR_VAR = PORT_FEATURE_COUNT + 0;
+	int FMU_PORT__FMI_NAME = PORT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>FMU Port</em>' class.
@@ -1246,6 +1246,11 @@ public interface ComponentsPackage extends EPackage {
 	int FMI_SCALAR_VARIABLE = 17;
 
 	/**
+	 * Default RMS components extension ID.
+	 */
+	public static final String COMPONENTS_EXTENSION_ID = "ac.soton.rms.components";
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.ComponentDiagram <em>Component Diagram</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1462,10 +1467,10 @@ public interface ComponentsPackage extends EPackage {
 	EAttribute getFMUComponent_Path();
 
 	/**
-	 * Returns the meta object for the reference list '{@link ac.soton.rms.components.FMUComponent#getParameters <em>Parameters</em>}'.
+	 * Returns the meta object for the containment reference list '{@link ac.soton.rms.components.FMUComponent#getParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parameters</em>'.
+	 * @return the meta object for the containment reference list '<em>Parameters</em>'.
 	 * @see ac.soton.rms.components.FMUComponent#getParameters()
 	 * @see #getFMUComponent()
 	 * @generated
@@ -1580,15 +1585,15 @@ public interface ComponentsPackage extends EPackage {
 	EClass getFMUVariable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUVariable#getFmiScalarVar <em>Fmi Scalar Var</em>}'.
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUVariable#getFmiName <em>Fmi Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fmi Scalar Var</em>'.
-	 * @see ac.soton.rms.components.FMUVariable#getFmiScalarVar()
+	 * @return the meta object for the attribute '<em>Fmi Name</em>'.
+	 * @see ac.soton.rms.components.FMUVariable#getFmiName()
 	 * @see #getFMUVariable()
 	 * @generated
 	 */
-	EAttribute getFMUVariable_FmiScalarVar();
+	EAttribute getFMUVariable_FmiName();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBVariable <em>Event BVariable</em>}'.
@@ -1654,15 +1659,15 @@ public interface ComponentsPackage extends EPackage {
 	EClass getFMUPort();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUPort#getFmiScalarVar <em>Fmi Scalar Var</em>}'.
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUPort#getFmiName <em>Fmi Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fmi Scalar Var</em>'.
-	 * @see ac.soton.rms.components.FMUPort#getFmiScalarVar()
+	 * @return the meta object for the attribute '<em>Fmi Name</em>'.
+	 * @see ac.soton.rms.components.FMUPort#getFmiName()
 	 * @see #getFMUPort()
 	 * @generated
 	 */
-	EAttribute getFMUPort_FmiScalarVar();
+	EAttribute getFMUPort_FmiName();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBPort <em>Event BPort</em>}'.
@@ -1775,7 +1780,7 @@ public interface ComponentsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>FMI Scalar Variable</em>'.
 	 * @see org.ptolemy.fmi.FMIScalarVariable
-	 * @model instanceClass="org.ptolemy.fmi.FMIScalarVariable"
+	 * @model instanceClass="org.ptolemy.fmi.FMIScalarVariable" serializeable="false"
 	 * @generated
 	 */
 	EDataType getFMIScalarVariable();
@@ -1971,7 +1976,7 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute FMU_COMPONENT__PATH = eINSTANCE.getFMUComponent_Path();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameters</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -2065,12 +2070,12 @@ public interface ComponentsPackage extends EPackage {
 		EClass FMU_VARIABLE = eINSTANCE.getFMUVariable();
 
 		/**
-		 * The meta object literal for the '<em><b>Fmi Scalar Var</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Fmi Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FMU_VARIABLE__FMI_SCALAR_VAR = eINSTANCE.getFMUVariable_FmiScalarVar();
+		EAttribute FMU_VARIABLE__FMI_NAME = eINSTANCE.getFMUVariable_FmiName();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
@@ -2127,12 +2132,12 @@ public interface ComponentsPackage extends EPackage {
 		EClass FMU_PORT = eINSTANCE.getFMUPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Fmi Scalar Var</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Fmi Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FMU_PORT__FMI_SCALAR_VAR = eINSTANCE.getFMUPort_FmiScalarVar();
+		EAttribute FMU_PORT__FMI_NAME = eINSTANCE.getFMUPort_FmiName();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBPortImpl <em>Event BPort</em>}' class.

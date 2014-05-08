@@ -9,14 +9,12 @@
  */
 package ac.soton.rms.components.impl;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.ptolemy.fmi.FMIScalarVariable;
 
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUVariable;
-
-import org.eclipse.emf.common.notify.Notification;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +23,7 @@ import org.eclipse.emf.common.notify.Notification;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link ac.soton.rms.components.impl.FMUVariableImpl#getFmiScalarVar <em>Fmi Scalar Var</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.FMUVariableImpl#getFmiName <em>Fmi Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,23 +38,24 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
-	 * The default value of the '{@link #getFmiScalarVar() <em>Fmi Scalar Var</em>}' attribute.
+	 * The default value of the '{@link #getFmiName() <em>Fmi Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFmiScalarVar()
+	 * @see #getFmiName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final FMIScalarVariable FMI_SCALAR_VAR_EDEFAULT = null;
+	protected static final String FMI_NAME_EDEFAULT = null;
+
 	/**
-	 * The cached value of the '{@link #getFmiScalarVar() <em>Fmi Scalar Var</em>}' attribute.
+	 * The cached value of the '{@link #getFmiName() <em>Fmi Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFmiScalarVar()
+	 * @see #getFmiName()
 	 * @generated
 	 * @ordered
 	 */
-	protected FMIScalarVariable fmiScalarVar = FMI_SCALAR_VAR_EDEFAULT;
+	protected String fmiName = FMI_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -82,8 +81,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FMIScalarVariable getFmiScalarVar() {
-		return fmiScalarVar;
+	public String getFmiName() {
+		return fmiName;
 	}
 
 	/**
@@ -91,11 +90,11 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFmiScalarVar(FMIScalarVariable newFmiScalarVar) {
-		FMIScalarVariable oldFmiScalarVar = fmiScalarVar;
-		fmiScalarVar = newFmiScalarVar;
+	public void setFmiName(String newFmiName) {
+		String oldFmiName = fmiName;
+		fmiName = newFmiName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR, oldFmiScalarVar, fmiScalarVar));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_VARIABLE__FMI_NAME, oldFmiName, fmiName));
 	}
 
 	/**
@@ -106,8 +105,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR:
-				return getFmiScalarVar();
+			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
+				return getFmiName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,8 +119,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR:
-				setFmiScalarVar((FMIScalarVariable)newValue);
+			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
+				setFmiName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -135,8 +134,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR:
-				setFmiScalarVar(FMI_SCALAR_VAR_EDEFAULT);
+			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
+				setFmiName(FMI_NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -150,8 +149,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_SCALAR_VAR:
-				return FMI_SCALAR_VAR_EDEFAULT == null ? fmiScalarVar != null : !FMI_SCALAR_VAR_EDEFAULT.equals(fmiScalarVar);
+			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
+				return FMI_NAME_EDEFAULT == null ? fmiName != null : !FMI_NAME_EDEFAULT.equals(fmiName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -166,17 +165,15 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fmiScalarVar: ");
-		result.append(fmiScalarVar);
+		result.append(" (fmiName: ");
+		result.append(fmiName);
 		result.append(')');
 		return result.toString();
 	}
 	
 	@Override
 	public String getLabel() {
-		FMIScalarVariable var = getFmiScalarVar();
-		assert var != null;
-		return var.name;
+		return getFmiName();
 	}
 
 } //FMUVariableImpl

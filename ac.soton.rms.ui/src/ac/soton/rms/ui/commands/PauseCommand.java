@@ -14,14 +14,13 @@ import org.eclipse.core.commands.ExecutionException;
 import ac.soton.rms.master.Master;
 
 /**
+ * Command handleer for pausing the simulation.
+ * 
  * @author vitaly
  *
  */
 public class PauseCommand extends AbstractHandler {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Master.pause();

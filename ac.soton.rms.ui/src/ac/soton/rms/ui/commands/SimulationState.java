@@ -13,9 +13,9 @@ import java.util.Map;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
 
-import ac.soton.rms.master.Master;
-
 /**
+ * Simulation state source provider for the UI command handlers.
+ * 
  * @author vitaly
  *
  */
@@ -28,11 +28,9 @@ public class SimulationState extends AbstractSourceProvider {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Map getCurrentState() {
 		Map map = new HashMap(1);

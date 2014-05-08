@@ -76,25 +76,25 @@ public class FMUPortItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addFmiScalarVarPropertyDescriptor(object);
+			addFmiNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Fmi Scalar Var feature.
+	 * This adds a property descriptor for the Fmi Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addFmiScalarVarPropertyDescriptor(Object object) {
+	protected void addFmiNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_FMUPort_fmiScalarVar_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_FMUPort_fmiScalarVar_feature", "_UI_FMUPort_type"),
-				 ComponentsPackage.Literals.FMU_PORT__FMI_SCALAR_VAR,
+				 getString("_UI_FMUPort_fmiName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_FMUPort_fmiName_feature", "_UI_FMUPort_type"),
+				 ComponentsPackage.Literals.FMU_PORT__FMI_NAME,
 				 true,
 				 false,
 				 false,
@@ -122,7 +122,7 @@ public class FMUPortItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((FMUPort)object).getLabel());
+		String label = ((FMUPort)object).getFmiName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_FMUPort_type") :
 			getString("_UI_FMUPort_type") + " " + label;
@@ -140,7 +140,7 @@ public class FMUPortItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(FMUPort.class)) {
-			case ComponentsPackage.FMU_PORT__FMI_SCALAR_VAR:
+			case ComponentsPackage.FMU_PORT__FMI_NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

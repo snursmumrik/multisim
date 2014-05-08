@@ -12,7 +12,6 @@ package ac.soton.rms.components.impl;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collection;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,10 +20,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
-
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUComponent;
@@ -111,7 +108,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	protected String path = PATH_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' reference list.
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getParameters()
@@ -225,7 +222,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 */
 	public EList<FMUParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectResolvingEList<FMUParameter>(FMUParameter.class, this, ComponentsPackage.FMU_COMPONENT__PARAMETERS);
+			parameters = new EObjectContainmentEList.Resolving<FMUParameter>(FMUParameter.class, this, ComponentsPackage.FMU_COMPONENT__PARAMETERS);
 		}
 		return parameters;
 	}
@@ -386,6 +383,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 				return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
 			case ComponentsPackage.FMU_COMPONENT__VARIABLES:
 				return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+			case ComponentsPackage.FMU_COMPONENT__PARAMETERS:
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

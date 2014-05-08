@@ -12,13 +12,19 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eventb.core.IEventBRoot;
 import org.eventb.emf.core.machine.Machine;
+import org.ptolemy.fmi.FMIScalarVariable;
+import org.ptolemy.fmi.type.FMIBooleanType;
+import org.ptolemy.fmi.type.FMIIntegerType;
+import org.ptolemy.fmi.type.FMIRealType;
+import org.ptolemy.fmi.type.FMIStringType;
+import org.ptolemy.fmi.type.FMIType;
 import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
 
-import de.prob.cosimulation.FMU;
 import ac.soton.rms.components.AbstractVariable;
-import ac.soton.rms.components.FMUParameter;
+import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
+import de.prob.cosimulation.FMU;
 
 /**
  * @author vitaly
@@ -128,5 +134,62 @@ public class SimulationUtil {
 		return value;
 	}
 
+	/**
+	 * Returns component metamodel's variable type
+	 * that corresponds to FMI scalar variable.
+	 * Returns String type as default.
+	 * 
+	 * @param scalarVariable
+	 * @return
+	 */
+	public static VariableType fmiGetType(FMIScalarVariable scalarVariable) {
+		FMIType type = scalarVariable.type;
+		if (type instanceof FMIRealType) {
+			return VariableType.REAL;
+		} else if (type instanceof FMIIntegerType) {
+			return VariableType.INTEGER;
+		} else if (type instanceof FMIBooleanType) {
+			return VariableType.BOOLEAN;
+		} else {
+			return VariableType.STRING;
+		}
+	}
 	
+	/**
+	 * Returns default value of the FMI scalar variable,
+	 * or null if not set.
+	 * 
+	 * @param scalarVariable
+	 * @return
+	 */
+	public static Object fmiGetDefaultValue(FMIScalarVariable scalarVariable) {
+		FMIType type = scalarVariable.type;
+		Object value = null;
+		if (type instanceof FMIRealType) {
+			value = ((FMIRealType) type).start;
+		} else if (type instanceof FMIIntegerType) {
+			value = ((FMIIntegerType) type).start;
+		} else if (type instanceof FMIBooleanType) {
+			value = ((FMIBooleanType) type).start;
+		} else if (type instanceof FMIStringType) {
+			value = ((FMIStringType) type).start;
+		}
+		return value;
+	}
+
+	/**
+	 * Returns components metamodel's variable causality that
+	 * corresponds to provided FMI scalar variable's causality.
+	 * 
+	 * @param scalarVariable
+	 * @return causality
+	 */
+	public static VariableCausality fmiGetCausality(FMIScalarVariable scalarVariable) {
+		switch (scalarVariable.causality) {
+		case internal: return VariableCausality.INTERNAL;
+		case input: return VariableCausality.INPUT;
+		case output: return VariableCausality.OUTPUT;
+		default: return VariableCausality.NONE;
+		}
+	}
 }

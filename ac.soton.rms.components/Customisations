@@ -1,0 +1,27 @@
+**************************************************************************************
+* Customisations list
+* (list of all overrides, custom code within the generated code, generated nots etc.
+* that are worth putting in templates for the automatic generation)
+**************************************************************************************
+
+EventBComponentImpl:
+getExtensionId() override
+private Random random = new Random(System.currentTimeMillis());
+private Set<String> waitSet = new HashSet<String>();
+private BufferedReader traceReader;
+private BufferedWriter traceWriter;
+
+ComponentsPackage:
+COMPONENTS_EXTENSION_ID constant
+
+EventBPort:
+getLabel() override
+
+EventBVariable:
+getLabel() override
+
+FMUPort:
+getLabel() override
+
+FMUVariable:
+getLabel() override

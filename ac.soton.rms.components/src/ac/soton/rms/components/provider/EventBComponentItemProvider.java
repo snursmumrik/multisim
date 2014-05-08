@@ -12,7 +12,6 @@ package ac.soton.rms.components.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -30,7 +29,6 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.provider.AbstractExtensionItemProvider;
-
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.EventBComponent;

@@ -42,6 +42,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eventb.emf.core;visibility:=reexport,
  ac.soton.eventb.emf.core.extension;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
- org.eclipse.gef;visibility:=reexport
+ org.eclipse.gef;visibility:=reexport,
+ org.eclipse.emf.validation;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
