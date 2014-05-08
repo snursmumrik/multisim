@@ -219,6 +219,9 @@
             viewerId="fr.systerel.explorer.navigator.view">
          <includes>
             <actionExtension
+                  pattern="ac.soton.rms.components.diagram.navigatorActionProvider">
+            </actionExtension>
+            <actionExtension
                   pattern="ac.soton.rms.ui.navigator.actions.diagram">
             </actionExtension>
             <actionExtension
