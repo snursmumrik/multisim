@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -55,11 +56,14 @@ public class SetParameters implements IObjectActionDelegate {
 		if (component.getFmu() != null) {
 			modelDescription = component.getFmu().getModelDescription();
 		} else {
+			if (component.getPath() == null) {
+				MessageDialog.openError(Display.getDefault().getActiveShell(), "Parameters Failure", "FMU path is not set.");
+				return;
+			}
 			try {
 				modelDescription = FMUFile.parseFMUFile(component.getPath());
 			} catch (IOException e) {
-				e.printStackTrace();
-				//FIXME: handle the exception (no file found)
+				MessageDialog.openError(Display.getDefault().getActiveShell(), "Parameters Failure", "Could not read the FMU '" + component.getPath() + "' for parameters.");
 				return;
 			}
 		}

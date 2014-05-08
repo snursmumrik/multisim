@@ -11,8 +11,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPage;
@@ -44,14 +46,7 @@ public class OpenMachine implements IObjectActionDelegate {
 		
 		// if machine isn't set, add error marker
 		if (machine == null || machine.eResource() == null) {
-			//TODO: check if markers are already added
-//			Resource resource = view.eResource();
-//			ComponentsMarkerNavigationProvider.addMarker(
-//					WorkspaceSynchronizer.getFile(resource), 
-//					resource.getURIFragment(view),
-//					EMFCoreUtil.getQualifiedName(component, true), 
-//					"Machine is not set", 
-//					IMarker.SEVERITY_ERROR);
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Machine Failure", "Machine reference is not set.");
 			return;
 		}
 		
