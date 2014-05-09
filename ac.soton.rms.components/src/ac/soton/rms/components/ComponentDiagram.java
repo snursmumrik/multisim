@@ -27,7 +27,7 @@ import org.eventb.emf.core.EventBNamed;
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='singleEventBComponent'"
  * @generated
  */
 public interface ComponentDiagram extends EventBNamed {

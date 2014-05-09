@@ -162,7 +162,47 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateComponentDiagram(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(componentDiagram, diagnostics, context);
+		if (!validate_NoCircularContainment(componentDiagram, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validateComponentDiagram_singleEventBComponent(componentDiagram, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the singleEventBComponent constraint of '<em>Component Diagram</em>'.
+	 * <!-- begin-user-doc -->
+	 * Only one Event-B Component is allowed.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateComponentDiagram_singleEventBComponent(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		int countB = 0;
+		for (Component c : componentDiagram.getComponents())
+			if (c instanceof EventBComponent)
+				++countB;
+		
+		if (countB > 1) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_GenericConstraint_diagnostic",
+						 new Object[] { "singleEventBComponent", getObjectLabel(componentDiagram, context) },
+						 new Object[] { componentDiagram },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**

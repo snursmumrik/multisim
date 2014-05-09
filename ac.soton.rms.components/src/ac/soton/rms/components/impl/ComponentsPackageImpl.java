@@ -911,10 +911,10 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		createResource(eNS_URI);
 
 		// Create annotations
-		// org.eventb.emf.core.extendedMetaClasses
-		createOrgAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
+		// org.eventb.emf.core.extendedMetaClasses
+		createOrgAnnotations();
 	}
 
 	/**
@@ -924,7 +924,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	protected void createOrgAnnotations() {
-		String source = "org.eventb.emf.core.extendedMetaClasses";		
+		String source = "org.eventb.emf.core.extendedMetaClasses";			
 		addAnnotation
 		  (eventBComponentEClass, 
 		   source, 
@@ -942,7 +942,13 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";			
+		String source = "http://www.eclipse.org/emf/2002/Ecore";		
+		addAnnotation
+		  (componentDiagramEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "singleEventBComponent"
+		   });			
 		addAnnotation
 		  (eventBComponentEClass, 
 		   source, 
