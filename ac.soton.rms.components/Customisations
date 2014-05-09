@@ -29,3 +29,8 @@ getLabel() override
 
 FMUVariable:
 getLabel() override
+
+== ac.soton.rms.components.diagram
+ComponentsDocumentProvider:
+doSaveDocument() genNot
+saveEventB() new

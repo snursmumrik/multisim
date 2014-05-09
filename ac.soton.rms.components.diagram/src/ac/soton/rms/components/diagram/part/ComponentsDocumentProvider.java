@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
@@ -55,11 +57,19 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.internal.util.Diagram
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eventb.emf.core.AbstractExtension;
+import org.eventb.emf.core.machine.Machine;
+
+import ac.soton.rms.components.Component;
+import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.EventBComponent;
 
 /**
  * @generated
@@ -582,7 +592,7 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void doSaveDocument(IProgressMonitor monitor, Object element,
 			IDocument document, boolean overwrite) throws CoreException {
@@ -603,6 +613,9 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 				monitor.beginTask(
 						Messages.ComponentsDocumentProvider_SaveDiagramTask,
 						info.getResourceSet().getResources().size() + 1); //"Saving diagram"
+				//XXX save Event-B component
+				saveEventB(document);
+				
 				for (Iterator<Resource> it = info.getLoadedResourcesIterator(); it
 						.hasNext();) {
 					Resource nextResource = it.next();
@@ -1130,6 +1143,66 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 			}
 		}
 
+	}
+
+	/**
+	 * Persists EventB component.
+	 * Stores EventBComponent as an extension in a machine.
+	 * 
+	 * @param document
+	 */
+	private void saveEventB(IDocument document) {
+		ComponentDiagram diagram = (ComponentDiagram) ((IDiagramDocument) document)
+				.getDiagram().getElement();
+		final TransactionalEditingDomain domain = ((IDiagramDocument) document)
+				.getEditingDomain();
+		CompoundCommand compoundCmd = new CompoundCommand();
+
+		for (final Component comp : diagram.getComponents()) {
+			if (comp instanceof EventBComponent
+					&& ((EventBComponent) comp).getMachine() != null) {
+
+				// adds command to extend Event-B machine with component config
+				// NOTE: replaces existing extension of the same id
+				compoundCmd.append(new RecordingCommand(domain) {
+					@Override
+					protected void doExecute() {
+						EventBComponent compCopy = (EventBComponent) EcoreUtil
+								.copy(comp);
+						try {
+							Resource resource = domain.getResourceSet()
+									.getResource(
+											compCopy.getMachine().getURI(),
+											true);
+
+							if (resource != null && resource.isLoaded()) {
+								Machine machine = (Machine) resource
+										.getContents().get(0);
+								if (machine == null)
+									return;
+
+								// remove any existing extensions of the same id (EventB component)
+								Iterator<AbstractExtension> it = machine
+										.getExtensions().iterator();
+								while (it.hasNext()) {
+									if (ComponentsPackage.COMPONENTS_EXTENSION_ID
+											.equals(it.next().getExtensionId())) {
+										it.remove();
+									}
+								}
+								//								compCopy.setReference(ComponentsPackage.COMPONENTS_EXTENSION_ID
+								//										+ "." + EcoreUtil.generateUUID());
+								machine.getExtensions().add(compCopy);
+								resource.save(Collections.EMPTY_MAP);
+							}
+						} catch (IOException e) {
+							MessageDialog.openError(Display.getDefault().getActiveShell(), "Event-B Component", "Failed to save component '" + comp.getLabel() + "' to its machine.");
+						}
+					}
+				});
+			}
+		}
+		domain.getCommandStack().execute(compoundCmd);
 	}
 
 }
