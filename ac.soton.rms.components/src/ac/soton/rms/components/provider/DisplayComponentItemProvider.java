@@ -10,9 +10,9 @@
 package ac.soton.rms.components.provider;
 
 
+import ac.soton.eventb.emf.core.extension.coreextension.provider.EventBLabeledItemProvider;
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,8 +26,6 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eventb.emf.core.provider.EventBNamedItemProvider;
-
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
@@ -39,7 +37,7 @@ import ac.soton.rms.components.DisplayComponent;
  * @generated
  */
 public class DisplayComponentItemProvider
-	extends EventBNamedItemProvider
+	extends EventBLabeledItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -132,7 +130,7 @@ public class DisplayComponentItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((DisplayComponent)object).getName();
+		String label = crop(((DisplayComponent)object).getLabel());
 		return label == null || label.length() == 0 ?
 			getString("_UI_DisplayComponent_type") :
 			getString("_UI_DisplayComponent_type") + " " + label;

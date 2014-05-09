@@ -244,7 +244,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 		DisplayComponent domainModelElement = (DisplayComponent) view
 				.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getName();
+			return domainModelElement.getLabel();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 2001); //$NON-NLS-1$
@@ -312,7 +312,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	private String getFMUPort_3002Text(View view) {
 		FMUPort domainModelElement = (FMUPort) view.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3002); //$NON-NLS-1$
@@ -326,7 +326,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	private String getFMUPort_3003Text(View view) {
 		FMUPort domainModelElement = (FMUPort) view.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3003); //$NON-NLS-1$

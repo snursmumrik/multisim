@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Parameter;
-import org.ptolemy.fmi.FMIScalarVariable;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
@@ -152,8 +151,6 @@ public class ComponentsValidator extends EObjectValidator {
 				return validateIStatus((IStatus)value, diagnostics, context);
 			case ComponentsPackage.FMU:
 				return validateFMU((FMU)value, diagnostics, context);
-			case ComponentsPackage.FMI_SCALAR_VARIABLE:
-				return validateFMIScalarVariable((FMIScalarVariable)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -506,15 +503,6 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateFMU(FMU fmu, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return true;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateFMIScalarVariable(FMIScalarVariable fmiScalarVariable, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

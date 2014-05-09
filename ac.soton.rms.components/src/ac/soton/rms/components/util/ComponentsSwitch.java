@@ -106,7 +106,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 			case ComponentsPackage.COMPONENT: {
 				Component component = (Component)theEObject;
 				T result = caseComponent(component);
-				if (result == null) result = caseEventBNamed(component);
+				if (result == null) result = caseEventBLabeled(component);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -116,7 +116,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAbstractExtension(eventBComponent);
 				if (result == null) result = caseComponent(eventBComponent);
 				if (result == null) result = caseEventBElement(eventBComponent);
-				if (result == null) result = caseEventBNamed(eventBComponent);
+				if (result == null) result = caseEventBLabeled(eventBComponent);
 				if (result == null) result = caseEventBObject(eventBComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -126,6 +126,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				T result = caseFMUComponent(fmuComponent);
 				if (result == null) result = caseComponent(fmuComponent);
 				if (result == null) result = caseEventBNamed(fmuComponent);
+				if (result == null) result = caseEventBLabeled(fmuComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -148,6 +149,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				FMUVariable fmuVariable = (FMUVariable)theEObject;
 				T result = caseFMUVariable(fmuVariable);
 				if (result == null) result = caseAbstractVariable(fmuVariable);
+				if (result == null) result = caseEventBNamed(fmuVariable);
 				if (result == null) result = caseEventBLabeled(fmuVariable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -165,6 +167,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				T result = caseFMUParameter(fmuParameter);
 				if (result == null) result = caseFMUVariable(fmuParameter);
 				if (result == null) result = caseAbstractVariable(fmuParameter);
+				if (result == null) result = caseEventBNamed(fmuParameter);
 				if (result == null) result = caseEventBLabeled(fmuParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -173,6 +176,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				FMUPort fmuPort = (FMUPort)theEObject;
 				T result = caseFMUPort(fmuPort);
 				if (result == null) result = casePort(fmuPort);
+				if (result == null) result = caseEventBNamed(fmuPort);
 				if (result == null) result = caseAbstractVariable(fmuPort);
 				if (result == null) result = caseEventBLabeled(fmuPort);
 				if (result == null) result = defaultCase(theEObject);
@@ -191,7 +195,7 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				DisplayComponent displayComponent = (DisplayComponent)theEObject;
 				T result = caseDisplayComponent(displayComponent);
 				if (result == null) result = caseComponent(displayComponent);
-				if (result == null) result = caseEventBNamed(displayComponent);
+				if (result == null) result = caseEventBLabeled(displayComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

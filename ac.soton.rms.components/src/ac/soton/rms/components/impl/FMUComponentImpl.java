@@ -9,9 +9,12 @@
  */
 package ac.soton.rms.components.impl;
 
+import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collection;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,7 +24,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eventb.emf.core.impl.EventBNamedImpl;
+import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.EventBNamed;
+
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUComponent;
@@ -41,6 +46,7 @@ import de.prob.cosimulation.FMU;
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getPath <em>Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getFmu <em>Fmu</em>}</li>
@@ -49,7 +55,7 @@ import de.prob.cosimulation.FMU;
  *
  * @generated
  */
-public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
+public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -86,6 +92,26 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * @ordered
 	 */
 	protected EList<AbstractVariable> variables;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = "";
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
@@ -199,6 +225,27 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_COMPONENT__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getPath() {
 		return path;
 	}
@@ -246,6 +293,23 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		fmu = newFmu;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_COMPONENT__FMU, oldFmu, fmu));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String doGetName() {
+		if (this.eIsProxy()){
+			String fragment = ((InternalEObject)this).eProxyURI().fragment();
+			int ind = fragment.lastIndexOf("::");
+			if (ind>-1) fragment = fragment.substring(ind+2);
+			fragment = fragment.substring(fragment.lastIndexOf('.')+1);
+			return fragment;
+		}else{
+			return name;
+		}
 	}
 
 	/**
@@ -403,6 +467,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 				return getOutputs();
 			case ComponentsPackage.FMU_COMPONENT__VARIABLES:
 				return getVariables();
+			case ComponentsPackage.FMU_COMPONENT__NAME:
+				return getName();
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				return getPath();
 			case ComponentsPackage.FMU_COMPONENT__PARAMETERS:
@@ -433,6 +499,9 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			case ComponentsPackage.FMU_COMPONENT__VARIABLES:
 				getVariables().clear();
 				getVariables().addAll((Collection<? extends AbstractVariable>)newValue);
+				return;
+			case ComponentsPackage.FMU_COMPONENT__NAME:
+				setName((String)newValue);
 				return;
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				setPath((String)newValue);
@@ -465,6 +534,9 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			case ComponentsPackage.FMU_COMPONENT__VARIABLES:
 				getVariables().clear();
 				return;
+			case ComponentsPackage.FMU_COMPONENT__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				setPath(PATH_EDEFAULT);
 				return;
@@ -492,6 +564,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 				return outputs != null && !outputs.isEmpty();
 			case ComponentsPackage.FMU_COMPONENT__VARIABLES:
 				return variables != null && !variables.isEmpty();
+			case ComponentsPackage.FMU_COMPONENT__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
 			case ComponentsPackage.FMU_COMPONENT__PARAMETERS:
@@ -508,16 +582,55 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBNamed.class) {
+			switch (derivedFeatureID) {
+				case ComponentsPackage.FMU_COMPONENT__NAME: return CorePackage.EVENT_BNAMED__NAME;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBNamed.class) {
+			switch (baseFeatureID) {
+				case CorePackage.EVENT_BNAMED__NAME: return ComponentsPackage.FMU_COMPONENT__NAME;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (path: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", path: ");
 		result.append(path);
 		result.append(", fmu: ");
 		result.append(fmu);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public String getLabel() {
+		return getName();
 	}
 
 } //FMUComponentImpl

@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eventb.emf.core.CorePackage;
 import ac.soton.rms.components.FMUPort;
 
 /**
@@ -76,25 +77,25 @@ public class FMUPortItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addFmiNamePropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Fmi Name feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addFmiNamePropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_FMUPort_fmiName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_FMUPort_fmiName_feature", "_UI_FMUPort_type"),
-				 ComponentsPackage.Literals.FMU_PORT__FMI_NAME,
+				 getString("_UI_EventBNamed_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBNamed_name_feature", "_UI_EventBNamed_type"),
+				 CorePackage.Literals.EVENT_BNAMED__NAME,
 				 true,
 				 false,
 				 false,
@@ -122,7 +123,7 @@ public class FMUPortItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((FMUPort)object).getFmiName();
+		String label = ((FMUPort)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_FMUPort_type") :
 			getString("_UI_FMUPort_type") + " " + label;
@@ -140,7 +141,7 @@ public class FMUPortItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(FMUPort.class)) {
-			case ComponentsPackage.FMU_PORT__FMI_NAME:
+			case ComponentsPackage.FMU_PORT__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

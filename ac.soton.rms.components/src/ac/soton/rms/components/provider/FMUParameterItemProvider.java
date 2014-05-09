@@ -145,7 +145,7 @@ public class FMUParameterItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((FMUParameter)object).getFmiName();
+		String label = ((FMUParameter)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_FMUParameter_type") :
 			getString("_UI_FMUParameter_type") + " " + label;

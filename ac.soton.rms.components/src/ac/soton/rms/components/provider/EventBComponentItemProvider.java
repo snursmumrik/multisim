@@ -10,6 +10,7 @@
 package ac.soton.rms.components.provider;
 
 
+import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -78,7 +79,7 @@ public class EventBComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
+			addLabelPropertyDescriptor(object);
 			addMachinePropertyDescriptor(object);
 			addComposedPropertyDescriptor(object);
 			addTraceFilePathPropertyDescriptor(object);
@@ -93,21 +94,21 @@ public class EventBComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Label feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addLabelPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EventBNamed_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBNamed_name_feature", "_UI_EventBNamed_type"),
-				 CorePackage.Literals.EVENT_BNAMED__NAME,
+				 getString("_UI_EventBLabeled_label_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBLabeled_label_feature", "_UI_EventBLabeled_type"),
+				 CoreextensionPackage.Literals.EVENT_BLABELED__LABEL,
 				 true,
-				 false,
+				 true,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
@@ -363,7 +364,7 @@ public class EventBComponentItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((EventBComponent)object).getName();
+		String label = ((EventBComponent)object).getReference();
 		return label == null || label.length() == 0 ?
 			getString("_UI_EventBComponent_type") :
 			getString("_UI_EventBComponent_type") + " " + label;
@@ -381,7 +382,7 @@ public class EventBComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EventBComponent.class)) {
-			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
+			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
 			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:

@@ -482,6 +482,7 @@
           editPartClassName="EventBComponentNameEditPart"
           itemSemanticEditPolicyClassName="EventBComponentNameItemSemanticEditPolicy"
           notationViewFactoryClassName="EventBComponentNameViewFactory"
+          readOnly="true"
           elementIcon="true">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
@@ -493,7 +494,7 @@
             xsi:type="gmfgen:FeatureLabelModelFacet"
             parser="//@labelParsers/@implementations.0">
           <metaFeatures
-              href="../../org.eventb.emf.core/model/eventbcore.genmodel#//core/EventBNamed/name"/>
+              href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.genmodel#//coreextension/EventBLabeled/label"/>
         </modelFacet>
       </labels>
     </topLevelNodes>

@@ -9,7 +9,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" interface="true"
-      eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
+      eSuperTypes="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.ecore#//EventBLabeled">
     <eOperations name="instantiate" eType="#//IStatus"/>
     <eOperations name="initialise" eType="#//IStatus">
       <eParameters name="tStart" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
@@ -48,7 +48,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="compareTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordTrace" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUComponent" eSuperTypes="#//Component">
+  <eClassifiers xsi:type="ecore:EClass" name="FMUComponent" eSuperTypes="#//Component ../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="validPath"/>
     </eAnnotations>
@@ -85,10 +85,7 @@
     <eLiterals name="Internal" value="2"/>
     <eLiterals name="None" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUVariable" eSuperTypes="#//AbstractVariable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiName" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FMUVariable" eSuperTypes="#//AbstractVariable ../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed"/>
   <eClassifiers xsi:type="ecore:EClass" name="EventBVariable" eSuperTypes="#//AbstractVariable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
         eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Variable"/>
@@ -97,10 +94,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fmiName" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port ../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed"/>
   <eClassifiers xsi:type="ecore:EClass" name="EventBPort" eSuperTypes="#//Port">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="validEventBReference"/>
@@ -114,7 +108,5 @@
   <eClassifiers xsi:type="ecore:EDataType" name="IStatus" instanceClassName="org.eclipse.core.runtime.IStatus"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="FMU" instanceClassName="de.prob.cosimulation.FMU"
-      serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="FMIScalarVariable" instanceClassName="org.ptolemy.fmi.FMIScalarVariable"
       serializable="false"/>
 </ecore:EPackage>

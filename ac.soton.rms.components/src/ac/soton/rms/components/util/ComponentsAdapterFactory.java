@@ -153,6 +153,10 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 				return createEventBNamedAdapter();
 			}
 			@Override
+			public Adapter caseEventBLabeled(EventBLabeled object) {
+				return createEventBLabeledAdapter();
+			}
+			@Override
 			public Adapter caseEventBObject(EventBObject object) {
 				return createEventBObjectAdapter();
 			}
@@ -163,10 +167,6 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseAbstractExtension(AbstractExtension object) {
 				return createAbstractExtensionAdapter();
-			}
-			@Override
-			public Adapter caseEventBLabeled(EventBLabeled object) {
-				return createEventBLabeledAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

@@ -9,8 +9,8 @@
  */
 package ac.soton.rms.components.impl;
 
+import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
 import java.util.Collection;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -18,8 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eventb.emf.core.impl.EventBNamedImpl;
-
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
@@ -40,7 +38,7 @@ import ac.soton.rms.components.Port;
  *
  * @generated
  */
-public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComponent {
+public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayComponent {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

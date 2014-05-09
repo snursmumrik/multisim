@@ -9,6 +9,8 @@
  */
 package ac.soton.rms.components.impl;
 
+import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
+import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -33,12 +34,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.core.IEventBRoot;
-import org.eventb.emf.core.CorePackage;
-import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
-
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
@@ -67,7 +65,7 @@ import de.prob.exceptions.ProBException;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getName <em>Name</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getVariables <em>Variables</em>}</li>
@@ -94,24 +92,14 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getLabel()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "";
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected static final String LABEL_EDEFAULT = "";
 
 	/**
 	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
@@ -321,22 +309,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__NAME, oldName, name));
+	public String getLabel() {
+		return getMachine() == null ? "" : getMachine().getName();
 	}
 
 	/**
@@ -845,23 +821,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String doGetName() {
-		if (this.eIsProxy()){
-			String fragment = ((InternalEObject)this).eProxyURI().fragment();
-			int ind = fragment.lastIndexOf("::");
-			if (ind>-1) fragment = fragment.substring(ind+2);
-			fragment = fragment.substring(fragment.lastIndexOf('.')+1);
-			return fragment;
-		}else{
-			return name;
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -883,8 +842,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
-				return getName();
+			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
+				return getLabel();
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				return getInputs();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
@@ -923,9 +882,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
-				setName((String)newValue);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				getInputs().clear();
 				getInputs().addAll((Collection<? extends Port>)newValue);
@@ -979,9 +935,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				getInputs().clear();
 				return;
@@ -1030,8 +983,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
+				return LABEL_EDEFAULT == null ? getLabel() != null : !LABEL_EDEFAULT.equals(getLabel());
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
@@ -1067,9 +1020,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == EventBNamed.class) {
+		if (baseClass == EventBLabeled.class) {
 			switch (derivedFeatureID) {
-				case ComponentsPackage.EVENT_BCOMPONENT__NAME: return CorePackage.EVENT_BNAMED__NAME;
+				case ComponentsPackage.EVENT_BCOMPONENT__LABEL: return CoreextensionPackage.EVENT_BLABELED__LABEL;
 				default: return -1;
 			}
 		}
@@ -1091,9 +1044,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == EventBNamed.class) {
+		if (baseClass == EventBLabeled.class) {
 			switch (baseFeatureID) {
-				case CorePackage.EVENT_BNAMED__NAME: return ComponentsPackage.EVENT_BCOMPONENT__NAME;
+				case CoreextensionPackage.EVENT_BLABELED__LABEL: return ComponentsPackage.EVENT_BCOMPONENT__LABEL;
 				default: return -1;
 			}
 		}
@@ -1118,9 +1071,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", composed: ");
+		result.append(" (composed: ");
 		result.append(composed);
 		result.append(", traceFilePath: ");
 		result.append(traceFilePath);

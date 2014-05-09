@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.machine.MachinePackage;
-
-import org.ptolemy.fmi.FMIScalarVariable;
 import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
@@ -177,13 +175,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	private EDataType fmuEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EDataType fmiScalarVariableEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -542,15 +533,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getFMUVariable_FmiName() {
-		return (EAttribute)fmuVariableEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getEventBVariable() {
 		return eventBVariableEClass;
 	}
@@ -598,15 +580,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 */
 	public EClass getFMUPort() {
 		return fmuPortEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getFMUPort_FmiName() {
-		return (EAttribute)fmuPortEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -704,15 +677,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getFMIScalarVariable() {
-		return fmiScalarVariableEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ComponentsFactory getComponentsFactory() {
 		return (ComponentsFactory)getEFactoryInstance();
 	}
@@ -773,7 +737,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		createEAttribute(abstractVariableEClass, ABSTRACT_VARIABLE__DESCRIPTION);
 
 		fmuVariableEClass = createEClass(FMU_VARIABLE);
-		createEAttribute(fmuVariableEClass, FMU_VARIABLE__FMI_NAME);
 
 		eventBVariableEClass = createEClass(EVENT_BVARIABLE);
 		createEReference(eventBVariableEClass, EVENT_BVARIABLE__VARIABLE);
@@ -783,7 +746,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		createEAttribute(fmuParameterEClass, FMU_PARAMETER__START_VALUE);
 
 		fmuPortEClass = createEClass(FMU_PORT);
-		createEAttribute(fmuPortEClass, FMU_PORT__FMI_NAME);
 
 		eventBPortEClass = createEClass(EVENT_BPORT);
 		createEReference(eventBPortEClass, EVENT_BPORT__PARAMETER);
@@ -801,7 +763,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		// Create data types
 		iStatusEDataType = createEDataType(ISTATUS);
 		fmuEDataType = createEDataType(FMU);
-		fmiScalarVariableEDataType = createEDataType(FMI_SCALAR_VARIABLE);
 	}
 
 	/**
@@ -830,8 +791,8 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		// Obtain other dependent packages
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-		MachinePackage theMachinePackage = (MachinePackage)EPackage.Registry.INSTANCE.getEPackage(MachinePackage.eNS_URI);
 		CoreextensionPackage theCoreextensionPackage = (CoreextensionPackage)EPackage.Registry.INSTANCE.getEPackage(CoreextensionPackage.eNS_URI);
+		MachinePackage theMachinePackage = (MachinePackage)EPackage.Registry.INSTANCE.getEPackage(MachinePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -839,16 +800,19 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 
 		// Add supertypes to classes
 		componentDiagramEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
-		componentEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
+		componentEClass.getESuperTypes().add(theCoreextensionPackage.getEventBLabeled());
 		eventBComponentEClass.getESuperTypes().add(theCorePackage.getAbstractExtension());
 		eventBComponentEClass.getESuperTypes().add(this.getComponent());
 		fmuComponentEClass.getESuperTypes().add(this.getComponent());
+		fmuComponentEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
 		portEClass.getESuperTypes().add(this.getAbstractVariable());
 		abstractVariableEClass.getESuperTypes().add(theCoreextensionPackage.getEventBLabeled());
 		fmuVariableEClass.getESuperTypes().add(this.getAbstractVariable());
+		fmuVariableEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
 		eventBVariableEClass.getESuperTypes().add(this.getAbstractVariable());
 		fmuParameterEClass.getESuperTypes().add(this.getFMUVariable());
 		fmuPortEClass.getESuperTypes().add(this.getPort());
+		fmuPortEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
 		eventBPortEClass.getESuperTypes().add(this.getPort());
 		displayComponentEClass.getESuperTypes().add(this.getComponent());
 		displayPortEClass.getESuperTypes().add(this.getPort());
@@ -907,7 +871,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		initEAttribute(getAbstractVariable_Description(), theEcorePackage.getEString(), "description", null, 0, 1, AbstractVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuVariableEClass, FMUVariable.class, "FMUVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFMUVariable_FmiName(), ecorePackage.getEString(), "fmiName", null, 1, 1, FMUVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eventBVariableEClass, EventBVariable.class, "EventBVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventBVariable_Variable(), theMachinePackage.getVariable(), null, "variable", null, 1, 1, EventBVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -917,7 +880,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		initEAttribute(getFMUParameter_StartValue(), theEcorePackage.getEJavaObject(), "startValue", null, 0, 1, FMUParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuPortEClass, FMUPort.class, "FMUPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFMUPort_FmiName(), ecorePackage.getEString(), "fmiName", null, 1, 1, FMUPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eventBPortEClass, EventBPort.class, "EventBPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventBPort_Parameter(), theMachinePackage.getParameter(), null, "parameter", null, 0, 1, EventBPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -944,7 +906,6 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		// Initialize data types
 		initEDataType(iStatusEDataType, IStatus.class, "IStatus", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fmuEDataType, de.prob.cosimulation.FMU.class, "FMU", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(fmiScalarVariableEDataType, FMIScalarVariable.class, "FMIScalarVariable", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

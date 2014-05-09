@@ -11,7 +11,10 @@ package ac.soton.rms.components.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.EventBNamed;
 
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUVariable;
@@ -23,7 +26,7 @@ import ac.soton.rms.components.FMUVariable;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link ac.soton.rms.components.impl.FMUVariableImpl#getFmiName <em>Fmi Name</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.FMUVariableImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,24 +41,24 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
-	 * The default value of the '{@link #getFmiName() <em>Fmi Name</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFmiName()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FMI_NAME_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = "";
 
 	/**
-	 * The cached value of the '{@link #getFmiName() <em>Fmi Name</em>}' attribute.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFmiName()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fmiName = FMI_NAME_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -81,8 +84,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFmiName() {
-		return fmiName;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -90,11 +93,28 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFmiName(String newFmiName) {
-		String oldFmiName = fmiName;
-		fmiName = newFmiName;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_VARIABLE__FMI_NAME, oldFmiName, fmiName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_VARIABLE__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String doGetName() {
+		if (this.eIsProxy()){
+			String fragment = ((InternalEObject)this).eProxyURI().fragment();
+			int ind = fragment.lastIndexOf("::");
+			if (ind>-1) fragment = fragment.substring(ind+2);
+			fragment = fragment.substring(fragment.lastIndexOf('.')+1);
+			return fragment;
+		}else{
+			return name;
+		}
 	}
 
 	/**
@@ -105,8 +125,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
-				return getFmiName();
+			case ComponentsPackage.FMU_VARIABLE__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -119,8 +139,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
-				setFmiName((String)newValue);
+			case ComponentsPackage.FMU_VARIABLE__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,8 +154,8 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
-				setFmiName(FMI_NAME_EDEFAULT);
+			case ComponentsPackage.FMU_VARIABLE__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -149,10 +169,42 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.FMU_VARIABLE__FMI_NAME:
-				return FMI_NAME_EDEFAULT == null ? fmiName != null : !FMI_NAME_EDEFAULT.equals(fmiName);
+			case ComponentsPackage.FMU_VARIABLE__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBNamed.class) {
+			switch (derivedFeatureID) {
+				case ComponentsPackage.FMU_VARIABLE__NAME: return CorePackage.EVENT_BNAMED__NAME;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBNamed.class) {
+			switch (baseFeatureID) {
+				case CorePackage.EVENT_BNAMED__NAME: return ComponentsPackage.FMU_VARIABLE__NAME;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -165,15 +217,15 @@ public class FMUVariableImpl extends AbstractVariableImpl implements FMUVariable
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fmiName: ");
-		result.append(fmiName);
+		result.append(" (name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}
 	
 	@Override
 	public String getLabel() {
-		return getFmiName();
+		return getName();
 	}
 
 } //FMUVariableImpl

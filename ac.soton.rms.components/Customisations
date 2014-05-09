@@ -10,6 +10,10 @@ private Random random = new Random(System.currentTimeMillis());
 private Set<String> waitSet = new HashSet<String>();
 private BufferedReader traceReader;
 private BufferedWriter traceWriter;
+getLabel() genNot
+
+FMUComponentImpl:
+getLabel() override
 
 ComponentsPackage:
 COMPONENTS_EXTENSION_ID constant

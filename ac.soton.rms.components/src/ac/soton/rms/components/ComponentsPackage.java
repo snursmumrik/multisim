@@ -140,13 +140,13 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT = 1;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__NAME = CorePackage.EVENT_BNAMED__NAME;
+	int COMPONENT__LABEL = CoreextensionPackage.EVENT_BLABELED__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -155,7 +155,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__INPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 0;
+	int COMPONENT__INPUTS = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
@@ -164,7 +164,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
+	int COMPONENT__OUTPUTS = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -173,7 +173,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__VARIABLES = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
+	int COMPONENT__VARIABLES = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Component</em>' class.
@@ -182,7 +182,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
+	int COMPONENT_FEATURE_COUNT = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -267,13 +267,13 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__EXTENSION_ID = CorePackage.ABSTRACT_EXTENSION__EXTENSION_ID;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__NAME = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 0;
+	int EVENT_BCOMPONENT__LABEL = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -403,13 +403,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT = 3;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__NAME = COMPONENT__NAME;
+	int FMU_COMPONENT__LABEL = COMPONENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -439,13 +439,22 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT__VARIABLES = COMPONENT__VARIABLES;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_COMPONENT__NAME = COMPONENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__PATH = COMPONENT_FEATURE_COUNT + 0;
+	int FMU_COMPONENT__PATH = COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -454,7 +463,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__PARAMETERS = COMPONENT_FEATURE_COUNT + 1;
+	int FMU_COMPONENT__PARAMETERS = COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Fmu</b></em>' attribute.
@@ -463,7 +472,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__FMU = COMPONENT_FEATURE_COUNT + 2;
+	int FMU_COMPONENT__FMU = COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>FMU Component</em>' class.
@@ -472,7 +481,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 3;
+	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.AbstractVariableImpl <em>Abstract Variable</em>}' class.
@@ -676,13 +685,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_VARIABLE__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_VARIABLE__FMI_NAME = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
+	int FMU_VARIABLE__NAME = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>FMU Variable</em>' class.
@@ -822,13 +831,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PARAMETER__DESCRIPTION = FMU_VARIABLE__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER__FMI_NAME = FMU_VARIABLE__FMI_NAME;
+	int FMU_PARAMETER__NAME = FMU_VARIABLE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
@@ -931,13 +940,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PORT__OUT = PORT__OUT;
 
 	/**
-	 * The feature id for the '<em><b>Fmi Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PORT__FMI_NAME = PORT_FEATURE_COUNT + 0;
+	int FMU_PORT__NAME = PORT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>FMU Port</em>' class.
@@ -1068,13 +1077,13 @@ public interface ComponentsPackage extends EPackage {
 	int DISPLAY_COMPONENT = 11;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_COMPONENT__NAME = COMPONENT__NAME;
+	int DISPLAY_COMPONENT__LABEL = COMPONENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -1234,16 +1243,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	int FMU = 16;
-
-	/**
-	 * The meta object id for the '<em>FMI Scalar Variable</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.ptolemy.fmi.FMIScalarVariable
-	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMIScalarVariable()
-	 * @generated
-	 */
-	int FMI_SCALAR_VARIABLE = 17;
 
 	/**
 	 * Default RMS components extension ID.
@@ -1585,17 +1584,6 @@ public interface ComponentsPackage extends EPackage {
 	EClass getFMUVariable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUVariable#getFmiName <em>Fmi Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fmi Name</em>'.
-	 * @see ac.soton.rms.components.FMUVariable#getFmiName()
-	 * @see #getFMUVariable()
-	 * @generated
-	 */
-	EAttribute getFMUVariable_FmiName();
-
-	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBVariable <em>Event BVariable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1657,17 +1645,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getFMUPort();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.FMUPort#getFmiName <em>Fmi Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fmi Name</em>'.
-	 * @see ac.soton.rms.components.FMUPort#getFmiName()
-	 * @see #getFMUPort()
-	 * @generated
-	 */
-	EAttribute getFMUPort_FmiName();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBPort <em>Event BPort</em>}'.
@@ -1773,17 +1750,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getFMU();
-
-	/**
-	 * Returns the meta object for data type '{@link org.ptolemy.fmi.FMIScalarVariable <em>FMI Scalar Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>FMI Scalar Variable</em>'.
-	 * @see org.ptolemy.fmi.FMIScalarVariable
-	 * @model instanceClass="org.ptolemy.fmi.FMIScalarVariable" serializeable="false"
-	 * @generated
-	 */
-	EDataType getFMIScalarVariable();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2070,14 +2036,6 @@ public interface ComponentsPackage extends EPackage {
 		EClass FMU_VARIABLE = eINSTANCE.getFMUVariable();
 
 		/**
-		 * The meta object literal for the '<em><b>Fmi Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FMU_VARIABLE__FMI_NAME = eINSTANCE.getFMUVariable_FmiName();
-
-		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2130,14 +2088,6 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FMU_PORT = eINSTANCE.getFMUPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Fmi Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FMU_PORT__FMI_NAME = eINSTANCE.getFMUPort_FmiName();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBPortImpl <em>Event BPort</em>}' class.
@@ -2232,16 +2182,6 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType FMU = eINSTANCE.getFMU();
-
-		/**
-		 * The meta object literal for the '<em>FMI Scalar Variable</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.ptolemy.fmi.FMIScalarVariable
-		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMIScalarVariable()
-		 * @generated
-		 */
-		EDataType FMI_SCALAR_VARIABLE = eINSTANCE.getFMIScalarVariable();
 
 	}
 

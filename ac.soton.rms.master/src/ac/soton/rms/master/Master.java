@@ -7,15 +7,10 @@
  */
 package ac.soton.rms.master;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
@@ -78,12 +73,12 @@ public class Master {
 			
 			// instantiate & initialise
 			for (Component c : components) {
-				monitor.subTask("Initialising '" + c.getName() + "'");
+				monitor.subTask("Initialising '" + c.getLabel() + "'");
 				if ((status = c.instantiate()) == SimStatus.OK_STATUS
 						&& (status = c.initialise(currentTime, stopTime)) == SimStatus.OK_STATUS) {
 					monitor.worked(1);
 				} else {
-					resultsMessage = "Could not initialise component '" + c.getName() + "'";
+					resultsMessage = "Could not initialise component '" + c.getLabel() + "'";
 					currentTime = stopTime;	// to skip simulation loop
 					break;
 				}
@@ -116,7 +111,7 @@ public class Master {
 				
 				// don't show if pausing
 				if (!paused)
-					monitor.subTask("Time=" + currentTime + "s: step '" + c.getName() + "'");
+					monitor.subTask("Time=" + currentTime + "s: step '" + c.getLabel() + "'");
 				
 				status = c.doStep(currentTime, step);
 				if (status.getSeverity() == SimStatus.WARNING) {
@@ -135,7 +130,7 @@ public class Master {
 		systemTime = System.currentTimeMillis() - systemTime;
 		
 		for (Component c : components) {
-			monitor.subTask("Terminating '" + c.getName() + "'");
+			monitor.subTask("Terminating '" + c.getLabel() + "'");
 			c.terminate();
 		}
 		

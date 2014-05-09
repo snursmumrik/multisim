@@ -151,11 +151,12 @@
       <domainMetaElement
           href="components.ecore#//EventBComponent"/>
       <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
+          xsi:type="gmfmap:FeatureLabelMapping"
+          readOnly="true">
         <diagramLabel
             href="components.gmfgraph#EventBComponentName"/>
         <features
-            href="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed/name"/>
+            href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.ecore#//EventBLabeled/label"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"

@@ -11,6 +11,7 @@ package ac.soton.rms.components;
 
 import de.prob.cosimulation.FMU;
 import org.eclipse.emf.common.util.EList;
+import org.eventb.emf.core.EventBNamed;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +31,7 @@ import org.eclipse.emf.common.util.EList;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='validPath'"
  * @generated
  */
-public interface FMUComponent extends Component {
+public interface FMUComponent extends Component, EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

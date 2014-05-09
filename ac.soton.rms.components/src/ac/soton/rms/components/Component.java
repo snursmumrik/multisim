@@ -9,9 +9,9 @@
  */
 package ac.soton.rms.components;
 
+import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
-import org.eventb.emf.core.EventBNamed;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eventb.emf.core.EventBNamed;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Component extends EventBNamed {
+public interface Component extends EventBLabeled {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

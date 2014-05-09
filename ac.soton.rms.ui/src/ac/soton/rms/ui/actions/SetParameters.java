@@ -74,7 +74,7 @@ public class SetParameters implements IObjectActionDelegate {
 			for (FMIScalarVariable variable : modelDescription.modelVariables) {
 				if (variable.variability == Variability.parameter) {	//XXX according to specification a parameter must also be an input, i.e. variable.causality == Causality.input
 					FMUParameter param = ComponentsFactory.eINSTANCE.createFMUParameter();
-					param.setFmiName(variable.name);
+					param.setName(variable.name);
 					param.setCausality(SimulationUtil.fmiGetCausality(variable));
 					param.setType(SimulationUtil.fmiGetType(variable));
 					param.setDefaultValue(SimulationUtil.fmiGetDefaultValue(variable));
