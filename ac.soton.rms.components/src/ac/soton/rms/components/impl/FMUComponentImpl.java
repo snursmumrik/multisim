@@ -320,6 +320,11 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 	public IStatus instantiate() {
 		assert getPath() != null;
 		
+		// disable notification
+		eSetDeliver(false);
+		for (Port p : getOutputs())
+			p.eSetDeliver(false);
+		
 		try {
 			setFmu(new FMU(getPath()));
 		} catch (IOException e) {
@@ -425,6 +430,11 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
+		// re-enable notification
+		eSetDeliver(true);
+		for (Port p : getOutputs())
+			p.eSetDeliver(true);
+		
 		//FIXME: termination causes JVM to fail (invalid memory access)
 		FMU fmu = getFmu();
 		assert fmu != null;

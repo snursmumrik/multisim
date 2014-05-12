@@ -75,6 +75,9 @@ public class SimulationUtil {
 	}
 
 	/**
+	 * Returns Event-B value from the provided FMI value.
+	 * intToReal precision is required for the Real type.
+	 * 
 	 * @param value
 	 * @param type
 	 * @param intToReal
@@ -82,8 +85,23 @@ public class SimulationUtil {
 	 */
 	public static String getEventBValue(Object value, VariableType type,
 			int intToReal) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (type) {
+		case BOOLEAN:
+			assert value instanceof Boolean;
+			return value.toString().toUpperCase();
+		case INTEGER:
+			assert value instanceof Integer;
+			return value.toString();
+		case REAL:
+			assert value instanceof Double;
+			double toB = ((Double) value).doubleValue() * Math.pow(10d, intToReal);
+			return Integer.toString((int) toB);
+		case STRING:
+			assert value instanceof String;
+			return (String) value;
+		default:
+			return null;
+		}
 	}
 
 	/**

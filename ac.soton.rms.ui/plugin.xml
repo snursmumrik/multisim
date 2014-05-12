@@ -305,5 +305,21 @@
             type="org.eclipse.gmf.runtime.notation.View">
       </propertyTester>
    </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="ac.soton.rms.ui.providers.DisplayComponentEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <context
+               editparts="DisplayComponentEditPart">
+         </context>
+         <object
+               class="ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart(ac.soton.rms.components.diagram)"
+               id="DisplayComponentEditPart">
+         </object>
+      </editpolicyProvider>
+   </extension>
 
 </plugin>

@@ -598,11 +598,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Event we : getWaitEvents())
 			waitSet.add(we.getName());
 
-//		// disable notification for modifying output ports
-//		// so that using EMF transactions is not required
-//		// while setting port value
-//		for (Port p : getOutputs())
-//			p.eSetDeliver(false);
+		// disable notification for modifying output ports
+		// so that using EMF transactions is not required
+		// while setting port value
+		for (Port p : getOutputs())
+			p.eSetDeliver(false);
 		
 		return SimStatus.OK_STATUS;
 	}
@@ -813,6 +813,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				e.printStackTrace();
 			}
 		}
+		
+		// re-enable notification
+		for (Port p : getOutputs())
+			p.eSetDeliver(true);
+		
 		return SimStatus.OK_STATUS;
 	}
 

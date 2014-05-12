@@ -106,10 +106,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass ../../org.eventb.emf.core/model/eventbcore.ecore#//machine/Variable"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intToReal" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DisplayComponent" eSuperTypes="#//Component"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DisplayPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DisplayComponent" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="chart" eType="#//Chart2D"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DisplayPort" eSuperTypes="#//Port">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="nonStringInput"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trace" eType="#//ITrace2D"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="#//Color"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="IStatus" instanceClassName="org.eclipse.core.runtime.IStatus"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="FMU" instanceClassName="de.prob.cosimulation.FMU"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ITrace2D" instanceClassName="info.monitorenter.gui.chart.ITrace2D"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Chart2D" instanceClassName="info.monitorenter.gui.chart.Chart2D"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
 </ecore:EPackage>

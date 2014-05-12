@@ -37,6 +37,9 @@ import ac.soton.rms.components.Port;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 import de.prob.cosimulation.FMU;
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.ITrace2D;
+import java.awt.Color;
 
 /**
  * <!-- begin-user-doc -->
@@ -151,6 +154,12 @@ public class ComponentsValidator extends EObjectValidator {
 				return validateIStatus((IStatus)value, diagnostics, context);
 			case ComponentsPackage.FMU:
 				return validateFMU((FMU)value, diagnostics, context);
+			case ComponentsPackage.ITRACE2_D:
+				return validateITrace2D((ITrace2D)value, diagnostics, context);
+			case ComponentsPackage.CHART2_D:
+				return validateChart2D((Chart2D)value, diagnostics, context);
+			case ComponentsPackage.COLOR:
+				return validateColor((Color)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -354,7 +363,7 @@ public class ComponentsValidator extends EObjectValidator {
 	/**
 	 * Validates the compatibleType constraint of '<em>Port</em>'.
 	 * <!-- begin-user-doc -->
-	 * Connected ports must have compatible types.
+	 * Connected ports must have compatible types (except DisplayPort).
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
@@ -364,7 +373,7 @@ public class ComponentsValidator extends EObjectValidator {
 		if (input == null)
 			return true;
 		
-		if (port.getType() != input.getType()) {
+		if (port.getType() != input.getType() && port instanceof DisplayPort == false) {
 			if (diagnostics != null) {
 				diagnostics.add
 					(createDiagnostic
@@ -507,7 +516,34 @@ public class ComponentsValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(displayPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(displayPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePort_compatibleType(displayPort, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDisplayPort_nonStringInput(displayPort, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the nonStringInput constraint of '<em>Display Port</em>'.
+	 * <!-- begin-user-doc -->
+	 * Not supported String input.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateDisplayPort_nonStringInput(DisplayPort displayPort, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Port input = displayPort.getIn();
+		if (input != null && input.getType() == VariableType.STRING) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_GenericConstraint_diagnostic",
+						 new Object[] { "nonStringInput", getObjectLabel(displayPort, context) },
+						 new Object[] { displayPort },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -543,6 +579,33 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateFMU(FMU fmu, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateITrace2D(ITrace2D iTrace2D, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateChart2D(Chart2D chart2D, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateColor(Color color, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

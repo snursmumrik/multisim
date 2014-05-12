@@ -42,6 +42,9 @@ import ac.soton.rms.components.Port;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 import ac.soton.rms.components.util.ComponentsValidator;
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.ITrace2D;
+import java.awt.Color;
 
 /**
  * <!-- begin-user-doc -->
@@ -175,6 +178,27 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	private EDataType fmuEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType iTrace2DEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType chart2DEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType colorEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -632,8 +656,35 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDisplayComponent_Chart() {
+		return (EAttribute)displayComponentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDisplayPort() {
 		return displayPortEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDisplayPort_Trace() {
+		return (EAttribute)displayPortEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDisplayPort_Color() {
+		return (EAttribute)displayPortEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -670,6 +721,33 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 */
 	public EDataType getFMU() {
 		return fmuEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getITrace2D() {
+		return iTrace2DEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getChart2D() {
+		return chart2DEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getColor() {
+		return colorEDataType;
 	}
 
 	/**
@@ -753,8 +831,11 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		createEAttribute(eventBPortEClass, EVENT_BPORT__INT_TO_REAL);
 
 		displayComponentEClass = createEClass(DISPLAY_COMPONENT);
+		createEAttribute(displayComponentEClass, DISPLAY_COMPONENT__CHART);
 
 		displayPortEClass = createEClass(DISPLAY_PORT);
+		createEAttribute(displayPortEClass, DISPLAY_PORT__TRACE);
+		createEAttribute(displayPortEClass, DISPLAY_PORT__COLOR);
 
 		// Create enums
 		variableTypeEEnum = createEEnum(VARIABLE_TYPE);
@@ -763,6 +844,9 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		// Create data types
 		iStatusEDataType = createEDataType(ISTATUS);
 		fmuEDataType = createEDataType(FMU);
+		iTrace2DEDataType = createEDataType(ITRACE2_D);
+		chart2DEDataType = createEDataType(CHART2_D);
+		colorEDataType = createEDataType(COLOR);
 	}
 
 	/**
@@ -887,8 +971,11 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		initEAttribute(getEventBPort_IntToReal(), theEcorePackage.getEInt(), "intToReal", null, 0, 1, EventBPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(displayComponentEClass, DisplayComponent.class, "DisplayComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDisplayComponent_Chart(), this.getChart2D(), "chart", null, 0, 1, DisplayComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(displayPortEClass, DisplayPort.class, "DisplayPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDisplayPort_Trace(), this.getITrace2D(), "trace", null, 0, 1, DisplayPort.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDisplayPort_Color(), this.getColor(), "color", null, 0, 1, DisplayPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(variableTypeEEnum, VariableType.class, "VariableType");
@@ -906,6 +993,9 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		// Initialize data types
 		initEDataType(iStatusEDataType, IStatus.class, "IStatus", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fmuEDataType, de.prob.cosimulation.FMU.class, "FMU", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(iTrace2DEDataType, ITrace2D.class, "ITrace2D", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(chart2DEDataType, Chart2D.class, "Chart2D", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(colorEDataType, Color.class, "Color", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -932,7 +1022,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		   },
 		   new URI[] {
 			 URI.createURI(CorePackage.eNS_URI).appendFragment("//machine/Machine")
-		   });				
+		   });					
 	}
 
 	/**
@@ -972,6 +1062,12 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		   source, 
 		   new String[] {
 			 "constraints", "validEventBReference"
+		   });		
+		addAnnotation
+		  (displayPortEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "nonStringInput"
 		   });
 	}
 

@@ -32,8 +32,7 @@ public class Master {
 	// simulation states
 	private static boolean finished = true;
 	private static boolean paused = false;
-	private static boolean cancelled = false;
-	private static boolean error = true;
+	private static boolean ok = true;
 	
 	private static String resultsMessage;
 	private static long systemTime;
@@ -41,7 +40,8 @@ public class Master {
 	/**
 	 * 
 	 */
-	public static void pause() {
+	synchronized public static void pause() {
+		System.out.println("Paused");
 		paused = true;
 	}
 	
@@ -52,15 +52,16 @@ public class Master {
 	 */
 	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor) {
 		paused = false;	// clear paused state
+		ok = true;
 		IStatus status = SimStatus.OK_STATUS;
 		
 		if (finished) {
-			// remember diagram configuration and read step size from Event-B
 			startTime = diagram.getStartTime();
 			stopTime = diagram.getStopTime();
 			currentTime = startTime;
 			components = diagram.getComponents();
 			
+			// read step size from Event-B
 			for (Component c : components) {
 				if (c instanceof EventBComponent) {
 					EventBComponent ebComponent = (EventBComponent) c;
@@ -79,7 +80,7 @@ public class Master {
 					monitor.worked(1);
 				} else {
 					resultsMessage = "Could not initialise component '" + c.getLabel() + "'";
-					currentTime = stopTime;	// to skip simulation loop
+					ok = false;
 					break;
 				}
 			}
@@ -92,22 +93,32 @@ public class Master {
 			systemTime = System.currentTimeMillis() - systemTime;
 		}
 
-		while (currentTime < stopTime) {
+		while (currentTime < stopTime && ok) {
 			if (monitor.isCanceled()) {
 				monitor.subTask("Cancelling simulation");
 				status = SimStatus.CANCEL_STATUS;
 				break;
-			} else if (paused) {
+			} else if (isPaused()) {
 				systemTime = System.currentTimeMillis() - systemTime;
 				monitor.subTask("Paused");
-				return SimStatus.PAUSE_STATUS;
+				status = SimStatus.PAUSE_STATUS;
+				generateResultsMessage(status);
+				return status;
 			}
 			
 			monitor.subTask("Exchanging values");
-			for (Component c : components)
-				c.writeOutputs();
 			for (Component c : components) {
-				c.readInputs();
+				if ((status = c.writeOutputs()) != SimStatus.OK_STATUS) {
+					ok = false;
+					break;
+				}
+			}
+			
+			for (Component c : components) {
+				if ((status = c.readInputs()) != SimStatus.OK_STATUS) {
+					ok = false;
+					break;
+				}
 				
 				// don't show if pausing
 				if (!paused)
@@ -118,13 +129,15 @@ public class Master {
 					paused = true;
 					monitor.subTask("Pausing simulation: " + status.getMessage() + " detected.");
 				} else if (status.getSeverity() == SimStatus.ERROR) {
-					currentTime = stopTime;
+					ok = false;
 					break;
 				}
 			}
 			
-			currentTime += step;
-			monitor.worked(step);
+			if (ok) {
+				currentTime += step;
+				monitor.worked(step);
+			}
 		}
 
 		systemTime = System.currentTimeMillis() - systemTime;
@@ -134,8 +147,7 @@ public class Master {
 			c.terminate();
 		}
 		
-//		monitor.subTask("Results");
-		compileResults(status);
+		generateResultsMessage(status);
 		finished = true;
 		return status;
 			
@@ -145,19 +157,24 @@ public class Master {
 	/**
 	 * @param status
 	 */
-	private static void compileResults(IStatus status) {
+	private static void generateResultsMessage(IStatus status) {
 		switch (status.getSeverity()) {
-		
-		}
-		if (status == SimStatus.OK_STATUS) {
+		case IStatus.OK:
 			resultsMessage = "Completed successfully in " + ((double) systemTime / 1000.0) + " seconds";
+			break;
+		case IStatus.INFO:
+		case IStatus.WARNING:
+			resultsMessage = "Simulation interrupted at time=" + currentTime + "s\nReason: " + status.getMessage();
+			break;
+		case IStatus.ERROR:
+			resultsMessage = "SImulation terminated at time=" + currentTime + "s\nError: " + status.getMessage();
 		}
 	}
 
 	/**
 	 * @return the paused
 	 */
-	public static boolean isPaused() {
+	synchronized public static boolean isPaused() {
 		return paused;
 	}
 

@@ -1113,13 +1113,22 @@ public interface ComponentsPackage extends EPackage {
 	int DISPLAY_COMPONENT__VARIABLES = COMPONENT__VARIABLES;
 
 	/**
+	 * The feature id for the '<em><b>Chart</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISPLAY_COMPONENT__CHART = COMPONENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Display Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 0;
+	int DISPLAY_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.DisplayPortImpl <em>Display Port</em>}' class.
@@ -1195,13 +1204,31 @@ public interface ComponentsPackage extends EPackage {
 	int DISPLAY_PORT__OUT = PORT__OUT;
 
 	/**
+	 * The feature id for the '<em><b>Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISPLAY_PORT__TRACE = PORT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISPLAY_PORT__COLOR = PORT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Display Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 0;
+	int DISPLAY_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.VariableType <em>Variable Type</em>}' enum.
@@ -1243,6 +1270,36 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	int FMU = 16;
+
+	/**
+	 * The meta object id for the '<em>ITrace2 D</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see info.monitorenter.gui.chart.ITrace2D
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getITrace2D()
+	 * @generated
+	 */
+	int ITRACE2_D = 17;
+
+	/**
+	 * The meta object id for the '<em>Chart2 D</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see info.monitorenter.gui.chart.Chart2D
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getChart2D()
+	 * @generated
+	 */
+	int CHART2_D = 18;
+
+	/**
+	 * The meta object id for the '<em>Color</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.awt.Color
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getColor()
+	 * @generated
+	 */
+	int COLOR = 19;
 
 	/**
 	 * Default RMS components extension ID.
@@ -1700,6 +1757,17 @@ public interface ComponentsPackage extends EPackage {
 	EClass getDisplayComponent();
 
 	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.DisplayComponent#getChart <em>Chart</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Chart</em>'.
+	 * @see ac.soton.rms.components.DisplayComponent#getChart()
+	 * @see #getDisplayComponent()
+	 * @generated
+	 */
+	EAttribute getDisplayComponent_Chart();
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.DisplayPort <em>Display Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1708,6 +1776,28 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getDisplayPort();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.DisplayPort#getTrace <em>Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Trace</em>'.
+	 * @see ac.soton.rms.components.DisplayPort#getTrace()
+	 * @see #getDisplayPort()
+	 * @generated
+	 */
+	EAttribute getDisplayPort_Trace();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.DisplayPort#getColor <em>Color</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Color</em>'.
+	 * @see ac.soton.rms.components.DisplayPort#getColor()
+	 * @see #getDisplayPort()
+	 * @generated
+	 */
+	EAttribute getDisplayPort_Color();
 
 	/**
 	 * Returns the meta object for enum '{@link ac.soton.rms.components.VariableType <em>Variable Type</em>}'.
@@ -1750,6 +1840,39 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getFMU();
+
+	/**
+	 * Returns the meta object for data type '{@link info.monitorenter.gui.chart.ITrace2D <em>ITrace2 D</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>ITrace2 D</em>'.
+	 * @see info.monitorenter.gui.chart.ITrace2D
+	 * @model instanceClass="info.monitorenter.gui.chart.ITrace2D" serializeable="false"
+	 * @generated
+	 */
+	EDataType getITrace2D();
+
+	/**
+	 * Returns the meta object for data type '{@link info.monitorenter.gui.chart.Chart2D <em>Chart2 D</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Chart2 D</em>'.
+	 * @see info.monitorenter.gui.chart.Chart2D
+	 * @model instanceClass="info.monitorenter.gui.chart.Chart2D" serializeable="false"
+	 * @generated
+	 */
+	EDataType getChart2D();
+
+	/**
+	 * Returns the meta object for data type '{@link java.awt.Color <em>Color</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Color</em>'.
+	 * @see java.awt.Color
+	 * @model instanceClass="java.awt.Color"
+	 * @generated
+	 */
+	EDataType getColor();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2134,6 +2257,14 @@ public interface ComponentsPackage extends EPackage {
 		EClass DISPLAY_COMPONENT = eINSTANCE.getDisplayComponent();
 
 		/**
+		 * The meta object literal for the '<em><b>Chart</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DISPLAY_COMPONENT__CHART = eINSTANCE.getDisplayComponent_Chart();
+
+		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.DisplayPortImpl <em>Display Port</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2142,6 +2273,22 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass DISPLAY_PORT = eINSTANCE.getDisplayPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DISPLAY_PORT__TRACE = eINSTANCE.getDisplayPort_Trace();
+
+		/**
+		 * The meta object literal for the '<em><b>Color</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DISPLAY_PORT__COLOR = eINSTANCE.getDisplayPort_Color();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.VariableType <em>Variable Type</em>}' enum.
@@ -2182,6 +2329,36 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType FMU = eINSTANCE.getFMU();
+
+		/**
+		 * The meta object literal for the '<em>ITrace2 D</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see info.monitorenter.gui.chart.ITrace2D
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getITrace2D()
+		 * @generated
+		 */
+		EDataType ITRACE2_D = eINSTANCE.getITrace2D();
+
+		/**
+		 * The meta object literal for the '<em>Chart2 D</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see info.monitorenter.gui.chart.Chart2D
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getChart2D()
+		 * @generated
+		 */
+		EDataType CHART2_D = eINSTANCE.getChart2D();
+
+		/**
+		 * The meta object literal for the '<em>Color</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.awt.Color
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getColor()
+		 * @generated
+		 */
+		EDataType COLOR = eINSTANCE.getColor();
 
 	}
 

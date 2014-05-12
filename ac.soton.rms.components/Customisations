@@ -4,6 +4,8 @@
 * that are worth putting in templates for the automatic generation)
 **************************************************************************************
 
+== ac.soton.rms.components
+
 EventBComponentImpl:
 getExtensionId() override
 private Random random = new Random(System.currentTimeMillis());
@@ -29,6 +31,11 @@ getLabel() override
 
 FMUVariable:
 getLabel() override
+
+DisplayComponentImpl:
+getLabel() override
+generateNewColour() new
+private Random random = new Random(System.currentTimeMillis());
 
 == ac.soton.rms.components.diagram
 ComponentsDocumentProvider:

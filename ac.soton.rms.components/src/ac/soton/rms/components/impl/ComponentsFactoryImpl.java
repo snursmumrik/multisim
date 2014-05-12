@@ -9,6 +9,7 @@
  */
 package ac.soton.rms.components.impl;
 
+import java.awt.Color;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -108,6 +109,8 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 				return createVariableTypeFromString(eDataType, initialValue);
 			case ComponentsPackage.VARIABLE_CAUSALITY:
 				return createVariableCausalityFromString(eDataType, initialValue);
+			case ComponentsPackage.COLOR:
+				return createColorFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -125,6 +128,8 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 				return convertVariableTypeToString(eDataType, instanceValue);
 			case ComponentsPackage.VARIABLE_CAUSALITY:
 				return convertVariableCausalityToString(eDataType, instanceValue);
+			case ComponentsPackage.COLOR:
+				return convertColorToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -268,6 +273,24 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 	 */
 	public String convertVariableCausalityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Color createColorFromString(EDataType eDataType, String initialValue) {
+		return (Color)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertColorToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

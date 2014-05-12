@@ -7,8 +7,6 @@
  */
 package ac.soton.rms.ui.commands;
 
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,14 +19,8 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.handlers.RadioState;
-import org.eclipse.ui.menus.UIElement;
 import org.eclipse.ui.progress.IProgressConstants;
 import org.eclipse.ui.services.ISourceProviderService;
 
@@ -92,13 +84,12 @@ public class SimulateCommand extends AbstractHandler {
 					Display.getDefault().asyncExec(new Runnable() {
 						@Override
 						public void run() {
-							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Status", Master.getResultsMessage());
+							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Results", Master.getResultsMessage());
 						}
 					});
 				}
 			});
 			job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);
-//			job.setProperty(IProgressConstants.NO_IMMEDIATE_ERROR_PROMPT_PROPERTY, true);
 			job.setProperty(IProgressConstants.ICON_PROPERTY, RmsUIActivator.getDefault().getImageRegistry().getDescriptor(RmsUIActivator.IMAGE_RMS));
 			job.schedule();
 			

@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -25,6 +26,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.ComponentsPackage;
@@ -75,8 +77,31 @@ public class DisplayComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addChartPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Chart feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addChartPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DisplayComponent_chart_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DisplayComponent_chart_feature", "_UI_DisplayComponent_type"),
+				 ComponentsPackage.Literals.DISPLAY_COMPONENT__CHART,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -148,6 +173,9 @@ public class DisplayComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DisplayComponent.class)) {
+			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__INPUTS:
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:

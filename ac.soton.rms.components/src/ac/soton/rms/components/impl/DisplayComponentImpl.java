@@ -10,18 +10,38 @@
 package ac.soton.rms.components.impl;
 
 import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.IAxisScalePolicy;
+import info.monitorenter.gui.chart.ITrace2D;
+import info.monitorenter.gui.chart.ZoomableChart;
+import info.monitorenter.gui.chart.axis.AxisLinear;
+import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
+import info.monitorenter.gui.chart.traces.Trace2DLtd;
+
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.Collection;
+import java.util.Random;
+
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import ac.soton.rms.components.AbstractVariable;
+import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
+import ac.soton.rms.components.DisplayPort;
 import ac.soton.rms.components.Port;
+import ac.soton.rms.components.VariableType;
+import ac.soton.rms.components.util.custom.SimStatus;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +53,7 @@ import ac.soton.rms.components.Port;
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getChart <em>Chart</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +94,28 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * @ordered
 	 */
 	protected EList<AbstractVariable> variables;
+
+	/**
+	 * The default value of the '{@link #getChart() <em>Chart</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChart()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Chart2D CHART_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getChart() <em>Chart</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChart()
+	 * @generated
+	 * @ordered
+	 */
+	protected Chart2D chart = CHART_EDEFAULT;
+
+	private Random random = new Random(System.currentTimeMillis());
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,65 +177,200 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IStatus instantiate() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public Chart2D getChart() {
+		return chart;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 */
+	public void setChart(Chart2D newChart) {
+		Chart2D oldChart = chart;
+		chart = newChart;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.DISPLAY_COMPONENT__CHART, oldChart, chart));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IStatus instantiate() {
+		if (getChart() == null) {
+			
+			// new chart with double-click zoom out
+			@SuppressWarnings("serial")
+			Chart2D chart = new ZoomableChart() {
+				long lastClickTime;
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					super.mouseClicked(e);
+					if (e.getWhen() - lastClickTime < 500)
+						this.zoomAll();
+					lastClickTime = e.getWhen();
+				}
+			};
+			
+			// remove original axes
+		    chart.removeAxisXBottom(chart.getAxisX());
+		    chart.removeAxisYLeft(chart.getAxisY());
+		    
+		    // empty label formatter
+		    @SuppressWarnings("serial")
+			LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getIntegerInstance()) {
+		    	@Override
+		    	public String format(double value) {
+		    		return "0";
+		    	}
+		    };
+		    
+		    // set new axes (draw x/y at the top/right to make a border, but without the scale)
+		    chart.setAxisXBottom(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getIntegerInstance())), 0);
+		    chart.setAxisYLeft(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getIntegerInstance())), 0);
+		    chart.setAxisYRight(new AxisLinear<IAxisScalePolicy>(lf), 0);
+		    chart.setAxisXTop(new AxisLinear<IAxisScalePolicy>(lf), 0);
+		    // show grid
+		    chart.getAxisX().setPaintGrid(true);
+		    chart.getAxisY().setPaintGrid(true);
+		    // remove titles
+		    chart.getAxisX().getAxisTitle().setTitle("");
+		    chart.getAxisY().getAxisTitle().setTitle("");
+		    chart.setGridColor(new Color(224,224,224));
+		    chart.setVisible(false);
+		    
+		    // disable notification
+		    eSetDeliver(false);
+		    for (Port p : getInputs())
+				p.eSetDeliver(false);
+		    
+			setChart(chart);
+		}
+		return SimStatus.OK_STATUS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	public IStatus initialise(double tStart, double tStop) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		Chart2D chart = getChart();
+		assert chart != null;
+		
+		// remove previous traces
+		chart.removeAllTraces();	//XXX: is that required? do removed ports keep traces in a chart?
+
+		// setup traces for all connected ports
+		for (Port p : getInputs()) {
+			assert p instanceof DisplayPort;
+			DisplayPort port = (DisplayPort) p;
+			Port input = port.getIn();
+			
+			if (input == null)
+				continue;
+			
+			// prepare traces
+		    ITrace2D trace = port.getTrace();
+		    if (trace == null) {
+		    	trace = new Trace2DLtd(1500);
+			    port.setTrace(trace);
+		    } else {
+		    	trace.removeAllPoints();
+		    }
+		    
+		    // trace name = input component&port name 
+			trace.setName(((Component) input.eContainer()).getLabel() + "." + input.getLabel());
+		    
+		    // set/generate colour
+		    Color colour = port.getColor();
+		    if (colour == null) {
+		    	colour = generateNewColour();
+		    	port.setColor(colour);
+		    }
+		    trace.setColor(colour);
+		    
+		    chart.addTrace(trace);
+		}
+		return SimStatus.OK_STATUS;
+	}
+
+	/**
+	 * Generate a random colour.
+	 * 
+	 * @return
+	 */
+	private Color generateNewColour() {
+		final float hue = random.nextFloat();
+		// Saturation between 0.7 and 0.9
+		final float saturation = (random.nextInt(2000) + 7000) / 10000f;
+		final float luminance = 0.8f;
+		return Color.getHSBColor(hue, saturation, luminance);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public IStatus readInputs() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return SimStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public IStatus writeOutputs() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return SimStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public IStatus doStep(double time, double step) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		DisplayPort port = null;
+		Port input = null;
+		for (Port p : getInputs()) {
+			assert p instanceof DisplayPort;
+			port = (DisplayPort) p;
+			input = port.getIn();
+			
+			// if port connected, plot the value
+			if (port.getIn() != null) {
+				assert port.getTrace() != null;
+				
+				Object value = input.getValue();
+				double traceValue = 0;
+				if (input.getType() == VariableType.REAL) {
+					traceValue = ((Double) value).doubleValue();
+				} else if (input.getType() == VariableType.INTEGER) {
+					traceValue = ((Integer) value).intValue();
+				} else if (input.getType() == VariableType.BOOLEAN) {
+					traceValue = ((Boolean) value).booleanValue() ? 1 : 0;
+				}
+				port.getTrace().addPoint(time, traceValue);
+			}
+		}
+		return SimStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public IStatus terminate() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	    // re-enable notification
+	    eSetDeliver(true);
+	    for (Port p : getInputs())
+			p.eSetDeliver(true);
+		return SimStatus.OK_STATUS;
 	}
 
 	/**
@@ -227,6 +405,8 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				return getOutputs();
 			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
 				return getVariables();
+			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
+				return getChart();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -252,6 +432,9 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				getVariables().clear();
 				getVariables().addAll((Collection<? extends AbstractVariable>)newValue);
 				return;
+			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
+				setChart((Chart2D)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -273,6 +456,9 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
 				getVariables().clear();
 				return;
+			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
+				setChart(CHART_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -291,8 +477,31 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				return outputs != null && !outputs.isEmpty();
 			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
 				return variables != null && !variables.isEmpty();
+			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
+				return CHART_EDEFAULT == null ? chart != null : !CHART_EDEFAULT.equals(chart);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (chart: ");
+		result.append(chart);
+		result.append(')');
+		return result.toString();
+	}
+
+	@Override
+	public String getLabel() {
+		return "Display";
 	}
 
 } //DisplayComponentImpl
