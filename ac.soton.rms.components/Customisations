@@ -41,3 +41,6 @@ private Random random = new Random(System.currentTimeMillis());
 ComponentsDocumentProvider:
 doSaveDocument() genNot
 saveEventB() new
+
+ac.soton.rms.components.diagram.part.ComponentsDiagramEditorUtil:
+ac.soton.rms.components.diagram.part.ComponentsDiagramEditorUtil.createDiagram(URI, IProgressMonitor) genNot

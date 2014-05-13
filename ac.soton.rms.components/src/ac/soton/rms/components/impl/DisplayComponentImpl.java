@@ -354,7 +354,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				} else if (input.getType() == VariableType.BOOLEAN) {
 					traceValue = ((Boolean) value).booleanValue() ? 1 : 0;
 				}
-				port.getTrace().addPoint(time, traceValue);
+				port.getTrace().addPoint(time/1000, traceValue);
 			}
 		}
 		return SimStatus.OK_STATUS;

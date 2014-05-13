@@ -143,9 +143,9 @@ public class ComponentsDiagramEditorUtil {
 
 	/**
 	 * This method should be called within a workspace modify operation since it creates resources.
-	 * @generated
+	 * @generated NOT
 	 */
-	public static Resource createDiagram(URI diagramURI,
+	public static Resource createDiagram(final URI diagramURI,
 			IProgressMonitor progressMonitor) {
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
 				.createEditingDomain();
@@ -163,6 +163,8 @@ public class ComponentsDiagramEditorUtil {
 					IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
 				ComponentDiagram model = createInitialModel();
+				// set model name to the name of the file
+				model.setName(diagramURI.trimFileExtension().lastSegment());
 				attachModelToResource(model, diagramResource);
 
 				Diagram diagram = ViewService.createDiagram(model,

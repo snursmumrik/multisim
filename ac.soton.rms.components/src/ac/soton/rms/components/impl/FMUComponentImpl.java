@@ -9,10 +9,7 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
-
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.EventBNamed;
 
+import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUComponent;
@@ -152,8 +150,6 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 	 * @ordered
 	 */
 	protected static final FMU FMU_EDEFAULT = null;
-
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.##########");
 
 	/**
 	 * The cached value of the '{@link #getFmu() <em>Fmu</em>}' attribute.
@@ -350,7 +346,7 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		}
 		
 		// initialise FMU
-		fmu.initialize(tStart, tStop);
+		fmu.initialize(tStart/1000, tStop/1000);
 		
 		// update internal/output variables
 		for (AbstractVariable v : getVariables())
@@ -407,14 +403,8 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		FMU fmu = getFmu();
 		assert fmu != null;
 		
-		//XXX: time fix
-		double rem = Math.IEEEremainder(time, 0.00000001);
-		if (rem > 0) {
-			time = Double.parseDouble(DECIMAL_FORMAT.format(time));
-		}
-		
 		// simulation step
-		fmu.doStep(time, step);
+		fmu.doStep(time/1000, step/1000);
 		
 		// update variables
 		for (AbstractVariable v : getVariables())

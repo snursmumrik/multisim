@@ -7,6 +7,7 @@
  */
 package ac.soton.rms.master;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -15,6 +16,8 @@ import org.eclipse.core.runtime.IStatus;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
 import ac.soton.rms.components.EventBComponent;
+import ac.soton.rms.components.FMUComponent;
+import ac.soton.rms.components.Port;
 import ac.soton.rms.components.util.custom.SimStatus;
 
 /**
@@ -28,6 +31,7 @@ public class Master {
 	private static int currentTime;
 	private static int step;
 	private static List<Component> components;
+	private static List<Component> eventBFMUs = new ArrayList<Component>();
 	
 	// simulation states
 	private static boolean finished = true;
@@ -66,6 +70,8 @@ public class Master {
 				if (c instanceof EventBComponent) {
 					EventBComponent ebComponent = (EventBComponent) c;
 					step = ebComponent.getStepPeriod();
+					eventBFMUs.clear();
+					setAffectedFMUs(c);
 					break;
 				}
 			}
@@ -113,6 +119,13 @@ public class Master {
 					break;
 				}
 			}
+			// zero-step for affected FMUs
+			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
+			for (Component cc : eventBFMUs) {
+				cc.readInputs();
+				cc.doStep(currentTime, 0);
+				cc.writeOutputs();
+			}
 			
 			for (Component c : components) {
 				if ((status = c.readInputs()) != SimStatus.OK_STATUS) {
@@ -122,7 +135,7 @@ public class Master {
 				
 				// don't show if pausing
 				if (!paused)
-					monitor.subTask("Time=" + currentTime + "s: step '" + c.getLabel() + "'");
+					monitor.subTask("Time=" + currentTime/1000f + "s: step '" + c.getLabel() + "'");
 				
 				status = c.doStep(currentTime, step);
 				if (status.getSeverity() == SimStatus.WARNING) {
@@ -132,7 +145,10 @@ public class Master {
 					ok = false;
 					break;
 				}
+				
+				
 			}
+			
 			
 			if (ok) {
 				currentTime += step;
@@ -153,6 +169,21 @@ public class Master {
 			
 	}
 
+	/**
+	 * @param c
+	 */
+	private static void setAffectedFMUs(Component c) {
+		Component cc = null;
+		for (Port po : c.getOutputs()) {
+			for (Port pi : po.getOut()) {
+				cc = (Component) pi.eContainer();
+				if (!eventBFMUs.contains(cc) && cc instanceof FMUComponent) {
+					eventBFMUs.add(cc);
+					setAffectedFMUs(cc);
+				}
+			}
+		}
+	}
 
 	/**
 	 * @param status
@@ -164,10 +195,10 @@ public class Master {
 			break;
 		case IStatus.INFO:
 		case IStatus.WARNING:
-			resultsMessage = "Simulation interrupted at time=" + currentTime + "s\nReason: " + status.getMessage();
+			resultsMessage = "Simulation interrupted at time=" + currentTime/1000f + "s\nReason: " + status.getMessage();
 			break;
 		case IStatus.ERROR:
-			resultsMessage = "SImulation terminated at time=" + currentTime + "s\nError: " + status.getMessage();
+			resultsMessage = "SImulation terminated at time=" + currentTime/1000f + "s\nError: " + status.getMessage();
 		}
 	}
 
