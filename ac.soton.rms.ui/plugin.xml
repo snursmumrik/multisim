@@ -320,6 +320,19 @@
                id="DisplayComponentEditPart">
          </object>
       </editpolicyProvider>
+      <editpolicyProvider
+            class="ac.soton.rms.ui.providers.DisplayPortEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <context
+               editparts="DisplayPortEditPart">
+         </context>
+         <object
+               class="ac.soton.rms.components.diagram.edit.parts.DisplayPortEditPart(ac.soton.rms.components.diagram)"
+               id="DisplayPortEditPart">
+         </object>
+      </editpolicyProvider>
    </extension>
 
 </plugin>
