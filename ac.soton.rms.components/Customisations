@@ -37,6 +37,9 @@ getLabel() override
 generateNewColour() new
 private Random random = new Random(System.currentTimeMillis());
 
+DisplayPort:
+getLabel() override
+
 == ac.soton.rms.components.diagram
 ComponentsDocumentProvider:
 doSaveDocument() genNot

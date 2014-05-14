@@ -10,12 +10,14 @@
 package ac.soton.rms.components.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayPort;
 import info.monitorenter.gui.chart.ITrace2D;
+
 import java.awt.Color;
+
 import org.eclipse.emf.common.notify.Notification;
 
 /**
@@ -222,6 +224,11 @@ public class DisplayPortImpl extends PortImpl implements DisplayPort {
 		result.append(color);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public String getLabel() {
+		return "";
 	}
 
 } //DisplayPortImpl
