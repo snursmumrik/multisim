@@ -550,14 +550,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// load machine animation
 		IEventBRoot root = SimulationUtil.getMachineRoot(getMachine());
 		Animator animator = Animator.getAnimator();
-		if (animator.isMachineLoaded()) {
-			animator.getHistory().reset();
-			try {
-				ClearMachineCommand.clearMachine(animator);
-			} catch (ProBException e) {
-				return SimStatus.PROB_ERROR;
-			}
-		}
+//		if (animator.isMachineLoaded()) {
+			
+			Animator.killAndReload();
+//			animator.getHistory().reset();
+//			try {
+//				ClearMachineCommand.clearMachine(animator);
+//			} catch (ProBException e) {
+//				return SimStatus.PROB_ERROR;
+//			}
+//		}
 		try {
 			LoadEventBModelCommand.load(animator, root);
 		} catch (ProBException e) {
@@ -730,12 +732,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				
 				// check invariants if on
 				if (checkInvariants && CheckInvariantStatusCommand.isInvariantViolated(animator, animator.getCurrentState().getId())) {
-					status = SimStatus.EVENTB_INV_VIOLATED;
+					return SimStatus.EVENTB_INV_VIOLATED;
 				}
 				
 				// check trace if on
 				if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
-					status = SimStatus.EVENTB_TRACE_DIV;
+					return SimStatus.EVENTB_TRACE_DIV;
 					//FIXME: pass the error status from findRecordedOp()
 					//FIXME: inv or div get overwritten one on another
 				}
@@ -778,11 +780,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private Object findRecordedOp(double time) {
 		try {
 			String line = null;
-			double traceTime = 0;
+			double traceTime = -1;
 			while (traceTime < time) {
 				if ((line = traceReader.readLine()) == null)
 					return null;
-				traceTime = Integer.valueOf(line.split(",")[0]);
+				traceTime = Double.valueOf(line.split(",")[0]);
 			}
 			if (traceTime == time)
 				return line.split(",")[1];

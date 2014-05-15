@@ -52,9 +52,12 @@ public class Master {
 	/**
 	 * @param diagram
 	 * @param monitor
+	 * @param checkInvariants 
+	 * @param compareTrace 
+	 * @param recordTrace 
 	 * @return
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor) {
+	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, boolean recordTrace, boolean compareTrace, boolean checkInvariants) {
 		paused = false;	// clear paused state
 		ok = true;
 		IStatus status = SimStatus.OK_STATUS;
@@ -69,6 +72,10 @@ public class Master {
 			for (Component c : components) {
 				if (c instanceof EventBComponent) {
 					EventBComponent ebComponent = (EventBComponent) c;
+					ebComponent.eSetDeliver(false);
+					ebComponent.setRecordTrace(recordTrace);
+					ebComponent.setCompareTrace(compareTrace);
+					ebComponent.setCheckInvariants(checkInvariants);
 					step = ebComponent.getStepPeriod();
 					eventBFMUs.clear();
 					setAffectedFMUs(c);
@@ -107,7 +114,7 @@ public class Master {
 			} else if (isPaused()) {
 				systemTime = System.currentTimeMillis() - systemTime;
 				monitor.subTask("Paused");
-				status = SimStatus.PAUSE_STATUS;
+//				status = SimStatus.PAUSE_STATUS;
 				generateResultsMessage(status);
 				return status;
 			}
@@ -119,13 +126,13 @@ public class Master {
 					break;
 				}
 			}
-			// zero-step for affected FMUs
-			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
-			for (Component cc : eventBFMUs) {
-				cc.readInputs();
-				cc.doStep(currentTime, 0);
-				cc.writeOutputs();
-			}
+//			// zero-step for affected FMUs
+//			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
+//			for (Component cc : eventBFMUs) {
+//				cc.readInputs();
+//				cc.doStep(currentTime, 0);
+//				cc.writeOutputs();
+//			}
 			
 			for (Component c : components) {
 				if ((status = c.readInputs()) != SimStatus.OK_STATUS) {

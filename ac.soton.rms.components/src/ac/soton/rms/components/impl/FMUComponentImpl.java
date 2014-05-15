@@ -321,6 +321,10 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
+
+		if (fmu != null)
+			fmu.reset();
+		else
 		try {
 			setFmu(new FMU(getPath()));
 		} catch (IOException e) {
@@ -429,7 +433,7 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		FMU fmu = getFmu();
 		assert fmu != null;
 		
-		fmu.reset();
+//		fmu.reset();
 		return SimStatus.OK_STATUS;
 	}
 

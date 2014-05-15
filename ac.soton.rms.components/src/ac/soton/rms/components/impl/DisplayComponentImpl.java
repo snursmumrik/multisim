@@ -288,7 +288,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		    Color colour = port.getColor();
 		    if (colour == null) {
 		    	colour = generateNewColour();
-		    	port.setColor(colour);
+//		    	port.setColor(colour);
 		    }
 		    trace.setColor(colour);
 		    
