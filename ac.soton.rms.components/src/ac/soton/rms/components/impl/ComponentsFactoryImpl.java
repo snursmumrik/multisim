@@ -278,19 +278,19 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Color createColorFromString(EDataType eDataType, String initialValue) {
-		return (Color)super.createFromString(eDataType, initialValue);
+		return new Color(Integer.parseInt(initialValue));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public String convertColorToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
+		return ((Color) instanceValue).getRGB() + "";
 	}
 
 	/**

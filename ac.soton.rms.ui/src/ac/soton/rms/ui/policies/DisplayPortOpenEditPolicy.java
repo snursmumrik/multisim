@@ -9,6 +9,11 @@ package ac.soton.rms.ui.policies;
 
 import java.awt.Color;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
@@ -36,11 +41,20 @@ public class DisplayPortOpenEditPolicy extends OpenEditPolicy {
 				Color color = port.getColor();
 				if (color != null)
 					dialog.setRGB(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
-				RGB picked = dialog.open();
+				final RGB picked = dialog.open();
 				if (picked != null) {
-					port.eSetDeliver(false);
-					port.setColor(new Color(picked.red, picked.green, picked.blue));
-					port.eSetDeliver(true);
+					try {
+						new AbstractEMFOperation(((GraphicalEditPart) getHost()).getEditingDomain(), "Set colour command") {
+							@Override
+							protected IStatus doExecute(IProgressMonitor monitor,
+									IAdaptable info) throws ExecutionException {
+								port.setColor(new Color(picked.red, picked.green, picked.blue));
+								return null;
+							}
+						}.execute(null, null);
+					} catch (ExecutionException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			
