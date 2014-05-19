@@ -36,9 +36,14 @@ DisplayComponentImpl:
 getLabel() override
 generateNewColour() new
 private Random random = new Random(System.currentTimeMillis());
+private static final int MAX_TRACE_SIZE = 1500;
 
 DisplayPort:
 getLabel() override
+
+ComponentsFactoryImpl:
+createColorFromString() genNot
+convertColorToString() genNot
 
 == ac.soton.rms.components.diagram
 ComponentsDocumentProvider:

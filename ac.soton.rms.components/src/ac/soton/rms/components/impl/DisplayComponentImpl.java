@@ -61,6 +61,12 @@ import ac.soton.rms.components.util.custom.SimStatus;
  */
 public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayComponent {
 	/**
+	 * Maximum size of the visible chart trace.
+	 * @custom
+	 */
+	private static final int MAX_TRACE_SIZE = 1500;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -218,7 +224,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		    chart.removeAxisXBottom(chart.getAxisX());
 		    chart.removeAxisYLeft(chart.getAxisY());
 		    
-		    // empty label formatter
+		    // empty label formatter for drawing border-like axes without marks
 		    @SuppressWarnings("serial")
 			LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getIntegerInstance()) {
 		    	@Override
@@ -232,15 +238,17 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		    chart.setAxisYLeft(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getIntegerInstance())), 0);
 		    chart.setAxisYRight(new AxisLinear<IAxisScalePolicy>(lf), 0);
 		    chart.setAxisXTop(new AxisLinear<IAxisScalePolicy>(lf), 0);
+		    
 		    // show grid
 		    chart.getAxisX().setPaintGrid(true);
 		    chart.getAxisY().setPaintGrid(true);
+		    chart.setGridColor(new Color(224,224,224));
+		    
 		    // remove titles
 		    chart.getAxisX().getAxisTitle().setTitle("");
 		    chart.getAxisY().getAxisTitle().setTitle("");
-		    chart.setGridColor(new Color(224,224,224));
-		    chart.setVisible(false);
 		    
+		    chart.setVisible(false);
 		    // disable notification
 		    eSetDeliver(false);
 		    for (Port p : getInputs())
@@ -275,7 +283,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 			// prepare traces
 		    ITrace2D trace = port.getTrace();
 		    if (trace == null) {
-		    	trace = new Trace2DLtd(1500);
+		    	trace = new Trace2DLtd(MAX_TRACE_SIZE);
 			    port.setTrace(trace);
 		    } else {
 		    	trace.removeAllPoints();
@@ -286,10 +294,8 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		    
 		    // set/generate colour
 		    Color colour = port.getColor();
-		    if (colour == null) {
+		    if (colour == null)
 		    	colour = generateNewColour();
-//		    	port.setColor(colour);
-		    }
 		    trace.setColor(colour);
 		    
 		    chart.addTrace(trace);
@@ -301,6 +307,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * Generate a random colour.
 	 * 
 	 * @return
+	 * @custom
 	 */
 	private Color generateNewColour() {
 		final float hue = random.nextFloat();
