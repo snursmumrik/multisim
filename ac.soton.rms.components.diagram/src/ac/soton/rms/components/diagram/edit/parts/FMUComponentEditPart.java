@@ -21,7 +21,6 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.gmf.runtime.diagram.core.edithelpers.CreateElementRequestAdapter;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -29,10 +28,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPo
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
-import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewAndElementRequest;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
-import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
@@ -42,7 +39,6 @@ import org.eclipse.swt.graphics.Color;
 import ac.soton.rms.components.diagram.edit.policies.FMUComponentCanonicalEditPolicy;
 import ac.soton.rms.components.diagram.edit.policies.FMUComponentItemSemanticEditPolicy;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
-import ac.soton.rms.components.diagram.providers.ComponentsElementTypes;
 
 /**
  * @generated
@@ -325,24 +321,6 @@ public class FMUComponentEditPart extends AbstractBorderedShapeEditPart {
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(ComponentsVisualIDRegistry
 				.getType(FMUComponentNameEditPart.VISUAL_ID));
-	}
-
-	/**
-	 * @generated
-	 */
-	public EditPart getTargetEditPart(Request request) {
-		if (request instanceof CreateViewAndElementRequest) {
-			CreateElementRequestAdapter adapter = ((CreateViewAndElementRequest) request)
-					.getViewAndElementDescriptor()
-					.getCreateElementRequestAdapter();
-			IElementType type = (IElementType) adapter
-					.getAdapter(IElementType.class);
-			if (type == ComponentsElementTypes.FMUVariable_3004) {
-				return getChildBySemanticHint(ComponentsVisualIDRegistry
-						.getType(FMUComponentFMUVariablesCompartmentEditPart.VISUAL_ID));
-			}
-		}
-		return super.getTargetEditPart(request);
 	}
 
 	/**

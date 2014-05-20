@@ -45,10 +45,9 @@ public class ComponentsPaletteFactory {
 		paletteContainer.add(createFMUComponent1CreationTool());
 		paletteContainer.add(createEventBComponent2CreationTool());
 		paletteContainer.add(createDisplayComponent3CreationTool());
-		paletteContainer.add(createVariable4CreationTool());
-		paletteContainer.add(createInputPort5CreationTool());
-		paletteContainer.add(createOutputPort6CreationTool());
-		paletteContainer.add(createConnector7CreationTool());
+		paletteContainer.add(createInputPort4CreationTool());
+		paletteContainer.add(createOutputPort5CreationTool());
+		paletteContainer.add(createConnector6CreationTool());
 		return paletteContainer;
 	}
 
@@ -103,32 +102,15 @@ public class ComponentsPaletteFactory {
 	/**
 	 * @generated
 	 */
-	private ToolEntry createVariable4CreationTool() {
-		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-		types.add(ComponentsElementTypes.FMUVariable_3004);
-		types.add(ComponentsElementTypes.EventBVariable_3007);
-		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Variable4CreationTool_title,
-				Messages.Variable4CreationTool_desc, types);
-		entry.setId("createVariable4CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(ComponentsDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.rms.components/icons/custom/FMUVariable.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createInputPort5CreationTool() {
+	private ToolEntry createInputPort4CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(3);
 		types.add(ComponentsElementTypes.DisplayPort_3001);
 		types.add(ComponentsElementTypes.FMUPort_3002);
 		types.add(ComponentsElementTypes.EventBPort_3005);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.InputPort5CreationTool_title,
-				Messages.InputPort5CreationTool_desc, types);
-		entry.setId("createInputPort5CreationTool"); //$NON-NLS-1$
+				Messages.InputPort4CreationTool_title,
+				Messages.InputPort4CreationTool_desc, types);
+		entry.setId("createInputPort4CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(ComponentsDiagramEditorPlugin
 				.findImageDescriptor("/ac.soton.rms.components/icons/custom/InputPort.gif")); //$NON-NLS-1$
 		entry.setLargeIcon(entry.getSmallIcon());
@@ -138,14 +120,14 @@ public class ComponentsPaletteFactory {
 	/**
 	 * @generated
 	 */
-	private ToolEntry createOutputPort6CreationTool() {
+	private ToolEntry createOutputPort5CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
 		types.add(ComponentsElementTypes.FMUPort_3003);
 		types.add(ComponentsElementTypes.EventBPort_3006);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.OutputPort6CreationTool_title,
-				Messages.OutputPort6CreationTool_desc, types);
-		entry.setId("createOutputPort6CreationTool"); //$NON-NLS-1$
+				Messages.OutputPort5CreationTool_title,
+				Messages.OutputPort5CreationTool_desc, types);
+		entry.setId("createOutputPort5CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(ComponentsDiagramEditorPlugin
 				.findImageDescriptor("/ac.soton.rms.components/icons/custom/OutputPort.gif")); //$NON-NLS-1$
 		entry.setLargeIcon(entry.getSmallIcon());
@@ -155,12 +137,12 @@ public class ComponentsPaletteFactory {
 	/**
 	 * @generated
 	 */
-	private ToolEntry createConnector7CreationTool() {
+	private ToolEntry createConnector6CreationTool() {
 		LinkToolEntry entry = new LinkToolEntry(
-				Messages.Connector7CreationTool_title,
-				Messages.Connector7CreationTool_desc,
+				Messages.Connector6CreationTool_title,
+				Messages.Connector6CreationTool_desc,
 				Collections.singletonList(ComponentsElementTypes.PortOut_4001));
-		entry.setId("createConnector7CreationTool"); //$NON-NLS-1$
+		entry.setId("createConnector6CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(ComponentsDiagramEditorPlugin
 				.findImageDescriptor("/ac.soton.rms.components/icons/custom/Connector.gif")); //$NON-NLS-1$
 		entry.setLargeIcon(entry.getSmallIcon());

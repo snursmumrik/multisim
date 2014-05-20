@@ -35,15 +35,11 @@ import ac.soton.rms.components.diagram.edit.parts.ConnectorEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBComponentEditPart;
-import ac.soton.rms.components.diagram.edit.parts.EventBComponentEventBVariablesCompartmentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.EventBVariableEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUComponentFMUVariablesCompartmentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUVariableEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
 import ac.soton.rms.components.diagram.part.Messages;
 
@@ -296,15 +292,6 @@ public class ComponentsNavigatorContentProvider implements
 							.getType(FMUOutputPortEditPart.VISUAL_ID));
 			result.addAll(createNavigatorItems(connectedViews, parentElement,
 					false));
-			connectedViews = getChildrenByType(
-					Collections.singleton(sv),
-					ComponentsVisualIDRegistry
-							.getType(FMUComponentFMUVariablesCompartmentEditPart.VISUAL_ID));
-			connectedViews = getChildrenByType(connectedViews,
-					ComponentsVisualIDRegistry
-							.getType(FMUVariableEditPart.VISUAL_ID));
-			result.addAll(createNavigatorItems(connectedViews, parentElement,
-					false));
 			return result.toArray();
 		}
 
@@ -320,15 +307,6 @@ public class ComponentsNavigatorContentProvider implements
 			connectedViews = getChildrenByType(Collections.singleton(sv),
 					ComponentsVisualIDRegistry
 							.getType(EventBOutputPortEditPart.VISUAL_ID));
-			result.addAll(createNavigatorItems(connectedViews, parentElement,
-					false));
-			connectedViews = getChildrenByType(
-					Collections.singleton(sv),
-					ComponentsVisualIDRegistry
-							.getType(EventBComponentEventBVariablesCompartmentEditPart.VISUAL_ID));
-			connectedViews = getChildrenByType(connectedViews,
-					ComponentsVisualIDRegistry
-							.getType(EventBVariableEditPart.VISUAL_ID));
 			result.addAll(createNavigatorItems(connectedViews, parentElement,
 					false));
 			return result.toArray();

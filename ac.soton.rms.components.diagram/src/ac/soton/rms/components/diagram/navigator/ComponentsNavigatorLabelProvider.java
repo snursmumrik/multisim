@@ -36,12 +36,10 @@ import ac.soton.rms.components.diagram.edit.parts.EventBComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBComponentNameEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.EventBVariableEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentNameEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUVariableEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsDiagramEditorPlugin;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
 import ac.soton.rms.components.diagram.providers.ComponentsElementTypes;
@@ -127,18 +125,12 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 		case FMUOutputPortEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Node?http://soton.ac.uk/models/components/2.0?FMUPort", ComponentsElementTypes.FMUPort_3003); //$NON-NLS-1$
-		case FMUVariableEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://soton.ac.uk/models/components/2.0?FMUVariable", ComponentsElementTypes.FMUVariable_3004); //$NON-NLS-1$
 		case EventBInputPortEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Node?http://soton.ac.uk/models/components/2.0?EventBPort", ComponentsElementTypes.EventBPort_3005); //$NON-NLS-1$
 		case EventBOutputPortEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Node?http://soton.ac.uk/models/components/2.0?EventBPort", ComponentsElementTypes.EventBPort_3006); //$NON-NLS-1$
-		case EventBVariableEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://soton.ac.uk/models/components/2.0?EventBVariable", ComponentsElementTypes.EventBVariable_3007); //$NON-NLS-1$
 		case ConnectorEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Link?http://soton.ac.uk/models/components/2.0?Port?out", ComponentsElementTypes.PortOut_4001); //$NON-NLS-1$
@@ -208,14 +200,10 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 			return getFMUPort_3002Text(view);
 		case FMUOutputPortEditPart.VISUAL_ID:
 			return getFMUPort_3003Text(view);
-		case FMUVariableEditPart.VISUAL_ID:
-			return getFMUVariable_3004Text(view);
 		case EventBInputPortEditPart.VISUAL_ID:
 			return getEventBPort_3005Text(view);
 		case EventBOutputPortEditPart.VISUAL_ID:
 			return getEventBPort_3006Text(view);
-		case EventBVariableEditPart.VISUAL_ID:
-			return getEventBVariable_3007Text(view);
 		case ConnectorEditPart.VISUAL_ID:
 			return getPortOut_4001Text(view);
 		}
@@ -337,26 +325,6 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	/**
 	 * @generated
 	 */
-	private String getFMUVariable_3004Text(View view) {
-		IParser parser = ComponentsParserProvider.getParser(
-				ComponentsElementTypes.FMUVariable_3004,
-				view.getElement() != null ? view.getElement() : view,
-				ComponentsVisualIDRegistry
-						.getType(FMUVariableEditPart.VISUAL_ID));
-		if (parser != null) {
-			return parser.getPrintString(new EObjectAdapter(
-					view.getElement() != null ? view.getElement() : view),
-					ParserOptions.NONE.intValue());
-		} else {
-			ComponentsDiagramEditorPlugin.getInstance().logError(
-					"Parser was not found for label " + 3004); //$NON-NLS-1$
-			return ""; //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * @generated
-	 */
 	private String getEventBPort_3005Text(View view) {
 		EventBPort domainModelElement = (EventBPort) view.getElement();
 		if (domainModelElement != null) {
@@ -378,26 +346,6 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3006); //$NON-NLS-1$
-			return ""; //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * @generated
-	 */
-	private String getEventBVariable_3007Text(View view) {
-		IParser parser = ComponentsParserProvider.getParser(
-				ComponentsElementTypes.EventBVariable_3007,
-				view.getElement() != null ? view.getElement() : view,
-				ComponentsVisualIDRegistry
-						.getType(EventBVariableEditPart.VISUAL_ID));
-		if (parser != null) {
-			return parser.getPrintString(new EObjectAdapter(
-					view.getElement() != null ? view.getElement() : view),
-					ParserOptions.NONE.intValue());
-		} else {
-			ComponentsDiagramEditorPlugin.getInstance().logError(
-					"Parser was not found for label " + 3007); //$NON-NLS-1$
 			return ""; //$NON-NLS-1$
 		}
 	}

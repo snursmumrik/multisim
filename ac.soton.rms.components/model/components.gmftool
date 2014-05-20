@@ -38,15 +38,6 @@
       </tools>
       <tools
           xsi:type="gmftool:CreationTool"
-          title="Variable"
-          description="Create new Variable">
-        <smallIcon
-            xsi:type="gmftool:BundleImage"
-            path="/icons/custom/FMUVariable.gif"
-            bundle="ac.soton.rms.components"/>
-      </tools>
-      <tools
-          xsi:type="gmftool:CreationTool"
           title="Input Port"
           description="Create new Input Port">
         <smallIcon

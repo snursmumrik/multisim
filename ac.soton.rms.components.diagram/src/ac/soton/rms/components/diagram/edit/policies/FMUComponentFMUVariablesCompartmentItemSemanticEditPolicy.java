@@ -7,10 +7,6 @@
  */
 package ac.soton.rms.components.diagram.edit.policies;
 
-import org.eclipse.gef.commands.Command;
-import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
-
-import ac.soton.rms.components.diagram.edit.commands.FMUVariableCreateCommand;
 import ac.soton.rms.components.diagram.providers.ComponentsElementTypes;
 
 /**
@@ -24,16 +20,6 @@ public class FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy extends
 	 */
 	public FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy() {
 		super(ComponentsElementTypes.FMUComponent_2002);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected Command getCreateCommand(CreateElementRequest req) {
-		if (ComponentsElementTypes.FMUVariable_3004 == req.getElementType()) {
-			return getGEFWrapper(new FMUVariableCreateCommand(req));
-		}
-		return super.getCreateCommand(req);
 	}
 
 }

@@ -615,7 +615,7 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 						info.getResourceSet().getResources().size() + 1); //"Saving diagram"
 				//XXX save Event-B component
 				saveEventB(document);
-				
+
 				for (Iterator<Resource> it = info.getLoadedResourcesIterator(); it
 						.hasNext();) {
 					Resource nextResource = it.next();
@@ -1196,7 +1196,12 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 								resource.save(Collections.EMPTY_MAP);
 							}
 						} catch (IOException e) {
-							MessageDialog.openError(Display.getDefault().getActiveShell(), "Event-B Component", "Failed to save component '" + comp.getLabel() + "' to its machine.");
+							MessageDialog.openError(
+									Display.getDefault().getActiveShell(),
+									"Event-B Component",
+									"Failed to save component '"
+											+ comp.getLabel()
+											+ "' to its machine.");
 						}
 					}
 				});

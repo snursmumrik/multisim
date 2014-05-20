@@ -185,42 +185,6 @@
       </modelFacet>
     </childNodes>
     <childNodes
-        xsi:type="gmfgen:GenChildLabelNode"
-        visualID="3004"
-        editPartClassName="FMUVariableEditPart"
-        itemSemanticEditPolicyClassName="FMUVariableItemSemanticEditPolicy"
-        notationViewFactoryClassName="FMUVariableViewFactory"
-        canonicalEditPolicyClassName="FMUVariableCanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="FMUVariableGraphicalNodeEditPolicy"
-        createCommandClassName="FMUVariableCreateCommand"
-        containers="//@diagram/@compartments.0"
-        labelReadOnly="true"
-        labelElementIcon="true">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <elementType
-          xsi:type="gmfgen:MetamodelType"
-          displayName="FMU Variable"
-          editHelperClassName="FMUVariableEditHelper"/>
-      <viewmap
-          xsi:type="gmfgen:FigureViewmap"
-          figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
-      <modelFacet>
-        <metaClass
-            href="components.genmodel#//components/FMUVariable"/>
-        <containmentMetaFeature
-            href="components.genmodel#//components/Component/variables"/>
-        <childMetaFeature
-            href="components.genmodel#//components/Component/variables"/>
-      </modelFacet>
-      <labelModelFacet
-          xsi:type="gmfgen:FeatureLabelModelFacet"
-          parser="//@labelParsers/@implementations.0">
-        <metaFeatures
-            href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.genmodel#//coreextension/EventBLabeled/label"/>
-      </labelModelFacet>
-    </childNodes>
-    <childNodes
         xsi:type="gmfgen:GenChildSideAffixedNode"
         visualID="3005"
         editPartClassName="EventBInputPortEditPart"
@@ -287,7 +251,7 @@
       <elementType
           xsi:type="gmfgen:SpecializationType"
           displayName="Event-B Output Port"
-          metamodelType="//@diagram/@childNodes.4/@elementType"/>
+          metamodelType="//@diagram/@childNodes.3/@elementType"/>
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="OutputPortFigure"
@@ -321,42 +285,6 @@
           </initializers>
         </modelElementInitializer>
       </modelFacet>
-    </childNodes>
-    <childNodes
-        xsi:type="gmfgen:GenChildLabelNode"
-        visualID="3007"
-        editPartClassName="EventBVariableEditPart"
-        itemSemanticEditPolicyClassName="EventBVariableItemSemanticEditPolicy"
-        notationViewFactoryClassName="EventBVariableViewFactory"
-        canonicalEditPolicyClassName="EventBVariableCanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="EventBVariableGraphicalNodeEditPolicy"
-        createCommandClassName="EventBVariableCreateCommand"
-        containers="//@diagram/@compartments.1"
-        labelReadOnly="true"
-        labelElementIcon="true">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <elementType
-          xsi:type="gmfgen:MetamodelType"
-          displayName="Event-B Variable"
-          editHelperClassName="EventBVariableEditHelper"/>
-      <viewmap
-          xsi:type="gmfgen:FigureViewmap"
-          figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
-      <modelFacet>
-        <metaClass
-            href="components.genmodel#//components/EventBVariable"/>
-        <containmentMetaFeature
-            href="components.genmodel#//components/Component/variables"/>
-        <childMetaFeature
-            href="components.genmodel#//components/Component/variables"/>
-      </modelFacet>
-      <labelModelFacet
-          xsi:type="gmfgen:FeatureLabelModelFacet"
-          parser="//@labelParsers/@implementations.0">
-        <metaFeatures
-            href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.genmodel#//coreextension/EventBLabeled/label"/>
-      </labelModelFacet>
     </childNodes>
     <topLevelNodes
         visualID="2001"
@@ -450,7 +378,7 @@
         itemSemanticEditPolicyClassName="EventBComponentItemSemanticEditPolicy"
         notationViewFactoryClassName="EventBComponentViewFactory"
         canonicalEditPolicyClassName="EventBComponentCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.4 //@diagram/@childNodes.5"
+        childNodes="//@diagram/@childNodes.3 //@diagram/@childNodes.4"
         compartments="//@diagram/@compartments.1"
         graphicalNodeEditPolicyClassName="EventBComponentGraphicalNodeEditPolicy"
         createCommandClassName="EventBComponentCreateCommand">
@@ -528,7 +456,6 @@
         itemSemanticEditPolicyClassName="FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="FMUComponentFMUVariablesViewFactory"
         canonicalEditPolicyClassName="FMUComponentFMUVariablesCompartmentCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.3"
         title="FMUVariablesCompartment"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.1">
@@ -549,7 +476,6 @@
         itemSemanticEditPolicyClassName="EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="EventBComponentEventBVariablesViewFactory"
         canonicalEditPolicyClassName="EventBComponentEventBVariablesCompartmentCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.6"
         title="EventBVariablesCompartment"
         canCollapse="false"
         needsTitle="false"
@@ -588,22 +514,16 @@
             genNodes="//@diagram/@topLevelNodes.0"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
-            title="Variable"
-            description="Create new Variable"
-            smallIconPath="/ac.soton.rms.components/icons/custom/FMUVariable.gif"
-            genNodes="//@diagram/@childNodes.3 //@diagram/@childNodes.6"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
             title="Input Port"
             description="Create new Input Port"
             smallIconPath="/ac.soton.rms.components/icons/custom/InputPort.gif"
-            genNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.4"/>
+            genNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.3"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Output Port"
             description="Create new Output Port"
             smallIconPath="/ac.soton.rms.components/icons/custom/OutputPort.gif"
-            genNodes="//@diagram/@childNodes.2 //@diagram/@childNodes.5"/>
+            genNodes="//@diagram/@childNodes.2 //@diagram/@childNodes.4"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Connector"
@@ -664,20 +584,14 @@
         parent="//@diagram/@topLevelNodes.1"
         child="//@diagram/@childNodes.2"/>
     <childReferences
-        parent="//@diagram/@topLevelNodes.1"
-        child="//@diagram/@childNodes.3"/>
-    <childReferences
         parent="//@diagram"
         child="//@diagram/@topLevelNodes.1"/>
     <childReferences
         parent="//@diagram/@topLevelNodes.2"
+        child="//@diagram/@childNodes.3"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.2"
         child="//@diagram/@childNodes.4"/>
-    <childReferences
-        parent="//@diagram/@topLevelNodes.2"
-        child="//@diagram/@childNodes.5"/>
-    <childReferences
-        parent="//@diagram/@topLevelNodes.2"
-        child="//@diagram/@childNodes.6"/>
     <childReferences
         parent="//@diagram"
         child="//@diagram/@topLevelNodes.2"/>
@@ -724,24 +638,24 @@
         groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
-        child="//@diagram/@childNodes.4"
+        child="//@diagram/@childNodes.3"
         referenceType="out_target"
         groupName="target"
         groupIcon="icons/linkTargetNavigatorGroup.gif"/>
     <childReferences
-        parent="//@diagram/@childNodes.4"
+        parent="//@diagram/@childNodes.3"
         child="//@diagram/@links.0"
         referenceType="in_source"
         groupName="incoming links"
         groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
-        child="//@diagram/@childNodes.5"
+        child="//@diagram/@childNodes.4"
         referenceType="out_target"
         groupName="target"
         groupIcon="icons/linkTargetNavigatorGroup.gif"/>
     <childReferences
-        parent="//@diagram/@childNodes.5"
+        parent="//@diagram/@childNodes.4"
         child="//@diagram/@links.0"
         referenceType="in_source"
         groupName="incoming links"
@@ -784,24 +698,24 @@
         groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
-        child="//@diagram/@childNodes.4"
+        child="//@diagram/@childNodes.3"
         referenceType="in_source"
         groupName="source"
         groupIcon="icons/linkSourceNavigatorGroup.gif"/>
     <childReferences
-        parent="//@diagram/@childNodes.4"
+        parent="//@diagram/@childNodes.3"
         child="//@diagram/@links.0"
         referenceType="out_target"
         groupName="outgoing links"
         groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
-        child="//@diagram/@childNodes.5"
+        child="//@diagram/@childNodes.4"
         referenceType="in_source"
         groupName="source"
         groupIcon="icons/linkSourceNavigatorGroup.gif"/>
     <childReferences
-        parent="//@diagram/@childNodes.5"
+        parent="//@diagram/@childNodes.4"
         child="//@diagram/@links.0"
         referenceType="out_target"
         groupName="outgoing links"
@@ -869,7 +783,7 @@
       extensibleViaService="true">
     <implementations
         xsi:type="gmfgen:PredefinedParser"
-        uses="//@diagram/@childNodes.3/@labelModelFacet //@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.6/@labelModelFacet //@diagram/@topLevelNodes.2/@labels.0/@modelFacet"/>
+        uses="//@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@topLevelNodes.2/@labels.0/@modelFacet"/>
   </labelParsers>
   <contextMenus
       context="//@diagram">

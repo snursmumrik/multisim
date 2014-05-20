@@ -7,10 +7,6 @@
  */
 package ac.soton.rms.components.diagram.edit.policies;
 
-import org.eclipse.gef.commands.Command;
-import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
-
-import ac.soton.rms.components.diagram.edit.commands.EventBVariableCreateCommand;
 import ac.soton.rms.components.diagram.providers.ComponentsElementTypes;
 
 /**
@@ -24,16 +20,6 @@ public class EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy
 	 */
 	public EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy() {
 		super(ComponentsElementTypes.EventBComponent_2003);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected Command getCreateCommand(CreateElementRequest req) {
-		if (ComponentsElementTypes.EventBVariable_3007 == req.getElementType()) {
-			return getGEFWrapper(new EventBVariableCreateCommand(req));
-		}
-		return super.getCreateCommand(req);
 	}
 
 }

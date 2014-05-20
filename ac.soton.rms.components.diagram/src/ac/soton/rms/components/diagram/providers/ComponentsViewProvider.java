@@ -57,13 +57,11 @@ import ac.soton.rms.components.diagram.edit.parts.EventBComponentEventBVariables
 import ac.soton.rms.components.diagram.edit.parts.EventBComponentNameEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.EventBOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.EventBVariableEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentFMUVariablesCompartmentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentNameEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUVariableEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
 
 /**
@@ -164,9 +162,7 @@ public class ComponentsViewProvider extends AbstractProvider implements
 				case EventBComponentEditPart.VISUAL_ID:
 				case DisplayPortEditPart.VISUAL_ID:
 				case FMUInputPortEditPart.VISUAL_ID:
-				case FMUVariableEditPart.VISUAL_ID:
 				case EventBInputPortEditPart.VISUAL_ID:
-				case EventBVariableEditPart.VISUAL_ID:
 				case FMUOutputPortEditPart.VISUAL_ID:
 				case EventBOutputPortEditPart.VISUAL_ID:
 					if (domainElement == null
@@ -187,10 +183,8 @@ public class ComponentsViewProvider extends AbstractProvider implements
 				|| DisplayPortEditPart.VISUAL_ID == visualID
 				|| FMUInputPortEditPart.VISUAL_ID == visualID
 				|| FMUOutputPortEditPart.VISUAL_ID == visualID
-				|| FMUVariableEditPart.VISUAL_ID == visualID
 				|| EventBInputPortEditPart.VISUAL_ID == visualID
-				|| EventBOutputPortEditPart.VISUAL_ID == visualID
-				|| EventBVariableEditPart.VISUAL_ID == visualID;
+				|| EventBOutputPortEditPart.VISUAL_ID == visualID;
 	}
 
 	/**
@@ -265,18 +259,12 @@ public class ComponentsViewProvider extends AbstractProvider implements
 		case FMUOutputPortEditPart.VISUAL_ID:
 			return createFMUPort_3003(domainElement, containerView, index,
 					persisted, preferencesHint);
-		case FMUVariableEditPart.VISUAL_ID:
-			return createFMUVariable_3004(domainElement, containerView, index,
-					persisted, preferencesHint);
 		case EventBInputPortEditPart.VISUAL_ID:
 			return createEventBPort_3005(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case EventBOutputPortEditPart.VISUAL_ID:
 			return createEventBPort_3006(domainElement, containerView, index,
 					persisted, preferencesHint);
-		case EventBVariableEditPart.VISUAL_ID:
-			return createEventBVariable_3007(domainElement, containerView,
-					index, persisted, preferencesHint);
 		}
 		// can't happen, provided #provides(CreateNodeViewOperation) is correct
 		return null;
@@ -529,21 +517,6 @@ public class ComponentsViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	public Node createFMUVariable_3004(EObject domainElement,
-			View containerView, int index, boolean persisted,
-			PreferencesHint preferencesHint) {
-		Node node = NotationFactory.eINSTANCE.createNode();
-		node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
-		node.setType(ComponentsVisualIDRegistry
-				.getType(FMUVariableEditPart.VISUAL_ID));
-		ViewUtil.insertChildView(containerView, node, index, persisted);
-		node.setElement(domainElement);
-		return node;
-	}
-
-	/**
-	 * @generated
-	 */
 	public Node createEventBPort_3005(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
@@ -608,21 +581,6 @@ public class ComponentsViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		return node;
-	}
-
-	/**
-	 * @generated
-	 */
-	public Node createEventBVariable_3007(EObject domainElement,
-			View containerView, int index, boolean persisted,
-			PreferencesHint preferencesHint) {
-		Node node = NotationFactory.eINSTANCE.createNode();
-		node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
-		node.setType(ComponentsVisualIDRegistry
-				.getType(EventBVariableEditPart.VISUAL_ID));
-		ViewUtil.insertChildView(containerView, node, index, persisted);
-		node.setElement(domainElement);
 		return node;
 	}
 

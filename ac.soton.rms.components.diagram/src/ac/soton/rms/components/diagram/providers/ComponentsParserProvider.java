@@ -23,9 +23,7 @@ import org.eventb.emf.core.CorePackage;
 
 import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 import ac.soton.rms.components.diagram.edit.parts.EventBComponentNameEditPart;
-import ac.soton.rms.components.diagram.edit.parts.EventBVariableEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentNameEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUVariableEditPart;
 import ac.soton.rms.components.diagram.parsers.MessageFormatParser;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
 
@@ -74,52 +72,12 @@ public class ComponentsParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser fMUVariable_3004Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getFMUVariable_3004Parser() {
-		if (fMUVariable_3004Parser == null) {
-			EAttribute[] features = new EAttribute[] { CoreextensionPackage.eINSTANCE
-					.getEventBLabeled_Label() };
-			MessageFormatParser parser = new MessageFormatParser(features);
-			fMUVariable_3004Parser = parser;
-		}
-		return fMUVariable_3004Parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	private IParser eventBVariable_3007Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getEventBVariable_3007Parser() {
-		if (eventBVariable_3007Parser == null) {
-			EAttribute[] features = new EAttribute[] { CoreextensionPackage.eINSTANCE
-					.getEventBLabeled_Label() };
-			MessageFormatParser parser = new MessageFormatParser(features);
-			eventBVariable_3007Parser = parser;
-		}
-		return eventBVariable_3007Parser;
-	}
-
-	/**
-	 * @generated
-	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case FMUComponentNameEditPart.VISUAL_ID:
 			return getFMUComponentName_5001Parser();
 		case EventBComponentNameEditPart.VISUAL_ID:
 			return getEventBComponentLabel_5002Parser();
-		case FMUVariableEditPart.VISUAL_ID:
-			return getFMUVariable_3004Parser();
-		case EventBVariableEditPart.VISUAL_ID:
-			return getEventBVariable_3007Parser();
 		}
 		return null;
 	}
