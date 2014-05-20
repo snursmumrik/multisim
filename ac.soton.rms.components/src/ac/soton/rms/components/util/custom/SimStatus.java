@@ -22,11 +22,11 @@ public class SimStatus extends Status {
 	public static final IStatus LOAD_ERROR = new Status(ERROR, ID, "Loading error");
 	public static final IStatus TRACE_ERROR = new Status(ERROR, ID, "Trace error");
 	public static final IStatus PROB_ERROR = new Status(ERROR, ID, "ProB failure");
-	public static final IStatus EVENTB_TRACE_DIV = new Status(WARNING, ID, "Divergence from trace");
+	public static final IStatus EVENTB_TRACE_DIV = new Status(ERROR, ID, "Divergence from trace");
 	public static final IStatus EVENTB_DEADLOCK = new Status(ERROR, ID, "Deadlock");
 	public static final IStatus EVENTB_ERROR = new Status(ERROR, ID, "Execution error");
 	public static final IStatus EVENTB_NO_READS = new Status(ERROR, ID, "No enabled ReadInput events");
-	public static final IStatus EVENTB_INV_VIOLATED = new Status(WARNING, ID, "Invariant violation");
+	public static final IStatus EVENTB_INV_VIOLATED = new Status(ERROR, ID, "Invariant violation");
 
 	/**
 	 * @param severity

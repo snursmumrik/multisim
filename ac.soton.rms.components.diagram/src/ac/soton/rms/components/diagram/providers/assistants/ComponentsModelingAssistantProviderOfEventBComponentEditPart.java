@@ -27,10 +27,9 @@ public class ComponentsModelingAssistantProviderOfEventBComponentEditPart
 	 */
 	@Override
 	public List<IElementType> getTypesForPopupBar(IAdaptable host) {
-		List<IElementType> types = new ArrayList<IElementType>(3);
+		List<IElementType> types = new ArrayList<IElementType>(2);
 		types.add(ComponentsElementTypes.EventBPort_3005);
 		types.add(ComponentsElementTypes.EventBPort_3006);
-		types.add(ComponentsElementTypes.EventBVariable_3007);
 		return types;
 	}
 

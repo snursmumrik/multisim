@@ -321,10 +321,15 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
-		try {
-			setFmu(new FMU(getPath()));
-		} catch (IOException e) {
-			return SimStatus.LOAD_ERROR;
+		// reuse FMU if possible
+		if (fmu != null) {
+			fmu.reset();
+		} else {
+			try {
+				setFmu(new FMU(getPath()));
+			} catch (IOException e) {
+				return SimStatus.LOAD_ERROR;
+			}
 		}
 		
 		return SimStatus.OK_STATUS;
@@ -403,14 +408,8 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		FMU fmu = getFmu();
 		assert fmu != null;
 		
-		// simulation step
 		fmu.doStep(time/1000, step/1000);
 		
-		// update variables
-		for (AbstractVariable v : getVariables())
-			v.setValue(SimulationUtil.fmuGet(fmu, v));
-		for (Port p : getOutputs())
-			p.setValue(SimulationUtil.fmuGet(fmu, p));
 		return SimStatus.OK_STATUS;
 	}
 
@@ -425,11 +424,6 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		//FIXME: termination causes JVM to fail (invalid memory access)
-		FMU fmu = getFmu();
-		assert fmu != null;
-		
-		fmu.reset();
 		return SimStatus.OK_STATUS;
 	}
 

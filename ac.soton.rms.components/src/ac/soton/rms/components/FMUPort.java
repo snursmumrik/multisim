@@ -9,7 +9,6 @@
  */
 package ac.soton.rms.components;
 
-import org.eventb.emf.core.EventBNamed;
 
 
 
@@ -23,7 +22,7 @@ import org.eventb.emf.core.EventBNamed;
  * @model
  * @generated
  */
-public interface FMUPort extends Port, EventBNamed {
+public interface FMUPort extends Port, FMUVariable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

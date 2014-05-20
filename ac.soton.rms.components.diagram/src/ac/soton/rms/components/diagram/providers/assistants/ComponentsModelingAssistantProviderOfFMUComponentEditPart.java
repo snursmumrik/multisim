@@ -27,10 +27,9 @@ public class ComponentsModelingAssistantProviderOfFMUComponentEditPart extends
 	 */
 	@Override
 	public List<IElementType> getTypesForPopupBar(IAdaptable host) {
-		List<IElementType> types = new ArrayList<IElementType>(3);
+		List<IElementType> types = new ArrayList<IElementType>(2);
 		types.add(ComponentsElementTypes.FMUPort_3002);
 		types.add(ComponentsElementTypes.FMUPort_3003);
-		types.add(ComponentsElementTypes.FMUVariable_3004);
 		return types;
 	}
 

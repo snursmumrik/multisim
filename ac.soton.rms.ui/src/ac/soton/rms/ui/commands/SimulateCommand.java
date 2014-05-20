@@ -62,7 +62,7 @@ public class SimulateCommand extends AbstractHandler {
 			Job job = new Job("RMS Simulation") {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					return Master.simulate(diagram, monitor);
+					return Master.simulate(diagram, monitor, recordTrace, compareTrace, checkInvariants);
 				}
 			};
 			job.setUser(true);

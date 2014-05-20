@@ -38,7 +38,7 @@
           </domainInitializer>
           <tool
               xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.4"/>
+              href="components.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="components.gmfgraph#InputPort"/>
         </ownedChild>
@@ -84,7 +84,7 @@
           </domainInitializer>
           <tool
               xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.4"/>
+              href="components.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="components.gmfgraph#InputPort"/>
         </ownedChild>
@@ -110,35 +110,12 @@
           </domainInitializer>
           <tool
               xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.5"/>
+              href="components.gmftool#//@palette/@tools.0/@tools.4"/>
           <diagramNode
               href="components.gmfgraph#OutputPort"/>
         </ownedChild>
       </children>
-      <children
-          compartment="//@nodes.1/@ownedChild/@compartments.0">
-        <containmentFeature
-            href="components.ecore#//Component/variables"/>
-        <ownedChild>
-          <domainMetaElement
-              href="components.ecore#//FMUVariable"/>
-          <labelMappings
-              xsi:type="gmfmap:FeatureLabelMapping"
-              readOnly="true">
-            <diagramLabel
-                href="components.gmfgraph#VariableLabel"/>
-            <features
-                href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.ecore#//EventBLabeled/label"/>
-          </labelMappings>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.3"/>
-          <diagramNode
-              href="components.gmfgraph#VariableLabel"/>
-        </ownedChild>
-      </children>
-      <compartments
-          children="//@nodes.1/@ownedChild/@children.2">
+      <compartments>
         <compartment
             href="components.gmfgraph#FMUVariablesCompartment"/>
       </compartments>
@@ -184,7 +161,7 @@
           </domainInitializer>
           <tool
               xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.4"/>
+              href="components.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="components.gmfgraph#InputPort"/>
         </ownedChild>
@@ -210,35 +187,12 @@
           </domainInitializer>
           <tool
               xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.5"/>
+              href="components.gmftool#//@palette/@tools.0/@tools.4"/>
           <diagramNode
               href="components.gmfgraph#OutputPort"/>
         </ownedChild>
       </children>
-      <children
-          compartment="//@nodes.2/@ownedChild/@compartments.0">
-        <containmentFeature
-            href="components.ecore#//Component/variables"/>
-        <ownedChild>
-          <domainMetaElement
-              href="components.ecore#//EventBVariable"/>
-          <labelMappings
-              xsi:type="gmfmap:FeatureLabelMapping"
-              readOnly="true">
-            <diagramLabel
-                href="components.gmfgraph#VariableLabel"/>
-            <features
-                href="../../ac.soton.eventb.emf.core.extension/model/eventbcoreextension.ecore#//EventBLabeled/label"/>
-          </labelMappings>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="components.gmftool#//@palette/@tools.0/@tools.3"/>
-          <diagramNode
-              href="components.gmfgraph#VariableLabel"/>
-        </ownedChild>
-      </children>
-      <compartments
-          children="//@nodes.2/@ownedChild/@children.2">
+      <compartments>
         <compartment
             href="components.gmfgraph#EventBVariablesCompartment"/>
       </compartments>
@@ -247,7 +201,7 @@
   <links>
     <tool
         xsi:type="gmftool:CreationTool"
-        href="components.gmftool#//@palette/@tools.0/@tools.6"/>
+        href="components.gmftool#//@palette/@tools.0/@tools.5"/>
     <diagramLink
         href="components.gmfgraph#Connector"/>
     <linkMetaFeature

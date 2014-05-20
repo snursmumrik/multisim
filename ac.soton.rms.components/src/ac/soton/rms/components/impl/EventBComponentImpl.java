@@ -281,7 +281,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
-	// NOT GENERATED
+	/**
+	 * @custom
+	 */
 	private Random random = new Random(System.currentTimeMillis());
 	private Set<String> waitSet = new HashSet<String>();
 	private BufferedReader traceReader;
@@ -551,7 +553,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		IEventBRoot root = SimulationUtil.getMachineRoot(getMachine());
 		Animator animator = Animator.getAnimator();
 		if (animator.isMachineLoaded()) {
-			animator.getHistory().reset();
 			try {
 				ClearMachineCommand.clearMachine(animator);
 			} catch (ProBException e) {
@@ -730,14 +731,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				
 				// check invariants if on
 				if (checkInvariants && CheckInvariantStatusCommand.isInvariantViolated(animator, animator.getCurrentState().getId())) {
-					status = SimStatus.EVENTB_INV_VIOLATED;
+					return SimStatus.EVENTB_INV_VIOLATED;
 				}
 				
 				// check trace if on
 				if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
-					status = SimStatus.EVENTB_TRACE_DIV;
+					return SimStatus.EVENTB_TRACE_DIV;
 					//FIXME: pass the error status from findRecordedOp()
-					//FIXME: inv or div get overwritten one on another
 				}
 				
 				// record trace if on
@@ -760,6 +760,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @param time
 	 * @param name
 	 * @return 
+	 * @custom
 	 */
 	private IStatus recordOp(double time, String name) {
 		try {
@@ -774,15 +775,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * @param time
 	 * @return
+	 * @custom
 	 */
 	private Object findRecordedOp(double time) {
 		try {
 			String line = null;
-			double traceTime = 0;
+			double traceTime = -1;
 			while (traceTime < time) {
 				if ((line = traceReader.readLine()) == null)
 					return null;
-				traceTime = Integer.valueOf(line.split(",")[0]);
+				traceTime = Double.valueOf(line.split(",")[0]);
 			}
 			if (traceTime == time)
 				return line.split(",")[1];
@@ -798,25 +800,24 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
+		// re-enable notifications
+		for (Port p : getOutputs())
+			p.eSetDeliver(true);
+		
 		if (traceReader != null)
 			try {
 				traceReader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return SimStatus.TRACE_ERROR;
 			}
+		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
 		if (traceWriter != null) {
 			try {
 				traceWriter.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return SimStatus.TRACE_ERROR;
 			}
 		}
-		
-		// re-enable notification
-		for (Port p : getOutputs())
-			p.eSetDeliver(true);
 		
 		return SimStatus.OK_STATUS;
 	}

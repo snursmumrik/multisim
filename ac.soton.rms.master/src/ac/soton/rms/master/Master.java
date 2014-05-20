@@ -31,7 +31,7 @@ public class Master {
 	private static int currentTime;
 	private static int step;
 	private static List<Component> components;
-	private static List<Component> eventBFMUs = new ArrayList<Component>();
+	private static List<Component> dependentFMUs = new ArrayList<Component>();
 	
 	// simulation states
 	private static boolean finished = true;
@@ -52,9 +52,12 @@ public class Master {
 	/**
 	 * @param diagram
 	 * @param monitor
+	 * @param checkInvariants 
+	 * @param compareTrace 
+	 * @param recordTrace 
 	 * @return
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor) {
+	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, boolean recordTrace, boolean compareTrace, boolean checkInvariants) {
 		paused = false;	// clear paused state
 		ok = true;
 		IStatus status = SimStatus.OK_STATUS;
@@ -69,9 +72,13 @@ public class Master {
 			for (Component c : components) {
 				if (c instanceof EventBComponent) {
 					EventBComponent ebComponent = (EventBComponent) c;
+					ebComponent.eSetDeliver(false);
+					ebComponent.setRecordTrace(recordTrace);
+					ebComponent.setCompareTrace(compareTrace);
+					ebComponent.setCheckInvariants(checkInvariants);
 					step = ebComponent.getStepPeriod();
-					eventBFMUs.clear();
-					setAffectedFMUs(c);
+					dependentFMUs.clear();
+					setDependentFMUs(ebComponent);
 					break;
 				}
 			}
@@ -107,7 +114,7 @@ public class Master {
 			} else if (isPaused()) {
 				systemTime = System.currentTimeMillis() - systemTime;
 				monitor.subTask("Paused");
-				status = SimStatus.PAUSE_STATUS;
+//				status = SimStatus.PAUSE_STATUS;
 				generateResultsMessage(status);
 				return status;
 			}
@@ -119,13 +126,13 @@ public class Master {
 					break;
 				}
 			}
-			// zero-step for affected FMUs
-			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
-			for (Component cc : eventBFMUs) {
-				cc.readInputs();
-				cc.doStep(currentTime, 0);
-				cc.writeOutputs();
-			}
+//			// zero-step for affected FMUs
+//			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
+//			for (Component cc : eventBFMUs) {
+//				cc.readInputs();
+//				cc.doStep(currentTime, 0);
+//				cc.writeOutputs();
+//			}
 			
 			for (Component c : components) {
 				if ((status = c.readInputs()) != SimStatus.OK_STATUS) {
@@ -160,6 +167,7 @@ public class Master {
 		
 		for (Component c : components) {
 			monitor.subTask("Terminating '" + c.getLabel() + "'");
+			//TODO: add error handling for the terminate() method
 			c.terminate();
 		}
 		
@@ -170,16 +178,17 @@ public class Master {
 	}
 
 	/**
+	 * Set a list of FMUs, directly dependent on component's output
 	 * @param c
 	 */
-	private static void setAffectedFMUs(Component c) {
+	private static void setDependentFMUs(Component c) {
 		Component cc = null;
 		for (Port po : c.getOutputs()) {
 			for (Port pi : po.getOut()) {
 				cc = (Component) pi.eContainer();
-				if (!eventBFMUs.contains(cc) && cc instanceof FMUComponent) {
-					eventBFMUs.add(cc);
-					setAffectedFMUs(cc);
+				if (!dependentFMUs.contains(cc) && cc instanceof FMUComponent) {
+					dependentFMUs.add(cc);
+					setDependentFMUs(cc);
 				}
 			}
 		}

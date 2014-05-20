@@ -17,6 +17,7 @@ import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
 import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
+import ac.soton.rms.components.*;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
@@ -176,8 +177,9 @@ public class ComponentsSwitch<T> extends Switch<T> {
 				FMUPort fmuPort = (FMUPort)theEObject;
 				T result = caseFMUPort(fmuPort);
 				if (result == null) result = casePort(fmuPort);
-				if (result == null) result = caseEventBNamed(fmuPort);
+				if (result == null) result = caseFMUVariable(fmuPort);
 				if (result == null) result = caseAbstractVariable(fmuPort);
+				if (result == null) result = caseEventBNamed(fmuPort);
 				if (result == null) result = caseEventBLabeled(fmuPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

@@ -18,6 +18,7 @@ import org.eventb.emf.core.EventBNamed;
 
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUPort;
+import ac.soton.rms.components.FMUVariable;
 
 /**
  * <!-- begin-user-doc -->
@@ -188,6 +189,11 @@ public class FMUPortImpl extends PortImpl implements FMUPort {
 				default: return -1;
 			}
 		}
+		if (baseClass == FMUVariable.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -201,6 +207,11 @@ public class FMUPortImpl extends PortImpl implements FMUPort {
 		if (baseClass == EventBNamed.class) {
 			switch (baseFeatureID) {
 				case CorePackage.EVENT_BNAMED__NAME: return ComponentsPackage.FMU_PORT__NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == FMUVariable.class) {
+			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}

@@ -275,42 +275,32 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String Variable4CreationTool_title;
+	public static String InputPort4CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Variable4CreationTool_desc;
+	public static String InputPort4CreationTool_desc;
 
 	/**
 	 * @generated
 	 */
-	public static String InputPort5CreationTool_title;
+	public static String OutputPort5CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String InputPort5CreationTool_desc;
+	public static String OutputPort5CreationTool_desc;
 
 	/**
 	 * @generated
 	 */
-	public static String OutputPort6CreationTool_title;
+	public static String Connector6CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String OutputPort6CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Connector7CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Connector7CreationTool_desc;
+	public static String Connector6CreationTool_desc;
 
 	/**
 	 * @generated

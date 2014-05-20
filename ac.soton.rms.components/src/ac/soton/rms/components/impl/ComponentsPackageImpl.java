@@ -896,7 +896,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		eventBVariableEClass.getESuperTypes().add(this.getAbstractVariable());
 		fmuParameterEClass.getESuperTypes().add(this.getFMUVariable());
 		fmuPortEClass.getESuperTypes().add(this.getPort());
-		fmuPortEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
+		fmuPortEClass.getESuperTypes().add(this.getFMUVariable());
 		eventBPortEClass.getESuperTypes().add(this.getPort());
 		displayComponentEClass.getESuperTypes().add(this.getComponent());
 		displayPortEClass.getESuperTypes().add(this.getPort());

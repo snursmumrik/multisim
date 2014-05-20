@@ -1303,6 +1303,7 @@ public interface ComponentsPackage extends EPackage {
 
 	/**
 	 * Default RMS components extension ID.
+	 * @custom
 	 */
 	public static final String COMPONENTS_EXTENSION_ID = "ac.soton.rms.components";
 

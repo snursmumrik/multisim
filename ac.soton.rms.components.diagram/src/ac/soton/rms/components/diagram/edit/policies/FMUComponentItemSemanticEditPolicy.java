@@ -29,7 +29,6 @@ import ac.soton.rms.components.diagram.edit.parts.ConnectorEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentFMUVariablesCompartmentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUOutputPortEditPart;
-import ac.soton.rms.components.diagram.edit.parts.FMUVariableEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;
 import ac.soton.rms.components.diagram.providers.ComponentsElementTypes;
 
@@ -157,13 +156,6 @@ public class FMUComponentItemSemanticEditPolicy extends
 						.hasNext();) {
 					Node cnode = (Node) cit.next();
 					switch (ComponentsVisualIDRegistry.getVisualID(cnode)) {
-					case FMUVariableEditPart.VISUAL_ID:
-						cmd.add(new DestroyElementCommand(
-								new DestroyElementRequest(getEditingDomain(),
-										cnode.getElement(), false))); // directlyOwned: true
-						// don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
-						// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
-						break;
 					}
 				}
 				break;
