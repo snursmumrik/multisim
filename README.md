@@ -1,4 +1,4 @@
-rms
+RMS
 ===
 
-Rodin Multi-Simulation plug-in for the Rodin platform
+Rodin Multi-Simulation plug-in for the ProB 2.0
