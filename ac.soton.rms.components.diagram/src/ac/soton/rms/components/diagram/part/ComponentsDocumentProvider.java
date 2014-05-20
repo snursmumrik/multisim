@@ -1150,6 +1150,7 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 	 * Stores EventBComponent as an extension in a machine.
 	 * 
 	 * @param document
+	 * @custom
 	 */
 	private void saveEventB(IDocument document) {
 		ComponentDiagram diagram = (ComponentDiagram) ((IDiagramDocument) document)

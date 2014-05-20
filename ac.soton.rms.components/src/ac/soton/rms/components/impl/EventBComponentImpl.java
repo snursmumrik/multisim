@@ -800,25 +800,24 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
+		// re-enable notifications
+		for (Port p : getOutputs())
+			p.eSetDeliver(true);
+		
 		if (traceReader != null)
 			try {
 				traceReader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return SimStatus.TRACE_ERROR;
 			}
+		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
 		if (traceWriter != null) {
 			try {
 				traceWriter.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return SimStatus.TRACE_ERROR;
 			}
 		}
-		
-		// re-enable notification
-		for (Port p : getOutputs())
-			p.eSetDeliver(true);
 		
 		return SimStatus.OK_STATUS;
 	}

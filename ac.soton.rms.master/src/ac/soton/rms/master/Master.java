@@ -31,7 +31,7 @@ public class Master {
 	private static int currentTime;
 	private static int step;
 	private static List<Component> components;
-	private static List<Component> eventBFMUs = new ArrayList<Component>();
+	private static List<Component> dependentFMUs = new ArrayList<Component>();
 	
 	// simulation states
 	private static boolean finished = true;
@@ -77,8 +77,8 @@ public class Master {
 					ebComponent.setCompareTrace(compareTrace);
 					ebComponent.setCheckInvariants(checkInvariants);
 					step = ebComponent.getStepPeriod();
-					eventBFMUs.clear();
-					setAffectedFMUs(c);
+					dependentFMUs.clear();
+					setDependentFMUs(ebComponent);
 					break;
 				}
 			}
@@ -167,6 +167,7 @@ public class Master {
 		
 		for (Component c : components) {
 			monitor.subTask("Terminating '" + c.getLabel() + "'");
+			//TODO: add error handling for the terminate() method
 			c.terminate();
 		}
 		
@@ -177,16 +178,17 @@ public class Master {
 	}
 
 	/**
+	 * Set a list of FMUs, directly dependent on component's output
 	 * @param c
 	 */
-	private static void setAffectedFMUs(Component c) {
+	private static void setDependentFMUs(Component c) {
 		Component cc = null;
 		for (Port po : c.getOutputs()) {
 			for (Port pi : po.getOut()) {
 				cc = (Component) pi.eContainer();
-				if (!eventBFMUs.contains(cc) && cc instanceof FMUComponent) {
-					eventBFMUs.add(cc);
-					setAffectedFMUs(cc);
+				if (!dependentFMUs.contains(cc) && cc instanceof FMUComponent) {
+					dependentFMUs.add(cc);
+					setDependentFMUs(cc);
 				}
 			}
 		}

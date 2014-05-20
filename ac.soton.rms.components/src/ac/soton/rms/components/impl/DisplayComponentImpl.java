@@ -65,6 +65,11 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * @custom
 	 */
 	private static final int MAX_TRACE_SIZE = 1500;
+	/**
+	 * Random colour generator.
+	 * @custom
+	 */
+	private Random random = new Random(System.currentTimeMillis());
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -120,8 +125,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * @ordered
 	 */
 	protected Chart2D chart = CHART_EDEFAULT;
-
-	private Random random = new Random(System.currentTimeMillis());
 
 	/**
 	 * <!-- begin-user-doc -->
