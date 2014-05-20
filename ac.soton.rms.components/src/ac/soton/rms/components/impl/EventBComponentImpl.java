@@ -281,7 +281,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
-	// NOT GENERATED
+	/**
+	 * @custom
+	 */
 	private Random random = new Random(System.currentTimeMillis());
 	private Set<String> waitSet = new HashSet<String>();
 	private BufferedReader traceReader;
@@ -550,16 +552,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// load machine animation
 		IEventBRoot root = SimulationUtil.getMachineRoot(getMachine());
 		Animator animator = Animator.getAnimator();
-//		if (animator.isMachineLoaded()) {
-			
-			Animator.killAndReload();
-//			animator.getHistory().reset();
-//			try {
-//				ClearMachineCommand.clearMachine(animator);
-//			} catch (ProBException e) {
-//				return SimStatus.PROB_ERROR;
-//			}
-//		}
+		if (animator.isMachineLoaded()) {
+			try {
+				ClearMachineCommand.clearMachine(animator);
+			} catch (ProBException e) {
+				return SimStatus.PROB_ERROR;
+			}
+		}
 		try {
 			LoadEventBModelCommand.load(animator, root);
 		} catch (ProBException e) {
@@ -739,7 +738,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
 					return SimStatus.EVENTB_TRACE_DIV;
 					//FIXME: pass the error status from findRecordedOp()
-					//FIXME: inv or div get overwritten one on another
 				}
 				
 				// record trace if on
@@ -762,6 +760,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @param time
 	 * @param name
 	 * @return 
+	 * @custom
 	 */
 	private IStatus recordOp(double time, String name) {
 		try {
@@ -776,6 +775,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * @param time
 	 * @return
+	 * @custom
 	 */
 	private Object findRecordedOp(double time) {
 		try {
