@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.Status;
  */
 public class SimStatus extends Status {
 	
-	private static final String ID = "ac.soton.rms.components";
+	public static final String ID = "ac.soton.rms.components";
 	
 	public static final IStatus PAUSE_STATUS = new Status(INFO, ID, "Pause");
 	public static final IStatus LOAD_ERROR = new Status(ERROR, ID, "Loading error");

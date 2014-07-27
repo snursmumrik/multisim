@@ -78,17 +78,17 @@ public class SimulateCommand extends AbstractHandler {
 					});
 				}
 			});
-			job.setProperty(IProgressConstants.ACTION_PROPERTY, new Action() {
-				@Override
-				public void run() {
-					Display.getDefault().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Results", Master.getResultsMessage());
-						}
-					});
-				}
-			});
+//			job.setProperty(IProgressConstants.ACTION_PROPERTY, new Action() {
+//				@Override
+//				public void run() {
+//					Display.getDefault().asyncExec(new Runnable() {
+//						@Override
+//						public void run() {
+//							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Results", Master.getResultsMessage());
+//						}
+//					});
+//				}
+//			});
 			job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);
 			job.setProperty(IProgressConstants.ICON_PROPERTY, RmsUIActivator.getDefault().getImageRegistry().getDescriptor(RmsUIActivator.IMAGE_RMS));
 			job.schedule();

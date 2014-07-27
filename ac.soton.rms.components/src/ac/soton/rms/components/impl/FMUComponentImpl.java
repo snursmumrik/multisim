@@ -340,7 +340,7 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus initialise(double tStart, double tStop) {
+	public IStatus initialise(int tStart, int tStop) {
 		FMU fmu = getFmu();
 		assert fmu != null;
 		
@@ -351,7 +351,7 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 		}
 		
 		// initialise FMU
-		fmu.initialize(tStart/1000, tStop/1000);
+		fmu.initialize(tStart/1000.0, tStop/1000.0);
 		
 		// update internal/output variables
 		for (AbstractVariable v : getVariables())
@@ -404,11 +404,11 @@ public class FMUComponentImpl extends EventBLabeledImpl implements FMUComponent 
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus doStep(double time, double step) {
+	public IStatus doStep(int time, int step) {
 		FMU fmu = getFmu();
 		assert fmu != null;
 		
-		fmu.doStep(time/1000, step/1000);
+		fmu.doStep(time/1000.0, step/1000.0);
 		
 		return SimStatus.OK_STATUS;
 	}

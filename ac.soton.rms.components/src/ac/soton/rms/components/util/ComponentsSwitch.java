@@ -17,7 +17,6 @@ import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
 import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
-import ac.soton.rms.components.*;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;

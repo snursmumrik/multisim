@@ -348,22 +348,13 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
-
-	/**
 	 * The feature id for the '<em><b>Check Invariants</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__CHECK_INVARIANTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
+	int EVENT_BCOMPONENT__CHECK_INVARIANTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Compare Trace</b></em>' attribute.
@@ -372,7 +363,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__COMPARE_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
+	int EVENT_BCOMPONENT__COMPARE_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
@@ -381,7 +372,25 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 12;
+	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
@@ -390,7 +399,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 13;
+	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -1302,6 +1311,16 @@ public interface ComponentsPackage extends EPackage {
 	int COLOR = 19;
 
 	/**
+	 * The meta object id for the '<em>Pro BTrace</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.prob.statespace.Trace
+	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getProBTrace()
+	 * @generated
+	 */
+	int PRO_BTRACE = 20;
+
+	/**
 	 * Default RMS components extension ID.
 	 * @custom
 	 */
@@ -1501,6 +1520,17 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEventBComponent_RecordTrace();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Trace</em>'.
+	 * @see ac.soton.rms.components.EventBComponent#getTrace()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_Trace();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.FMUComponent <em>FMU Component</em>}'.
@@ -1876,6 +1906,17 @@ public interface ComponentsPackage extends EPackage {
 	EDataType getColor();
 
 	/**
+	 * Returns the meta object for data type '{@link de.prob.statespace.Trace <em>Pro BTrace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Pro BTrace</em>'.
+	 * @see de.prob.statespace.Trace
+	 * @model instanceClass="de.prob.statespace.Trace" serializeable="false"
+	 * @generated
+	 */
+	EDataType getProBTrace();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2046,6 +2087,14 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EVENT_BCOMPONENT__RECORD_TRACE = eINSTANCE.getEventBComponent_RecordTrace();
+
+		/**
+		 * The meta object literal for the '<em><b>Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__TRACE = eINSTANCE.getEventBComponent_Trace();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -2360,6 +2409,16 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType COLOR = eINSTANCE.getColor();
+
+		/**
+		 * The meta object literal for the '<em>Pro BTrace</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.prob.statespace.Trace
+		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getProBTrace()
+		 * @generated
+		 */
+		EDataType PRO_BTRACE = eINSTANCE.getProBTrace();
 
 	}
 

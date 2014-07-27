@@ -8,6 +8,6 @@ Bundle-Vendor: University of Southampton
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  ac.soton.rms.components;bundle-version="0.1.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: ac.soton.rms.master

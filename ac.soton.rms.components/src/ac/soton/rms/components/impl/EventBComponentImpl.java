@@ -9,34 +9,44 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eventb.core.IEventBRoot;
 import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
+import org.rodinp.core.IRodinFile;
+import org.rodinp.core.RodinCore;
+
+import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
+import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
@@ -45,18 +55,18 @@ import ac.soton.rms.components.EventBPort;
 import ac.soton.rms.components.Port;
 import ac.soton.rms.components.util.custom.SimStatus;
 import ac.soton.rms.components.util.custom.SimulationUtil;
+
+import com.google.inject.Injector;
+
 import de.be4.classicalb.core.parser.exceptions.BException;
-import de.prob.core.Animator;
-import de.prob.core.command.CheckInitialisationStatusCommand;
-import de.prob.core.command.CheckInvariantStatusCommand;
-import de.prob.core.command.ClearMachineCommand;
-import de.prob.core.command.ExecuteOperationCommand;
-import de.prob.core.command.ExecuteRandomStepsCommand;
-import de.prob.core.command.GetOperationByPredicateCommand;
-import de.prob.core.command.LoadEventBModelCommand;
-import de.prob.core.domainobjects.Operation;
-import de.prob.core.domainobjects.Variable;
-import de.prob.exceptions.ProBException;
+import de.prob.model.eventb.EventBModel;
+import de.prob.scripting.EventBFactory;
+import de.prob.statespace.AnimationSelector;
+import de.prob.statespace.OpInfo;
+import de.prob.statespace.StateId;
+import de.prob.statespace.StateSpace;
+import de.prob.statespace.Trace;
+import de.prob.webconsole.ServletContextListener;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,10 +84,11 @@ import de.prob.exceptions.ProBException;
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getTraceFilePath <em>Trace File Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isCheckInvariants <em>Check Invariants</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isCompareTrace <em>Compare Trace</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
@@ -202,26 +213,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected EList<Event> waitEvents;
 
 	/**
-	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_PERIOD_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #isCheckInvariants() <em>Check Invariants</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -282,9 +273,50 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Trace TRACE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected Trace trace = TRACE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_PERIOD_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
+
+	/**
 	 * @custom
 	 */
 	private Random random = new Random(System.currentTimeMillis());
+	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
 	private BufferedReader traceReader;
 	private BufferedWriter traceWriter;
@@ -399,6 +431,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		recordTrace = newRecordTrace;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE, oldRecordTrace, recordTrace));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Trace getTrace() {
+		return trace;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTrace(Trace newTrace) {
+		Trace oldTrace = trace;
+		trace = newTrace;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__TRACE, oldTrace, trace));
 	}
 
 	/**
@@ -540,6 +593,28 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		}
 		return waitEvents;
 	}
+	
+	/**
+	 * Returns Event-B Root element of a machine.
+	 * @param machine
+	 * @return
+	 * @custom
+	 */
+	private IEventBRoot getMachineRoot(Machine machine) {
+		Resource resource = machine.eResource();
+		if (resource != null) {
+			URI uri = resource.getURI();
+			if (uri.isPlatformResource()) {
+				IFile file = WorkspaceSynchronizer.getFile(resource);
+				IRodinFile rodinFile = RodinCore.valueOf(file);
+				if (rodinFile != null) {
+					return (IEventBRoot) rodinFile.getRoot();
+				}
+			}
+			//FIXME: root for a non-workspace resource?
+		}
+		return null;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -547,53 +622,64 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus instantiate() {
-		assert getMachine() != null;
-		
-		// load machine animation
-		IEventBRoot root = SimulationUtil.getMachineRoot(getMachine());
-		Animator animator = Animator.getAnimator();
-		if (animator.isMachineLoaded()) {
-			try {
-				ClearMachineCommand.clearMachine(animator);
-			} catch (ProBException e) {
-				return SimStatus.PROB_ERROR;
-			}
-		}
-		try {
-			LoadEventBModelCommand.load(animator, root);
-		} catch (ProBException e) {
-			return SimStatus.LOAD_ERROR;
+		// load event-b machine
+		final IEventBRoot machineRoot = getMachineRoot(getMachine());
+		if (machineRoot == null) {
+			//FIXME:
+			throw new RuntimeException("machine absent");
+//			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot load machine component '" + getLabel()
+//					+ "'\nReason: Machine root cannot be determined.");
 		}
 		
-		// prepare trace comparison
-		if (compareTrace) {
-			try {
-				if (traceReader != null)
-					traceReader.close();
-				
-				// check trace file exists or created successfully
-				File file = new File(getTraceFilePath());
-				if (!file.exists() && !file.createNewFile())
-					return SimStatus.TRACE_ERROR;
-				
-				traceReader = new BufferedReader(new FileReader(getTraceFilePath()));
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
+		String fileName = machineRoot.getResource().getRawLocation()
+				.makeAbsolute().toOSString();
+		if (fileName.endsWith(".buc")) {
+			fileName = fileName.replace(".buc", ".bcc");
+		} else {
+			fileName = fileName.replace(".bum", ".bcm");
 		}
+
+		Injector injector = ServletContextListener.INJECTOR;
+		final EventBFactory instance = injector.getInstance(EventBFactory.class);
+		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
+		StateSpace s = model.getStatespace();
+		s.startTransaction();	// presumably putting everything into a transaction should make it perform faster
+		trace = new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
+		System.gc();
 		
-		// prepare trace recording
-		if (recordTrace) {
-			try {
-				if (traceWriter != null)
-					traceWriter.close();
-				traceWriter = new BufferedWriter(new FileWriter(getTraceFilePath()));
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		}
+//		// prepare trace comparison
+//		if (compareTrace) {
+//			try {
+//				if (traceReader != null)
+//					traceReader.close();
+//				
+//				// check trace file exists or created successfully
+//				File file = new File(getTraceFilePath());
+//				if (!file.exists() && !file.createNewFile())
+//					return SimStatus.TRACE_ERROR;
+//				
+//				traceReader = new BufferedReader(new FileReader(getTraceFilePath()));
+//			} catch (IOException e) {
+//				return SimStatus.TRACE_ERROR;
+//			}
+//		}
+//		
+//		// prepare trace recording
+//		if (recordTrace) {
+//			try {
+//				if (traceWriter != null)
+//					traceWriter.close();
+//				traceWriter = new BufferedWriter(new FileWriter(getTraceFilePath()));
+//			} catch (IOException e) {
+//				return SimStatus.TRACE_ERROR;
+//			}
+//		}
 		
 		// recall events for doStep matching
+		if (!readSet.isEmpty())
+			readSet.clear();
+		for (Event re : getReadInputEvents())
+			readSet.add(re.getName());
 		if (!waitSet.isEmpty())
 			waitSet.clear();
 		for (Event we : getWaitEvents())
@@ -613,18 +699,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus initialise(double tStart, double tStop) {
-		Animator animator = Animator.getAnimator();
-		
-		try {
-			ExecuteRandomStepsCommand.executeOperation(animator, 1);
-			if (!CheckInitialisationStatusCommand.isInitialized(animator, animator.getCurrentState().getId()))
-				ExecuteRandomStepsCommand.executeOperation(animator, 1);
-			if (!CheckInitialisationStatusCommand.isInitialized(animator, animator.getCurrentState().getId()))
-				return SimStatus.EVENTB_ERROR;
-		} catch (ProBException e) {
-			return SimStatus.PROB_ERROR;
-		}
+	public IStatus initialise(int tStart, int tStop) {
+		// execute first two events: 'setup_constants' and 'initialise'
+		//NOTE: setup_constants can be absent if there are no constants
+		trace = trace.anyEvent(null);
+		assert trace.getCurrent().getOp().getName() != null;
+		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+			trace = trace.anyEvent(null);
+		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+			return SimStatus.EVENTB_ERROR;
 		
 		return SimStatus.OK_STATUS;
 	}
@@ -632,6 +715,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws Exception 
 	 * @generated NOT
 	 */
 	public IStatus readInputs() {
@@ -654,33 +738,28 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			predicate.append("&" + ((EventBPort) p).getParameter().getName() + "=" + SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
 		}
 		
-		Animator animator = Animator.getAnimator();
-		
-		// find enabled read event
-		Operation readOp = null;
+		// find an enabled read event
+		List<OpInfo> readOps = new ArrayList<OpInfo>();
 		String predicateStr = predicate.toString();
 		for (Event re : readEvents) {
 			try {
-				readOp = GetOperationByPredicateCommand.getOperation(animator, animator.getCurrentState().getId(), re.getName(), predicateStr);
-			} catch (ProBException e) {
-				return SimStatus.PROB_ERROR;
-			} catch (BException e) {
-				return SimStatus.EVENTB_ERROR;
+				readOps.add(trace.findOneOp(re.getName(), predicateStr));
+			} catch (BException | IllegalArgumentException e) {
+				//FIXME:
+				throw new RuntimeException("failed read");
+//				return new SimStatus(Status.ERROR, SimStatus.ID, "Event-B error when reading inputs of component '" + getLabel() + "'\n" +
+//						"Reason: ProB failed to find an enabled read event '" + re.getName() + "' with the predicate '" + predicateStr + "'", e);
 			}
-			if (readOp != null)
-				break;
 		}
 		
 		// stop if no reads are enabled
-		if (readOp == null)
-			return SimStatus.EVENTB_NO_READS;
+		if (readOps.isEmpty())
+			//FIXME:
+			throw new RuntimeException("No read enabled");
+			//return SimStatus.EVENTB_NO_READS;
 		
 		// execute read event
-		try {
-			ExecuteOperationCommand.executeOperation(animator, readOp);
-		} catch (ProBException e) {
-			return SimStatus.PROB_ERROR;
-		}
+		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
 		
 		return SimStatus.OK_STATUS;
 	}
@@ -691,14 +770,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus writeOutputs() {
-		Map<String, Variable> values = Animator.getAnimator().getCurrentState().getValues();
+		assert trace != null;
+		StateId state = trace.getCurrentState();
+		
 		for (Port p : getOutputs()) {
 			// skip unconnected output
 			if (p.getOut().isEmpty())
 				continue;
 
 			p.setValue(SimulationUtil.getFMIValue(
-					values.get(p.getLabel()).getValue(), 
+					(String) state.value(p.getLabel()), 
 					p.getType(), 
 					((EventBPort) p).getIntToReal()));
 		}
@@ -711,46 +792,52 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus doStep(double time, double step) {
-		Animator animator = Animator.getAnimator();
-		List<Operation> ops = null;
-		Operation nextOp = null;
+	public IStatus doStep(int time, int step) {
+		Set<OpInfo> ops = null;
+		OpInfo nextOp = null;
 		IStatus status = SimStatus.OK_STATUS;
 		IStatus error = null;
-		while (true) {
-			ops = animator.getCurrentState().getEnabledOperations();
+		boolean isStep = true;
+		while (isStep) {
+			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
 			
 			// check deadlock
 			if (ops == null || ops.isEmpty())
-				return SimStatus.EVENTB_DEADLOCK;
+				//FIXME:
+				throw new RuntimeException("deadlock");
+				//return SimStatus.EVENTB_DEADLOCK;
 			
-			nextOp = ops.get(random.nextInt(ops.size()));
-			try {
-				// execute
-				ExecuteOperationCommand.executeOperation(animator, nextOp);
-				
-				// check invariants if on
-				if (checkInvariants && CheckInvariantStatusCommand.isInvariantViolated(animator, animator.getCurrentState().getId())) {
-					return SimStatus.EVENTB_INV_VIOLATED;
-				}
-				
-				// check trace if on
-				if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
-					return SimStatus.EVENTB_TRACE_DIV;
-					//FIXME: pass the error status from findRecordedOp()
-				}
-				
-				// record trace if on
-				if (recordTrace) {
-					error = recordOp(time, nextOp.getName());
-					if (error != SimStatus.OK_STATUS)
-						return error;
-				}
-			} catch (ProBException e) {
-				return SimStatus.EVENTB_ERROR;
+			// find next op
+			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
+			
+			// check if wait and read
+			assert nextOp.getName() != null;
+			if (waitSet.contains(nextOp.getName())) {
+				isStep = false;
+				if (readSet.contains(nextOp.getName()))
+					break;
 			}
-			if (waitSet.contains(nextOp.getName()))
-				break;
+			
+			// execute
+			trace = trace.add(nextOp.getId());
+			
+//			// check invariants if on
+//			if (checkInvariants && trace.getStateSpace().hasInvariantViolation(trace.getCurrentState())) {
+//				return SimStatus.EVENTB_INV_VIOLATED;
+//			}
+//			
+//			// check trace if on
+//			if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
+//				return SimStatus.EVENTB_TRACE_DIV;
+//				//FIXME: pass the error status from findRecordedOp()
+//			}
+//			
+//			// record trace if on
+//			if (recordTrace) {
+//				error = recordOp(time, nextOp.getName());
+//				if (error != SimStatus.OK_STATUS)
+//					return error;
+//			}
 		}
 
 		return status;
@@ -800,24 +887,31 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
+		trace.getStateSpace().endTransaction();
+		
 		// re-enable notifications
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		if (traceReader != null)
-			try {
-				traceReader.close();
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
-		if (traceWriter != null) {
-			try {
-				traceWriter.close();
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		}
+//		if (traceReader != null)
+//			try {
+//				traceReader.close();
+//			} catch (IOException e) {
+//				return SimStatus.TRACE_ERROR;
+//			}
+//		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
+//		if (traceWriter != null) {
+//			try {
+//				traceWriter.close();
+//			} catch (IOException e) {
+//				return SimStatus.TRACE_ERROR;
+//			}
+//		}
+
+		// show in ProB
+		Injector injector = ServletContextListener.INJECTOR;
+		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+		selector.addNewAnimation(trace);
 		
 		return SimStatus.OK_STATUS;
 	}
@@ -867,14 +961,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getReadInputEvents();
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				return getWaitEvents();
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return getStepPeriod();
 			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
 				return isCheckInvariants();
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
 				return isCompareTrace();
 			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				return isRecordTrace();
+			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
+				return getTrace();
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				return getStepPeriod();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -917,9 +1013,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				getWaitEvents().clear();
 				getWaitEvents().addAll((Collection<? extends Event>)newValue);
 				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod((Integer)newValue);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
 				setCheckInvariants((Boolean)newValue);
 				return;
@@ -928,6 +1021,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				setRecordTrace((Boolean)newValue);
+				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
+				setTrace((Trace)newValue);
+				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				setStepPeriod((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -965,9 +1064,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				getWaitEvents().clear();
 				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod(STEP_PERIOD_EDEFAULT);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
 				setCheckInvariants(CHECK_INVARIANTS_EDEFAULT);
 				return;
@@ -976,6 +1072,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				setRecordTrace(RECORD_TRACE_EDEFAULT);
+				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
+				setTrace(TRACE_EDEFAULT);
+				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				setStepPeriod(STEP_PERIOD_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1007,14 +1109,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return readInputEvents != null && !readInputEvents.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				return waitEvents != null && !waitEvents.isEmpty();
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
 				return checkInvariants != CHECK_INVARIANTS_EDEFAULT;
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
 				return compareTrace != COMPARE_TRACE_EDEFAULT;
 			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				return recordTrace != RECORD_TRACE_EDEFAULT;
+			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
+				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				return stepPeriod != STEP_PERIOD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1081,14 +1185,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		result.append(composed);
 		result.append(", traceFilePath: ");
 		result.append(traceFilePath);
-		result.append(", stepPeriod: ");
-		result.append(stepPeriod);
 		result.append(", checkInvariants: ");
 		result.append(checkInvariants);
 		result.append(", compareTrace: ");
 		result.append(compareTrace);
 		result.append(", recordTrace: ");
 		result.append(recordTrace);
+		result.append(", trace: ");
+		result.append(trace);
+		result.append(", stepPeriod: ");
+		result.append(stepPeriod);
 		result.append(')');
 		return result.toString();
 	}

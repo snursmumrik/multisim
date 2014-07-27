@@ -267,7 +267,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus initialise(double tStart, double tStop) {
+	public IStatus initialise(int tStart, int tStop) {
 		Chart2D chart = getChart();
 		assert chart != null;
 		
@@ -343,7 +343,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus doStep(double time, double step) {
+	public IStatus doStep(int time, int step) {
 		DisplayPort port = null;
 		Port input = null;
 		for (Port p : getInputs()) {
@@ -364,7 +364,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				} else if (input.getType() == VariableType.BOOLEAN) {
 					traceValue = ((Boolean) value).booleanValue() ? 1 : 0;
 				}
-				port.getTrace().addPoint(time/1000, traceValue);
+				port.getTrace().addPoint(time/1000.0, traceValue);
 			}
 		}
 		return SimStatus.OK_STATUS;

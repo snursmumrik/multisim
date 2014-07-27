@@ -85,10 +85,11 @@ public class EventBComponentItemProvider
 			addTraceFilePathPropertyDescriptor(object);
 			addReadInputEventsPropertyDescriptor(object);
 			addWaitEventsPropertyDescriptor(object);
-			addStepPeriodPropertyDescriptor(object);
 			addCheckInvariantsPropertyDescriptor(object);
 			addCompareTracePropertyDescriptor(object);
 			addRecordTracePropertyDescriptor(object);
+			addTracePropertyDescriptor(object);
+			addStepPeriodPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -199,6 +200,28 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Trace feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTracePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventBComponent_trace_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_trace_feature", "_UI_EventBComponent_type"),
+				 ComponentsPackage.Literals.EVENT_BCOMPONENT__TRACE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -385,10 +408,11 @@ public class EventBComponentItemProvider
 			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
 			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:

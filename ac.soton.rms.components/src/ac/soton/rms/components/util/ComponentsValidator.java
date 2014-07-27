@@ -37,6 +37,7 @@ import ac.soton.rms.components.Port;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 import de.prob.cosimulation.FMU;
+import de.prob.statespace.Trace;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.ITrace2D;
 import java.awt.Color;
@@ -160,6 +161,8 @@ public class ComponentsValidator extends EObjectValidator {
 				return validateChart2D((Chart2D)value, diagnostics, context);
 			case ComponentsPackage.COLOR:
 				return validateColor((Color)value, diagnostics, context);
+			case ComponentsPackage.PRO_BTRACE:
+				return validateProBTrace((Trace)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -171,47 +174,7 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateComponentDiagram(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(componentDiagram, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(componentDiagram, diagnostics, context);
-		if (result || diagnostics != null) result &= validateComponentDiagram_singleEventBComponent(componentDiagram, diagnostics, context);
-		return result;
-	}
-
-	/**
-	 * Validates the singleEventBComponent constraint of '<em>Component Diagram</em>'.
-	 * <!-- begin-user-doc -->
-	 * Only one Event-B Component is allowed.
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public boolean validateComponentDiagram_singleEventBComponent(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		int countB = 0;
-		for (Component c : componentDiagram.getComponents())
-			if (c instanceof EventBComponent)
-				++countB;
-		
-		if (countB > 1) {
-			if (diagnostics != null) {
-				diagnostics.add
-					(createDiagnostic
-						(Diagnostic.ERROR,
-						 DIAGNOSTIC_SOURCE,
-						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "singleEventBComponent", getObjectLabel(componentDiagram, context) },
-						 new Object[] { componentDiagram },
-						 context));
-			}
-			return false;
-		}
-		return true;
+		return validate_EveryDefaultConstraint(componentDiagram, diagnostics, context);
 	}
 
 	/**
@@ -606,6 +569,15 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateColor(Color color, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateProBTrace(Trace proBTrace, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

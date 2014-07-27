@@ -42,6 +42,7 @@ import ac.soton.rms.components.Port;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 import ac.soton.rms.components.util.ComponentsValidator;
+import de.prob.statespace.Trace;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.ITrace2D;
 import java.awt.Color;
@@ -199,6 +200,13 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	private EDataType colorEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType proBTraceEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -405,7 +413,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	public EAttribute getEventBComponent_StepPeriod() {
-		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -414,7 +422,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	public EAttribute getEventBComponent_CheckInvariants() {
-		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -423,7 +431,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	public EAttribute getEventBComponent_CompareTrace() {
-		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -432,6 +440,15 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	public EAttribute getEventBComponent_RecordTrace() {
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEventBComponent_Trace() {
 		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -755,6 +772,15 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getProBTrace() {
+		return proBTraceEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ComponentsFactory getComponentsFactory() {
 		return (ComponentsFactory)getEFactoryInstance();
 	}
@@ -794,10 +820,11 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE_FILE_PATH);
 		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__READ_INPUT_EVENTS);
 		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__WAIT_EVENTS);
-		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__STEP_PERIOD);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__CHECK_INVARIANTS);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__COMPARE_TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__RECORD_TRACE);
+		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE);
+		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__STEP_PERIOD);
 
 		fmuComponentEClass = createEClass(FMU_COMPONENT);
 		createEAttribute(fmuComponentEClass, FMU_COMPONENT__PATH);
@@ -847,6 +874,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		iTrace2DEDataType = createEDataType(ITRACE2_D);
 		chart2DEDataType = createEDataType(CHART2_D);
 		colorEDataType = createEDataType(COLOR);
+		proBTraceEDataType = createEDataType(PRO_BTRACE);
 	}
 
 	/**
@@ -915,16 +943,16 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		addEOperation(componentEClass, this.getIStatus(), "instantiate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		EOperation op = addEOperation(componentEClass, this.getIStatus(), "initialise", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEDouble(), "tStart", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEDouble(), "tStop", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "tStart", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "tStop", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(componentEClass, this.getIStatus(), "readInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(componentEClass, this.getIStatus(), "writeOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(componentEClass, this.getIStatus(), "doStep", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEDouble(), "time", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEcorePackage.getEDouble(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "time", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEInt(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(componentEClass, this.getIStatus(), "terminate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -934,10 +962,11 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		initEAttribute(getEventBComponent_TraceFilePath(), theEcorePackage.getEString(), "traceFilePath", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEventBComponent_ReadInputEvents(), theMachinePackage.getEvent(), null, "readInputEvents", null, 0, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEventBComponent_WaitEvents(), theMachinePackage.getEvent(), null, "waitEvents", null, 1, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEventBComponent_StepPeriod(), theEcorePackage.getEInt(), "stepPeriod", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_CheckInvariants(), theEcorePackage.getEBoolean(), "checkInvariants", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_CompareTrace(), theEcorePackage.getEBoolean(), "compareTrace", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_RecordTrace(), theEcorePackage.getEBoolean(), "recordTrace", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEventBComponent_Trace(), this.getProBTrace(), "trace", null, 0, 1, EventBComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEventBComponent_StepPeriod(), theEcorePackage.getEInt(), "stepPeriod", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuComponentEClass, FMUComponent.class, "FMUComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFMUComponent_Path(), theEcorePackage.getEString(), "path", null, 1, 1, FMUComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -996,15 +1025,16 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 		initEDataType(iTrace2DEDataType, ITrace2D.class, "ITrace2D", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(chart2DEDataType, Chart2D.class, "Chart2D", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(colorEDataType, Color.class, "Color", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(proBTraceEDataType, Trace.class, "ProBTrace", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
 
 		// Create annotations
-		// http://www.eclipse.org/emf/2002/Ecore
-		createEcoreAnnotations();
 		// org.eventb.emf.core.extendedMetaClasses
 		createOrgAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
 	}
 
 	/**
@@ -1014,7 +1044,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	protected void createOrgAnnotations() {
-		String source = "org.eventb.emf.core.extendedMetaClasses";			
+		String source = "org.eventb.emf.core.extendedMetaClasses";		
 		addAnnotation
 		  (eventBComponentEClass, 
 		   source, 
@@ -1032,13 +1062,7 @@ public class ComponentsPackageImpl extends EPackageImpl implements ComponentsPac
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";		
-		addAnnotation
-		  (componentDiagramEClass, 
-		   source, 
-		   new String[] {
-			 "constraints", "singleEventBComponent"
-		   });			
+		String source = "http://www.eclipse.org/emf/2002/Ecore";			
 		addAnnotation
 		  (eventBComponentEClass, 
 		   source, 

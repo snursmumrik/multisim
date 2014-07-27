@@ -9,6 +9,7 @@
  */
 package ac.soton.rms.components;
 
+import de.prob.statespace.Trace;
 import org.eclipse.emf.common.util.EList;
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.machine.Event;
@@ -27,10 +28,11 @@ import org.eventb.emf.core.machine.Machine;
  *   <li>{@link ac.soton.rms.components.EventBComponent#getTraceFilePath <em>Trace File Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#getWaitEvents <em>Wait Events</em>}</li>
- *   <li>{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#isCheckInvariants <em>Check Invariants</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#isCompareTrace <em>Compare Trace</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}</li>
+ *   <li>{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
@@ -259,5 +261,31 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * @generated
 	 */
 	void setRecordTrace(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Trace</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Trace</em>' attribute.
+	 * @see #setTrace(Trace)
+	 * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent_Trace()
+	 * @model dataType="ac.soton.rms.components.ProBTrace" transient="true"
+	 * @generated
+	 */
+	Trace getTrace();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Trace</em>' attribute.
+	 * @see #getTrace()
+	 * @generated
+	 */
+	void setTrace(Trace value);
 
 } // EventBComponent

@@ -7,8 +7,11 @@
  */
 package ac.soton.rms.master;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -25,212 +28,129 @@ import ac.soton.rms.components.util.custom.SimStatus;
  *
  */
 public class Master {
-	
+	// simulation data
+	private static List<Component> components;
 	private static int startTime;
 	private static int stopTime;
 	private static int currentTime;
-	private static int step;
-	private static List<Component> components;
-	private static List<Component> dependentFMUs = new ArrayList<Component>();
 	
-	// simulation states
+	// job states
 	private static boolean finished = true;
-	private static boolean paused = false;
-	private static boolean ok = true;
 	
-	private static String resultsMessage;
-	private static long systemTime;
+	// component lists
+	private static Map<EventBComponent, Integer> updateList = new HashMap<>();
+	private static Set<EventBComponent> deList = new HashSet<>();
+	private static Set<FMUComponent> ctList = new HashSet<>();
+	private static Map<Component, Integer> lastEvalTime = new HashMap<>();
+	private static Map<Port, Object> preValue = new HashMap<Port, Object>();
 	
 	/**
+	 * Simulate the diagram.
 	 * 
-	 */
-	synchronized public static void pause() {
-		System.out.println("Paused");
-		paused = true;
-	}
-	
-	/**
 	 * @param diagram
-	 * @param monitor
-	 * @param checkInvariants 
-	 * @param compareTrace 
-	 * @param recordTrace 
+	 * @param monitor progress monitor
+	 * @param checkInvariants invariant check flag
+	 * @param compareTrace trace comparison flag 
+	 * @param recordTrace trace recording flag
 	 * @return
 	 */
 	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, boolean recordTrace, boolean compareTrace, boolean checkInvariants) {
-		paused = false;	// clear paused state
-		ok = true;
 		IStatus status = SimStatus.OK_STATUS;
 		
 		if (finished) {
+			updateList.clear();
+			deList.clear();
+			ctList .clear();
+			lastEvalTime.clear();
+			preValue.clear();
+			
+			components = diagram.getComponents();
 			startTime = diagram.getStartTime();
 			stopTime = diagram.getStopTime();
 			currentTime = startTime;
-			components = diagram.getComponents();
-			
-			// read step size from Event-B
-			for (Component c : components) {
-				if (c instanceof EventBComponent) {
-					EventBComponent ebComponent = (EventBComponent) c;
-					ebComponent.eSetDeliver(false);
-					ebComponent.setRecordTrace(recordTrace);
-					ebComponent.setCompareTrace(compareTrace);
-					ebComponent.setCheckInvariants(checkInvariants);
-					step = ebComponent.getStepPeriod();
-					dependentFMUs.clear();
-					setDependentFMUs(ebComponent);
-					break;
-				}
-			}
-			
-			monitor.beginTask("", stopTime - startTime + components.size());
 			
 			// instantiate & initialise
 			for (Component c : components) {
-				monitor.subTask("Initialising '" + c.getLabel() + "'");
-				if ((status = c.instantiate()) == SimStatus.OK_STATUS
-						&& (status = c.initialise(currentTime, stopTime)) == SimStatus.OK_STATUS) {
-					monitor.worked(1);
-				} else {
-					resultsMessage = "Could not initialise component '" + c.getLabel() + "'";
-					ok = false;
-					break;
-				}
+				c.instantiate();
+				c.initialise(currentTime, stopTime);
+				
+				// first evaluation of DE
+				if (c instanceof EventBComponent)
+					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
+				else if (c instanceof FMUComponent)
+					lastEvalTime.put(c, 0);		// store eval time for CT
+				
+				// initial IO (part 1)
+				c.writeOutputs();
+				
+				if (c instanceof EventBComponent)
+					for (Port y : c.getOutputs())
+						preValue.put(y, y.getValue());
 			}
+			// initial IO (part 2)
+			for (Component c : components)
+				c.readInputs();
 
-			finished = false;	// mark as started
-			systemTime = System.currentTimeMillis();
-		} else {
-			monitor.beginTask("", stopTime - startTime + components.size());
-			monitor.worked(components.size() + currentTime - startTime);
-			systemTime = System.currentTimeMillis() - systemTime;
+			finished = false;
 		}
 
-		while (currentTime < stopTime && ok) {
-			if (monitor.isCanceled()) {
-				monitor.subTask("Cancelling simulation");
-				status = SimStatus.CANCEL_STATUS;
-				break;
-			} else if (isPaused()) {
-				systemTime = System.currentTimeMillis() - systemTime;
-				monitor.subTask("Paused");
-//				status = SimStatus.PAUSE_STATUS;
-				generateResultsMessage(status);
-				return status;
-			}
-			
-			monitor.subTask("Exchanging values");
-			for (Component c : components) {
-				if ((status = c.writeOutputs()) != SimStatus.OK_STATUS) {
-					ok = false;
-					break;
+		for (; currentTime <= stopTime; ++currentTime) {
+			for (Component c : diagram.getComponents()) {
+				if (currentTime == updateList.get(c)) {
+					deList.add((EventBComponent) c);
+					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepPeriod());
 				}
 			}
-//			// zero-step for affected FMUs
-//			//FIXME: only applicable for an algebraic loop and only if Event-B output has changed
-//			for (Component cc : eventBFMUs) {
-//				cc.readInputs();
-//				cc.doStep(currentTime, 0);
-//				cc.writeOutputs();
-//			}
 			
-			for (Component c : components) {
-				if ((status = c.readInputs()) != SimStatus.OK_STATUS) {
-					ok = false;
-					break;
+			// skip CT steps if no DE
+			if (deList.isEmpty())
+				continue;
+			
+			// DE step
+			for (EventBComponent c : deList) {
+				c.doStep(currentTime, c.getStepPeriod());
+				c.writeOutputs();
+				System.out.println(currentTime+": "+c.getLabel()+"["+c.getStepPeriod()+"]."+c.getOutputs().get(0).getLabel()+"="+c.getOutputs().get(0).getValue());
+				for (Port y : c.getOutputs()) {
+					if (y.getValue() != preValue.get(y)) {
+						preValue.put(y, y.getValue());
+						for (Port u : y.getOut()) {
+							if (u.eContainer() instanceof FMUComponent)
+								ctList.add((FMUComponent) u.eContainer());
+						}
+					}
 				}
-				
-				// don't show if pausing
-				if (!paused)
-					monitor.subTask("Time=" + currentTime/1000f + "s: step '" + c.getLabel() + "'");
-				
-				status = c.doStep(currentTime, step);
-				if (status.getSeverity() == SimStatus.WARNING) {
-					paused = true;
-					monitor.subTask("Pausing simulation: " + status.getMessage() + " detected.");
-				} else if (status.getSeverity() == SimStatus.ERROR) {
-					ok = false;
-					break;
-				}
-				
-				
 			}
 			
-			
-			if (ok) {
-				currentTime += step;
-				monitor.worked(step);
+			// CT step
+			for (FMUComponent c : ctList) {
+				int tEval = lastEvalTime .get(c);
+				c.doStep(tEval, currentTime - tEval);
+				c.writeOutputs();
+				lastEvalTime.put(c, currentTime);
 			}
+			
+			// IO
+			for (Component c : deList)
+				c.readInputs();
+			for (Component c : ctList)
+				c.readInputs();
+			
+			deList.clear();
+			ctList.clear();
 		}
-
-		systemTime = System.currentTimeMillis() - systemTime;
 		
 		for (Component c : components) {
-			monitor.subTask("Terminating '" + c.getLabel() + "'");
-			//TODO: add error handling for the terminate() method
 			c.terminate();
 		}
 		
-		generateResultsMessage(status);
 		finished = true;
+		
 		return status;
-			
 	}
 
-	/**
-	 * Set a list of FMUs, directly dependent on component's output
-	 * @param c
-	 */
-	private static void setDependentFMUs(Component c) {
-		Component cc = null;
-		for (Port po : c.getOutputs()) {
-			for (Port pi : po.getOut()) {
-				cc = (Component) pi.eContainer();
-				if (!dependentFMUs.contains(cc) && cc instanceof FMUComponent) {
-					dependentFMUs.add(cc);
-					setDependentFMUs(cc);
-				}
-			}
-		}
+	public static void pause() {
+		// TODO Auto-generated method stub
+		
 	}
-
-	/**
-	 * @param status
-	 */
-	private static void generateResultsMessage(IStatus status) {
-		switch (status.getSeverity()) {
-		case IStatus.OK:
-			resultsMessage = "Completed successfully in " + ((double) systemTime / 1000.0) + " seconds";
-			break;
-		case IStatus.INFO:
-		case IStatus.WARNING:
-			resultsMessage = "Simulation interrupted at time=" + currentTime/1000f + "s\nReason: " + status.getMessage();
-			break;
-		case IStatus.ERROR:
-			resultsMessage = "SImulation terminated at time=" + currentTime/1000f + "s\nError: " + status.getMessage();
-		}
-	}
-
-	/**
-	 * @return the paused
-	 */
-	synchronized public static boolean isPaused() {
-		return paused;
-	}
-
-	/**
-	 * @return the finished
-	 */
-	public static boolean isFinished() {
-		return finished;
-	}
-
-	/**
-	 * @return the resultsMessage
-	 */
-	public static String getResultsMessage() {
-		return resultsMessage;
-	}
-	
-	
 }

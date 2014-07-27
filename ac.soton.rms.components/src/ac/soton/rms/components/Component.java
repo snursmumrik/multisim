@@ -101,7 +101,7 @@ public interface Component extends EventBLabeled {
 	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	IStatus initialise(double tStart, double tStop);
+	IStatus initialise(int tStart, int tStop);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,7 +125,7 @@ public interface Component extends EventBLabeled {
 	 * @model dataType="ac.soton.rms.components.IStatus"
 	 * @generated
 	 */
-	IStatus doStep(double time, double step);
+	IStatus doStep(int time, int step);
 
 	/**
 	 * <!-- begin-user-doc -->
