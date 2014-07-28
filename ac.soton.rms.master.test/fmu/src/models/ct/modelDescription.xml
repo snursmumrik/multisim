@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fmiModelDescription
+  fmiVersion="1.0"
+  modelName="ct"
+  modelIdentifier="ct"
+  guid="{8c4e810f-3df3-4a00-8276-176fa3c9f009}"
+  numberOfContinuousStates="0"
+  numberOfEventIndicators="0">
+<ModelVariables>
+  <ScalarVariable name="u" valueReference="0" description="integer input" causality = "input">
+     <Integer start="0"/>
+  </ScalarVariable>
+  <ScalarVariable name="y" valueReference="1" description="counts the seconds" causality = "output">
+     <Integer start="0"/>
+  </ScalarVariable>
+</ModelVariables>

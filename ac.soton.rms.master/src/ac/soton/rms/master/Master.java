@@ -34,9 +34,6 @@ public class Master {
 	private static int stopTime;
 	private static int currentTime;
 	
-	// job states
-	private static boolean finished = true;
-	
 	// component lists
 	private static Map<EventBComponent, Integer> updateList = new HashMap<>();
 	private static Set<EventBComponent> deList = new HashSet<>();
@@ -57,46 +54,43 @@ public class Master {
 	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, boolean recordTrace, boolean compareTrace, boolean checkInvariants) {
 		IStatus status = SimStatus.OK_STATUS;
 		
-		if (finished) {
-			updateList.clear();
-			deList.clear();
-			ctList .clear();
-			lastEvalTime.clear();
-			preValue.clear();
+		updateList.clear();
+		deList.clear();
+		ctList .clear();
+		lastEvalTime.clear();
+		preValue.clear();
+		
+		components = diagram.getComponents();
+		startTime = diagram.getStartTime();
+		stopTime = diagram.getStopTime();
+		currentTime = startTime;
+		
+		// instantiate & initialise
+		for (Component c : components) {
+			c.instantiate();
+			c.initialise(currentTime, stopTime);
 			
-			components = diagram.getComponents();
-			startTime = diagram.getStartTime();
-			stopTime = diagram.getStopTime();
-			currentTime = startTime;
+			// first evaluation of DE
+			if (c instanceof EventBComponent)
+				updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
+			else if (c instanceof FMUComponent)
+				lastEvalTime.put(c, 0);		// store eval time for CT
 			
-			// instantiate & initialise
-			for (Component c : components) {
-				c.instantiate();
-				c.initialise(currentTime, stopTime);
-				
-				// first evaluation of DE
-				if (c instanceof EventBComponent)
-					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
-				else if (c instanceof FMUComponent)
-					lastEvalTime.put(c, 0);		// store eval time for CT
-				
-				// initial IO (part 1)
-				c.writeOutputs();
-				
-				if (c instanceof EventBComponent)
-					for (Port y : c.getOutputs())
-						preValue.put(y, y.getValue());
-			}
-			// initial IO (part 2)
-			for (Component c : components)
-				c.readInputs();
-
-			finished = false;
+			// initial IO (part 1)
+			c.writeOutputs();
+			
+			if (c instanceof EventBComponent)
+				for (Port y : c.getOutputs())
+					preValue.put(y, y.getValue());
 		}
+		// initial IO (part 2)
+		for (Component c : components)
+			c.readInputs();
 
+		// simulation loop
 		for (; currentTime <= stopTime; ++currentTime) {
 			for (Component c : diagram.getComponents()) {
-				if (currentTime == updateList.get(c)) {
+				if (updateList.containsKey(c) && currentTime == updateList.get(c)) {
 					deList.add((EventBComponent) c);
 					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepPeriod());
 				}
@@ -111,6 +105,13 @@ public class Master {
 				c.doStep(currentTime, c.getStepPeriod());
 				c.writeOutputs();
 				System.out.println(currentTime+": "+c.getLabel()+"["+c.getStepPeriod()+"]."+c.getOutputs().get(0).getLabel()+"="+c.getOutputs().get(0).getValue());
+				// evaluate any CT input
+				for (Port u : c.getInputs()) {
+					if (u.getIn() != null && u.getIn().eContainer() instanceof FMUComponent) {
+						ctList.add((FMUComponent) u.getIn().eContainer());
+					}
+				}
+				// evaluate any CT at the output, if the output has changed
 				for (Port y : c.getOutputs()) {
 					if (y.getValue() != preValue.get(y)) {
 						preValue.put(y, y.getValue());
@@ -127,6 +128,7 @@ public class Master {
 				int tEval = lastEvalTime .get(c);
 				c.doStep(tEval, currentTime - tEval);
 				c.writeOutputs();
+				System.out.println(currentTime+": "+c.getLabel()+"["+(currentTime - tEval)+"]."+c.getOutputs().get(0).getLabel()+"="+c.getOutputs().get(0).getValue());
 				lastEvalTime.put(c, currentTime);
 			}
 			
@@ -140,11 +142,10 @@ public class Master {
 			ctList.clear();
 		}
 		
+		// termination
 		for (Component c : components) {
 			c.terminate();
 		}
-		
-		finished = true;
 		
 		return status;
 	}

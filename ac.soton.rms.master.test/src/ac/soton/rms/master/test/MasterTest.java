@@ -3,24 +3,25 @@
  */
 package ac.soton.rms.master.test;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.eventb.core.IEvent;
 import org.eventb.core.IEventBProject;
 import org.eventb.core.IEventBRoot;
@@ -38,39 +39,42 @@ import org.junit.Test;
 import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
 
-import com.google.inject.Injector;
-
-import de.be4.classicalb.core.parser.exceptions.BException;
-import de.prob.model.eventb.EventBModel;
-import de.prob.model.representation.AbstractModel;
-import de.prob.scripting.EventBFactory;
-import de.prob.statespace.AnimationSelector;
-import de.prob.statespace.StateSpace;
-import de.prob.statespace.Trace;
-import de.prob.webconsole.ServletContextListener;
 import ac.soton.rms.components.ComponentDiagram;
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
+import ac.soton.rms.components.FMUComponent;
+import ac.soton.rms.components.FMUPort;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
-import ac.soton.rms.components.util.custom.SimStatus;
 import ac.soton.rms.master.Master;
 
+import com.google.inject.Injector;
+
+import de.be4.classicalb.core.parser.exceptions.BException;
+import de.prob.model.eventb.EventBModel;
+import de.prob.scripting.EventBFactory;
+import de.prob.statespace.StateSpace;
+import de.prob.statespace.Trace;
+import de.prob.webconsole.ServletContextListener;
+
 /**
- * @author vitaly
- *
- * Creates an example component connection graph:
+ *  Creates an example component connection graph:
  * 		->	C1	->
  * 		D1		D2
  * 		<-	C2	<-
  * 
  * where Dn - discrete component (Event-B)
- * 		Cn - continuous component (FMU)
- * 		-> - direction of the data exchange (IO)
+ * 		 Cn - continuous component (FMU)
+ * 		 -> - direction of the data exchange (IO)
+ * 
+ * @author vitaly
+ *
  */
 public class MasterTest extends AbstractEventBTests {
 	
+	private static final String CT_NAME = "C";
+	private static final String DE_NAME = "D";
 	protected static final String CARTESIAN_PRODUCT = "\u00d7";
 	protected static final String DIRECT_PRODUCT = "\u2297";
 	protected static final String MEMBER_OF = " \u2208 ";
@@ -90,12 +94,15 @@ public class MasterTest extends AbstractEventBTests {
 
 	/**
 	 * Test method for {@link ac.soton.rms.master.Master#simulate(ac.soton.rms.components.ComponentDiagram, org.eclipse.core.runtime.IProgressMonitor, boolean, boolean, boolean)}.
+	 * 
 	 * @throws CoreException 
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
 	@Test
-	public final void testSimulate() throws CoreException {
+	public final void testSimulateDE() throws CoreException, IOException, InterruptedException {
 		IEventBProject project = createEventBProject("MATest");
-		IMachineRoot machine = createMachine(project, "DT");
+		IMachineRoot machine = createMachine(project, DE_NAME);
 
 		createVariable(machine, "y");
 		createVariable(machine, "io");
@@ -122,56 +129,158 @@ public class MasterTest extends AbstractEventBTests {
 		// generates missing files
 		machine.getRodinFile().save(monitor, false);
 		workspace.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+		IProject projectRes = ResourcesPlugin.getWorkspace().getRoot().getProject("MATest");
 		
 		// EMF
 		ResourceSetImpl rs = new ResourceSetImpl();
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject("MATest").getFile("DT.bum");
+		IFile file = projectRes.getFile(DE_NAME+".bum");
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		Resource resource = rs.getResource(uri, true);
 		Machine m = (Machine) resource.getContents().get(0);
 
 		ComponentDiagram diagram = ComponentsFactory.eINSTANCE.createComponentDiagram();
 		
-		EventBComponent dt1 = ComponentsFactory.eINSTANCE.createEventBComponent();
-		dt1.setMachine(m);
+		EventBComponent d1 = ComponentsFactory.eINSTANCE.createEventBComponent();
+		d1.setMachine(m);
 		for (Event e : m.getEvents()) {
 			if (e.getName().equals("read")) {
-				dt1.getReadInputEvents().add(e);
+				d1.getReadInputEvents().add(e);
 				EventBPort u = ComponentsFactory.eINSTANCE.createEventBPort();
 				u.setParameter(e.getParameters().get(0));
 				u.setType(VariableType.INTEGER);
 				u.setCausality(VariableCausality.INPUT);
-				dt1.getInputs().add(u);
+				d1.getInputs().add(u);
 			} else if (e.getName().equals("wait")) {
-				dt1.getWaitEvents().add(e);
+				d1.getWaitEvents().add(e);
 			}
 		}
 		EventBPort y = ComponentsFactory.eINSTANCE.createEventBPort();
 		y.setVariable(m.getVariables().get(m.getVariables().get(0).getName().equals("y") ? 0 : 1));
 		y.setType(VariableType.INTEGER);
 		y.setCausality(VariableCausality.OUTPUT);
-		dt1.getOutputs().add(y);
-		dt1.setStepPeriod(3);
+		d1.getOutputs().add(y);
+		d1.setStepPeriod(3);
 		
-		EventBComponent dt2 = EcoreUtil.copy(dt1);
-		dt2.setStepPeriod(4);
+		EventBComponent d2 = EcoreUtil.copy(d1);
+		d2.setStepPeriod(4);
 		
-		dt1.getInputs().get(0).setIn(dt2.getOutputs().get(0));
-		dt2.getInputs().get(0).setIn(dt1.getOutputs().get(0));
-		diagram.getComponents().add(dt1);
-		diagram.getComponents().add(dt2);
+		d1.getInputs().get(0).setIn(d2.getOutputs().get(0));
+		d2.getInputs().get(0).setIn(d1.getOutputs().get(0));
+		diagram.getComponents().add(d1);
+		diagram.getComponents().add(d2);
 		diagram.setStartTime(0);
 		diagram.setStopTime(12);
 		Master.simulate(diagram, null, false, false, false);
 		
-		Object y1 = dt1.getOutputs().get(0).getValue();
-		Object y2 = dt2.getOutputs().get(0).getValue();
+		Object y1 = d1.getOutputs().get(0).getValue();
+		Object y2 = d2.getOutputs().get(0).getValue();
 		assertTrue((int)y1 == 3 && (int)y2 == 2);
+	}
+	
+	public final void testSimulateDECT() throws CoreException, IOException, InterruptedException {
+		IEventBProject project = createEventBProject("MATest");
+		IMachineRoot machine = createMachine(project, DE_NAME);
+
+		createVariable(machine, "y");
+		createVariable(machine, "io");
+		createInvariant(machine, "inv1", "y"+MEMBER_OF+INT, false);
+		createInvariant(machine, "inv2", "io"+MEMBER_OF+BOOL, false);
+		
+		IEvent init = createEvent(machine, "INITIALISATION");
+		createAction(init, "act1", "y"+ASSIGN+"0");
+		createAction(init, "act2", "io"+ASSIGN+"TRUE");
+		
+		IEvent read = createEvent(machine, "read");
+		createParameter(read, "u");
+		createGuard(read, "grd1", "u"+MEMBER_OF+INT, false);
+		createGuard(read, "grd2", "io = TRUE", false);
+		createAction(read, "act1", "y"+ASSIGN+"u");
+		createAction(read, "act2", "io"+ASSIGN+"FALSE");
+		
+		IEvent wait = createEvent(machine, "wait");
+		createGuard(wait, "grd1", "io = FALSE", false);
+		createAction(wait, "act1", "io"+ASSIGN+"TRUE");
+		createAction(wait, "act2", "y"+ASSIGN+"y+1");
+
+		// save file and build workspace - this triggers static check, and
+		// generates missing files
+		machine.getRodinFile().save(monitor, false);
+		workspace.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+		IProject projectRes = ResourcesPlugin.getWorkspace().getRoot().getProject("MATest");
+		
+		// FMU
+		URL base = Platform.getBundle("ac.soton.rms.master.test").getEntry("fmu/src/models");
+		String command = "make";
+		String[] envp = {};
+		File dir = new File(FileLocator.toFileURL(base).getPath()) ;
+		Process proc = Runtime.getRuntime().exec(command, envp, dir);
+		assertTrue(proc.waitFor() == 0);
+		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/ct.fmu"));
+		assertTrue(fmuFile.exists());
+		FileUtils.copyFileToDirectory(fmuFile, new File(projectRes.getLocation().toOSString()));
+		
+		// EMF
+		ResourceSetImpl rs = new ResourceSetImpl();
+		IFile file = projectRes.getFile(DE_NAME+".bum");
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		Resource resource = rs.getResource(uri, true);
+		Machine m = (Machine) resource.getContents().get(0);
+
+		ComponentDiagram diagram = ComponentsFactory.eINSTANCE.createComponentDiagram();
+		
+		EventBComponent de = ComponentsFactory.eINSTANCE.createEventBComponent();
+		de.setMachine(m);
+		for (Event e : m.getEvents()) {
+			if (e.getName().equals("read")) {
+				de.getReadInputEvents().add(e);
+				EventBPort u = ComponentsFactory.eINSTANCE.createEventBPort();
+				u.setParameter(e.getParameters().get(0));
+				u.setType(VariableType.INTEGER);
+				u.setCausality(VariableCausality.INPUT);
+				de.getInputs().add(u);
+			} else if (e.getName().equals("wait")) {
+				de.getWaitEvents().add(e);
+			}
+		}
+		EventBPort y = ComponentsFactory.eINSTANCE.createEventBPort();
+		y.setVariable(m.getVariables().get(m.getVariables().get(0).getName().equals("y") ? 0 : 1));
+		y.setType(VariableType.INTEGER);
+		y.setCausality(VariableCausality.OUTPUT);
+		de.getOutputs().add(y);
+		de.setStepPeriod(3000);
+		
+		FMUComponent ct = ComponentsFactory.eINSTANCE.createFMUComponent();
+		ct.setName(CT_NAME+"1");
+		ct.setPath(fmuFile.getPath());
+		FMUPort uc = ComponentsFactory.eINSTANCE.createFMUPort();
+		uc.setCausality(VariableCausality.INPUT);
+		uc.setType(VariableType.INTEGER);
+		uc.setName("u");
+		ct.getInputs().add(uc);
+		FMUPort yc = ComponentsFactory.eINSTANCE.createFMUPort();
+		yc.setCausality(VariableCausality.OUTPUT);
+		yc.setType(VariableType.INTEGER);
+		yc.setName("y");
+		ct.getOutputs().add(yc);
+		
+		de.getInputs().get(0).setIn(ct.getOutputs().get(0));
+		ct.getInputs().get(0).setIn(de.getOutputs().get(0));
+		diagram.getComponents().add(de);
+		diagram.getComponents().add(ct);
+		diagram.setStartTime(0);
+		diagram.setStopTime(12000);
+		Master.simulate(diagram, null, false, false, false);
+		
+		Object y1 = de.getOutputs().get(0).getValue();
+		Object y2 = ct.getOutputs().get(0).getValue();
+		System.out.println(de.getLabel()+".y="+y1);
+		System.out.println(ct.getName()+".y="+y2);
+		assertTrue((int)y1 == 6 && (int)y2 == 8);
 	}
 	
 	@Test
 	public final void testAnimation() throws CoreException, BException {
-		IEventBProject project = createEventBProject("anim");
+		createEventBProject("anim");
 		
 		ResourceSetImpl rs = new ResourceSetImpl();
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject("anim").getFile("m0.bum");
@@ -337,5 +446,19 @@ public class MasterTest extends AbstractEventBTests {
 		trace = trace.anyEvent(null);
 		Object value = trace.getCurrentState().value("y");
 		trace = trace.anyEvent(null);
+	}
+	
+	@Test
+	public final void testFMUBuild() throws IOException, InterruptedException {
+		URL base = Platform.getBundle("ac.soton.rms.master.test").getEntry("fmu/src/models");
+		String command = "make";
+		String[] envp = {};
+		File dir = new File(FileLocator.toFileURL(base).getPath()) ;
+		Process proc = Runtime.getRuntime().exec(command, envp, dir);
+		assertTrue(proc.waitFor() == 0);
+		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/inc.fmu"));
+		assertTrue(fmuFile.exists());
+		
+		FileUtils.copyFileToDirectory(fmuFile, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()));
 	}
 }

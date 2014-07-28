@@ -13,3 +13,5 @@ Require-Bundle: org.junit;bundle-version="4.8.2",
  de.prob.core.kernel,
  de.prob.ui
 Import-Package: org.eventb.emf.core.machine
+Bundle-ClassPath: lib/commons-io-2.4.jar,
+ .
