@@ -391,6 +391,7 @@ public class MasterTest extends AbstractEventBTests {
 		Injector injector = ServletContextListener.INJECTOR;
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
 		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
+		@SuppressWarnings("deprecation")
 		StateSpace s = model.getStatespace();
 		return new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
 	}
@@ -400,8 +401,8 @@ public class MasterTest extends AbstractEventBTests {
 		IEventBProject project = createEventBProject("TestProject");
 		IMachineRoot machine = createMachine(project, "TestMachine");
 
-		IVariable v1 = createVariable(machine, "y");
-		IVariable v2 = createVariable(machine, "io");
+		createVariable(machine, "y");
+		createVariable(machine, "io");
 		createInvariant(machine, "inv1", "y"+MEMBER_OF+INT, false);
 		createInvariant(machine, "inv2", "io"+MEMBER_OF+BOOL, false);
 		
@@ -440,6 +441,7 @@ public class MasterTest extends AbstractEventBTests {
 		Injector injector = ServletContextListener.INJECTOR;
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
 		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
+		@SuppressWarnings("deprecation")
 		StateSpace s = model.getStatespace();
 		Trace trace = new Trace(s);
 		
