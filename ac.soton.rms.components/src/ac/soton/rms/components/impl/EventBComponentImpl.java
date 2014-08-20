@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -625,10 +626,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// load event-b machine
 		final IEventBRoot machineRoot = getMachineRoot(getMachine());
 		if (machineRoot == null) {
-			//FIXME:
-			throw new RuntimeException("machine absent");
-//			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot load machine component '" + getLabel()
-//					+ "'\nReason: Machine root cannot be determined.");
+			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot load machine component '" + getLabel()
+					+ "'\nReason: Machine root cannot be determined.");
 		}
 		
 		String fileName = machineRoot.getResource().getRawLocation()
@@ -641,39 +640,48 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 
 		Injector injector = ServletContextListener.INJECTOR;
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
-		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("IGNORE_HASH_COLLISIONS","TRUE");
+//		params.put("FORGET_STATE_SPACE","TRUE");
+		EventBModel model = instance.load(fileName, params, false);
+		if (model == null)
+			return SimStatus.PROB_ERROR;
+		
 		StateSpace s = model.getStatespace();
 		s.startTransaction();	// presumably putting everything into a transaction should make it perform faster
 		trace = new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
 		System.gc();
 		
-//		// prepare trace comparison
-//		if (compareTrace) {
-//			try {
-//				if (traceReader != null)
-//					traceReader.close();
-//				
-//				// check trace file exists or created successfully
-//				File file = new File(getTraceFilePath());
-//				if (!file.exists() && !file.createNewFile())
-//					return SimStatus.TRACE_ERROR;
-//				
-//				traceReader = new BufferedReader(new FileReader(getTraceFilePath()));
-//			} catch (IOException e) {
-//				return SimStatus.TRACE_ERROR;
-//			}
-//		}
-//		
-//		// prepare trace recording
-//		if (recordTrace) {
-//			try {
-//				if (traceWriter != null)
-//					traceWriter.close();
-//				traceWriter = new BufferedWriter(new FileWriter(getTraceFilePath()));
-//			} catch (IOException e) {
-//				return SimStatus.TRACE_ERROR;
-//			}
-//		}
+		// prepare trace comparison
+		if (compareTrace) {
+			try {
+				if (traceReader != null)
+					traceReader.close();
+				
+				// check trace file exists or created successfully
+				assert getTraceFilePath() != null;
+				File file = new File(getTraceFilePath());
+				if (!file.exists() && !file.createNewFile())
+					return SimStatus.TRACE_ERROR;
+				
+				traceReader = new BufferedReader(new FileReader(getTraceFilePath()));
+			} catch (IOException e) {
+				return SimStatus.TRACE_ERROR;
+			}
+		}
+		
+		// prepare trace recording
+		if (recordTrace) {
+			try {
+				if (traceWriter != null)
+					traceWriter.close();
+				
+				assert getTraceFilePath() != null;
+				traceWriter = new BufferedWriter(new FileWriter(getTraceFilePath()));
+			} catch (IOException e) {
+				return SimStatus.TRACE_ERROR;
+			}
+		}
 		
 		// recall events for doStep matching
 		if (!readSet.isEmpty())
@@ -719,6 +727,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus readInputs() {
+		assert trace != null;
 		EList<Event> readEvents = getReadInputEvents();
 		
 		// skip if no inputs
@@ -733,8 +742,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			if (p.getIn() == null)
 				continue;
 			
-			// add parameter to event predicate string
 			assert p instanceof EventBPort && ((EventBPort) p).getParameter() != null;
+			assert p.getIn().getValue() != null;
+
+			// add parameter to event predicate string
 			predicate.append("&" + ((EventBPort) p).getParameter().getName() + "=" + SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
 		}
 		
@@ -745,18 +756,14 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			try {
 				readOps.add(trace.findOneOp(re.getName(), predicateStr));
 			} catch (BException | IllegalArgumentException e) {
-				//FIXME:
-				throw new RuntimeException("failed read");
-//				return new SimStatus(Status.ERROR, SimStatus.ID, "Event-B error when reading inputs of component '" + getLabel() + "'\n" +
-//						"Reason: ProB failed to find an enabled read event '" + re.getName() + "' with the predicate '" + predicateStr + "'", e);
+				return new SimStatus(Status.ERROR, SimStatus.ID, "Event-B error when reading inputs of component '" + getLabel() + "'\n" +
+						"Reason: ProB failed to find an enabled read event '" + re.getName() + "' with the predicate '" + predicateStr + "'", e);
 			}
 		}
 		
 		// stop if no reads are enabled
 		if (readOps.isEmpty())
-			//FIXME:
-			throw new RuntimeException("No read enabled");
-			//return SimStatus.EVENTB_NO_READS;
+			return SimStatus.EVENTB_NO_READS;
 		
 		// execute read event
 		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
@@ -774,10 +781,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		StateId state = trace.getCurrentState();
 		
 		for (Port p : getOutputs()) {
-			// skip unconnected output
-			if (p.getOut().isEmpty())
-				continue;
-
+			assert p instanceof EventBPort && ((EventBPort) p).getVariable() != null;
+			
 			p.setValue(SimulationUtil.getFMIValue(
 					(String) state.value(p.getLabel()), 
 					p.getType(), 
@@ -795,17 +800,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	public IStatus doStep(int time, int step) {
 		Set<OpInfo> ops = null;
 		OpInfo nextOp = null;
+		boolean noWait = true;
 		IStatus status = SimStatus.OK_STATUS;
-		IStatus error = null;
-		boolean isStep = true;
-		while (isStep) {
+		
+		while (noWait) {
 			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
 			
 			// check deadlock
 			if (ops == null || ops.isEmpty())
-				//FIXME:
-				throw new RuntimeException("deadlock");
-				//return SimStatus.EVENTB_DEADLOCK;
+				return SimStatus.EVENTB_DEADLOCK;
 			
 			// find next op
 			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
@@ -813,7 +816,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			// check if wait and read
 			assert nextOp.getName() != null;
 			if (waitSet.contains(nextOp.getName())) {
-				isStep = false;
+				noWait = false;
 				if (readSet.contains(nextOp.getName()))
 					break;
 			}
@@ -821,37 +824,36 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			// execute
 			trace = trace.add(nextOp.getId());
 			
-//			// check invariants if on
-//			if (checkInvariants && trace.getStateSpace().hasInvariantViolation(trace.getCurrentState())) {
-//				return SimStatus.EVENTB_INV_VIOLATED;
-//			}
-//			
-//			// check trace if on
-//			if (compareTrace && !nextOp.getName().equals(findRecordedOp(time))) {
-//				return SimStatus.EVENTB_TRACE_DIV;
-//				//FIXME: pass the error status from findRecordedOp()
-//			}
-//			
-//			// record trace if on
-//			if (recordTrace) {
-//				error = recordOp(time, nextOp.getName());
-//				if (error != SimStatus.OK_STATUS)
-//					return error;
-//			}
+			// check invariants if on
+			if (checkInvariants && trace.getStateSpace().hasInvariantViolation(trace.getCurrentState())) {
+				return SimStatus.EVENTB_INV_VIOLATED;
+			}
+
+			// check trace if on
+			if (compareTrace && (status = findRecordedOp(nextOp, time)) != SimStatus.OK_STATUS) {
+				return status;
+			}
+			
+			// record trace if on
+			if (recordTrace && (status = recordOp(nextOp, time)) != SimStatus.OK_STATUS) {
+				return status;
+			}
 		}
 
 		return status;
 	}
 
 	/**
+	 * Record an operation at specified time.
+	 * 
+	 * @param op
 	 * @param time
-	 * @param name
 	 * @return 
 	 * @custom
 	 */
-	private IStatus recordOp(double time, String name) {
+	private IStatus recordOp(OpInfo op, int time) {
 		try {
-			traceWriter.write("" + time + "," + name);
+			traceWriter.write("" + time + "," + op.getName() + "," + op.getParams().toString());
 			traceWriter.newLine();
 		} catch (IOException e) {
 			return SimStatus.TRACE_ERROR;
@@ -860,25 +862,37 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	}
 
 	/**
+	 * Find recorded operation at specified time.
+	 * 
+	 * @param op
 	 * @param time
 	 * @return
 	 * @custom
 	 */
-	private Object findRecordedOp(double time) {
+	private IStatus findRecordedOp(OpInfo op, int time) {
 		try {
 			String line = null;
-			double traceTime = -1;
+			String recordedName = null;
+			int traceTime = -1;
+			
+			// find recorded time
 			while (traceTime < time) {
 				if ((line = traceReader.readLine()) == null)
-					return null;
-				traceTime = Double.valueOf(line.split(",")[0]);
+					break;
+				traceTime = Integer.valueOf(line.split(",")[0]);
 			}
-			if (traceTime == time)
-				return line.split(",")[1];
+			
+			if (traceTime == time) {
+				recordedName = line.split(",")[1];
+				if (op.getName().equals(recordedName))
+					return SimStatus.OK_STATUS;
+				else
+					return new SimStatus(Status.ERROR, SimStatus.ID, "Executed event '" + op.getName() + "' does not match recorded event '" + recordedName + "' at time t=" + time + "ms\n");
+			}
 		} catch (IOException e) {
 			return SimStatus.TRACE_ERROR;
 		}
-		return null;
+		return new SimStatus(Status.ERROR, SimStatus.ID, "No trace record found for event '" + op.getName() + "' at time t=" + time + "ms\n");
 	}
 
 	/**
@@ -893,20 +907,20 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-//		if (traceReader != null)
-//			try {
-//				traceReader.close();
-//			} catch (IOException e) {
-//				return SimStatus.TRACE_ERROR;
-//			}
-//		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
-//		if (traceWriter != null) {
-//			try {
-//				traceWriter.close();
-//			} catch (IOException e) {
-//				return SimStatus.TRACE_ERROR;
-//			}
-//		}
+		if (traceReader != null)
+			try {
+				traceReader.close();
+			} catch (IOException e) {
+				return SimStatus.TRACE_ERROR;
+			}
+		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
+		if (traceWriter != null) {
+			try {
+				traceWriter.close();
+			} catch (IOException e) {
+				return SimStatus.TRACE_ERROR;
+			}
+		}
 
 		// show in ProB
 		Injector injector = ServletContextListener.INJECTOR;
