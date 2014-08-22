@@ -63,12 +63,11 @@ public class Master {
 		components = diagram.getComponents();
 		startTime = diagram.getStartTime();
 		stopTime = diagram.getStopTime();
-		currentTime = startTime;
 		
 		// instantiate & initialise
 		for (Component c : components) {
 			c.instantiate();
-			c.initialise(currentTime, stopTime);
+			c.initialise(startTime, stopTime);
 			
 			// first evaluation of DE
 			if (c instanceof EventBComponent)
@@ -76,19 +75,24 @@ public class Master {
 			else if (c instanceof FMUComponent)
 				lastEvalTime.put(c, 0);		// store eval time for CT
 			
-			// initial IO (part 1)
+			// initial IO #1
 			c.writeOutputs();
 			
 			if (c instanceof EventBComponent)
 				for (Port y : c.getOutputs())
 					preValue.put(y, y.getValue());
 		}
-		// initial IO (part 2)
+		// initial IO #2
 		for (Component c : components)
 			c.readInputs();
 
 		// simulation loop
-		for (; currentTime <= stopTime; ++currentTime) {
+		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
+			if (monitor.isCanceled()) {
+				status = SimStatus.CANCEL_STATUS;
+				break;
+			}
+			
 			for (Component c : diagram.getComponents()) {
 				if (updateList.containsKey(c) && currentTime == updateList.get(c)) {
 					deList.add((EventBComponent) c);
@@ -104,14 +108,13 @@ public class Master {
 			for (EventBComponent c : deList) {
 				c.doStep(currentTime, c.getStepPeriod());
 				c.writeOutputs();
-				System.out.println(currentTime+": "+c.getLabel()+"["+c.getStepPeriod()+"]."+c.getOutputs().get(0).getLabel()+"="+c.getOutputs().get(0).getValue());
-				// evaluate any CT input
+				// evaluate any input CT
 				for (Port u : c.getInputs()) {
 					if (u.getIn() != null && u.getIn().eContainer() instanceof FMUComponent) {
 						ctList.add((FMUComponent) u.getIn().eContainer());
 					}
 				}
-				// evaluate any CT at the output, if the output has changed
+				// evaluate any output CT if DE output has changed
 				for (Port y : c.getOutputs()) {
 					if (y.getValue() != preValue.get(y)) {
 						preValue.put(y, y.getValue());
@@ -128,7 +131,6 @@ public class Master {
 				int tEval = lastEvalTime .get(c);
 				c.doStep(tEval, currentTime - tEval);
 				c.writeOutputs();
-				System.out.println(currentTime+": "+c.getLabel()+"["+(currentTime - tEval)+"]."+c.getOutputs().get(0).getLabel()+"="+c.getOutputs().get(0).getValue());
 				lastEvalTime.put(c, currentTime);
 			}
 			

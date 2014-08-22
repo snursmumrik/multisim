@@ -66,21 +66,6 @@
                   icon="icons/Simulate.gif"
                   id="ac.soton.rms.ui.commands.toolbar.simulate"
                   label="Simulate"
-                  style="pulldown">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="activePartId">
-                     <equals
-                           value="ac.soton.rms.components.diagram.part.ComponentsDiagramEditorID">
-                     </equals>
-                  </with>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="ac.soton.rms.ui.commands.pause"
-                  icon="icons/Pause.gif"
-                  label="Pause"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -93,42 +78,6 @@
                </visibleWhen>
             </command>
          </toolbar>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="menu:ac.soton.rms.ui.commands.toolbar.simulate">
-         <command
-               commandId="ac.soton.rms.ui.commands.simulate"
-               label="Simulate"
-               style="push">
-         </command>
-         <command
-               commandId="ac.soton.rms.ui.commands.simulate"
-               label="Record Trace"
-               style="push">
-            <parameter
-                  name="ac.soton.rms.ui.parameters.recordTrace"
-                  value="true">
-            </parameter>
-         </command>
-         <command
-               commandId="ac.soton.rms.ui.commands.simulate"
-               label="Compare Trace"
-               style="push">
-            <parameter
-                  name="ac.soton.rms.ui.parameters.compareTrace"
-                  value="true">
-            </parameter>
-         </command>
-         <command
-               commandId="ac.soton.rms.ui.commands.simulate"
-               label="Check Invariants"
-               style="push">
-            <parameter
-                  name="ac.soton.rms.ui.parameters.checkInvariants"
-                  value="true">
-            </parameter>
-         </command>
       </menuContribution>
    </extension>
    <extension
