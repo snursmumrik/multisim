@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -170,7 +171,7 @@ public class MasterTest extends AbstractEventBTests {
 		diagram.getComponents().add(d2);
 		diagram.setStartTime(0);
 		diagram.setStopTime(12);
-		Master.simulate(diagram, null, false, false, false);
+		Master.simulate(diagram, new NullProgressMonitor(), null);
 		
 		Object y1 = d1.getOutputs().get(0).getValue();
 		Object y2 = d2.getOutputs().get(0).getValue();
@@ -269,7 +270,7 @@ public class MasterTest extends AbstractEventBTests {
 		diagram.getComponents().add(ct);
 		diagram.setStartTime(0);
 		diagram.setStopTime(12000);
-		Master.simulate(diagram, null, false, false, false);
+		Master.simulate(diagram, new NullProgressMonitor(), null);
 		
 		Object y1 = de.getOutputs().get(0).getValue();
 		Object y2 = ct.getOutputs().get(0).getValue();

@@ -9,12 +9,7 @@
  */
 package ac.soton.rms.components.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -67,6 +62,7 @@ import de.prob.statespace.OpInfo;
 import de.prob.statespace.StateId;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
+import de.prob.statespace.TraceConverter;
 import de.prob.webconsole.ServletContextListener;
 
 /**
@@ -319,8 +315,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private Random random = new Random(System.currentTimeMillis());
 	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
-	private BufferedReader traceReader;
-	private BufferedWriter traceWriter;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -643,6 +637,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("IGNORE_HASH_COLLISIONS","TRUE");
 //		params.put("FORGET_STATE_SPACE","TRUE");
+		params.put("MEMO", "TRUE");
+		params.put("TIME_OUT", "4000");
 		EventBModel model = instance.load(fileName, params, false);
 		if (model == null)
 			return SimStatus.PROB_ERROR;
@@ -651,37 +647,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		s.startTransaction();	// presumably putting everything into a transaction should make it perform faster
 		trace = new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
 		System.gc();
-		
-		// prepare trace comparison
-		if (compareTrace) {
-			try {
-				if (traceReader != null)
-					traceReader.close();
-				
-				// check trace file exists or created successfully
-				assert getTraceFilePath() != null;
-				File file = new File(getTraceFilePath());
-				if (!file.exists() && !file.createNewFile())
-					return SimStatus.TRACE_ERROR;
-				
-				traceReader = new BufferedReader(new FileReader(getTraceFilePath()));
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		}
-		
-		// prepare trace recording
-		if (recordTrace) {
-			try {
-				if (traceWriter != null)
-					traceWriter.close();
-				
-				assert getTraceFilePath() != null;
-				traceWriter = new BufferedWriter(new FileWriter(getTraceFilePath()));
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		}
 		
 		// recall events for doStep matching
 		if (!readSet.isEmpty())
@@ -715,7 +680,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
-			return SimStatus.EVENTB_ERROR;
+			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot initialise component '" + getLabel()
+					+ "'\nReason: $initialise_machine operation not found.");
 		
 		return SimStatus.OK_STATUS;
 	}
@@ -749,7 +715,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			predicate.append("&" + ((EventBPort) p).getParameter().getName() + "=" + SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
 		}
 		
-		// find an enabled read event
+		// find enabled read event
 		List<OpInfo> readOps = new ArrayList<OpInfo>();
 		String predicateStr = predicate.toString();
 		for (Event re : readEvents) {
@@ -828,71 +794,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			if (checkInvariants && trace.getStateSpace().hasInvariantViolation(trace.getCurrentState())) {
 				return SimStatus.EVENTB_INV_VIOLATED;
 			}
-
-			// check trace if on
-			if (compareTrace && (status = findRecordedOp(nextOp, time)) != SimStatus.OK_STATUS) {
-				return status;
-			}
-			
-			// record trace if on
-			if (recordTrace && (status = recordOp(nextOp, time)) != SimStatus.OK_STATUS) {
-				return status;
-			}
 		}
 
 		return status;
-	}
-
-	/**
-	 * Record an operation at specified time.
-	 * 
-	 * @param op
-	 * @param time
-	 * @return 
-	 * @custom
-	 */
-	private IStatus recordOp(OpInfo op, int time) {
-		try {
-			traceWriter.write("" + time + "," + op.getName() + "," + op.getParams().toString());
-			traceWriter.newLine();
-		} catch (IOException e) {
-			return SimStatus.TRACE_ERROR;
-		}
-		return SimStatus.OK_STATUS;
-	}
-
-	/**
-	 * Find recorded operation at specified time.
-	 * 
-	 * @param op
-	 * @param time
-	 * @return
-	 * @custom
-	 */
-	private IStatus findRecordedOp(OpInfo op, int time) {
-		try {
-			String line = null;
-			String recordedName = null;
-			int traceTime = -1;
-			
-			// find recorded time
-			while (traceTime < time) {
-				if ((line = traceReader.readLine()) == null)
-					break;
-				traceTime = Integer.valueOf(line.split(",")[0]);
-			}
-			
-			if (traceTime == time) {
-				recordedName = line.split(",")[1];
-				if (op.getName().equals(recordedName))
-					return SimStatus.OK_STATUS;
-				else
-					return new SimStatus(Status.ERROR, SimStatus.ID, "Executed event '" + op.getName() + "' does not match recorded event '" + recordedName + "' at time t=" + time + "ms\n");
-			}
-		} catch (IOException e) {
-			return SimStatus.TRACE_ERROR;
-		}
-		return new SimStatus(Status.ERROR, SimStatus.ID, "No trace record found for event '" + op.getName() + "' at time t=" + time + "ms\n");
 	}
 
 	/**
@@ -901,26 +805,20 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
+		assert trace != null;
 		trace.getStateSpace().endTransaction();
 		
 		// re-enable notifications
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		if (traceReader != null)
-			try {
-				traceReader.close();
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		//XXX cannot have both trace reader and writer, i.e. either records or replays a trace
-		if (traceWriter != null) {
-			try {
-				traceWriter.close();
-			} catch (IOException e) {
-				return SimStatus.TRACE_ERROR;
-			}
-		}
+		// save trace
+		String traceFilePath = this.traceFilePath;
+		if (traceFilePath == null)
+			traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString();
+		traceFilePath += "_" + new SimpleDateFormat("yyMMddHHmmss").format(new java.util.Date()) + ".xml";
+		trace.toString();	//XXX has to be called to fix the serialisation bug
+		TraceConverter.save(trace, traceFilePath);
 
 		// show in ProB
 		Injector injector = ServletContextListener.INJECTOR;

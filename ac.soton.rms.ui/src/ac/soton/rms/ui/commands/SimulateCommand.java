@@ -7,6 +7,9 @@
  */
 package ac.soton.rms.ui.commands;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -16,8 +19,6 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -34,22 +35,15 @@ import ac.soton.rms.ui.RmsUIActivator;
  */
 public class SimulateCommand extends AbstractHandler {
 
-	/**
-	 * 
-	 */
-	private static final String PARAM_RECORD_TRACE = "ac.soton.rms.ui.parameters.recordTrace";
-	private static final String PARAM_COMPARE_TRACE = "ac.soton.rms.ui.parameters.compareTrace";
-	private static final String PARAM_CHECK_INVARIANTS = "ac.soton.rms.ui.parameters.checkInvariants";
-
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IEditorPart editor = HandlerUtil.getActiveEditor(event);
-		final boolean recordTrace = Boolean.valueOf(event.getParameter(PARAM_RECORD_TRACE));
-		final boolean compareTrace = Boolean.valueOf(event.getParameter(PARAM_COMPARE_TRACE));
-		final boolean checkInvariants = Boolean.valueOf(event.getParameter(PARAM_CHECK_INVARIANTS));
+		
+		final Map<String, String> params = new HashMap<>();
+		params.put(Master.PARAM_CHECK_INVARIANTS, Boolean.valueOf(event.getParameter(Master.PARAM_CHECK_INVARIANTS)).toString());
 		
 		// source provider service
 	    ISourceProviderService sourceProviderService = (ISourceProviderService) HandlerUtil
@@ -59,14 +53,21 @@ public class SimulateCommand extends AbstractHandler {
 	    
 		if (editor != null) {
 			final ComponentDiagram diagram = (ComponentDiagram) ((DiagramEditor) editor).getDiagram().getElement();
-			Job job = new Job("RMS Simulation") {
+			Job job = new Job("Multi-simulation") {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					return Master.simulate(diagram, monitor, recordTrace, compareTrace, checkInvariants);
+					return Master.simulate(diagram, monitor, params);
+				}
+				@Override
+				public boolean belongsTo(Object family) {
+					return "Multi-simulation".equals(getName());
 				}
 			};
-			job.setUser(true);
-			job.setPriority(Job.LONG);
+			
+			job.setUser(true);				// user UI job
+			job.setPriority(Job.LONG);		// long-running job scheduling (lower priority than interactive and short, but higher than build)
+			job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);		// keep only one job in progress monitor
+			job.setProperty(IProgressConstants.ICON_PROPERTY, RmsUIActivator.getDefault().getImageRegistry().getDescriptor(RmsUIActivator.IMAGE_RMS));	// job icon
 			job.addJobChangeListener(new JobChangeAdapter() {
 				@Override
 				public void done(IJobChangeEvent event) {
@@ -89,8 +90,6 @@ public class SimulateCommand extends AbstractHandler {
 //					});
 //				}
 //			});
-			job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);
-			job.setProperty(IProgressConstants.ICON_PROPERTY, RmsUIActivator.getDefault().getImageRegistry().getDescriptor(RmsUIActivator.IMAGE_RMS));
 			job.schedule();
 			
 		    simulationStateService.setActive(true);

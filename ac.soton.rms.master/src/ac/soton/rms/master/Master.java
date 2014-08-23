@@ -28,6 +28,13 @@ import ac.soton.rms.components.util.custom.SimStatus;
  *
  */
 public class Master {
+	/**
+	 * Parameters
+	 */
+	public static final String PARAM_RECORD_TRACE = "ac.soton.rms.ui.parameters.recordTrace";
+	public static final String PARAM_COMPARE_TRACE = "ac.soton.rms.ui.parameters.compareTrace";
+	public static final String PARAM_CHECK_INVARIANTS = "ac.soton.rms.ui.parameters.checkInvariants";
+	
 	// simulation data
 	private static List<Component> components;
 	private static int startTime;
@@ -39,19 +46,17 @@ public class Master {
 	private static Set<EventBComponent> deList = new HashSet<>();
 	private static Set<FMUComponent> ctList = new HashSet<>();
 	private static Map<Component, Integer> lastEvalTime = new HashMap<>();
-	private static Map<Port, Object> preValue = new HashMap<Port, Object>();
+	private static Map<Port, Object> preValue = new HashMap<>();
 	
 	/**
 	 * Simulate the diagram.
 	 * 
 	 * @param diagram
 	 * @param monitor progress monitor
-	 * @param checkInvariants invariant check flag
-	 * @param compareTrace trace comparison flag 
-	 * @param recordTrace trace recording flag
+	 * @param params simulation parameters
 	 * @return
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, boolean recordTrace, boolean compareTrace, boolean checkInvariants) {
+	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) {
 		IStatus status = SimStatus.OK_STATUS;
 		
 		updateList.clear();
@@ -64,10 +69,32 @@ public class Master {
 		startTime = diagram.getStartTime();
 		stopTime = diagram.getStopTime();
 		
-		// instantiate & initialise
+		status = initialise(monitor);
+
+		if (status == SimStatus.OK_STATUS)
+			status = doSteps(monitor);
+		
+		terminate();
+		
+		return status;
+	}
+
+	/**
+	 * Instantiate and initialise components.
+	 * 
+	 * @param monitor
+	 * @return
+	 */
+	private static IStatus initialise(IProgressMonitor monitor) {
+		monitor.beginTask("Initialisation", components.size());
+		IStatus status = null;
+		
 		for (Component c : components) {
-			c.instantiate();
-			c.initialise(startTime, stopTime);
+			monitor.subTask("Initialising '" + c.getLabel() + "'");
+			if ((status = c.instantiate()) != SimStatus.OK_STATUS 
+					|| (status = c.initialise(startTime, stopTime)) != SimStatus.OK_STATUS) {
+				return status;
+			}
 			
 			// first evaluation of DE
 			if (c instanceof EventBComponent)
@@ -76,44 +103,66 @@ public class Master {
 				lastEvalTime.put(c, 0);		// store eval time for CT
 			
 			// initial IO #1
-			c.writeOutputs();
+			if ((status = c.writeOutputs()) != SimStatus.OK_STATUS)
+				return status;
 			
 			if (c instanceof EventBComponent)
 				for (Port y : c.getOutputs())
 					preValue.put(y, y.getValue());
+			
+			monitor.worked(1);
 		}
 		// initial IO #2
 		for (Component c : components)
-			c.readInputs();
+			if ((status = c.readInputs()) != SimStatus.OK_STATUS)
+				return status;
+		
+		return status;
+	}
 
-		// simulation loop
+	/**
+	 * Perform simulation steps.
+	 * 
+	 * @param monitor
+	 * @return
+	 */
+	private static IStatus doSteps(IProgressMonitor monitor) {
+		monitor.beginTask("Simulation", stopTime - startTime);
+		IStatus status = null;
+
 		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
 			if (monitor.isCanceled()) {
 				status = SimStatus.CANCEL_STATUS;
 				break;
 			}
 			
-			for (Component c : diagram.getComponents()) {
+			for (Component c : components) {
 				if (updateList.containsKey(c) && currentTime == updateList.get(c)) {
 					deList.add((EventBComponent) c);
 					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepPeriod());
 				}
 			}
 			
-			// skip CT steps if no DE
-			if (deList.isEmpty())
+			// skip the step if no DEs to evaluate
+			if (deList.isEmpty()) {
+				monitor.worked(1);
 				continue;
+			}
 			
 			// DE step
 			for (EventBComponent c : deList) {
-				c.doStep(currentTime, c.getStepPeriod());
-				c.writeOutputs();
+				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getLabel() + "'");
+				if ((status = c.doStep(currentTime, c.getStepPeriod())) != SimStatus.OK_STATUS
+						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
+					return status;
+				
 				// evaluate any input CT
 				for (Port u : c.getInputs()) {
 					if (u.getIn() != null && u.getIn().eContainer() instanceof FMUComponent) {
 						ctList.add((FMUComponent) u.getIn().eContainer());
 					}
 				}
+				
 				// evaluate any output CT if DE output has changed
 				for (Port y : c.getOutputs()) {
 					if (y.getValue() != preValue.get(y)) {
@@ -129,31 +178,40 @@ public class Master {
 			// CT step
 			for (FMUComponent c : ctList) {
 				int tEval = lastEvalTime .get(c);
-				c.doStep(tEval, currentTime - tEval);
-				c.writeOutputs();
+				if ((status = c.doStep(tEval, currentTime - tEval)) != SimStatus.OK_STATUS
+						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
+					return status;
 				lastEvalTime.put(c, currentTime);
 			}
 			
 			// IO
 			for (Component c : deList)
-				c.readInputs();
+				if ((status = c.readInputs()) != SimStatus.OK_STATUS)
+					return status;
 			for (Component c : ctList)
-				c.readInputs();
+				if ((status = c.readInputs()) != SimStatus.OK_STATUS)
+					return status;
 			
 			deList.clear();
 			ctList.clear();
-		}
-		
-		// termination
-		for (Component c : components) {
-			c.terminate();
+			
+			monitor.worked(1);
 		}
 		
 		return status;
 	}
 
+	/**
+	 * Terminate all components.
+	 */
+	private static void terminate() {
+		for (Component c : components) {
+			c.terminate();
+		}
+	}
+
 	public static void pause() {
 		// TODO Auto-generated method stub
-		
+		//NOTE: not used
 	}
 }
