@@ -28,11 +28,9 @@ import ac.soton.rms.components.DisplayComponent;
 import ac.soton.rms.components.DisplayPort;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.EventBVariable;
 import ac.soton.rms.components.FMUComponent;
 import ac.soton.rms.components.FMUParameter;
 import ac.soton.rms.components.FMUPort;
-import ac.soton.rms.components.FMUVariable;
 import ac.soton.rms.components.Port;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
@@ -133,10 +131,6 @@ public class ComponentsValidator extends EObjectValidator {
 				return validatePort((Port)value, diagnostics, context);
 			case ComponentsPackage.ABSTRACT_VARIABLE:
 				return validateAbstractVariable((AbstractVariable)value, diagnostics, context);
-			case ComponentsPackage.FMU_VARIABLE:
-				return validateFMUVariable((FMUVariable)value, diagnostics, context);
-			case ComponentsPackage.EVENT_BVARIABLE:
-				return validateEventBVariable((EventBVariable)value, diagnostics, context);
 			case ComponentsPackage.FMU_PARAMETER:
 				return validateFMUParameter((FMUParameter)value, diagnostics, context);
 			case ComponentsPackage.FMU_PORT:
@@ -360,24 +354,6 @@ public class ComponentsValidator extends EObjectValidator {
 	 */
 	public boolean validateAbstractVariable(AbstractVariable abstractVariable, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(abstractVariable, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateFMUVariable(FMUVariable fmuVariable, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(fmuVariable, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateEventBVariable(EventBVariable eventBVariable, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(eventBVariable, diagnostics, context);
 	}
 
 	/**

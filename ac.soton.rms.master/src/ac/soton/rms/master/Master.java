@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
@@ -58,6 +59,7 @@ public class Master {
 	 */
 	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) {
 		IStatus status = SimStatus.OK_STATUS;
+		long simulationTime = System.currentTimeMillis();
 		
 		updateList.clear();
 		deList.clear();
@@ -76,6 +78,26 @@ public class Master {
 		
 		terminate();
 		
+		return getResultStatus(status, System.currentTimeMillis() - simulationTime);
+	}
+
+	/**
+	 * Creates final result status.
+	 * 
+	 * @param status original status
+	 * @param time elapsed time
+	 * @return
+	 */
+	private static IStatus getResultStatus(IStatus status, long time) {
+		switch (status.getSeverity()) {
+		case Status.OK:
+			status = new SimStatus(Status.OK, SimStatus.ID, "Simulation finished in " + time/1000 + "s"); break;
+		case Status.ERROR:
+			status = new SimStatus(Status.ERROR, SimStatus.ID, "Simulation terminated after " + time/1000 + "s" + "\nError: " + status.getMessage()); break;
+		case Status.CANCEL:
+			status = new SimStatus(Status.CANCEL, SimStatus.ID, "Simulation cancelled"); break;
+		}
+		
 		return status;
 	}
 
@@ -86,11 +108,10 @@ public class Master {
 	 * @return
 	 */
 	private static IStatus initialise(IProgressMonitor monitor) {
-		monitor.beginTask("Initialisation", components.size());
 		IStatus status = null;
 		
 		for (Component c : components) {
-			monitor.subTask("Initialising '" + c.getLabel() + "'");
+			monitor.subTask("Initialising component '" + c.getName() + "'");
 			if ((status = c.instantiate()) != SimStatus.OK_STATUS 
 					|| (status = c.initialise(startTime, stopTime)) != SimStatus.OK_STATUS) {
 				return status;
@@ -110,7 +131,6 @@ public class Master {
 				for (Port y : c.getOutputs())
 					preValue.put(y, y.getValue());
 			
-			monitor.worked(1);
 		}
 		// initial IO #2
 		for (Component c : components)
@@ -128,6 +148,7 @@ public class Master {
 	 */
 	private static IStatus doSteps(IProgressMonitor monitor) {
 		monitor.beginTask("Simulation", stopTime - startTime);
+		int lastMonitorTick = startTime;
 		IStatus status = null;
 
 		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
@@ -145,13 +166,12 @@ public class Master {
 			
 			// skip the step if no DEs to evaluate
 			if (deList.isEmpty()) {
-				monitor.worked(1);
 				continue;
 			}
 			
 			// DE step
 			for (EventBComponent c : deList) {
-				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getLabel() + "'");
+				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
 				if ((status = c.doStep(currentTime, c.getStepPeriod())) != SimStatus.OK_STATUS
 						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
 					return status;
@@ -177,6 +197,7 @@ public class Master {
 			
 			// CT step
 			for (FMUComponent c : ctList) {
+				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
 				int tEval = lastEvalTime .get(c);
 				if ((status = c.doStep(tEval, currentTime - tEval)) != SimStatus.OK_STATUS
 						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
@@ -195,7 +216,8 @@ public class Master {
 			deList.clear();
 			ctList.clear();
 			
-			monitor.worked(1);
+			monitor.worked(currentTime-lastMonitorTick);
+			lastMonitorTick = currentTime;
 		}
 		
 		return status;

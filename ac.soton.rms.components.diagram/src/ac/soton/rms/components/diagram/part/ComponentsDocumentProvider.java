@@ -1201,7 +1201,7 @@ public class ComponentsDocumentProvider extends AbstractDocumentProvider
 									Display.getDefault().getActiveShell(),
 									"Event-B Component",
 									"Failed to save component '"
-											+ comp.getLabel()
+											+ comp.getName()
 											+ "' to its machine.");
 						}
 					}

@@ -27,7 +27,6 @@ import org.eventb.core.IEvent;
 import org.eventb.core.IEventBProject;
 import org.eventb.core.IEventBRoot;
 import org.eventb.core.IMachineRoot;
-import org.eventb.core.IVariable;
 import org.eventb.emf.core.machine.Action;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Guard;
@@ -274,7 +273,7 @@ public class MasterTest extends AbstractEventBTests {
 		
 		Object y1 = de.getOutputs().get(0).getValue();
 		Object y2 = ct.getOutputs().get(0).getValue();
-		System.out.println(de.getLabel()+".y="+y1);
+		System.out.println(de.getName()+".y="+y1);
 		System.out.println(ct.getName()+".y="+y2);
 		assertTrue((int)y1 == 6 && (int)y2 == 8);
 	}

@@ -12,7 +12,6 @@ package ac.soton.rms.components.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -27,8 +26,7 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import ac.soton.eventb.emf.core.extension.coreextension.provider.EventBLabeledItemProvider;
+import org.eventb.emf.core.provider.EventBNamedItemProvider;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 
@@ -39,7 +37,7 @@ import ac.soton.rms.components.ComponentsPackage;
  * @generated
  */
 public class AbstractVariableItemProvider
-	extends EventBLabeledItemProvider
+	extends EventBNamedItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -181,7 +179,7 @@ public class AbstractVariableItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((AbstractVariable)object).getLabel());
+		String label = ((AbstractVariable)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_AbstractVariable_type") :
 			getString("_UI_AbstractVariable_type") + " " + label;

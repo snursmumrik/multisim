@@ -232,7 +232,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 		DisplayComponent domainModelElement = (DisplayComponent) view
 				.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 2001); //$NON-NLS-1$
@@ -286,7 +286,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	private String getDisplayPort_3001Text(View view) {
 		DisplayPort domainModelElement = (DisplayPort) view.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3001); //$NON-NLS-1$
@@ -328,7 +328,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	private String getEventBPort_3005Text(View view) {
 		EventBPort domainModelElement = (EventBPort) view.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3005); //$NON-NLS-1$
@@ -342,7 +342,7 @@ public class ComponentsNavigatorLabelProvider extends LabelProvider implements
 	private String getEventBPort_3006Text(View view) {
 		EventBPort domainModelElement = (EventBPort) view.getElement();
 		if (domainModelElement != null) {
-			return domainModelElement.getLabel();
+			return domainModelElement.getName();
 		} else {
 			ComponentsDiagramEditorPlugin.getInstance().logError(
 					"No domain element for view with visualID = " + 3006); //$NON-NLS-1$

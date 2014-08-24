@@ -66,7 +66,7 @@ public class FMUParameterTableViewer extends TableViewer {
 		providers.add(new ColumnProvider("Name", 200, new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
-				return ((FMUParameter) element).getLabel();
+				return ((FMUParameter) element).getName();
 			}}));
 		providers.add(new ColumnProvider("Type", 70, new ColumnLabelProvider() {
 			@Override

@@ -168,7 +168,7 @@ public class EventBPortItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((EventBPort)object).getLabel());
+		String label = ((EventBPort)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_EventBPort_type") :
 			getString("_UI_EventBPort_type") + " " + label;

@@ -54,19 +54,19 @@ public class ComponentsParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser eventBComponentLabel_5002Parser;
+	private IParser eventBComponentName_5002Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getEventBComponentLabel_5002Parser() {
-		if (eventBComponentLabel_5002Parser == null) {
-			EAttribute[] features = new EAttribute[] { CoreextensionPackage.eINSTANCE
-					.getEventBLabeled_Label() };
+	private IParser getEventBComponentName_5002Parser() {
+		if (eventBComponentName_5002Parser == null) {
+			EAttribute[] features = new EAttribute[] { CorePackage.eINSTANCE
+					.getEventBNamed_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			eventBComponentLabel_5002Parser = parser;
+			eventBComponentName_5002Parser = parser;
 		}
-		return eventBComponentLabel_5002Parser;
+		return eventBComponentName_5002Parser;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ComponentsParserProvider extends AbstractProvider implements
 		case FMUComponentNameEditPart.VISUAL_ID:
 			return getFMUComponentName_5001Parser();
 		case EventBComponentNameEditPart.VISUAL_ID:
-			return getEventBComponentLabel_5002Parser();
+			return getEventBComponentName_5002Parser();
 		}
 		return null;
 	}

@@ -38,7 +38,7 @@ import ac.soton.rms.components.FMUParameter;
  * @generated
  */
 public class FMUParameterItemProvider
-	extends FMUVariableItemProvider
+	extends AbstractVariableItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

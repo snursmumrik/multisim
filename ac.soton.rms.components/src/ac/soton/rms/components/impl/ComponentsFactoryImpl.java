@@ -23,11 +23,9 @@ import ac.soton.rms.components.DisplayComponent;
 import ac.soton.rms.components.DisplayPort;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.EventBVariable;
 import ac.soton.rms.components.FMUComponent;
 import ac.soton.rms.components.FMUParameter;
 import ac.soton.rms.components.FMUPort;
-import ac.soton.rms.components.FMUVariable;
 import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 
@@ -85,8 +83,6 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 			case ComponentsPackage.COMPONENT_DIAGRAM: return createComponentDiagram();
 			case ComponentsPackage.EVENT_BCOMPONENT: return createEventBComponent();
 			case ComponentsPackage.FMU_COMPONENT: return createFMUComponent();
-			case ComponentsPackage.FMU_VARIABLE: return createFMUVariable();
-			case ComponentsPackage.EVENT_BVARIABLE: return createEventBVariable();
 			case ComponentsPackage.FMU_PARAMETER: return createFMUParameter();
 			case ComponentsPackage.FMU_PORT: return createFMUPort();
 			case ComponentsPackage.EVENT_BPORT: return createEventBPort();
@@ -163,26 +159,6 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 	public FMUComponent createFMUComponent() {
 		FMUComponentImpl fmuComponent = new FMUComponentImpl();
 		return fmuComponent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FMUVariable createFMUVariable() {
-		FMUVariableImpl fmuVariable = new FMUVariableImpl();
-		return fmuVariable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EventBVariable createEventBVariable() {
-		EventBVariableImpl eventBVariable = new EventBVariableImpl();
-		return eventBVariable;
 	}
 
 	/**

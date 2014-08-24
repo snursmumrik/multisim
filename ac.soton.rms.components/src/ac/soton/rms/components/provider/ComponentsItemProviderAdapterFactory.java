@@ -181,52 +181,6 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link ac.soton.rms.components.FMUVariable} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FMUVariableItemProvider fmuVariableItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link ac.soton.rms.components.FMUVariable}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createFMUVariableAdapter() {
-		if (fmuVariableItemProvider == null) {
-			fmuVariableItemProvider = new FMUVariableItemProvider(this);
-		}
-
-		return fmuVariableItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link ac.soton.rms.components.EventBVariable} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected EventBVariableItemProvider eventBVariableItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link ac.soton.rms.components.EventBVariable}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createEventBVariableAdapter() {
-		if (eventBVariableItemProvider == null) {
-			eventBVariableItemProvider = new EventBVariableItemProvider(this);
-		}
-
-		return eventBVariableItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link ac.soton.rms.components.FMUParameter} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -470,8 +424,6 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 		if (componentDiagramItemProvider != null) componentDiagramItemProvider.dispose();
 		if (eventBComponentItemProvider != null) eventBComponentItemProvider.dispose();
 		if (fmuComponentItemProvider != null) fmuComponentItemProvider.dispose();
-		if (fmuVariableItemProvider != null) fmuVariableItemProvider.dispose();
-		if (eventBVariableItemProvider != null) eventBVariableItemProvider.dispose();
 		if (fmuParameterItemProvider != null) fmuParameterItemProvider.dispose();
 		if (fmuPortItemProvider != null) fmuPortItemProvider.dispose();
 		if (eventBPortItemProvider != null) eventBPortItemProvider.dispose();

@@ -9,7 +9,7 @@
  */
 package ac.soton.rms.components;
 
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
+import org.eventb.emf.core.EventBNamed;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
  * @model abstract="true"
  * @generated
  */
-public interface AbstractVariable extends EventBLabeled {
+public interface AbstractVariable extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -12,8 +12,7 @@ package ac.soton.rms.components.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
+import org.eventb.emf.core.impl.EventBNamedImpl;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.VariableCausality;
@@ -35,7 +34,7 @@ import ac.soton.rms.components.VariableType;
  *
  * @generated
  */
-public abstract class AbstractVariableImpl extends EventBLabeledImpl implements AbstractVariable {
+public abstract class AbstractVariableImpl extends EventBNamedImpl implements AbstractVariable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

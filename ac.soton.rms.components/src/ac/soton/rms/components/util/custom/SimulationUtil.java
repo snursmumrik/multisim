@@ -110,7 +110,7 @@ public class SimulationUtil {
 	 * @param value
 	 */
 	public static void fmuSet(FMU fmu, AbstractVariable variable, Object value) {
-		String name = variable.getLabel();
+		String name = variable.getName();
 		switch (variable.getType()) {
 		case BOOLEAN:
 			fmu.set(name, (Boolean) value);
@@ -133,7 +133,7 @@ public class SimulationUtil {
 	 * @return
 	 */
 	public static Object fmuGet(FMU fmu, AbstractVariable variable) {
-		String name = variable.getLabel();
+		String name = variable.getName();
 		Object value = null;
 		switch (variable.getType()) {
 		case BOOLEAN:

@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -53,7 +55,7 @@ public class SimulateCommand extends AbstractHandler {
 	    
 		if (editor != null) {
 			final ComponentDiagram diagram = (ComponentDiagram) ((DiagramEditor) editor).getDiagram().getElement();
-			Job job = new Job("Multi-simulation") {
+			final Job job = new Job("Multi-simulation") {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					return Master.simulate(diagram, monitor, params);
@@ -79,17 +81,18 @@ public class SimulateCommand extends AbstractHandler {
 					});
 				}
 			});
-//			job.setProperty(IProgressConstants.ACTION_PROPERTY, new Action() {
-//				@Override
-//				public void run() {
-//					Display.getDefault().asyncExec(new Runnable() {
-//						@Override
-//						public void run() {
-//							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Results", Master.getResultsMessage());
-//						}
-//					});
-//				}
-//			});
+			job.setProperty(IProgressConstants.ACTION_PROPERTY, new Action() {
+				Job jb = job;
+				@Override
+				public void run() {
+					Display.getDefault().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Simulation Results", jb.getResult().getMessage());
+						}
+					});
+				}
+			});
 			job.schedule();
 			
 		    simulationStateService.setActive(true);

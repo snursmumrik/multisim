@@ -63,24 +63,6 @@ public interface ComponentsFactory extends EFactory {
 	FMUComponent createFMUComponent();
 
 	/**
-	 * Returns a new object of class '<em>FMU Variable</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>FMU Variable</em>'.
-	 * @generated
-	 */
-	FMUVariable createFMUVariable();
-
-	/**
-	 * Returns a new object of class '<em>Event BVariable</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Event BVariable</em>'.
-	 * @generated
-	 */
-	EventBVariable createEventBVariable();
-
-	/**
 	 * Returns a new object of class '<em>FMU Parameter</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

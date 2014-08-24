@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eventb.emf.core.CorePackage;
 
-import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
-
 /**
  * <!-- begin-user-doc -->
  * The <b>Package</b> for the model.
@@ -140,13 +138,13 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT = 1;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__LABEL = CoreextensionPackage.EVENT_BLABELED__LABEL;
+	int COMPONENT__NAME = CorePackage.EVENT_BNAMED__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -155,7 +153,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__INPUTS = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 0;
+	int COMPONENT__INPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
@@ -164,16 +162,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT__OUTPUTS = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT__VARIABLES = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 2;
+	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Component</em>' class.
@@ -182,7 +171,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 3;
+	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -267,13 +256,13 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__EXTENSION_ID = CorePackage.ABSTRACT_EXTENSION__EXTENSION_ID;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__LABEL = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 0;
+	int EVENT_BCOMPONENT__NAME = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -294,22 +283,13 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__OUTPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__VARIABLES = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Machine</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
+	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Composed</b></em>' attribute.
@@ -318,16 +298,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Trace File Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__TRACE_FILE_PATH = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
+	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Read Input Events</b></em>' reference list.
@@ -336,7 +307,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
+	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Wait Events</b></em>' reference list.
@@ -345,34 +316,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
-
-	/**
-	 * The feature id for the '<em><b>Check Invariants</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__CHECK_INVARIANTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
-
-	/**
-	 * The feature id for the '<em><b>Compare Trace</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__COMPARE_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
-
-	/**
-	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
+	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -381,7 +325,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 12;
+	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
@@ -390,7 +334,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 13;
+	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
@@ -399,7 +343,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 14;
+	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -412,13 +356,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT = 3;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__LABEL = COMPONENT__LABEL;
+	int FMU_COMPONENT__NAME = COMPONENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -439,31 +383,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
 
 	/**
-	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_COMPONENT__VARIABLES = COMPONENT__VARIABLES;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_COMPONENT__NAME = COMPONENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__PATH = COMPONENT_FEATURE_COUNT + 1;
+	int FMU_COMPONENT__PATH = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -472,7 +398,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__PARAMETERS = COMPONENT_FEATURE_COUNT + 2;
+	int FMU_COMPONENT__PARAMETERS = COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Fmu</b></em>' attribute.
@@ -481,7 +407,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT__FMU = COMPONENT_FEATURE_COUNT + 3;
+	int FMU_COMPONENT__FMU = COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>FMU Component</em>' class.
@@ -490,7 +416,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 4;
+	int FMU_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.AbstractVariableImpl <em>Abstract Variable</em>}' class.
@@ -503,13 +429,13 @@ public interface ComponentsPackage extends EPackage {
 	int ABSTRACT_VARIABLE = 5;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE__LABEL = CoreextensionPackage.EVENT_BLABELED__LABEL;
+	int ABSTRACT_VARIABLE__NAME = CorePackage.EVENT_BNAMED__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -518,7 +444,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE__TYPE = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 0;
+	int ABSTRACT_VARIABLE__TYPE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Causality</b></em>' attribute.
@@ -527,7 +453,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE__CAUSALITY = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 1;
+	int ABSTRACT_VARIABLE__CAUSALITY = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -536,7 +462,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE__VALUE = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 2;
+	int ABSTRACT_VARIABLE__VALUE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -545,7 +471,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE__DESCRIPTION = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 3;
+	int ABSTRACT_VARIABLE__DESCRIPTION = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Abstract Variable</em>' class.
@@ -554,7 +480,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_VARIABLE_FEATURE_COUNT = CoreextensionPackage.EVENT_BLABELED_FEATURE_COUNT + 4;
+	int ABSTRACT_VARIABLE_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.PortImpl <em>Port</em>}' class.
@@ -567,13 +493,13 @@ public interface ComponentsPackage extends EPackage {
 	int PORT = 4;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PORT__LABEL = ABSTRACT_VARIABLE__LABEL;
+	int PORT__NAME = ABSTRACT_VARIABLE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -639,152 +565,6 @@ public interface ComponentsPackage extends EPackage {
 	int PORT_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUVariableImpl <em>FMU Variable</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see ac.soton.rms.components.impl.FMUVariableImpl
-	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMUVariable()
-	 * @generated
-	 */
-	int FMU_VARIABLE = 6;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__LABEL = ABSTRACT_VARIABLE__LABEL;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__TYPE = ABSTRACT_VARIABLE__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Causality</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__CAUSALITY = ABSTRACT_VARIABLE__CAUSALITY;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__VALUE = ABSTRACT_VARIABLE__VALUE;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE__NAME = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>FMU Variable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_VARIABLE_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see ac.soton.rms.components.impl.EventBVariableImpl
-	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getEventBVariable()
-	 * @generated
-	 */
-	int EVENT_BVARIABLE = 7;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__LABEL = ABSTRACT_VARIABLE__LABEL;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__TYPE = ABSTRACT_VARIABLE__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Causality</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__CAUSALITY = ABSTRACT_VARIABLE__CAUSALITY;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__VALUE = ABSTRACT_VARIABLE__VALUE;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Variable</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE__VARIABLE = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Event BVariable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BVARIABLE_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUParameterImpl <em>FMU Parameter</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -792,52 +572,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMUParameter()
 	 * @generated
 	 */
-	int FMU_PARAMETER = 8;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PARAMETER__LABEL = FMU_VARIABLE__LABEL;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PARAMETER__TYPE = FMU_VARIABLE__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Causality</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PARAMETER__CAUSALITY = FMU_VARIABLE__CAUSALITY;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PARAMETER__VALUE = FMU_VARIABLE__VALUE;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PARAMETER__DESCRIPTION = FMU_VARIABLE__DESCRIPTION;
+	int FMU_PARAMETER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -846,7 +581,43 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER__NAME = FMU_VARIABLE__NAME;
+	int FMU_PARAMETER__NAME = ABSTRACT_VARIABLE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PARAMETER__TYPE = ABSTRACT_VARIABLE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Causality</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PARAMETER__CAUSALITY = ABSTRACT_VARIABLE__CAUSALITY;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PARAMETER__VALUE = ABSTRACT_VARIABLE__VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_PARAMETER__DESCRIPTION = ABSTRACT_VARIABLE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
@@ -855,7 +626,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER__DEFAULT_VALUE = FMU_VARIABLE_FEATURE_COUNT + 0;
+	int FMU_PARAMETER__DEFAULT_VALUE = ABSTRACT_VARIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Start Value</b></em>' attribute.
@@ -864,7 +635,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER__START_VALUE = FMU_VARIABLE_FEATURE_COUNT + 1;
+	int FMU_PARAMETER__START_VALUE = ABSTRACT_VARIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>FMU Parameter</em>' class.
@@ -873,7 +644,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PARAMETER_FEATURE_COUNT = FMU_VARIABLE_FEATURE_COUNT + 2;
+	int FMU_PARAMETER_FEATURE_COUNT = ABSTRACT_VARIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.FMUPortImpl <em>FMU Port</em>}' class.
@@ -883,16 +654,16 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMUPort()
 	 * @generated
 	 */
-	int FMU_PORT = 9;
+	int FMU_PORT = 7;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PORT__LABEL = PORT__LABEL;
+	int FMU_PORT__NAME = PORT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -949,22 +720,13 @@ public interface ComponentsPackage extends EPackage {
 	int FMU_PORT__OUT = PORT__OUT;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_PORT__NAME = PORT_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>FMU Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FMU_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
+	int FMU_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBPortImpl <em>Event BPort</em>}' class.
@@ -974,16 +736,16 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getEventBPort()
 	 * @generated
 	 */
-	int EVENT_BPORT = 10;
+	int EVENT_BPORT = 8;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BPORT__LABEL = PORT__LABEL;
+	int EVENT_BPORT__NAME = PORT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1083,16 +845,16 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getDisplayComponent()
 	 * @generated
 	 */
-	int DISPLAY_COMPONENT = 11;
+	int DISPLAY_COMPONENT = 9;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_COMPONENT__LABEL = COMPONENT__LABEL;
+	int DISPLAY_COMPONENT__NAME = COMPONENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
@@ -1111,15 +873,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @ordered
 	 */
 	int DISPLAY_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DISPLAY_COMPONENT__VARIABLES = COMPONENT__VARIABLES;
 
 	/**
 	 * The feature id for the '<em><b>Chart</b></em>' attribute.
@@ -1147,16 +900,16 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getDisplayPort()
 	 * @generated
 	 */
-	int DISPLAY_PORT = 12;
+	int DISPLAY_PORT = 10;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_PORT__LABEL = PORT__LABEL;
+	int DISPLAY_PORT__NAME = PORT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1247,7 +1000,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getVariableType()
 	 * @generated
 	 */
-	int VARIABLE_TYPE = 13;
+	int VARIABLE_TYPE = 11;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.VariableCausality <em>Variable Causality</em>}' enum.
@@ -1257,7 +1010,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getVariableCausality()
 	 * @generated
 	 */
-	int VARIABLE_CAUSALITY = 14;
+	int VARIABLE_CAUSALITY = 12;
 
 
 	/**
@@ -1268,7 +1021,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getIStatus()
 	 * @generated
 	 */
-	int ISTATUS = 15;
+	int ISTATUS = 13;
 
 	/**
 	 * The meta object id for the '<em>FMU</em>' data type.
@@ -1278,7 +1031,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMU()
 	 * @generated
 	 */
-	int FMU = 16;
+	int FMU = 14;
 
 	/**
 	 * The meta object id for the '<em>ITrace2 D</em>' data type.
@@ -1288,7 +1041,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getITrace2D()
 	 * @generated
 	 */
-	int ITRACE2_D = 17;
+	int ITRACE2_D = 15;
 
 	/**
 	 * The meta object id for the '<em>Chart2 D</em>' data type.
@@ -1298,7 +1051,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getChart2D()
 	 * @generated
 	 */
-	int CHART2_D = 18;
+	int CHART2_D = 16;
 
 	/**
 	 * The meta object id for the '<em>Color</em>' data type.
@@ -1308,7 +1061,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getColor()
 	 * @generated
 	 */
-	int COLOR = 19;
+	int COLOR = 17;
 
 	/**
 	 * The meta object id for the '<em>Pro BTrace</em>' data type.
@@ -1318,7 +1071,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getProBTrace()
 	 * @generated
 	 */
-	int PRO_BTRACE = 20;
+	int PRO_BTRACE = 18;
 
 	/**
 	 * Default RMS components extension ID.
@@ -1402,17 +1155,6 @@ public interface ComponentsPackage extends EPackage {
 	EReference getComponent_Outputs();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link ac.soton.rms.components.Component#getVariables <em>Variables</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Variables</em>'.
-	 * @see ac.soton.rms.components.Component#getVariables()
-	 * @see #getComponent()
-	 * @generated
-	 */
-	EReference getComponent_Variables();
-
-	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBComponent <em>Event BComponent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1443,17 +1185,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEventBComponent_Composed();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getTraceFilePath <em>Trace File Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Trace File Path</em>'.
-	 * @see ac.soton.rms.components.EventBComponent#getTraceFilePath()
-	 * @see #getEventBComponent()
-	 * @generated
-	 */
-	EAttribute getEventBComponent_TraceFilePath();
 
 	/**
 	 * Returns the meta object for the reference list '{@link ac.soton.rms.components.EventBComponent#getReadInputEvents <em>Read Input Events</em>}'.
@@ -1487,39 +1218,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEventBComponent_StepPeriod();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isCheckInvariants <em>Check Invariants</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Check Invariants</em>'.
-	 * @see ac.soton.rms.components.EventBComponent#isCheckInvariants()
-	 * @see #getEventBComponent()
-	 * @generated
-	 */
-	EAttribute getEventBComponent_CheckInvariants();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isCompareTrace <em>Compare Trace</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Compare Trace</em>'.
-	 * @see ac.soton.rms.components.EventBComponent#isCompareTrace()
-	 * @see #getEventBComponent()
-	 * @generated
-	 */
-	EAttribute getEventBComponent_CompareTrace();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#isRecordTrace <em>Record Trace</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Record Trace</em>'.
-	 * @see ac.soton.rms.components.EventBComponent#isRecordTrace()
-	 * @see #getEventBComponent()
-	 * @generated
-	 */
-	EAttribute getEventBComponent_RecordTrace();
 
 	/**
 	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}'.
@@ -1660,37 +1358,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAbstractVariable_Description();
-
-	/**
-	 * Returns the meta object for class '{@link ac.soton.rms.components.FMUVariable <em>FMU Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>FMU Variable</em>'.
-	 * @see ac.soton.rms.components.FMUVariable
-	 * @generated
-	 */
-	EClass getFMUVariable();
-
-	/**
-	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBVariable <em>Event BVariable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Event BVariable</em>'.
-	 * @see ac.soton.rms.components.EventBVariable
-	 * @generated
-	 */
-	EClass getEventBVariable();
-
-	/**
-	 * Returns the meta object for the reference '{@link ac.soton.rms.components.EventBVariable#getVariable <em>Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Variable</em>'.
-	 * @see ac.soton.rms.components.EventBVariable#getVariable()
-	 * @see #getEventBVariable()
-	 * @generated
-	 */
-	EReference getEventBVariable_Variable();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.FMUParameter <em>FMU Parameter</em>}'.
@@ -1999,14 +1666,6 @@ public interface ComponentsPackage extends EPackage {
 		EReference COMPONENT__OUTPUTS = eINSTANCE.getComponent_Outputs();
 
 		/**
-		 * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPONENT__VARIABLES = eINSTANCE.getComponent_Variables();
-
-		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2033,14 +1692,6 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute EVENT_BCOMPONENT__COMPOSED = eINSTANCE.getEventBComponent_Composed();
 
 		/**
-		 * The meta object literal for the '<em><b>Trace File Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EVENT_BCOMPONENT__TRACE_FILE_PATH = eINSTANCE.getEventBComponent_TraceFilePath();
-
-		/**
 		 * The meta object literal for the '<em><b>Read Input Events</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2063,30 +1714,6 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EVENT_BCOMPONENT__STEP_PERIOD = eINSTANCE.getEventBComponent_StepPeriod();
-
-		/**
-		 * The meta object literal for the '<em><b>Check Invariants</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EVENT_BCOMPONENT__CHECK_INVARIANTS = eINSTANCE.getEventBComponent_CheckInvariants();
-
-		/**
-		 * The meta object literal for the '<em><b>Compare Trace</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EVENT_BCOMPONENT__COMPARE_TRACE = eINSTANCE.getEventBComponent_CompareTrace();
-
-		/**
-		 * The meta object literal for the '<em><b>Record Trace</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EVENT_BCOMPONENT__RECORD_TRACE = eINSTANCE.getEventBComponent_RecordTrace();
 
 		/**
 		 * The meta object literal for the '<em><b>Trace</b></em>' attribute feature.
@@ -2197,34 +1824,6 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ABSTRACT_VARIABLE__DESCRIPTION = eINSTANCE.getAbstractVariable_Description();
-
-		/**
-		 * The meta object literal for the '{@link ac.soton.rms.components.impl.FMUVariableImpl <em>FMU Variable</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see ac.soton.rms.components.impl.FMUVariableImpl
-		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getFMUVariable()
-		 * @generated
-		 */
-		EClass FMU_VARIABLE = eINSTANCE.getFMUVariable();
-
-		/**
-		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBVariableImpl <em>Event BVariable</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see ac.soton.rms.components.impl.EventBVariableImpl
-		 * @see ac.soton.rms.components.impl.ComponentsPackageImpl#getEventBVariable()
-		 * @generated
-		 */
-		EClass EVENT_BVARIABLE = eINSTANCE.getEventBVariable();
-
-		/**
-		 * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EVENT_BVARIABLE__VARIABLE = eINSTANCE.getEventBVariable_Variable();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.FMUParameterImpl <em>FMU Parameter</em>}' class.

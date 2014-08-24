@@ -17,7 +17,6 @@ import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentDiagram;
@@ -26,11 +25,9 @@ import ac.soton.rms.components.DisplayComponent;
 import ac.soton.rms.components.DisplayPort;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.EventBVariable;
 import ac.soton.rms.components.FMUComponent;
 import ac.soton.rms.components.FMUParameter;
 import ac.soton.rms.components.FMUPort;
-import ac.soton.rms.components.FMUVariable;
 import ac.soton.rms.components.Port;
 
 /**
@@ -121,14 +118,6 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 				return createAbstractVariableAdapter();
 			}
 			@Override
-			public Adapter caseFMUVariable(FMUVariable object) {
-				return createFMUVariableAdapter();
-			}
-			@Override
-			public Adapter caseEventBVariable(EventBVariable object) {
-				return createEventBVariableAdapter();
-			}
-			@Override
 			public Adapter caseFMUParameter(FMUParameter object) {
 				return createFMUParameterAdapter();
 			}
@@ -151,10 +140,6 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseEventBNamed(EventBNamed object) {
 				return createEventBNamedAdapter();
-			}
-			@Override
-			public Adapter caseEventBLabeled(EventBLabeled object) {
-				return createEventBLabeledAdapter();
 			}
 			@Override
 			public Adapter caseEventBObject(EventBObject object) {
@@ -269,34 +254,6 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractVariableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link ac.soton.rms.components.FMUVariable <em>FMU Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see ac.soton.rms.components.FMUVariable
-	 * @generated
-	 */
-	public Adapter createFMUVariableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link ac.soton.rms.components.EventBVariable <em>Event BVariable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see ac.soton.rms.components.EventBVariable
-	 * @generated
-	 */
-	public Adapter createEventBVariableAdapter() {
 		return null;
 	}
 
@@ -423,20 +380,6 @@ public class ComponentsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEventBNamedAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled <em>Event BLabeled</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled
-	 * @generated
-	 */
-	public Adapter createEventBLabeledAdapter() {
 		return null;
 	}
 

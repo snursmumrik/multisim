@@ -132,7 +132,7 @@ public class PortItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((Port)object).getLabel());
+		String label = ((Port)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Port_type") :
 			getString("_UI_Port_type") + " " + label;

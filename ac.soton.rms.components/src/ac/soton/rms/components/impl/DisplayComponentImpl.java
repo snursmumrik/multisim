@@ -9,7 +9,6 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.eventb.emf.core.extension.coreextension.impl.EventBLabeledImpl;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxisScalePolicy;
 import info.monitorenter.gui.chart.ITrace2D;
@@ -17,13 +16,11 @@ import info.monitorenter.gui.chart.ZoomableChart;
 import info.monitorenter.gui.chart.axis.AxisLinear;
 import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -33,8 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import ac.soton.rms.components.AbstractVariable;
+import org.eventb.emf.core.impl.EventBNamedImpl;
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
@@ -52,14 +48,13 @@ import ac.soton.rms.components.util.custom.SimStatus;
  * <ul>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getChart <em>Chart</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayComponent {
+public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComponent {
 	/**
 	 * Maximum size of the visible chart trace.
 	 * @custom
@@ -96,16 +91,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
-	/**
-	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVariables()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<AbstractVariable> variables;
-
 	/**
 	 * The default value of the '{@link #getChart() <em>Chart</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -167,18 +152,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS);
 		}
 		return outputs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<AbstractVariable> getVariables() {
-		if (variables == null) {
-			variables = new EObjectContainmentEList.Resolving<AbstractVariable>(AbstractVariable.class, this, ComponentsPackage.DISPLAY_COMPONENT__VARIABLES);
-		}
-		return variables;
 	}
 
 	/**
@@ -293,7 +266,7 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		    }
 		    
 		    // trace name = input component&port name 
-			trace.setName(((Component) input.eContainer()).getLabel() + "." + input.getLabel());
+			trace.setName(((Component) input.eContainer()).getName() + "." + input.getName());
 		    
 		    // set/generate colour
 		    Color colour = port.getColor();
@@ -395,8 +368,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
-				return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -413,8 +384,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				return getInputs();
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return getOutputs();
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
-				return getVariables();
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				return getChart();
 		}
@@ -438,10 +407,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
-				getVariables().clear();
-				getVariables().addAll((Collection<? extends AbstractVariable>)newValue);
-				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				setChart((Chart2D)newValue);
 				return;
@@ -463,9 +428,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
-				getVariables().clear();
-				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				setChart(CHART_EDEFAULT);
 				return;
@@ -485,8 +447,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
-				return variables != null && !variables.isEmpty();
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				return CHART_EDEFAULT == null ? chart != null : !CHART_EDEFAULT.equals(chart);
 		}
@@ -507,11 +467,6 @@ public class DisplayComponentImpl extends EventBLabeledImpl implements DisplayCo
 		result.append(chart);
 		result.append(')');
 		return result.toString();
-	}
-
-	@Override
-	public String getLabel() {
-		return "Display";
 	}
 
 } //DisplayComponentImpl

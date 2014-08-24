@@ -30,7 +30,7 @@ import ac.soton.rms.components.FMUParameter;
  *
  * @generated
  */
-public class FMUParameterImpl extends FMUVariableImpl implements FMUParameter {
+public class FMUParameterImpl extends AbstractVariableImpl implements FMUParameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

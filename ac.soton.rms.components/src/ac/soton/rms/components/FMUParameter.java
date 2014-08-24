@@ -27,7 +27,7 @@ package ac.soton.rms.components;
  * @model
  * @generated
  */
-public interface FMUParameter extends FMUVariable {
+public interface FMUParameter extends AbstractVariable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

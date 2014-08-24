@@ -9,9 +9,9 @@
  */
 package ac.soton.rms.components;
 
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
+import org.eventb.emf.core.EventBNamed;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link ac.soton.rms.components.Component#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.Component#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.rms.components.Component#getVariables <em>Variables</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,7 +30,7 @@ import org.eclipse.emf.common.util.EList;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Component extends EventBLabeled {
+public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -70,22 +69,6 @@ public interface Component extends EventBLabeled {
 	 * @generated
 	 */
 	EList<Port> getOutputs();
-
-	/**
-	 * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-	 * The list contents are of type {@link ac.soton.rms.components.AbstractVariable}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Variables</em>' containment reference list.
-	 * @see ac.soton.rms.components.ComponentsPackage#getComponent_Variables()
-	 * @model containment="true" resolveProxies="true"
-	 * @generated
-	 */
-	EList<AbstractVariable> getVariables();
 
 	/**
 	 * <!-- begin-user-doc -->

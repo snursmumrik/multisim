@@ -9,6 +9,8 @@
  */
 package ac.soton.rms.components.impl;
 
+import ac.soton.rms.components.Component;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -35,25 +36,20 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eventb.core.IEventBRoot;
+import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
-
-import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
-import ac.soton.eventb.emf.core.extension.coreextension.EventBLabeled;
-import ac.soton.rms.components.AbstractVariable;
-import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
 import ac.soton.rms.components.Port;
 import ac.soton.rms.components.util.custom.SimStatus;
 import ac.soton.rms.components.util.custom.SimulationUtil;
-
 import com.google.inject.Injector;
-
 import de.be4.classicalb.core.parser.exceptions.BException;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
@@ -72,18 +68,13 @@ import de.prob.webconsole.ServletContextListener;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getMachine <em>Machine</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isComposed <em>Composed</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getTraceFilePath <em>Trace File Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isCheckInvariants <em>Check Invariants</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isCompareTrace <em>Compare Trace</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
@@ -100,14 +91,24 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
-	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLabel()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LABEL_EDEFAULT = "";
+	protected static final String NAME_EDEFAULT = "";
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
@@ -128,16 +129,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
-
-	/**
-	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVariables()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<AbstractVariable> variables;
 
 	/**
 	 * The cached value of the '{@link #getMachine() <em>Machine</em>}' reference.
@@ -170,26 +161,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected boolean composed = COMPOSED_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getTraceFilePath() <em>Trace File Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTraceFilePath()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TRACE_FILE_PATH_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getTraceFilePath() <em>Trace File Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTraceFilePath()
-	 * @generated
-	 * @ordered
-	 */
-	protected String traceFilePath = TRACE_FILE_PATH_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getReadInputEvents() <em>Read Input Events</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -208,66 +179,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected EList<Event> waitEvents;
-
-	/**
-	 * The default value of the '{@link #isCheckInvariants() <em>Check Invariants</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCheckInvariants()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean CHECK_INVARIANTS_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCheckInvariants() <em>Check Invariants</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCheckInvariants()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean checkInvariants = CHECK_INVARIANTS_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isCompareTrace() <em>Compare Trace</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCompareTrace()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean COMPARE_TRACE_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCompareTrace() <em>Compare Trace</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCompareTrace()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean compareTrace = COMPARE_TRACE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isRecordTrace()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean RECORD_TRACE_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isRecordTrace()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
@@ -315,6 +226,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private Random random = new Random(System.currentTimeMillis());
 	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
+	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -333,6 +245,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	protected EClass eStaticClass() {
 		return ComponentsPackage.Literals.EVENT_BCOMPONENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__NAME, oldName, name));
 	}
 
 	/**
@@ -363,69 +296,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		stepPeriod = newStepPeriod;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isCheckInvariants() {
-		return checkInvariants;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCheckInvariants(boolean newCheckInvariants) {
-		boolean oldCheckInvariants = checkInvariants;
-		checkInvariants = newCheckInvariants;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS, oldCheckInvariants, checkInvariants));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isCompareTrace() {
-		return compareTrace;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCompareTrace(boolean newCompareTrace) {
-		boolean oldCompareTrace = compareTrace;
-		compareTrace = newCompareTrace;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE, oldCompareTrace, compareTrace));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isRecordTrace() {
-		return recordTrace;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRecordTrace(boolean newRecordTrace) {
-		boolean oldRecordTrace = recordTrace;
-		recordTrace = newRecordTrace;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE, oldRecordTrace, recordTrace));
 	}
 
 	/**
@@ -471,18 +341,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS);
 		}
 		return outputs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<AbstractVariable> getVariables() {
-		if (variables == null) {
-			variables = new EObjectContainmentEList.Resolving<AbstractVariable>(AbstractVariable.class, this, ComponentsPackage.EVENT_BCOMPONENT__VARIABLES);
-		}
-		return variables;
 	}
 
 	/**
@@ -542,27 +400,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		composed = newComposed;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__COMPOSED, oldComposed, composed));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getTraceFilePath() {
-		return traceFilePath;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTraceFilePath(String newTraceFilePath) {
-		String oldTraceFilePath = traceFilePath;
-		traceFilePath = newTraceFilePath;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH, oldTraceFilePath, traceFilePath));
 	}
 
 	/**
@@ -750,7 +587,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			assert p instanceof EventBPort && ((EventBPort) p).getVariable() != null;
 			
 			p.setValue(SimulationUtil.getFMIValue(
-					(String) state.value(p.getLabel()), 
+					(String) state.value(p.getName()), 
 					p.getType(), 
 					((EventBPort) p).getIntToReal()));
 		}
@@ -789,11 +626,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			
 			// execute
 			trace = trace.add(nextOp.getId());
-			
-			// check invariants if on
-			if (checkInvariants && trace.getStateSpace().hasInvariantViolation(trace.getCurrentState())) {
-				return SimStatus.EVENTB_INV_VIOLATED;
-			}
 		}
 
 		return status;
@@ -813,10 +645,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			p.eSetDeliver(true);
 		
 		// save trace
-		String traceFilePath = this.traceFilePath;
-		if (traceFilePath == null)
-			traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString();
-		traceFilePath += "_" + new SimpleDateFormat("yyMMddHHmmss").format(new java.util.Date()) + ".xml";
+		String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
+				+ "_" + dateFormat.format(new java.util.Date()) + ".xml";
 		trace.toString();	//XXX has to be called to fix the serialisation bug
 		TraceConverter.save(trace, traceFilePath);
 
@@ -825,7 +655,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
 		selector.addNewAnimation(trace);
 		
+		trace = null;
+		System.gc();
+		
 		return SimStatus.OK_STATUS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String doGetName() {
+		if (this.eIsProxy()){
+			String fragment = ((InternalEObject)this).eProxyURI().fragment();
+			int ind = fragment.lastIndexOf("::");
+			if (ind>-1) fragment = fragment.substring(ind+2);
+			fragment = fragment.substring(fragment.lastIndexOf('.')+1);
+			return fragment;
+		}else{
+			return name;
+		}
 	}
 
 	/**
@@ -840,8 +690,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
-				return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -854,31 +702,21 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
-				return getLabel();
+			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
+				return getName();
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				return getInputs();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return getOutputs();
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
-				return getVariables();
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				if (resolve) return getMachine();
 				return basicGetMachine();
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 				return isComposed();
-			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-				return getTraceFilePath();
 			case ComponentsPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
 				return getReadInputEvents();
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				return getWaitEvents();
-			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
-				return isCheckInvariants();
-			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
-				return isCompareTrace();
-			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
-				return isRecordTrace();
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				return getTrace();
 			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
@@ -896,6 +734,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
+				setName((String)newValue);
+				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				getInputs().clear();
 				getInputs().addAll((Collection<? extends Port>)newValue);
@@ -904,18 +745,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
-				getVariables().clear();
-				getVariables().addAll((Collection<? extends AbstractVariable>)newValue);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)newValue);
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 				setComposed((Boolean)newValue);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-				setTraceFilePath((String)newValue);
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
 				getReadInputEvents().clear();
@@ -924,15 +758,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				getWaitEvents().clear();
 				getWaitEvents().addAll((Collection<? extends Event>)newValue);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
-				setCheckInvariants((Boolean)newValue);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
-				setCompareTrace((Boolean)newValue);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
-				setRecordTrace((Boolean)newValue);
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace((Trace)newValue);
@@ -952,14 +777,14 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				getInputs().clear();
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				getOutputs().clear();
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
-				getVariables().clear();
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)null);
@@ -967,23 +792,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 				setComposed(COMPOSED_EDEFAULT);
 				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-				setTraceFilePath(TRACE_FILE_PATH_EDEFAULT);
-				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
 				getReadInputEvents().clear();
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				getWaitEvents().clear();
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
-				setCheckInvariants(CHECK_INVARIANTS_EDEFAULT);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
-				setCompareTrace(COMPARE_TRACE_EDEFAULT);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
-				setRecordTrace(RECORD_TRACE_EDEFAULT);
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace(TRACE_EDEFAULT);
@@ -1003,30 +816,20 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
-				return LABEL_EDEFAULT == null ? getLabel() != null : !LABEL_EDEFAULT.equals(getLabel());
+			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
-				return variables != null && !variables.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				return machine != null;
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
 				return composed != COMPOSED_EDEFAULT;
-			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-				return TRACE_FILE_PATH_EDEFAULT == null ? traceFilePath != null : !TRACE_FILE_PATH_EDEFAULT.equals(traceFilePath);
 			case ComponentsPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
 				return readInputEvents != null && !readInputEvents.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
 				return waitEvents != null && !waitEvents.isEmpty();
-			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
-				return checkInvariants != CHECK_INVARIANTS_EDEFAULT;
-			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
-				return compareTrace != COMPARE_TRACE_EDEFAULT;
-			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
-				return recordTrace != RECORD_TRACE_EDEFAULT;
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
 			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
@@ -1042,9 +845,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == EventBLabeled.class) {
+		if (baseClass == EventBNamed.class) {
 			switch (derivedFeatureID) {
-				case ComponentsPackage.EVENT_BCOMPONENT__LABEL: return CoreextensionPackage.EVENT_BLABELED__LABEL;
+				case ComponentsPackage.EVENT_BCOMPONENT__NAME: return CorePackage.EVENT_BNAMED__NAME;
 				default: return -1;
 			}
 		}
@@ -1052,7 +855,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (derivedFeatureID) {
 				case ComponentsPackage.EVENT_BCOMPONENT__INPUTS: return ComponentsPackage.COMPONENT__INPUTS;
 				case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS: return ComponentsPackage.COMPONENT__OUTPUTS;
-				case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES: return ComponentsPackage.COMPONENT__VARIABLES;
 				default: return -1;
 			}
 		}
@@ -1066,9 +868,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == EventBLabeled.class) {
+		if (baseClass == EventBNamed.class) {
 			switch (baseFeatureID) {
-				case CoreextensionPackage.EVENT_BLABELED__LABEL: return ComponentsPackage.EVENT_BCOMPONENT__LABEL;
+				case CorePackage.EVENT_BNAMED__NAME: return ComponentsPackage.EVENT_BCOMPONENT__NAME;
 				default: return -1;
 			}
 		}
@@ -1076,7 +878,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (baseFeatureID) {
 				case ComponentsPackage.COMPONENT__INPUTS: return ComponentsPackage.EVENT_BCOMPONENT__INPUTS;
 				case ComponentsPackage.COMPONENT__OUTPUTS: return ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS;
-				case ComponentsPackage.COMPONENT__VARIABLES: return ComponentsPackage.EVENT_BCOMPONENT__VARIABLES;
 				default: return -1;
 			}
 		}
@@ -1093,16 +894,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (composed: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", composed: ");
 		result.append(composed);
-		result.append(", traceFilePath: ");
-		result.append(traceFilePath);
-		result.append(", checkInvariants: ");
-		result.append(checkInvariants);
-		result.append(", compareTrace: ");
-		result.append(compareTrace);
-		result.append(", recordTrace: ");
-		result.append(recordTrace);
 		result.append(", trace: ");
 		result.append(trace);
 		result.append(", stepPeriod: ");

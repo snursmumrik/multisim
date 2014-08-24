@@ -295,7 +295,10 @@ public class EventBPortImpl extends PortImpl implements EventBPort {
 		return result.toString();
 	}
 
-	@Override
+	/**
+	 * @return
+	 * @custom
+	 */
 	public String getLabel() {
 		String noName = "";
 		return getCausality() == VariableCausality.INPUT ? 

@@ -14,8 +14,6 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eventb.emf.core.provider.EventbcoreEditPlugin;
 
-import ac.soton.eventb.emf.core.extension.coreextension.provider.EventbcoreextensionEditPlugin;
-
 /**
  * This is the central singleton for the Components edit plugin.
  * <!-- begin-user-doc -->
@@ -57,7 +55,6 @@ public final class ComponentsEditPlugin extends EMFPlugin {
 		  (new ResourceLocator [] {
 		     EcoreEditPlugin.INSTANCE,
 		     EventbcoreEditPlugin.INSTANCE,
-		     EventbcoreextensionEditPlugin.INSTANCE,
 		   });
 	}
 

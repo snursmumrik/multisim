@@ -138,7 +138,6 @@ public class ComponentsDiagramEditorPlugin extends AbstractUIPlugin {
 		factories.add(new CoreItemProviderAdapterFactory());
 		factories.add(new MachineItemProviderAdapterFactory());
 		factories.add(new ContextItemProviderAdapterFactory());
-		factories.add(new CoreextensionItemProviderAdapterFactory());
 		factories.add(new ResourceItemProviderAdapterFactory());
 		factories.add(new ReflectiveItemProviderAdapterFactory());
 	}

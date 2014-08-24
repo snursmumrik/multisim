@@ -145,7 +145,7 @@ public class DisplayPortItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((DisplayPort)object).getLabel());
+		String label = ((DisplayPort)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DisplayPort_type") :
 			getString("_UI_DisplayPort_type") + " " + label;

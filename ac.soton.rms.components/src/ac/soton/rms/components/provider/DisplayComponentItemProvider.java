@@ -10,7 +10,6 @@
 package ac.soton.rms.components.provider;
 
 
-import ac.soton.eventb.emf.core.extension.coreextension.provider.EventBLabeledItemProvider;
 import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -28,6 +27,7 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eventb.emf.core.provider.EventBNamedItemProvider;
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
@@ -39,7 +39,7 @@ import ac.soton.rms.components.DisplayComponent;
  * @generated
  */
 public class DisplayComponentItemProvider
-	extends EventBLabeledItemProvider
+	extends EventBNamedItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -118,7 +118,6 @@ public class DisplayComponentItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__INPUTS);
 			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__OUTPUTS);
-			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__VARIABLES);
 		}
 		return childrenFeatures;
 	}
@@ -155,7 +154,7 @@ public class DisplayComponentItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = crop(((DisplayComponent)object).getLabel());
+		String label = ((DisplayComponent)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DisplayComponent_type") :
 			getString("_UI_DisplayComponent_type") + " " + label;
@@ -178,7 +177,6 @@ public class DisplayComponentItemProvider
 				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__INPUTS:
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
-			case ComponentsPackage.DISPLAY_COMPONENT__VARIABLES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -225,36 +223,6 @@ public class DisplayComponentItemProvider
 			(createChildParameter
 				(ComponentsPackage.Literals.COMPONENT__OUTPUTS,
 				 ComponentsFactory.eINSTANCE.createDisplayPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUVariable()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createEventBVariable()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createEventBPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createDisplayPort()));
 	}
 
 	/**
@@ -270,8 +238,7 @@ public class DisplayComponentItemProvider
 
 		boolean qualify =
 			childFeature == ComponentsPackage.Literals.COMPONENT__INPUTS ||
-			childFeature == ComponentsPackage.Literals.COMPONENT__OUTPUTS ||
-			childFeature == ComponentsPackage.Literals.COMPONENT__VARIABLES;
+			childFeature == ComponentsPackage.Literals.COMPONENT__OUTPUTS;
 
 		if (qualify) {
 			return getString

@@ -22,7 +22,7 @@ package ac.soton.rms.components;
  * @model
  * @generated
  */
-public interface FMUPort extends Port, FMUVariable {
+public interface FMUPort extends Port {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

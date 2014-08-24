@@ -134,12 +134,6 @@
           name="ConnectorFigure"/>
     </descriptors>
     <descriptors
-        name="VariableFigure">
-      <actualFigure
-          xsi:type="gmfgraph:Label"
-          name="VariableLabelFigure"/>
-    </descriptors>
-    <descriptors
         name="DisplayComponentFigure">
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
@@ -251,7 +245,4 @@
       name="EventBComponentName"
       figure="EventBComponentFigure"
       accessor="//@figures.0/@descriptors.1/@accessors.0"/>
-  <labels
-      name="VariableLabel"
-      figure="VariableFigure"/>
 </gmfgraph:Canvas>

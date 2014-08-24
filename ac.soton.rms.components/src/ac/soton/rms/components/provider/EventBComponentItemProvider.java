@@ -10,7 +10,6 @@
 package ac.soton.rms.components.provider;
 
 
-import ac.soton.eventb.emf.core.extension.coreextension.CoreextensionPackage;
 import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -79,15 +78,11 @@ public class EventBComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLabelPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 			addMachinePropertyDescriptor(object);
 			addComposedPropertyDescriptor(object);
-			addTraceFilePathPropertyDescriptor(object);
 			addReadInputEventsPropertyDescriptor(object);
 			addWaitEventsPropertyDescriptor(object);
-			addCheckInvariantsPropertyDescriptor(object);
-			addCompareTracePropertyDescriptor(object);
-			addRecordTracePropertyDescriptor(object);
 			addTracePropertyDescriptor(object);
 			addStepPeriodPropertyDescriptor(object);
 		}
@@ -95,21 +90,21 @@ public class EventBComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EventBLabeled_label_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBLabeled_label_feature", "_UI_EventBLabeled_type"),
-				 CoreextensionPackage.Literals.EVENT_BLABELED__LABEL,
+				 getString("_UI_EventBNamed_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBNamed_name_feature", "_UI_EventBNamed_type"),
+				 CorePackage.Literals.EVENT_BNAMED__NAME,
 				 true,
-				 true,
+				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
@@ -134,72 +129,6 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Check Invariants feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCheckInvariantsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EventBComponent_checkInvariants_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_checkInvariants_feature", "_UI_EventBComponent_type"),
-				 ComponentsPackage.Literals.EVENT_BCOMPONENT__CHECK_INVARIANTS,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Compare Trace feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCompareTracePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EventBComponent_compareTrace_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_compareTrace_feature", "_UI_EventBComponent_type"),
-				 ComponentsPackage.Literals.EVENT_BCOMPONENT__COMPARE_TRACE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Record Trace feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addRecordTracePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EventBComponent_recordTrace_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_recordTrace_feature", "_UI_EventBComponent_type"),
-				 ComponentsPackage.Literals.EVENT_BCOMPONENT__RECORD_TRACE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -271,28 +200,6 @@ public class EventBComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Trace File Path feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTraceFilePathPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EventBComponent_traceFilePath_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_traceFilePath_feature", "_UI_EventBComponent_type"),
-				 ComponentsPackage.Literals.EVENT_BCOMPONENT__TRACE_FILE_PATH,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This adds a property descriptor for the Read Input Events feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -350,7 +257,6 @@ public class EventBComponentItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__INPUTS);
 			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__OUTPUTS);
-			childrenFeatures.add(ComponentsPackage.Literals.COMPONENT__VARIABLES);
 		}
 		return childrenFeatures;
 	}
@@ -387,7 +293,7 @@ public class EventBComponentItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((EventBComponent)object).getReference();
+		String label = ((EventBComponent)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_EventBComponent_type") :
 			getString("_UI_EventBComponent_type") + " " + label;
@@ -405,19 +311,14 @@ public class EventBComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EventBComponent.class)) {
-			case ComponentsPackage.EVENT_BCOMPONENT__LABEL:
+			case ComponentsPackage.EVENT_BCOMPONENT__NAME:
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
-			case ComponentsPackage.EVENT_BCOMPONENT__TRACE_FILE_PATH:
-			case ComponentsPackage.EVENT_BCOMPONENT__CHECK_INVARIANTS:
-			case ComponentsPackage.EVENT_BCOMPONENT__COMPARE_TRACE:
-			case ComponentsPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__INPUTS:
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
-			case ComponentsPackage.EVENT_BCOMPONENT__VARIABLES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -469,36 +370,6 @@ public class EventBComponentItemProvider
 			(createChildParameter
 				(ComponentsPackage.Literals.COMPONENT__OUTPUTS,
 				 ComponentsFactory.eINSTANCE.createDisplayPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUVariable()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createEventBVariable()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUParameter()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createFMUPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createEventBPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ComponentsPackage.Literals.COMPONENT__VARIABLES,
-				 ComponentsFactory.eINSTANCE.createDisplayPort()));
 	}
 
 	/**
@@ -514,8 +385,7 @@ public class EventBComponentItemProvider
 
 		boolean qualify =
 			childFeature == ComponentsPackage.Literals.COMPONENT__INPUTS ||
-			childFeature == ComponentsPackage.Literals.COMPONENT__OUTPUTS ||
-			childFeature == ComponentsPackage.Literals.COMPONENT__VARIABLES;
+			childFeature == ComponentsPackage.Literals.COMPONENT__OUTPUTS;
 
 		if (qualify) {
 			return getString

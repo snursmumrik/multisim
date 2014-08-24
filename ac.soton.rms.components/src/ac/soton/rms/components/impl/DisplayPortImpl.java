@@ -226,9 +226,4 @@ public class DisplayPortImpl extends PortImpl implements DisplayPort {
 		return result.toString();
 	}
 
-	@Override
-	public String getLabel() {
-		return "";
-	}
-
 } //DisplayPortImpl
