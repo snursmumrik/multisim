@@ -163,7 +163,7 @@ public class ComponentsDiagramEditorUtil {
 					IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
 				ComponentDiagram model = createInitialModel();
-				// set model name to the name of the file
+				//@custom: set model name to the name of the file
 				model.setName(diagramURI.trimFileExtension().lastSegment());
 				attachModelToResource(model, diagramResource);
 

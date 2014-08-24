@@ -1,58 +1,9 @@
 **************************************************************************************
-* Customisations list
-* (list of all overrides, custom code within the generated code, generated nots etc.
+* Customisations
+* (notes on overrides, custom code within the generated code, generated notes etc.
 * that are worth putting in templates for the automatic generation)
 **************************************************************************************
 
 Code customisations are implemented via 
 - @generated NOT approach
 - Method overrides and custom code, both cases tagged as @custom
-
-== ac.soton.rms.components
-
-EventBComponentImpl:
-getExtensionId() override
-private Random random = new Random(System.currentTimeMillis());
-private Set<String> waitSet = new HashSet<String>();
-private BufferedReader traceReader;
-private BufferedWriter traceWriter;
-getLabel() genNot
-
-FMUComponentImpl:
-getLabel() override
-
-ComponentsPackage:
-COMPONENTS_EXTENSION_ID constant
-
-EventBPort:
-getLabel() override
-
-EventBVariable:
-getLabel() override
-
-FMUPort:
-getLabel() override
-
-FMUVariable:
-getLabel() override
-
-DisplayComponentImpl:
-getLabel() override
-generateNewColour() new
-private Random random = new Random(System.currentTimeMillis());
-private static final int MAX_TRACE_SIZE = 1500;
-
-DisplayPort:
-getLabel() override
-
-ComponentsFactoryImpl:
-createColorFromString() genNot
-convertColorToString() genNot
-
-== ac.soton.rms.components.diagram
-ComponentsDocumentProvider:
-doSaveDocument() genNot
-saveEventB() new
-
-ac.soton.rms.components.diagram.part.ComponentsDiagramEditorUtil:
-ac.soton.rms.components.diagram.part.ComponentsDiagramEditorUtil.createDiagram(URI, IProgressMonitor) genNot

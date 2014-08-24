@@ -906,6 +906,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		return result.toString();
 	}
 
+	/* @custom
+	 */
 	@Override
 	public String getExtensionId() {
 		return ComponentsPackage.COMPONENTS_EXTENSION_ID;
