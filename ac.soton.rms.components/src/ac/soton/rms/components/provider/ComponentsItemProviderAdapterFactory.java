@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -462,7 +463,7 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 			protected EditingDomain editingDomain;
 
 			/**
-			 * Creates the a switch for populating child descriptors in the given domain.
+			 * Creates the switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
 			 * @generated
@@ -478,10 +479,15 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 			 */
 			@Override
 			public Object caseEventBElement(EventBElement object) {
-				newChildDescriptors.add
-					(createChildParameter
-						(CorePackage.Literals.EVENT_BELEMENT__EXTENSIONS,
-						 ComponentsFactory.eINSTANCE.createEventBComponent()));
+			
+			EAnnotation annotation = null;
+				
+				annotation = ComponentsPackage.Literals.EVENT_BCOMPONENT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.EVENT_BELEMENT__EXTENSIONS,
+							 ComponentsFactory.eINSTANCE.createEventBComponent()));
 
 				return null;
 			}
@@ -493,10 +499,15 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 			 */
 			@Override
 			public Object caseAnnotation(Annotation object) {
-				newChildDescriptors.add
-					(createChildParameter
-						(CorePackage.Literals.ANNOTATION__CONTENTS,
-						 ComponentsFactory.eINSTANCE.createEventBComponent()));
+			
+			EAnnotation annotation = null;
+				
+				annotation = ComponentsPackage.Literals.EVENT_BCOMPONENT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 ComponentsFactory.eINSTANCE.createEventBComponent()));
 
 				return null;
 			}
@@ -519,8 +530,8 @@ public class ComponentsItemProviderAdapterFactory extends ComponentsAdapterFacto
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 			ArrayList<Object> result = new ArrayList<Object>();
-			new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
-			return result;
+		   new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
+		   return result;
 		}
 
 		/**

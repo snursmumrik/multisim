@@ -51,7 +51,7 @@ public class ComponentsFactoryImpl extends EFactoryImpl implements ComponentsFac
 	 */
 	public static ComponentsFactory init() {
 		try {
-			ComponentsFactory theComponentsFactory = (ComponentsFactory)EPackage.Registry.INSTANCE.getEFactory(ComponentsPackage.eNS_URI);
+			ComponentsFactory theComponentsFactory = (ComponentsFactory)EPackage.Registry.INSTANCE.getEFactory("http://soton.ac.uk/models/components/2.0"); 
 			if (theComponentsFactory != null) {
 				return theComponentsFactory;
 			}

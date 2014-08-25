@@ -108,7 +108,7 @@ public class Master {
 	 * @return
 	 */
 	private static IStatus initialise(IProgressMonitor monitor) {
-		IStatus status = null;
+		IStatus status = SimStatus.OK_STATUS;
 		
 		for (Component c : components) {
 			monitor.subTask("Initialising component '" + c.getName() + "'");
@@ -149,7 +149,7 @@ public class Master {
 	private static IStatus doSteps(IProgressMonitor monitor) {
 		monitor.beginTask("Simulation", stopTime - startTime);
 		int lastMonitorTick = startTime;
-		IStatus status = null;
+		IStatus status = SimStatus.OK_STATUS;
 
 		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
 			if (monitor.isCanceled()) {
