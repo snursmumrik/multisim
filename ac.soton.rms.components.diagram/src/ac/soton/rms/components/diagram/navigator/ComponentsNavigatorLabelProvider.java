@@ -23,11 +23,11 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonLabelProvider;
 
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.DisplayComponent;
-import ac.soton.rms.components.DisplayPort;
-import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.FMUPort;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.DisplayComponent;
+import ac.soton.multisim.components.DisplayPort;
+import ac.soton.multisim.components.EventBPort;
+import ac.soton.multisim.components.FMUPort;
 import ac.soton.rms.components.diagram.edit.parts.ComponentDiagramEditPart;
 import ac.soton.rms.components.diagram.edit.parts.ConnectorEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;

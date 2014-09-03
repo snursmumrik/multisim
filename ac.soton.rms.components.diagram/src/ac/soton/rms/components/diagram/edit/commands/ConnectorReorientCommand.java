@@ -16,7 +16,7 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.EditElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientReferenceRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 
-import ac.soton.rms.components.Port;
+import ac.soton.multisim.components.Port;
 import ac.soton.rms.components.diagram.edit.policies.ComponentsBaseItemSemanticEditPolicy;
 
 /**

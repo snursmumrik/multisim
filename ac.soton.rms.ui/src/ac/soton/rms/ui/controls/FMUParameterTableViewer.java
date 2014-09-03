@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import ac.soton.rms.components.FMUParameter;
+import ac.soton.multisim.components.FMUParameter;
 import ac.soton.rms.ui.providers.ColumnProvider;
 
 /**

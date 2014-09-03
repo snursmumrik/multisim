@@ -27,9 +27,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IProgressConstants;
 import org.eclipse.ui.services.ISourceProviderService;
 
-import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentDiagram;
 import ac.soton.rms.master.Master;
-import ac.soton.rms.ui.RmsUIActivator;
+import ac.soton.rms.ui.MultisimUIActivator;
 
 /**
  * @author vitaly
@@ -69,7 +69,7 @@ public class SimulateCommand extends AbstractHandler {
 			job.setUser(true);				// user UI job
 			job.setPriority(Job.LONG);		// long-running job scheduling (lower priority than interactive and short, but higher than build)
 			job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);		// keep only one job in progress monitor
-			job.setProperty(IProgressConstants.ICON_PROPERTY, RmsUIActivator.getDefault().getImageRegistry().getDescriptor(RmsUIActivator.IMAGE_RMS));	// job icon
+			job.setProperty(IProgressConstants.ICON_PROPERTY, MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_RMS));	// job icon
 			job.addJobChangeListener(new JobChangeAdapter() {
 				@Override
 				public void done(IJobChangeEvent event) {

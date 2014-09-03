@@ -10,7 +10,7 @@ package ac.soton.rms.ui.test;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.gmf.runtime.notation.View;
 
-import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentDiagram;
 
 /**
  * @author vitaly

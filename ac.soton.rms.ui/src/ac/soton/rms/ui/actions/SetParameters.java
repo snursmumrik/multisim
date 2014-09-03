@@ -30,11 +30,11 @@ import org.ptolemy.fmi.FMIScalarVariable;
 import org.ptolemy.fmi.FMIScalarVariable.Variability;
 import org.ptolemy.fmi.FMUFile;
 
-import ac.soton.rms.components.ComponentsFactory;
-import ac.soton.rms.components.FMUComponent;
-import ac.soton.rms.components.FMUParameter;
+import ac.soton.multisim.components.ComponentsFactory;
+import ac.soton.multisim.components.FMUComponent;
+import ac.soton.multisim.components.FMUParameter;
+import ac.soton.multisim.components.util.custom.SimulationUtil;
 import ac.soton.rms.components.diagram.edit.parts.FMUComponentEditPart;
-import ac.soton.rms.components.util.custom.SimulationUtil;
 import ac.soton.rms.ui.dialogs.FMUParametersDialog;
 
 /**

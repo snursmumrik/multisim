@@ -32,10 +32,10 @@ import org.eventb.emf.core.provider.CoreItemProviderAdapterFactory;
 import org.osgi.framework.BundleContext;
 
 import ac.soton.eventb.emf.core.extension.coreextension.provider.CoreextensionItemProviderAdapterFactory;
+import ac.soton.multisim.components.provider.ComponentsItemProviderAdapterFactory;
 import ac.soton.rms.components.diagram.edit.policies.ComponentsBaseItemSemanticEditPolicy;
 import ac.soton.rms.components.diagram.expressions.ComponentsOCLFactory;
 import ac.soton.rms.components.diagram.providers.ElementInitializers;
-import ac.soton.rms.components.provider.ComponentsItemProviderAdapterFactory;
 
 /**
  * @generated

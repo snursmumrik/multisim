@@ -15,7 +15,7 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.emf.type.core.commands.EditElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 
-import ac.soton.rms.components.Port;
+import ac.soton.multisim.components.Port;
 import ac.soton.rms.components.diagram.edit.policies.ComponentsBaseItemSemanticEditPolicy;
 
 /**

@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 
-import ac.soton.rms.components.FMUParameter;
+import ac.soton.multisim.components.FMUParameter;
 
 /**
  * Table cell editing support for FMU parameter values.

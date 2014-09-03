@@ -42,8 +42,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.tooling.runtime.edit.helpers.GeneratedEditHelperBase;
 
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.Port;
+import ac.soton.multisim.components.ComponentsPackage;
+import ac.soton.multisim.components.Port;
 import ac.soton.rms.components.diagram.expressions.ComponentsOCLFactory;
 import ac.soton.rms.components.diagram.part.ComponentsDiagramEditorPlugin;
 import ac.soton.rms.components.diagram.part.ComponentsVisualIDRegistry;

@@ -21,7 +21,7 @@ import org.eclipse.gmf.tooling.runtime.providers.DiagramElementTypes;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
-import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.multisim.components.ComponentsPackage;
 import ac.soton.rms.components.diagram.edit.parts.ComponentDiagramEditPart;
 import ac.soton.rms.components.diagram.edit.parts.ConnectorEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;

@@ -24,7 +24,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eventb.emf.core.machine.Machine;
 
-import ac.soton.rms.components.EventBComponent;
+import ac.soton.multisim.components.EventBComponent;
 import ac.soton.rms.components.diagram.edit.parts.EventBComponentEditPart;
 
 /**

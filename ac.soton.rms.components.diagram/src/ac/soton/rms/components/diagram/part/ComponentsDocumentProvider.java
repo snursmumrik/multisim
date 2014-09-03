@@ -66,10 +66,10 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.machine.Machine;
 
-import ac.soton.rms.components.Component;
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.EventBComponent;
+import ac.soton.multisim.components.Component;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentsPackage;
+import ac.soton.multisim.components.EventBComponent;
 
 /**
  * @generated

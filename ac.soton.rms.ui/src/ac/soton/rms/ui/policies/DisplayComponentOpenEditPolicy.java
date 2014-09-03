@@ -20,9 +20,9 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.OpenEditPolicy;
 
-import ac.soton.rms.components.DisplayComponent;
+import ac.soton.multisim.components.DisplayComponent;
+import ac.soton.multisim.components.util.custom.SimStatus;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;
-import ac.soton.rms.components.util.custom.SimStatus;
 
 public final class DisplayComponentOpenEditPolicy extends OpenEditPolicy {
 

@@ -22,7 +22,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
 
-import ac.soton.rms.components.DisplayPort;
+import ac.soton.multisim.components.DisplayPort;
 
 /**
  * @author vitaly

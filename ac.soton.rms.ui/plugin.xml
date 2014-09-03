@@ -5,7 +5,7 @@
          point="org.eclipse.ui.commands">
       <category
             id="ac.soton.rms.ui.commands"
-            name="RMS UI Commands">
+            name="Multisim UI Commands">
       </category>
       <command
             categoryId="ac.soton.rms.ui.commands"

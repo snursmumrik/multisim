@@ -19,9 +19,9 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import ac.soton.rms.components.Component;
-import ac.soton.rms.components.ComponentsFactory;
-import ac.soton.rms.components.FMUPort;
+import ac.soton.multisim.components.Component;
+import ac.soton.multisim.components.ComponentsFactory;
+import ac.soton.multisim.components.FMUPort;
 import ac.soton.rms.components.diagram.providers.ElementInitializers;
 
 /**

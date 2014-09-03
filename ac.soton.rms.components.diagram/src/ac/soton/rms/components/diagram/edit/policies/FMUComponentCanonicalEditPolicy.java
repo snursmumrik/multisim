@@ -40,7 +40,7 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.Size;
 import org.eclipse.gmf.runtime.notation.View;
 
-import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.multisim.components.ComponentsPackage;
 import ac.soton.rms.components.diagram.edit.parts.FMUInputPortEditPart;
 import ac.soton.rms.components.diagram.edit.parts.FMUOutputPortEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsDiagramUpdater;

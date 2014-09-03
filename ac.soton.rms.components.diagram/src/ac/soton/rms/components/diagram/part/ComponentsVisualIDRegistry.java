@@ -14,11 +14,11 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.tooling.runtime.structure.DiagramStructure;
 
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.DisplayPort;
-import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.FMUPort;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentsPackage;
+import ac.soton.multisim.components.DisplayPort;
+import ac.soton.multisim.components.EventBPort;
+import ac.soton.multisim.components.FMUPort;
 import ac.soton.rms.components.diagram.edit.parts.ComponentDiagramEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayPortEditPart;

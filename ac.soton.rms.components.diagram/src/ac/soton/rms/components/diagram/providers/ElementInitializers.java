@@ -7,11 +7,11 @@
  */
 package ac.soton.rms.components.diagram.providers;
 
-import ac.soton.rms.components.ComponentsPackage;
-import ac.soton.rms.components.DisplayPort;
-import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.FMUPort;
-import ac.soton.rms.components.VariableCausality;
+import ac.soton.multisim.components.ComponentsPackage;
+import ac.soton.multisim.components.DisplayPort;
+import ac.soton.multisim.components.EventBPort;
+import ac.soton.multisim.components.FMUPort;
+import ac.soton.multisim.components.VariableCausality;
 import ac.soton.rms.components.diagram.expressions.ComponentsAbstractExpression;
 import ac.soton.rms.components.diagram.expressions.ComponentsOCLFactory;
 import ac.soton.rms.components.diagram.part.ComponentsDiagramEditorPlugin;

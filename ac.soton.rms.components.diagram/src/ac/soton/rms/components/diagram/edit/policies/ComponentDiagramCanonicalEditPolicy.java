@@ -36,7 +36,7 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.tooling.runtime.update.UpdaterLinkDescriptor;
 
-import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.multisim.components.ComponentsPackage;
 import ac.soton.rms.components.diagram.edit.parts.ComponentDiagramEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayComponentEditPart;
 import ac.soton.rms.components.diagram.edit.parts.DisplayPortEditPart;

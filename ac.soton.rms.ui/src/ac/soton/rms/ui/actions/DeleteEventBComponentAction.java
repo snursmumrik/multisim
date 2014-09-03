@@ -24,7 +24,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 
-import ac.soton.rms.components.EventBComponent;
+import ac.soton.multisim.components.EventBComponent;
 
 /**
  * Action for deleting an Event-B component from the Event-B Explorer view.

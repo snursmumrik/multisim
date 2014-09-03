@@ -14,7 +14,7 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
-import ac.soton.rms.components.AbstractVariable;
+import ac.soton.multisim.components.AbstractVariable;
 import ac.soton.rms.ui.dialogs.DecoratedInputValidator;
 
 /**

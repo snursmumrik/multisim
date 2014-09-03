@@ -17,12 +17,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
-import ac.soton.rms.components.Component;
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.EventBComponent;
-import ac.soton.rms.components.FMUComponent;
-import ac.soton.rms.components.Port;
-import ac.soton.rms.components.util.custom.SimStatus;
+import ac.soton.multisim.components.Component;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.EventBComponent;
+import ac.soton.multisim.components.FMUComponent;
+import ac.soton.multisim.components.Port;
+import ac.soton.multisim.components.util.custom.SimStatus;
 
 /**
  * @author vitaly

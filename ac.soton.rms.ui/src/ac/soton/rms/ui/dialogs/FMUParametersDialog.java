@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import ac.soton.rms.components.FMUParameter;
+import ac.soton.multisim.components.FMUParameter;
 import ac.soton.rms.ui.controls.FMUParameterTableViewer;
 
 

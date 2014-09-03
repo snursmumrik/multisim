@@ -28,7 +28,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 
-import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.multisim.components.ComponentsPackage;
 import ac.soton.rms.components.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.rms.components.diagram.part.ComponentsDiagramUpdater;
 import ac.soton.rms.components.diagram.part.ComponentsNodeDescriptor;

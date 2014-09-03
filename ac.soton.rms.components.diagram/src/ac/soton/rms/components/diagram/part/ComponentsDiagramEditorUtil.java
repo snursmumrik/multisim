@@ -57,8 +57,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsFactory;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentsFactory;
 import ac.soton.rms.components.diagram.edit.parts.ComponentDiagramEditPart;
 
 /**

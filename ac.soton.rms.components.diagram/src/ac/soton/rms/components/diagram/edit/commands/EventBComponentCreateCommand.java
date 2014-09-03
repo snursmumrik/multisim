@@ -19,9 +19,9 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsFactory;
-import ac.soton.rms.components.EventBComponent;
+import ac.soton.multisim.components.ComponentDiagram;
+import ac.soton.multisim.components.ComponentsFactory;
+import ac.soton.multisim.components.EventBComponent;
 
 /**
  * @generated
