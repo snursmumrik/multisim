@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package ac.soton.rms.master;
+package ac.soton.multisim.master;
 
 import java.util.HashMap;
 import java.util.HashSet;

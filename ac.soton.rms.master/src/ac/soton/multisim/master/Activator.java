@@ -1,4 +1,4 @@
-package ac.soton.rms.master;
+package ac.soton.multisim.master;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

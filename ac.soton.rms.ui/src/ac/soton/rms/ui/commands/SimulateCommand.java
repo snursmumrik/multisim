@@ -28,7 +28,7 @@ import org.eclipse.ui.progress.IProgressConstants;
 import org.eclipse.ui.services.ISourceProviderService;
 
 import ac.soton.multisim.components.ComponentDiagram;
-import ac.soton.rms.master.Master;
+import ac.soton.multisim.master.Master;
 import ac.soton.rms.ui.MultisimUIActivator;
 
 /**

@@ -11,7 +11,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import ac.soton.rms.master.Master;
+import ac.soton.multisim.master.Master;
 
 /**
  * Command handleer for pausing the simulation.

@@ -1,4 +1,4 @@
-package ac.soton.rms.master;
+package ac.soton.multisim.master;
 /**
  * Copyright (c) 2013 University of Southampton.
  * All rights reserved. This program and the accompanying materials
