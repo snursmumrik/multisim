@@ -29,11 +29,6 @@
       </command>
       <command
             categoryId="ac.soton.rms.ui.commands"
-            id="ac.soton.rms.ui.commands.pause"
-            name="Pause">
-      </command>
-      <command
-            categoryId="ac.soton.rms.ui.commands"
             id="ac.soton.rms.ui.commands.validate"
             name="Validate">
       </command>

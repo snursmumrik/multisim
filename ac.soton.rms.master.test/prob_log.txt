@@ -5279,3 +5279,68 @@
 
 2014-08-23 22:04:01,517 76693 [main] INFO  de.prob.cli.ProBConnection Method:
 				send Line: 78 - yes('.'(=('Errors',[]),[]))
+2014-08-26 22:32:35,819 2449 [main] DEBUG de.prob.Main Method:
+				<init> Line: 93 - Java version: 1.7.0_51
+2014-08-26 22:32:35,848 2478 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 64 - Protection Domain: ProtectionDomain  (file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar <no signer certificates>)
+ null
+ <no principals>
+ java.security.AllPermissionCollection@44c2c269 (
+ ("java.security.AllPermission" "<all permissions>" "<all actions>")
+)
+
+
+2014-08-26 22:32:35,849 2479 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 68 - External Form: file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar
+2014-08-26 22:34:02,501 2313 [main] DEBUG de.prob.Main Method:
+				<init> Line: 93 - Java version: 1.7.0_51
+2014-08-26 22:34:02,531 2343 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 64 - Protection Domain: ProtectionDomain  (file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar <no signer certificates>)
+ null
+ <no principals>
+ java.security.AllPermissionCollection@3cf8f3e4 (
+ ("java.security.AllPermission" "<all permissions>" "<all actions>")
+)
+
+
+2014-08-26 22:34:02,532 2344 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 68 - External Form: file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar
+2014-08-26 22:45:18,076 2318 [main] DEBUG de.prob.Main Method:
+				<init> Line: 93 - Java version: 1.7.0_51
+2014-08-26 22:45:18,105 2347 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 64 - Protection Domain: ProtectionDomain  (file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar <no signer certificates>)
+ null
+ <no principals>
+ java.security.AllPermissionCollection@25e969d9 (
+ ("java.security.AllPermission" "<all permissions>" "<all actions>")
+)
+
+
+2014-08-26 22:45:18,106 2348 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 68 - External Form: file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar
+2014-08-26 22:46:23,930 2433 [main] DEBUG de.prob.Main Method:
+				<init> Line: 93 - Java version: 1.7.0_51
+2014-08-26 22:46:23,960 2463 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 64 - Protection Domain: ProtectionDomain  (file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar <no signer certificates>)
+ null
+ <no principals>
+ java.security.AllPermissionCollection@3749a97f (
+ ("java.security.AllPermission" "<all permissions>" "<all actions>")
+)
+
+
+2014-08-26 22:46:23,961 2464 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 68 - External Form: file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar
+2014-08-26 22:47:11,526 2444 [main] DEBUG de.prob.Main Method:
+				<init> Line: 93 - Java version: 1.7.0_51
+2014-08-26 22:47:11,556 2474 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 64 - Protection Domain: ProtectionDomain  (file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar <no signer certificates>)
+ null
+ <no principals>
+ java.security.AllPermissionCollection@395e4874 (
+ ("java.security.AllPermission" "<all permissions>" "<all actions>")
+)
+
+
+2014-08-26 22:47:11,557 2475 [Thread-4] DEBUG de.prob.webconsole.WebConsole Method:
+				run Line: 68 - External Form: file:/Users/vitaly/Workspaces/RMS2/.metadata/.plugins/org.eclipse.pde.core/pde-junit/org.eclipse.osgi/bundles/26/1/.cp/lib/dependencies/de.prob.core.kernel-2.0.0-milestone-15-SNAPSHOT.jar

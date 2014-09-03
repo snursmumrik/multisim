@@ -9,8 +9,9 @@
  */
 package ac.soton.rms.components;
 
-import de.prob.cosimulation.FMU;
 import org.eclipse.emf.common.util.EList;
+
+import de.prob.cosimulation.FMU;
 
 /**
  * <!-- begin-user-doc -->

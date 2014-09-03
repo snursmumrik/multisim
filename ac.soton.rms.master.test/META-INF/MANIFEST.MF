@@ -10,9 +10,8 @@ Require-Bundle: org.eclipse.core.resources,
  org.eventb.core,
  org.eclipse.emf.workspace,
  de.prob.ui,
- de.prob.core.rodin;bundle-version="1.0.0"
+ de.prob.core.rodin;bundle-version="1.0.0",
+ org.junit4;bundle-version="4.8.1"
 Import-Package: org.eventb.emf.core.machine
 Bundle-ClassPath: lib/commons-io-2.4.jar,
- lib/junit-4.8.2.jar,
- lib/junit-dep-4.10.jar,
  .

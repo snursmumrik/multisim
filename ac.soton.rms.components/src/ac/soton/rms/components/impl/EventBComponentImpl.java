@@ -9,7 +9,6 @@
  */
 package ac.soton.rms.components.impl;
 
-import ac.soton.rms.components.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,17 +19,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import org.eclipse.core.resources.IFile;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -41,15 +38,17 @@ import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
-import org.rodinp.core.IRodinFile;
-import org.rodinp.core.RodinCore;
+
+import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.EventBComponent;
 import ac.soton.rms.components.EventBPort;
 import ac.soton.rms.components.Port;
 import ac.soton.rms.components.util.custom.SimStatus;
 import ac.soton.rms.components.util.custom.SimulationUtil;
+
 import com.google.inject.Injector;
+
 import de.be4.classicalb.core.parser.exceptions.BException;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
@@ -70,12 +69,12 @@ import de.prob.webconsole.ServletContextListener;
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getMachine <em>Machine</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#isComposed <em>Composed</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
- *   <li>{@link ac.soton.rms.components.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
@@ -128,6 +127,26 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
+
+	/**
+	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_PERIOD_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getMachine() <em>Machine</em>}' reference.
@@ -198,26 +217,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected Trace trace = TRACE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_PERIOD_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 
 	/**
 	 * @custom
@@ -424,28 +423,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		}
 		return waitEvents;
 	}
-	
-	/**
-	 * Returns Event-B Root element of a machine.
-	 * @param machine
-	 * @return
-	 * @custom
-	 */
-	private IEventBRoot getMachineRoot(Machine machine) {
-		Resource resource = machine.eResource();
-		if (resource != null) {
-			URI uri = resource.getURI();
-			if (uri.isPlatformResource()) {
-				IFile file = WorkspaceSynchronizer.getFile(resource);
-				IRodinFile rodinFile = RodinCore.valueOf(file);
-				if (rodinFile != null) {
-					return (IEventBRoot) rodinFile.getRoot();
-				}
-			}
-			//FIXME: root for a non-workspace resource?
-		}
-		return null;
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -454,7 +431,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	public IStatus instantiate() {
 		// load event-b machine
-		final IEventBRoot machineRoot = getMachineRoot(getMachine());
+		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
 			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot load machine component '" + getLabel()
 					+ "'\nReason: Machine root cannot be determined.");
@@ -487,10 +464,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// recall events for doStep matching
 		if (!readSet.isEmpty())
 			readSet.clear();
-		for (Event re : getReadInputEvents())
-			readSet.add(re.getName());
 		if (!waitSet.isEmpty())
 			waitSet.clear();
+		for (Event re : getReadInputEvents())
+			readSet.add(re.getName());
 		for (Event we : getWaitEvents())
 			waitSet.add(we.getName());
 
@@ -707,6 +684,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getInputs();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return getOutputs();
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				return getStepPeriod();
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				if (resolve) return getMachine();
 				return basicGetMachine();
@@ -718,8 +697,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getWaitEvents();
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				return getTrace();
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return getStepPeriod();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -744,6 +721,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				setStepPeriod((Integer)newValue);
+				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)newValue);
 				return;
@@ -760,9 +740,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace((Trace)newValue);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -785,6 +762,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				setStepPeriod(STEP_PERIOD_EDEFAULT);
+				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)null);
 				return;
@@ -799,9 +779,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return;
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace(TRACE_EDEFAULT);
-				return;
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod(STEP_PERIOD_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -821,6 +798,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
+			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
+				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case ComponentsPackage.EVENT_BCOMPONENT__MACHINE:
 				return machine != null;
 			case ComponentsPackage.EVENT_BCOMPONENT__COMPOSED:
@@ -831,8 +810,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return waitEvents != null && !waitEvents.isEmpty();
 			case ComponentsPackage.EVENT_BCOMPONENT__TRACE:
 				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
-			case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return stepPeriod != STEP_PERIOD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -854,6 +831,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (derivedFeatureID) {
 				case ComponentsPackage.EVENT_BCOMPONENT__INPUTS: return ComponentsPackage.COMPONENT__INPUTS;
 				case ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS: return ComponentsPackage.COMPONENT__OUTPUTS;
+				case ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD: return ComponentsPackage.COMPONENT__STEP_PERIOD;
 				default: return -1;
 			}
 		}
@@ -877,6 +855,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (baseFeatureID) {
 				case ComponentsPackage.COMPONENT__INPUTS: return ComponentsPackage.EVENT_BCOMPONENT__INPUTS;
 				case ComponentsPackage.COMPONENT__OUTPUTS: return ComponentsPackage.EVENT_BCOMPONENT__OUTPUTS;
+				case ComponentsPackage.COMPONENT__STEP_PERIOD: return ComponentsPackage.EVENT_BCOMPONENT__STEP_PERIOD;
 				default: return -1;
 			}
 		}
@@ -895,12 +874,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", stepPeriod: ");
+		result.append(stepPeriod);
 		result.append(", composed: ");
 		result.append(composed);
 		result.append(", trace: ");
 		result.append(trace);
-		result.append(", stepPeriod: ");
-		result.append(stepPeriod);
 		result.append(')');
 		return result.toString();
 	}

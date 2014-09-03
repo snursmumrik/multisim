@@ -40,6 +40,7 @@ import de.prob.cosimulation.FMU;
  * <ul>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getPath <em>Path</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.FMUComponentImpl#getFmu <em>Fmu</em>}</li>
@@ -75,6 +76,26 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
+
+	/**
+	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_PERIOD_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
@@ -167,6 +188,27 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, ComponentsPackage.FMU_COMPONENT__OUTPUTS);
 		}
 		return outputs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getStepPeriod() {
+		return stepPeriod;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStepPeriod(int newStepPeriod) {
+		int oldStepPeriod = stepPeriod;
+		stepPeriod = newStepPeriod;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.FMU_COMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
 	}
 
 	/**
@@ -370,6 +412,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 				return getInputs();
 			case ComponentsPackage.FMU_COMPONENT__OUTPUTS:
 				return getOutputs();
+			case ComponentsPackage.FMU_COMPONENT__STEP_PERIOD:
+				return getStepPeriod();
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				return getPath();
 			case ComponentsPackage.FMU_COMPONENT__PARAMETERS:
@@ -396,6 +440,9 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			case ComponentsPackage.FMU_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
+				return;
+			case ComponentsPackage.FMU_COMPONENT__STEP_PERIOD:
+				setStepPeriod((Integer)newValue);
 				return;
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				setPath((String)newValue);
@@ -425,6 +472,9 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			case ComponentsPackage.FMU_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
+			case ComponentsPackage.FMU_COMPONENT__STEP_PERIOD:
+				setStepPeriod(STEP_PERIOD_EDEFAULT);
+				return;
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				setPath(PATH_EDEFAULT);
 				return;
@@ -450,6 +500,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.FMU_COMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
+			case ComponentsPackage.FMU_COMPONENT__STEP_PERIOD:
+				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
 			case ComponentsPackage.FMU_COMPONENT__PARAMETERS:
@@ -470,7 +522,9 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (path: ");
+		result.append(" (stepPeriod: ");
+		result.append(stepPeriod);
+		result.append(", path: ");
 		result.append(path);
 		result.append(", fmu: ");
 		result.append(fmu);

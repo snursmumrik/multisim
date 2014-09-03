@@ -10,7 +10,6 @@
 package ac.soton.rms.components.provider;
 
 
-import ac.soton.rms.components.ComponentsPackage;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,9 +25,10 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayPort;
 
 /**

@@ -9,11 +9,12 @@
  */
 package ac.soton.rms.components;
 
-import de.prob.statespace.Trace;
 import org.eclipse.emf.common.util.EList;
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
+
+import de.prob.statespace.Trace;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,12 +29,11 @@ import org.eventb.emf.core.machine.Machine;
  *   <li>{@link ac.soton.rms.components.EventBComponent#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#getWaitEvents <em>Wait Events</em>}</li>
  *   <li>{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}</li>
- *   <li>{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='consistentReadEvents'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='consistentReadEvents\nvalidMachineReference'"
  * @generated
  */
 public interface EventBComponent extends AbstractExtension, Component {
@@ -127,32 +127,6 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * @generated
 	 */
 	EList<Event> getWaitEvents();
-
-	/**
-	 * Returns the value of the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Step Period</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Step Period</em>' attribute.
-	 * @see #setStepPeriod(int)
-	 * @see ac.soton.rms.components.ComponentsPackage#getEventBComponent_StepPeriod()
-	 * @model
-	 * @generated
-	 */
-	int getStepPeriod();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Step Period</em>' attribute.
-	 * @see #getStepPeriod()
-	 * @generated
-	 */
-	void setStepPeriod(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Trace</b></em>' attribute.

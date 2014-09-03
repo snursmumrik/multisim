@@ -9,14 +9,25 @@
  */
 package ac.soton.rms.components.util;
 
+import java.util.List;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
-import ac.soton.rms.components.*;
-import java.util.List;
-import org.eclipse.emf.ecore.EClass;
+import ac.soton.rms.components.AbstractVariable;
+import ac.soton.rms.components.Component;
+import ac.soton.rms.components.ComponentDiagram;
+import ac.soton.rms.components.ComponentsPackage;
+import ac.soton.rms.components.DisplayComponent;
+import ac.soton.rms.components.DisplayPort;
+import ac.soton.rms.components.EventBComponent;
+import ac.soton.rms.components.EventBPort;
+import ac.soton.rms.components.FMUComponent;
+import ac.soton.rms.components.FMUParameter;
+import ac.soton.rms.components.FMUPort;
+import ac.soton.rms.components.Port;
 
 /**
  * <!-- begin-user-doc -->

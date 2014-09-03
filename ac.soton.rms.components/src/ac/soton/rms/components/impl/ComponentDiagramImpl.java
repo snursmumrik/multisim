@@ -35,6 +35,7 @@ import ac.soton.rms.components.ComponentsPackage;
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getStartTime <em>Start Time</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.ComponentDiagramImpl#getStepSize <em>Step Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,6 +98,26 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @ordered
 	 */
 	protected int startTime = START_TIME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_SIZE_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepSize = STEP_SIZE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +197,27 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getStepSize() {
+		return stepSize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStepSize(int newStepSize) {
+		int oldStepSize = stepSize;
+		stepSize = newStepSize;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.COMPONENT_DIAGRAM__STEP_SIZE, oldStepSize, stepSize));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -199,6 +241,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return getStopTime();
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				return getStartTime();
+			case ComponentsPackage.COMPONENT_DIAGRAM__STEP_SIZE:
+				return getStepSize();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -222,6 +266,9 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				setStartTime((Integer)newValue);
 				return;
+			case ComponentsPackage.COMPONENT_DIAGRAM__STEP_SIZE:
+				setStepSize((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -243,6 +290,9 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				setStartTime(START_TIME_EDEFAULT);
 				return;
+			case ComponentsPackage.COMPONENT_DIAGRAM__STEP_SIZE:
+				setStepSize(STEP_SIZE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -261,6 +311,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return stopTime != STOP_TIME_EDEFAULT;
 			case ComponentsPackage.COMPONENT_DIAGRAM__START_TIME:
 				return startTime != START_TIME_EDEFAULT;
+			case ComponentsPackage.COMPONENT_DIAGRAM__STEP_SIZE:
+				return stepSize != STEP_SIZE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -279,6 +331,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		result.append(stopTime);
 		result.append(", startTime: ");
 		result.append(startTime);
+		result.append(", stepSize: ");
+		result.append(stepSize);
 		result.append(')');
 		return result.toString();
 	}

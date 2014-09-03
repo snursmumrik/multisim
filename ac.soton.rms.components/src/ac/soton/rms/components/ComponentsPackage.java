@@ -119,13 +119,22 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT_DIAGRAM__START_TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Step Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_DIAGRAM__STEP_SIZE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Component Diagram</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
+	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.Component <em>Component</em>}' class.
@@ -165,13 +174,22 @@ public interface ComponentsPackage extends EPackage {
 	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT__STEP_PERIOD = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
+	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -283,13 +301,22 @@ public interface ComponentsPackage extends EPackage {
 	int EVENT_BCOMPONENT__OUTPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Machine</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
+	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Composed</b></em>' attribute.
@@ -298,7 +325,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
+	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Read Input Events</b></em>' reference list.
@@ -307,7 +334,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
+	int EVENT_BCOMPONENT__READ_INPUT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Wait Events</b></em>' reference list.
@@ -316,7 +343,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
+	int EVENT_BCOMPONENT__WAIT_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -325,16 +352,7 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
+	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
@@ -381,6 +399,15 @@ public interface ComponentsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FMU_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
+
+	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FMU_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
 
 	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
@@ -875,6 +902,15 @@ public interface ComponentsPackage extends EPackage {
 	int DISPLAY_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
 
 	/**
+	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISPLAY_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
+
+	/**
 	 * The feature id for the '<em><b>Chart</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1123,6 +1159,17 @@ public interface ComponentsPackage extends EPackage {
 	EAttribute getComponentDiagram_StartTime();
 
 	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.ComponentDiagram#getStepSize <em>Step Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Step Size</em>'.
+	 * @see ac.soton.rms.components.ComponentDiagram#getStepSize()
+	 * @see #getComponentDiagram()
+	 * @generated
+	 */
+	EAttribute getComponentDiagram_StepSize();
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.Component <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1153,6 +1200,17 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComponent_Outputs();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Step Period</em>'.
+	 * @see ac.soton.rms.components.Component#getStepPeriod()
+	 * @see #getComponent()
+	 * @generated
+	 */
+	EAttribute getComponent_StepPeriod();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.rms.components.EventBComponent <em>Event BComponent</em>}'.
@@ -1207,17 +1265,6 @@ public interface ComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getEventBComponent_WaitEvents();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getStepPeriod <em>Step Period</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Step Period</em>'.
-	 * @see ac.soton.rms.components.EventBComponent#getStepPeriod()
-	 * @see #getEventBComponent()
-	 * @generated
-	 */
-	EAttribute getEventBComponent_StepPeriod();
 
 	/**
 	 * Returns the meta object for the attribute '{@link ac.soton.rms.components.EventBComponent#getTrace <em>Trace</em>}'.
@@ -1640,6 +1687,14 @@ public interface ComponentsPackage extends EPackage {
 		EAttribute COMPONENT_DIAGRAM__START_TIME = eINSTANCE.getComponentDiagram_StartTime();
 
 		/**
+		 * The meta object literal for the '<em><b>Step Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_DIAGRAM__STEP_SIZE = eINSTANCE.getComponentDiagram_StepSize();
+
+		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.Component <em>Component</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1664,6 +1719,14 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPONENT__OUTPUTS = eINSTANCE.getComponent_Outputs();
+
+		/**
+		 * The meta object literal for the '<em><b>Step Period</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT__STEP_PERIOD = eINSTANCE.getComponent_StepPeriod();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.rms.components.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -1706,14 +1769,6 @@ public interface ComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference EVENT_BCOMPONENT__WAIT_EVENTS = eINSTANCE.getEventBComponent_WaitEvents();
-
-		/**
-		 * The meta object literal for the '<em><b>Step Period</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EVENT_BCOMPONENT__STEP_PERIOD = eINSTANCE.getEventBComponent_StepPeriod();
 
 		/**
 		 * The meta object literal for the '<em><b>Trace</b></em>' attribute feature.

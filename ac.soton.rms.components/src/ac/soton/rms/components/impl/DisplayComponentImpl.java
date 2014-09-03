@@ -16,11 +16,13 @@ import info.monitorenter.gui.chart.ZoomableChart;
 import info.monitorenter.gui.chart.axis.AxisLinear;
 import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
+
 import ac.soton.rms.components.Component;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.DisplayComponent;
@@ -48,6 +51,7 @@ import ac.soton.rms.components.util.custom.SimStatus;
  * <ul>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.rms.components.impl.DisplayComponentImpl#getChart <em>Chart</em>}</li>
  * </ul>
  * </p>
@@ -91,6 +95,24 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
+	/**
+	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_PERIOD_EDEFAULT = 0;
+	/**
+	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepPeriod()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getChart() <em>Chart</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -152,6 +174,27 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS);
 		}
 		return outputs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getStepPeriod() {
+		return stepPeriod;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStepPeriod(int newStepPeriod) {
+		int oldStepPeriod = stepPeriod;
+		stepPeriod = newStepPeriod;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentsPackage.DISPLAY_COMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
 	}
 
 	/**
@@ -384,6 +427,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				return getInputs();
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return getOutputs();
+			case ComponentsPackage.DISPLAY_COMPONENT__STEP_PERIOD:
+				return getStepPeriod();
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				return getChart();
 		}
@@ -407,6 +452,9 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
+			case ComponentsPackage.DISPLAY_COMPONENT__STEP_PERIOD:
+				setStepPeriod((Integer)newValue);
+				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				setChart((Chart2D)newValue);
 				return;
@@ -428,6 +476,9 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
+			case ComponentsPackage.DISPLAY_COMPONENT__STEP_PERIOD:
+				setStepPeriod(STEP_PERIOD_EDEFAULT);
+				return;
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				setChart(CHART_EDEFAULT);
 				return;
@@ -447,6 +498,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				return inputs != null && !inputs.isEmpty();
 			case ComponentsPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
+			case ComponentsPackage.DISPLAY_COMPONENT__STEP_PERIOD:
+				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case ComponentsPackage.DISPLAY_COMPONENT__CHART:
 				return CHART_EDEFAULT == null ? chart != null : !CHART_EDEFAULT.equals(chart);
 		}
@@ -463,7 +516,9 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (chart: ");
+		result.append(" (stepPeriod: ");
+		result.append(stepPeriod);
+		result.append(", chart: ");
 		result.append(chart);
 		result.append(')');
 		return result.toString();

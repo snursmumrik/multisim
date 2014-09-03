@@ -12,6 +12,7 @@ package ac.soton.rms.components.provider;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -27,6 +28,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eventb.emf.core.provider.EventBNamedItemProvider;
+
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.ComponentsPackage;
 
@@ -199,7 +201,6 @@ public class AbstractVariableItemProvider
 		switch (notification.getFeatureID(AbstractVariable.class)) {
 			case ComponentsPackage.ABSTRACT_VARIABLE__TYPE:
 			case ComponentsPackage.ABSTRACT_VARIABLE__CAUSALITY:
-			case ComponentsPackage.ABSTRACT_VARIABLE__VALUE:
 			case ComponentsPackage.ABSTRACT_VARIABLE__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

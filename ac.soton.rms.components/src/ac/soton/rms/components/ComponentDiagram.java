@@ -23,11 +23,12 @@ import org.eventb.emf.core.EventBNamed;
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.rms.components.ComponentDiagram#getStartTime <em>Start Time</em>}</li>
+ *   <li>{@link ac.soton.rms.components.ComponentDiagram#getStepSize <em>Step Size</em>}</li>
  * </ul>
  * </p>
  *
  * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='noDirectFMU'"
  * @generated
  */
 public interface ComponentDiagram extends EventBNamed {
@@ -105,5 +106,31 @@ public interface ComponentDiagram extends EventBNamed {
 	 * @generated
 	 */
 	void setStartTime(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Step Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Step Size</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Step Size</em>' attribute.
+	 * @see #setStepSize(int)
+	 * @see ac.soton.rms.components.ComponentsPackage#getComponentDiagram_StepSize()
+	 * @model
+	 * @generated
+	 */
+	int getStepSize();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.rms.components.ComponentDiagram#getStepSize <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Step Size</em>' attribute.
+	 * @see #getStepSize()
+	 * @generated
+	 */
+	void setStepSize(int value);
 
 } // ComponentDiagram

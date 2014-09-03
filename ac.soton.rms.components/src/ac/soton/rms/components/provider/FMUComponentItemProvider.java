@@ -12,6 +12,7 @@ package ac.soton.rms.components.provider;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,6 +29,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eventb.emf.core.provider.EventBNamedItemProvider;
+
 import ac.soton.rms.components.ComponentsFactory;
 import ac.soton.rms.components.ComponentsPackage;
 import ac.soton.rms.components.FMUComponent;
@@ -77,11 +79,34 @@ public class FMUComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addStepPeriodPropertyDescriptor(object);
 			addPathPropertyDescriptor(object);
 			addParametersPropertyDescriptor(object);
 			addFmuPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Step Period feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStepPeriodPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Component_stepPeriod_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Component_stepPeriod_feature", "_UI_Component_type"),
+				 ComponentsPackage.Literals.COMPONENT__STEP_PERIOD,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -218,6 +243,7 @@ public class FMUComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(FMUComponent.class)) {
+			case ComponentsPackage.FMU_COMPONENT__STEP_PERIOD:
 			case ComponentsPackage.FMU_COMPONENT__PATH:
 			case ComponentsPackage.FMU_COMPONENT__FMU:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

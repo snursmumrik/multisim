@@ -7,11 +7,16 @@
  */
 package ac.soton.rms.components.util;
 
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.ITrace2D;
+import java.awt.Color;
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,6 +24,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eventb.emf.core.machine.Event;
+import org.eventb.emf.core.machine.Machine;
 import org.eventb.emf.core.machine.Parameter;
 import ac.soton.rms.components.AbstractVariable;
 import ac.soton.rms.components.Component;
@@ -36,9 +42,6 @@ import ac.soton.rms.components.VariableCausality;
 import ac.soton.rms.components.VariableType;
 import de.prob.cosimulation.FMU;
 import de.prob.statespace.Trace;
-import info.monitorenter.gui.chart.Chart2D;
-import info.monitorenter.gui.chart.ITrace2D;
-import java.awt.Color;
 
 /**
  * <!-- begin-user-doc -->
@@ -168,7 +171,46 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateComponentDiagram(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(componentDiagram, diagnostics, context);
+		boolean result = validate_NoCircularContainment(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMultiplicityConforms(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(componentDiagram, diagnostics, context);
+		if (result || diagnostics != null) result &= validateComponentDiagram_noDirectFMU(componentDiagram, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the noDirectCT constraint of '<em>Component Diagram</em>'.
+	 * <!-- begin-user-doc -->
+	 * Cannot have directly connected FMU components.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateComponentDiagram_noDirectFMU(ComponentDiagram componentDiagram, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		for (Component c : componentDiagram.getComponents()) {
+			if (c instanceof FMUComponent) {
+				for (Port p : c.getInputs()) {
+					if (p.getIn() instanceof FMUPort) {
+						if (diagnostics != null) {
+							diagnostics.add
+								(new BasicDiagnostic
+									(Diagnostic.ERROR,
+									 DIAGNOSTIC_SOURCE,
+									 0,
+									 "Direct connection of FMUs is not supported",
+									 new Object[] { componentDiagram }));
+						}
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -196,6 +238,7 @@ public class ComponentsValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(eventBComponent, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(eventBComponent, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEventBComponent_consistentReadEvents(eventBComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEventBComponent_validMachineReference(eventBComponent, diagnostics, context);
 		return result;
 	}
 
@@ -207,13 +250,13 @@ public class ComponentsValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateEventBComponent_consistentReadEvents(EventBComponent eventBComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		EList<Event> events = eventBComponent.getReadInputEvents();
+		EList<Event> reads = eventBComponent.getReadInputEvents();
 		// skip single event
-		if (events.size() <= 1)
+		if (reads.size() <= 1)
 			return true;
 		
 		// read first
-		Event event1 = events.get(0);
+		Event event1 = reads.get(0);
 		Set<String> paramNames = new HashSet<String>(event1.getParameters().size());
 		for (Parameter p : event1.getParameters())
 			paramNames.add(p.getName());
@@ -221,7 +264,7 @@ public class ComponentsValidator extends EObjectValidator {
 		// compare to the rest
 		boolean failed = false;
 		Event event2 = null;
-		for (Event e : events) {
+		for (Event e : reads) {
 			if (event1.getParameters().size() != e.getParameters().size()) {
 				event2 = e;
 				failed = true;
@@ -239,14 +282,37 @@ public class ComponentsValidator extends EObjectValidator {
 		if (failed) {
 			if (diagnostics != null) {
 				diagnostics.add
-					(createDiagnostic
+					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UI_GenericConstraint_diagnostic",	// MessageFormat.format("Component ''{0}'' has inconsistent read input events ''{1}'' and ''{2}'' (mismatched number/names of parameters)", new Object[] { eventBComponent.getName(), event1.getName(), event2.getName() }),	
-						 new Object[] { "consistentReadEvents", getObjectLabel(eventBComponent, context) },
-						 new Object[] { eventBComponent },
-						 context));
+						 MessageFormat.format("Inconsistent read input events ''{1}'' and ''{2}'' (mismatched number/names of parameters)", new Object[] { event1.getName(), event2.getName() }),	
+						 new Object[] { eventBComponent }));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the validMachineReference constraint of '<em>Event BComponent</em>'.
+	 * <!-- begin-user-doc -->
+	 * Must have a valid Machine reference.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEventBComponent_validMachineReference(EventBComponent eventBComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Machine m = eventBComponent.getMachine();
+		//XXX null is checked by another validation constraint
+		if (m != null && m.eIsProxy()) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(new BasicDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "Invalid Machine reference",
+						 new Object[] { eventBComponent }));
 			}
 			return false;
 		}
@@ -281,17 +347,16 @@ public class ComponentsValidator extends EObjectValidator {
 	 */
 	public boolean validateFMUComponent_validPath(FMUComponent fmuComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		String path = fmuComponent.getPath();
-		if (path == null || new File(path).exists() == false) {
+		//XXX null is checked by another rule
+		if (path != null && new File(path).exists() == false) {
 			if (diagnostics != null) {
 				diagnostics.add
-					(createDiagnostic
+					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UI_GenericConstraint_diagnostic",	// MessageFormat.format("Component ''{0}'' must have a valid FMU path"
-						 new Object[] { "validPath", getObjectLabel(fmuComponent, context) },	// new Object[] { this.getName() }
-						 new Object[] { fmuComponent },
-						 context));
+						 "Invalid FMU path",	
+						 new Object[] { fmuComponent }));
 			}
 			return false;
 		}
@@ -330,17 +395,16 @@ public class ComponentsValidator extends EObjectValidator {
 		if (input == null)
 			return true;
 		
-		if (port.getType() != input.getType() && port instanceof DisplayPort == false) {
+		// ignore Display ports
+		if (port instanceof DisplayPort == false && port.getType() != input.getType()) {
 			if (diagnostics != null) {
 				diagnostics.add
-					(createDiagnostic
+					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UI_GenericConstraint_diagnostic",	// MessageFormat.format("Connected ports ''{0}'' and ''{1}'' have incompatible types"
-						 new Object[] { "compatibleType", getObjectLabel(port, context) },	// , new Object[] { port1.getName(), port2.getName())
-						 new Object[] { port },
-						 context));
+						 MessageFormat.format("Ports ''{0}'' and ''{1}'' have incompatible types", new Object[] { port.getName(), input.getName()}),
+						 new Object[] { port }));
 			}
 			return false;
 		}
@@ -416,14 +480,12 @@ public class ComponentsValidator extends EObjectValidator {
 		if (eventBPort.getParameter() == null && eventBPort.getVariable() == null) {
 			if (diagnostics != null) {
 				diagnostics.add
-					(createDiagnostic
+					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "validEventBReference", getObjectLabel(eventBPort, context) },
-						 new Object[] { eventBPort },
-						 context));
+						 "No variable or parameter is defined",	
+						 new Object[] { eventBPort }));
 			}
 			return false;
 		}
@@ -471,14 +533,12 @@ public class ComponentsValidator extends EObjectValidator {
 		if (input != null && input.getType() == VariableType.STRING) {
 			if (diagnostics != null) {
 				diagnostics.add
-					(createDiagnostic
+					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "nonStringInput", getObjectLabel(displayPort, context) },
-						 new Object[] { displayPort },
-						 context));
+						 "String type is not supported by Display",	
+						 new Object[] { displayPort }));
 			}
 			return false;
 		}

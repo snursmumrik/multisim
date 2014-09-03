@@ -23,6 +23,7 @@ import org.eventb.emf.core.EventBNamed;
  * <ul>
  *   <li>{@link ac.soton.rms.components.Component#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.rms.components.Component#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,6 +70,32 @@ public interface Component extends EventBNamed {
 	 * @generated
 	 */
 	EList<Port> getOutputs();
+
+	/**
+	 * Returns the value of the '<em><b>Step Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Step Period</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Step Period</em>' attribute.
+	 * @see #setStepPeriod(int)
+	 * @see ac.soton.rms.components.ComponentsPackage#getComponent_StepPeriod()
+	 * @model
+	 * @generated
+	 */
+	int getStepPeriod();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.rms.components.Component#getStepPeriod <em>Step Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Step Period</em>' attribute.
+	 * @see #getStepPeriod()
+	 * @generated
+	 */
+	void setStepPeriod(int value);
 
 	/**
 	 * <!-- begin-user-doc -->
