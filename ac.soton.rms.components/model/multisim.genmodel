@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2014 University of Southampton.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html"
+    modelDirectory="/ac.soton.multisim/src" editDirectory="/ac.soton.multisim/src"
+    editorDirectory="/ac.soton.multisim.editor/src" modelPluginID="ac.soton.multisim"
+    templateDirectory="/org.eventb.emf.core/templates" dynamicTemplates="true" modelName="Multisim"
+    modelPluginClass="" editPluginClass="ac.soton.multisim.provider.ComponentsEditPlugin"
+    editorPluginClass="ac.soton.multisim.presentation.ComponentsEditorPlugin" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testSuiteClass="ac.soton.multisim.tests.ComponentsAllTests" importerID="org.eclipse.emf.importer.ecore"
+    containmentProxies="true" complianceLevel="7.0" editPluginID="ac.soton.multisim"
+    editorPluginID="ac.soton.multisim.editor" tableProviders="true" colorProviders="true"
+    language="" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eventb.emf.core/model/eventbcore.genmodel#//core"
+    importOrganizing="true">
+  <foreignModel>multisim.ecore</foreignModel>
+  <genPackages prefix="Multisim" basePackage="ac.soton" disposableProviderFactory="true"
+      extensibleProviderFactory="true" childCreationExtenders="true" fileExtensions="msm"
+      ecorePackage="multisim.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="multisim.ecore#//VariableType">
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableType/Real"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableType/Integer"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableType/Boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableType/String"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="multisim.ecore#//VariableCausality">
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableCausality/Input"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableCausality/Output"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableCausality/Internal"/>
+      <genEnumLiterals ecoreEnumLiteral="multisim.ecore#//VariableCausality/None"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="multisim.ecore#//IStatus"/>
+    <genDataTypes ecoreDataType="multisim.ecore#//FMU"/>
+    <genDataTypes ecoreDataType="multisim.ecore#//ITrace2D"/>
+    <genDataTypes ecoreDataType="multisim.ecore#//Chart2D"/>
+    <genDataTypes ecoreDataType="multisim.ecore#//Color"/>
+    <genDataTypes ecoreDataType="multisim.ecore#//ProBTrace"/>
+    <genClasses ecoreClass="multisim.ecore#//ComponentDiagram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//ComponentDiagram/components"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stopTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/startTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stepSize"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="multisim.ecore#//Component">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//Component/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//Component/outputs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//Component/stepPeriod"/>
+      <genOperations ecoreOperation="multisim.ecore#//Component/instantiate"/>
+      <genOperations ecoreOperation="multisim.ecore#//Component/initialise">
+        <genParameters ecoreParameter="multisim.ecore#//Component/initialise/tStart"/>
+        <genParameters ecoreParameter="multisim.ecore#//Component/initialise/tStop"/>
+      </genOperations>
+      <genOperations ecoreOperation="multisim.ecore#//Component/readInputs"/>
+      <genOperations ecoreOperation="multisim.ecore#//Component/writeOutputs"/>
+      <genOperations ecoreOperation="multisim.ecore#//Component/doStep">
+        <genParameters ecoreParameter="multisim.ecore#//Component/doStep/time"/>
+        <genParameters ecoreParameter="multisim.ecore#//Component/doStep/step"/>
+      </genOperations>
+      <genOperations ecoreOperation="multisim.ecore#//Component/terminate"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//EventBComponent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/machine"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/composed"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/readInputEvents"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/waitEvents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//FMUComponent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/path"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//FMUComponent/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/fmu"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="multisim.ecore#//Port">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//Port/in"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//Port/out"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="multisim.ecore#//AbstractVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/causality"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/description"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//FMUParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUParameter/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUParameter/startValue"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//FMUPort"/>
+    <genClasses ecoreClass="multisim.ecore#//EventBPort">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBPort/parameter"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBPort/variable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBPort/intToReal"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//DisplayComponent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayComponent/chart"/>
+    </genClasses>
+    <genClasses ecoreClass="multisim.ecore#//DisplayPort">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/trace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/color"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -15,16 +15,16 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://soton.ac.uk/models/components/2.0"
-            class="ac.soton.multisim.components.ComponentsPackage"
-            genModel="model/components.genmodel"/>
+            uri="http://soton.ac.uk/models/multisim/2.0"
+            class="ac.soton.multisim.MultisimPackage"
+            genModel="model/multisim.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated components -->
       <factory
-            uri="http://soton.ac.uk/models/components/2.0"
-            class="ac.soton.multisim.components.provider.ComponentsItemProviderAdapterFactory"
+            uri="http://soton.ac.uk/models/multisim/2.0"
+            class="ac.soton.multisim.provider.MultisimItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -40,12 +40,12 @@
       <!-- @generated components -->
       <extender
             uri="http://emf.eventb.org/models/core/machine/2014"
-            class="ac.soton.multisim.components.provider.ComponentsItemProviderAdapterFactory$CoreChildCreationExtender"/>
+            class="ac.soton.multisim.provider.MultisimItemProviderAdapterFactory$CoreChildCreationExtender"/>
    </extension>
    <extension
          point="org.eventb.emf.persistence.synchroniser">
       <emfPackage
-            nsURI="http://soton.ac.uk/models/components/2.0">
+            nsURI="http://soton.ac.uk/models/multisim/2.0">
          <synchroniser
                emf_class="EventBComponent"
                rodin_id="ac.soton.eventb.emf.core.extension.persistence.serialisedExtension"

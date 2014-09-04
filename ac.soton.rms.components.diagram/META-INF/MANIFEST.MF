@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: ac.soton.rms.components.diagram; singleton:=true
+Bundle-SymbolicName: ac.soton.multisim.components.diagram; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: ac.soton.rms.components.diagram.part.ComponentsDiagramEditorPlugin
+Bundle-Activator: ac.soton.multisim.components.diagram.part.ComponentsDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: ac.soton.rms.components.diagram.edit.parts,
- ac.soton.rms.components.diagram.navigator,
- ac.soton.rms.components.diagram.part,
- ac.soton.rms.components.diagram.providers
+Export-Package: ac.soton.multisim.components.diagram.edit.parts,
+ ac.soton.multisim.components.diagram.navigator,
+ ac.soton.multisim.components.diagram.part,
+ ac.soton.multisim.components.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.core.expressions,
@@ -37,7 +37,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.tooling.runtime;visibility:=reexport,
  org.eclipse.draw2d;visibility:=reexport,
  org.eclipse.gmf.runtime.draw2d.ui;visibility:=reexport,
- ac.soton.multisim.components;visibility:=reexport,
+ ac.soton.multisim;visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.edit;visibility:=reexport,
  org.eventb.emf.core;visibility:=reexport,

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Multisim UI
-Bundle-SymbolicName: ac.soton.rms.ui;singleton:=true
+Bundle-SymbolicName: ac.soton.multisim.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: ac.soton.rms.ui.MultisimUIActivator
+Bundle-Activator: ac.soton.multisim.ui.MultisimUIActivator
 Bundle-Vendor: University of Southampton
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.expressions;bundle-version="3.4.300",
@@ -13,9 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.transaction;bundle-version="1.4.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.5.0",
  ac.soton.multisim.master;bundle-version="1.0.0",
- ac.soton.multisim.components;bundle-version="0.1.0",
- ac.soton.rms.components.diagram;bundle-version="1.0.0",
+ ac.soton.multisim;bundle-version="0.1.0",
  ac.soton.eventb.emf.core.extension.navigator;bundle-version="2.0.0",
- de.prob.ui;bundle-version="1.0.0"
+ de.prob.ui;bundle-version="1.0.0",
+ ac.soton.multisim.diagram;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

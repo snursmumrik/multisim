@@ -1,21 +1,21 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: ac.soton.multisim.components;singleton:=true
+Bundle-SymbolicName: ac.soton.multisim;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .,
  lib/jchart2d-3.2.2.jar,
  lib/jide-oss-3.5.14.jar,
  lib/xmlgraphics-commons-1.5.jar
-Bundle-Activator: ac.soton.multisim.components.provider.ComponentsEditPlugin$Implementation
+Bundle-Activator: ac.soton.multisim.provider.ComponentsEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: ac.soton.multisim.components;uses:="info.monitorenter.gui.chart,  org.eclipse.emf.ecore,  org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.eventb.emf.core.extension.coreextension,  de.prob.cosimulation,  org.eventb.emf.core.machine",
- ac.soton.multisim.components.impl;uses:="org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core.impl,  de.prob.cosimulation,  org.eclipse.emf.common.notify,  org.eventb.emf.core.machine,  ac.soton.eventb.emf.core.extension.coreextension.impl,  info.monitorenter.gui.chart,  org.eclipse.emf.ecore,  ac.soton.rms.components,  org.eclipse.emf.ecore.impl",
- ac.soton.multisim.components.provider;uses:="org.eclipse.emf.edit.command,  org.eventb.emf.core.util,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.rms.components.util,  org.eclipse.emf.common.notify,  ac.soton.eventb.emf.core.extension.coreextension.provider,  org.eclipse.emf.ecore,  org.eventb.emf.core.provider,  org.eclipse.emf.common,  org.eclipse.emf.edit.provider,  org.eclipse.emf.edit.domain",
- ac.soton.multisim.components.util;uses:="org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.eventb.emf.core.extension.coreextension,  org.eclipse.emf.common.notify,  de.prob.cosimulation,  info.monitorenter.gui.chart,  org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  org.eclipse.emf.common.notify.impl,  ac.soton.rms.components",
- ac.soton.multisim.components.util.custom;uses:="org.eclipse.core.runtime,  org.ptolemy.fmi,  org.eventb.core,  ac.soton.rms.components,  de.prob.cosimulation,  org.eventb.emf.core.machine",
+Export-Package: ac.soton.multisim;uses:="info.monitorenter.gui.chart,  org.eclipse.emf.ecore,  org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.eventb.emf.core.extension.coreextension,  de.prob.cosimulation,  org.eventb.emf.core.machine",
+ ac.soton.multisim.impl;uses:="org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core.impl,  de.prob.cosimulation,  org.eclipse.emf.common.notify,  org.eventb.emf.core.machine,  ac.soton.eventb.emf.core.extension.coreextension.impl,  info.monitorenter.gui.chart,  org.eclipse.emf.ecore,  ac.soton.rms.components,  org.eclipse.emf.ecore.impl",
+ ac.soton.multisim.provider;uses:="org.eclipse.emf.edit.command,  org.eventb.emf.core.util,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.rms.components.util,  org.eclipse.emf.common.notify,  ac.soton.eventb.emf.core.extension.coreextension.provider,  org.eclipse.emf.ecore,  org.eventb.emf.core.provider,  org.eclipse.emf.common,  org.eclipse.emf.edit.provider,  org.eclipse.emf.edit.domain",
+ ac.soton.multisim.util;uses:="org.eclipse.core.runtime,  org.eclipse.emf.common.util,  org.eventb.emf.core,  ac.soton.eventb.emf.core.extension.coreextension,  org.eclipse.emf.common.notify,  de.prob.cosimulation,  info.monitorenter.gui.chart,  org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  org.eclipse.emf.common.notify.impl,  ac.soton.rms.components",
+ ac.soton.multisim.util.custom;uses:="org.eclipse.core.runtime,  org.ptolemy.fmi,  org.eventb.core,  ac.soton.rms.components,  de.prob.cosimulation,  org.eventb.emf.core.machine",
  info.monitorenter.gui.chart
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,

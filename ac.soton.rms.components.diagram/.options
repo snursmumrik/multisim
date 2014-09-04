@@ -1,7 +1,7 @@
-# Tracing options for the ac.soton.rms.components.diagram plug-in
+# Tracing options for the ac.soton.multisim.components.diagram plug-in
 
 # Common issues
-ac.soton.rms.components.diagram/debug=false
+ac.soton.multisim.components.diagram/debug=false
 
 # Visual IDs
-ac.soton.rms.components.diagram/debug/visualID=false
+ac.soton.multisim.components.diagram/debug/visualID=false

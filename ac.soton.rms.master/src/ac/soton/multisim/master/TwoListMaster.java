@@ -21,10 +21,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
-import ac.soton.multisim.components.Component;
-import ac.soton.multisim.components.ComponentDiagram;
-import ac.soton.multisim.components.DisplayComponent;
-import ac.soton.multisim.components.Port;
+import ac.soton.multisim.Component;
+import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.DisplayComponent;
+import ac.soton.multisim.Port;
 
 /**
  * Master algorithm for FMU-EventB co-simulation.
