@@ -5,13 +5,11 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package ac.soton.multisim.ui.controls;
+package ac.soton.multisim.ui.viewers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -19,23 +17,22 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.ui.providers.ColumnProvider;
 
 /**
- * Table viewer for displaying FMUParameter elements.
+ * Table viewer for displaying elements via column providers.
  * Capable of editing variable values via cell editor.
  * 
  * @author vitaly
  *
  */
-public class FMUParameterTableViewer extends TableViewer {
+public abstract class ColumnProviderTableViewer extends TableViewer {
 
 	/**
 	 * @param parent
 	 * @param style
 	 */
-	public FMUParameterTableViewer(Composite parent, int style) {
+	public ColumnProviderTableViewer(Composite parent, int style) {
 		super(parent, style);
 		createColumns();
 	    Table table = getTable();
@@ -43,9 +40,16 @@ public class FMUParameterTableViewer extends TableViewer {
 	    table.setLinesVisible(true);
 		setContentProvider(ArrayContentProvider.getInstance());
 	}
+	
+	/**
+	 * Creates column providers for the table viewer.
+	 * 
+	 * @return providers
+	 */
+	protected abstract List<ColumnProvider> createColumnProviders();
 
 	/**
-	 * 
+	 * Creates columns from providers.
 	 */
 	private void createColumns() {
 		List<ColumnProvider> columnProviders = createColumnProviders();
@@ -56,36 +60,6 @@ public class FMUParameterTableViewer extends TableViewer {
 				column.setEditingSupport(provider.getEditingSupport());
 			}
 		}
-	}
-	
-	/**
-	 * @return
-	 */
-	private List<ColumnProvider> createColumnProviders() {
-		ArrayList<ColumnProvider> providers = new ArrayList<ColumnProvider>();
-		providers.add(new ColumnProvider("Name", 200, new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((FMUParameter) element).getName();
-			}}));
-		providers.add(new ColumnProvider("Type", 70, new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((FMUParameter) element).getType().toString();
-			}}));
-		providers.add(new ColumnProvider("Value", 70, new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				Object value = ((FMUParameter) element).getStartValue();
-				return value == null ? null : value.toString();
-			}}, 
-			new FMUParameterValueEditingSupport(this)));
-		providers.add(new ColumnProvider("Description", 200, new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((FMUParameter) element).getDescription();
-			}}));
-		return providers;
 	}
 
 	/**

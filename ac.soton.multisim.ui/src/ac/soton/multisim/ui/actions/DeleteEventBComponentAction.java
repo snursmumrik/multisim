@@ -57,7 +57,7 @@ public class DeleteEventBComponentAction extends Action {
 					TransactionalEditingDomain editingDomain = TransactionUtil
 							.getEditingDomain(resource);
 					if (editingDomain != null) {
-						Command cmd = new RecordingCommand(editingDomain, "Delete Diagram Command") {
+						Command cmd = new RecordingCommand(editingDomain, "Delete Component Command") {
 							protected void doExecute() {
 								EcoreUtil.delete(component, true);
 							}

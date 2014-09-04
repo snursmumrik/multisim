@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import ac.soton.multisim.FMUParameter;
-import ac.soton.multisim.ui.controls.FMUParameterTableViewer;
+import ac.soton.multisim.ui.viewers.FMUParameterTableViewer;
 
 
 /**
