@@ -29,7 +29,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.FMUComponent;
-import ac.soton.multisim.diagram.part.custom.ComponentInstantiationTool;
+import ac.soton.multisim.diagram.part.custom.InstantiateComponentTool;
 import ac.soton.multisim.diagram.providers.MultisimElementTypes;
 
 /**
@@ -96,7 +96,7 @@ public class MultisimPaletteFactory {
 	 * @custom
 	 */
 	private PaletteEntry createComponentInstantiationTool(Component component, ImageDescriptor imageDescriptor) {
-		ComponentInstantiationTool cit = new ComponentInstantiationTool(component.getName(), "Instantiate component "+component.getName(), null, component);
+		InstantiateComponentTool cit = new InstantiateComponentTool(component.getName(), "Instantiate component "+component.getName(), null, component);
 
 		cit.setToolProperty("comp", component);
 		cit.setSmallIcon(imageDescriptor);

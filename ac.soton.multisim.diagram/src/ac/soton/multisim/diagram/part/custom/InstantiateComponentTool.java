@@ -21,18 +21,18 @@ import ac.soton.multisim.Component;
  * @author vitaly
  *
  */
-public class ComponentInstantiationTool extends ToolEntry {
+public class InstantiateComponentTool extends ToolEntry {
 
 	private final List<IElementType> elementTypes;
 	private Component component;
 
 
-	public ComponentInstantiationTool(String title, String description, List<IElementType> elementTypes) {
+	public InstantiateComponentTool(String title, String description, List<IElementType> elementTypes) {
 		super(title, description, null, null);
 		this.elementTypes = elementTypes;
 	}
 	
-	public ComponentInstantiationTool(String title, String description, List<IElementType> elementTypes, Component component) {
+	public InstantiateComponentTool(String title, String description, List<IElementType> elementTypes, Component component) {
 		super(title, description, null, null);
 		this.elementTypes = null;
 		this.component = component;
@@ -41,7 +41,7 @@ public class ComponentInstantiationTool extends ToolEntry {
 
 	@Override
 	public Tool createTool() {
-		Tool tool = new ComponentInstantiationRequestTool(component);
+		Tool tool = new InstantiateComponentRequestTool(component);
 		tool.setProperties(getToolProperties());
 		return tool;
 	}

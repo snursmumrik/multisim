@@ -42,12 +42,12 @@ import ac.soton.multisim.diagram.part.MultisimDiagramEditor;
  * @author vitaly
  *
  */
-public class ComponentInstantiationRequestTool extends CreationTool {
+public class InstantiateComponentRequestTool extends CreationTool {
 	
 	private Component component;
 	private GraphicalEditPart diagramEP;
 
-	public ComponentInstantiationRequestTool(Component comp) {
+	public InstantiateComponentRequestTool(Component comp) {
 		super();
 		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		if (editor instanceof MultisimDiagramEditor) {
