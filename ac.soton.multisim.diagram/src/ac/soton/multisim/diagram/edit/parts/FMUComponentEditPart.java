@@ -399,4 +399,12 @@ public class FMUComponentEditPart extends AbstractBorderedShapeEditPart {
 	static final Color FFIGUREFMUVARIABLESCOMPARTMENTFIGURE_BACK = new Color(
 			null, 185, 220, 130);
 
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public boolean canAttachNote() {
+		return false;
+	}
+	
 }

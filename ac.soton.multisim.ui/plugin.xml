@@ -129,6 +129,19 @@
                id="DisplayPortEditPart">
          </object>
       </editpolicyProvider>
+      <editpolicyProvider
+            class="ac.soton.multisim.ui.providers.ComponentDiagramEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <context
+               editparts="ComponentDiagramEditPart">
+         </context>
+         <object
+               class="ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart(ac.soton.multisim.diagram)"
+               id="ComponentDiagramEditPart">
+         </object>
+      </editpolicyProvider>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">

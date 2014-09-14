@@ -401,4 +401,12 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 	static final Color FFIGUREEVENTBVARIABLESCOMPARTMENTFIGURE_BACK = new Color(
 			null, 255, 169, 86);
 
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public boolean canAttachNote() {
+		return false;
+	}
+
 }

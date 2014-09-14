@@ -357,4 +357,12 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 	static final Color FFIGUREDISPLAYCOMPARTMENTFIGURE_BACK = new Color(null,
 			171, 206, 238);
 
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public boolean canAttachNote() {
+		return false;
+	}
+	
 }

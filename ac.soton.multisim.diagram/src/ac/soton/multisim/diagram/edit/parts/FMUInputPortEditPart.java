@@ -227,4 +227,12 @@ public class FMUInputPortEditPart extends AbstractBorderItemEditPart {
 	 */
 	static final Color THIS_BACK = new Color(null, 230, 230, 230);
 
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public boolean canAttachNote() {
+		return false;
+	}
+
 }

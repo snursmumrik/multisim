@@ -9,17 +9,27 @@ package ac.soton.multisim.diagram.part;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.palette.PaletteSeparator;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.jface.resource.ImageDescriptor;
 
+import ac.soton.multisim.Component;
+import ac.soton.multisim.EventBComponent;
+import ac.soton.multisim.FMUComponent;
+import ac.soton.multisim.diagram.part.custom.ComponentInstantiationTool;
 import ac.soton.multisim.diagram.providers.MultisimElementTypes;
 
 /**
@@ -32,6 +42,66 @@ public class MultisimPaletteFactory {
 	 */
 	public void fillPalette(PaletteRoot paletteRoot) {
 		paletteRoot.add(createComponents1Group());
+	}
+
+	/**
+	 * @custom
+	 */
+	public void addToPalette(PaletteRoot paletteRoot, Component component) {
+		PaletteGroup importedGroup = null;
+		for (Object child : paletteRoot.getChildren()) {
+			if (child instanceof PaletteGroup && "importedComponentsGroup".equals(((PaletteGroup) child).getId())) {
+				importedGroup = (PaletteGroup) child;
+				break;
+			}
+ 		}
+		if (importedGroup == null) {
+			importedGroup = new PaletteGroup("Imported") {
+				Set<String> importedIDs = new HashSet<>();
+
+				@Override
+				public void add(PaletteEntry entry) {
+					if (!importedIDs.contains(entry.getId())) {
+						super.add(entry);
+						importedIDs.add(entry.getId());
+					}
+				}};
+			importedGroup.setId("importedComponentsGroup");
+			paletteRoot.add(new PaletteSeparator());
+			paletteRoot.add(importedGroup);
+		}
+		String id = null;
+		ImageDescriptor imageDescriptor = null;
+		if (component instanceof EventBComponent) {
+			id = ((EventBComponent) component).getReference();
+			imageDescriptor = MultisimDiagramEditorPlugin.findImageDescriptor("/ac.soton.multisim/icons/custom/EventBComponent.gif");
+		} else if (component instanceof FMUComponent) {
+			id = ((FMUComponent) component).getPath();
+			imageDescriptor = MultisimDiagramEditorPlugin.findImageDescriptor("/ac.soton.multisim/icons/custom/FMUComponent.gif");
+		}
+		
+		if (id == null)
+			return;
+		
+		//XXX creates element copy so that it is not affected by the original
+		PaletteEntry entry = createComponentInstantiationTool(EcoreUtil.copy(component), imageDescriptor);
+		entry.setId(id);
+		importedGroup.add(entry);
+	}
+
+	/**
+	 * @param component
+	 * @param imageDescriptor 
+	 * @return
+	 * @custom
+	 */
+	private PaletteEntry createComponentInstantiationTool(Component component, ImageDescriptor imageDescriptor) {
+		ComponentInstantiationTool cit = new ComponentInstantiationTool(component.getName(), "Instantiate component "+component.getName(), null, component);
+
+		cit.setToolProperty("comp", component);
+		cit.setSmallIcon(imageDescriptor);
+		cit.setLargeIcon(cit.getSmallIcon());
+		return cit;
 	}
 
 	/**

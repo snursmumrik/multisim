@@ -25,7 +25,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eventb.core;bundle-version="2.5.1",
  org.eventb.emf.core;visibility:=reexport,
  ac.soton.eventb.emf.core.extension;visibility:=reexport,
+ ac.soton.eventb.emf.core.extension.persistence;bundle-version="2.0.0",
  de.prob.ui;bundle-version="1.0.0",
- de.prob.core.rodin;bundle-version="1.0.0",
- ac.soton.eventb.emf.core.extension.persistence;bundle-version="2.0.0"
+ de.prob.core.rodin;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

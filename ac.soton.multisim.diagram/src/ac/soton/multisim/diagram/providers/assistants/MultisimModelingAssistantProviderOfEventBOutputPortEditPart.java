@@ -126,12 +126,13 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public List<IElementType> doGetRelTypesOnTarget(
 			EventBOutputPortEditPart target) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
-		types.add(MultisimElementTypes.PortOut_4001);
+		// commented to remove incoming connection handle
+//		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 

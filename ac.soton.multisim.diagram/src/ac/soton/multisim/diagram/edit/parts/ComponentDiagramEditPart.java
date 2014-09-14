@@ -52,5 +52,5 @@ public class ComponentDiagramEditPart extends DiagramEditPart {
 						MultisimVisualIDRegistry.TYPED_INSTANCE));
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
 	}
-
+	
 }

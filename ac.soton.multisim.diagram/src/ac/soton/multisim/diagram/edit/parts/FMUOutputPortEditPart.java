@@ -222,4 +222,12 @@ public class FMUOutputPortEditPart extends AbstractBorderItemEditPart {
 
 	}
 
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public boolean canAttachNote() {
+		return false;
+	}
+
 }

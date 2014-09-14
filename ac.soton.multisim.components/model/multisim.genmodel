@@ -61,12 +61,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/composed"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/readInputEvents"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/waitEvents"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/aa"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//FMUComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/path"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//FMUComponent/parameters"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/fmu"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/fmu"/>
     </genClasses>
     <genClasses image="false" ecoreClass="multisim.ecore#//Port">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//Port/in"/>
@@ -89,10 +90,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBPort/intToReal"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//DisplayComponent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayComponent/chart"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayComponent/chart"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//DisplayPort">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/trace"/>
+      <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/trace"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/color"/>
     </genClasses>
   </genPackages>

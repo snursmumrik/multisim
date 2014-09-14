@@ -452,6 +452,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 //		params.put("FORGET_STATE_SPACE","TRUE");
 		params.put("MEMO", "TRUE");
 		params.put("TIME_OUT", "4000");
+		params.put("COMPRESSION", "TRUE");
+		params.put("CLPFD", "TRUE");
 		EventBModel model = instance.load(fileName, params, false);
 		if (model == null)
 			return SimStatus.PROB_ERROR;

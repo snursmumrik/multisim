@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 
+import ac.soton.multisim.Port;
 import ac.soton.multisim.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.multisim.diagram.edit.parts.EventBInputPortEditPart;
 import ac.soton.multisim.diagram.edit.parts.EventBOutputPortEditPart;
@@ -40,12 +41,13 @@ public class MultisimModelingAssistantProviderOfEventBInputPortEditPart extends
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public List<IElementType> doGetRelTypesOnSource(
 			EventBInputPortEditPart source) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
-		types.add(MultisimElementTypes.PortOut_4001);
+		// commented to remove the output connection handle
+//		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 
@@ -126,12 +128,14 @@ public class MultisimModelingAssistantProviderOfEventBInputPortEditPart extends
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public List<IElementType> doGetRelTypesOnTarget(
 			EventBInputPortEditPart target) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
-		types.add(MultisimElementTypes.PortOut_4001);
+		// only show the input connection handle if there is no input yet
+		if (((Port) target.resolveSemanticElement()).getIn() == null)
+			types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 
