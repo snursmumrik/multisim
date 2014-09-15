@@ -361,6 +361,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	private abstract class DropTargetListener extends DiagramDropTargetListener {
 
 		private static final String FMU_EXTENSION = "fmu";
+		private static final String MACHINE_EXTENSION = "bum";
 
 		public DropTargetListener(EditPartViewer viewer, Transfer xfer) {
 			super(viewer, xfer);
@@ -379,8 +380,10 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 				
 				Object selectedObject = selection.getFirstElement();
 				if (selectedObject instanceof IFile) {
-					if (FMU_EXTENSION.equals(((IFile) selectedObject).getFileExtension()))
+					if (FMU_EXTENSION.equals(((IFile) selectedObject).getFileExtension()) ||
+							MACHINE_EXTENSION.equals(((IFile) selectedObject).getFileExtension())) {
 						return Collections.singletonList(selectedObject);
+					}
 				} else if (selectedObject instanceof IMachineRoot) {
 					return Collections.singletonList(selectedObject);
 				} else if (selectedObject instanceof MultisimNavigatorItem) {

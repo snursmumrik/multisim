@@ -8,6 +8,7 @@
 package ac.soton.multisim.ui.policies;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -33,16 +34,30 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
+import org.eventb.core.IEventBRoot;
 import org.eventb.core.basis.MachineRoot;
+import org.eventb.emf.core.AbstractExtension;
+import org.eventb.emf.core.EventBElement;
+import org.eventb.emf.core.machine.Machine;
+import org.eventb.emf.persistence.EMFRodinDB;
+import org.ptolemy.fmi.FMIModelDescription;
+import org.ptolemy.fmi.FMIScalarVariable;
+import org.ptolemy.fmi.FMIScalarVariable.Causality;
+import org.ptolemy.fmi.FMUFile;
+import org.rodinp.core.IRodinProject;
+import org.rodinp.core.RodinCore;
 
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.FMUComponent;
+import ac.soton.multisim.FMUPort;
 import ac.soton.multisim.MultisimFactory;
+import ac.soton.multisim.MultisimPackage;
+import ac.soton.multisim.Port;
+import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.diagram.part.MultisimPaletteFactory;
+import ac.soton.multisim.util.custom.SimulationUtil;
 
 /**
  * Drag & drop import edit policy for component diagram.
@@ -95,6 +110,10 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 	 */
 	public class ImportCommand extends AbstractTransactionalCommand {
 		
+		private static final String MACHINE_EXTENSION = "bum";
+		private static final String FMU_EXTENSION = "fmu";
+		private static final int DEFAULT_STEP = 1000;
+		
 		private Object importedObject;
 		private ObjectAdapter adapter;
 		private GraphicalEditPart containerEP;
@@ -110,15 +129,38 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 		protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
 				IAdaptable info) throws ExecutionException {
 			Component component = null;
-			if (importedObject instanceof Component) {
+			
+			// resolve workspace files
+			if (importedObject instanceof IFile) {
+				IFile file = (IFile) importedObject;
+				if (MACHINE_EXTENSION.equals(file.getFileExtension())) {
+					IRodinProject project = RodinCore.getRodinDB().getRodinProject(file.getProject().getName());
+					importedObject = project.getRodinFile(file.getName()).getRoot();
+				} else if (FMU_EXTENSION.equals(file.getFileExtension())) {
+					importedObject = new File(file.getLocation().toOSString());
+				}
+			}
+			
+			// get component from input
+			if (importedObject instanceof File) {
+				component = createFMUComponent((File) importedObject);
+			} else if (importedObject instanceof Component) {
 				component = (Component) EcoreUtil.copy((Component) importedObject);
 			} else if (importedObject instanceof MachineRoot) {
-				
-			} else if (importedObject instanceof IFile) {
-				
-			} else if (importedObject instanceof File) {
-				
-			}
+				IEventBRoot root = (IEventBRoot) importedObject;
+				EventBElement machine = EMFRodinDB.INSTANCE.loadEventBComponent(root);
+				for (AbstractExtension extension : machine.getExtensions()) {
+					if (MultisimPackage.EXTENSION_ID.equals(extension.getExtensionId())) {
+						component = (Component) EcoreUtil.copy(extension);
+					}
+				}
+				if (component == null) {
+					component = createEventBComponent((Machine) machine);
+				}
+			} 
+			
+			if (component == null)
+				return CommandResult.newErrorCommandResult("Component import error: Invalid input");
 			
 			((ComponentDiagram) containerEP.resolveSemanticElement()).getComponents().add(component);
 			adapter.setObject(component);
@@ -130,18 +172,73 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 			return CommandResult.newOKCommandResult(new EObjectAdapter(component));
 		}
 		
-		/**
-		 * @return
-		 */
-		private Component getNewComponent() {
-			FMUComponent element = MultisimFactory.eINSTANCE.createFMUComponent();
-			
-			// import wizard for a new component
-			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-			if (MessageDialog.openQuestion(shell, "Name", "Lego?"))
-				element.setName("Lego");
-			return element;
+		private Component createEventBComponent(Machine machine) {
+			EventBComponent component = MultisimFactory.eINSTANCE.createEventBComponent();
+			component.setName(machine.getName());
+			component.setStepPeriod(DEFAULT_STEP);
+			return component;
 		}
 
+		/**
+		 * Creates an FMU component from a system File.
+		 * 
+		 * @param fmuFile
+		 * @return
+		 */
+		private Component createFMUComponent(File fmuFile) {
+			FMIModelDescription modelDescription;
+			try {
+				modelDescription = FMUFile.parseFMUFile(fmuFile.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+			FMUComponent component = MultisimFactory.eINSTANCE.createFMUComponent();
+			component.setName(modelDescription.modelName);
+			component.setPath(fmuFile.getAbsolutePath());
+
+			for (FMIScalarVariable scalarVariable : modelDescription.modelVariables) {
+				if (scalarVariable.causality == Causality.input) {
+					createFMUInput(scalarVariable, component);
+				} else if (scalarVariable.causality == Causality.output) {
+					createFMUOutput(scalarVariable, component);
+				}
+			}
+			
+			return component;
+		}
+
+		/**
+		 * Creates and appends to component an FMU input port.
+		 * 
+		 * @param scalarVariable
+		 * @param component
+		 */
+		private void createFMUInput(FMIScalarVariable scalarVariable,
+				FMUComponent component) {
+			FMUPort variable = MultisimFactory.eINSTANCE.createFMUPort();
+			variable.setName(scalarVariable.name);
+			variable.setType(SimulationUtil.fmiGetType(scalarVariable));
+			variable.setCausality(VariableCausality.INPUT);
+			variable.setDescription(scalarVariable.description);
+			component.getInputs().add((Port) variable);
+		}
+
+		/**
+		 * Creates and appends to component an FMU output port.
+		 * 
+		 * @param scalarVariable
+		 * @param component
+		 */
+		private void createFMUOutput(FMIScalarVariable scalarVariable,
+				FMUComponent component) {
+			FMUPort variable = MultisimFactory.eINSTANCE.createFMUPort();
+			variable.setName(scalarVariable.name);
+			variable.setType(SimulationUtil.fmiGetType(scalarVariable));
+			variable.setCausality(VariableCausality.OUTPUT);
+			variable.setDescription(scalarVariable.description);
+			component.getOutputs().add((Port) variable);
+		}
 	}
 }

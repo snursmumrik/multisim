@@ -1183,7 +1183,7 @@ public class MultisimDocumentProvider extends AbstractDocumentProvider
 								Iterator<AbstractExtension> it = machine
 										.getExtensions().iterator();
 								while (it.hasNext()) {
-									if (MultisimPackage.MULTISIM_EXTENSION_ID
+									if (MultisimPackage.EXTENSION_ID
 											.equals(it.next().getExtensionId())) {
 										it.remove();
 									}

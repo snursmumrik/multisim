@@ -890,7 +890,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public String getExtensionId() {
-		return MultisimPackage.MULTISIM_EXTENSION_ID;
+		return MultisimPackage.EXTENSION_ID;
 	}
 
 } //EventBComponentImpl

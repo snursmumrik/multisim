@@ -37,7 +37,7 @@ public interface MultisimPackage extends EPackage {
 	/**
 	 * @custom
 	 */
-	String MULTISIM_EXTENSION_ID = "ac.soton.multisim";
+	String EXTENSION_ID = "ac.soton.multisim";
 	
 	/**
 	 * <!-- begin-user-doc -->
