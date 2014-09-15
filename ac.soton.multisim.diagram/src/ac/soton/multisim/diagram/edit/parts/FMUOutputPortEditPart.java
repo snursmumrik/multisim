@@ -9,12 +9,15 @@ package ac.soton.multisim.diagram.edit.parts;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
@@ -26,8 +29,11 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 
+import ac.soton.multisim.Port;
 import ac.soton.multisim.diagram.edit.policies.FMUOutputPortItemSemanticEditPolicy;
 
 /**
@@ -228,6 +234,47 @@ public class FMUOutputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public boolean canAttachNote() {
 		return false;
+	}
+	
+	/**
+	 * Mouse-over instant feedback label.
+	 * @custom
+	 */
+	private Label feedbackFigure;
+	
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public void showTargetFeedback(Request request) {
+		super.showTargetFeedback(request);
+		// the feedback layer figures do not receive mouse e
+		if (feedbackFigure == null) {
+			feedbackFigure = new Label(
+					((Port) resolveSemanticElement()).getName());
+			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
+			Rectangle bounds = feedbackFigure.getTextBounds().getCopy();
+			bounds.setLocation(getFigure().getBounds().getLocation()
+					.translate(13, -bounds.height));
+			feedbackFigure.setBounds(bounds);
+
+			IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
+			layer.add(feedbackFigure);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @custom
+	 */
+	@Override
+	public void eraseTargetFeedback(Request request) {
+		super.eraseTargetFeedback(request);
+		IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
+		if (layer != null && feedbackFigure != null
+				&& feedbackFigure.getParent() != null) {
+			layer.remove(feedbackFigure);
+		}
+		feedbackFigure = null;
 	}
 
 }
