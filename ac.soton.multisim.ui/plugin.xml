@@ -66,6 +66,11 @@
             </adapt>
          </enablement>
       </actionProvider>
+      <commonWizard
+            type="new"
+            wizardId="ac.soton.multisim.diagram.part.MultisimCreationWizardID">
+         <enablement></enablement>
+      </commonWizard>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
