@@ -17,7 +17,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditDomain;
@@ -78,7 +77,6 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 
 	@Override
 	public Command getDropObjectsCommand(DropObjectsRequest dropRequest) {
-		EObject newElement = null;
 		ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors = new ArrayList<CreateViewRequest.ViewDescriptor>();
 		for (Iterator<?> it = dropRequest.getObjects().iterator(); it.hasNext();) {
 			Object nextObject = it.next();
@@ -175,6 +173,7 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 		private Component createEventBComponent(Machine machine) {
 			EventBComponent component = MultisimFactory.eINSTANCE.createEventBComponent();
 			component.setName(machine.getName());
+			component.setMachine(machine);
 			component.setStepPeriod(DEFAULT_STEP);
 			return component;
 		}

@@ -195,6 +195,7 @@ http://www.eclipse.org/legal/epl-v10.html
       <propertyContributor
             contributorId="ac.soton.multisim.diagram"
             labelProvider="ac.soton.multisim.diagram.sheet.MultisimSheetLabelProvider">
+         <propertyCategory category="overview"/>
          <propertyCategory category="domain"/>
          <propertyCategory category="visual"/>
          <propertyCategory category="extra"/>
@@ -213,9 +214,47 @@ http://www.eclipse.org/legal/epl-v10.html
              id="property.tab.DiagramPropertySection"
              label="%tab.diagram"/>
           <propertyTab
-             category="domain"
-             id="property.tab.domain"
-             label="%tab.domain"/>
+                category="domain"
+                id="property.tab.domain"
+                label="%tab.domain"/>
+          <propertyTab
+                category="overview"
+                id="property.tab.overview"
+                image="icons/obj16/Multisim.png"
+                label="Overview">
+          </propertyTab>
+          <propertyTab
+                afterTab="property.tab.overview"
+                category="overview"
+                id="property.tab.read"
+                image="icons/obj16/Read.png"
+                indented="true"
+                label="Read">
+          </propertyTab>
+          <propertyTab
+                afterTab="property.tab.read"
+                category="overview"
+                id="property.tab.wait"
+                image="icons/obj16/Wait.png"
+                indented="true"
+                label="Wait">
+          </propertyTab>
+          <propertyTab
+                afterTab="property.tab.wait"
+                category="overview"
+                id="property.tab.inputs"
+                image="icons/obj16/Inputs.png"
+                indented="true"
+                label="Inputs">
+          </propertyTab>
+          <propertyTab
+                afterTab="property.tab.inputs"
+                category="overview"
+                id="property.tab.outputs"
+                image="icons/obj16/Outputs.png"
+                indented="true"
+                label="Outputs">
+          </propertyTab>
       </propertyTabs>
    </extension>
 
@@ -249,6 +288,85 @@ http://www.eclipse.org/legal/epl-v10.html
             <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input type="org.eclipse.gef.EditPart"/>
             <input type="ac.soton.multisim.diagram.navigator.MultisimAbstractNavigatorItem"/>
+         </propertySection>
+         <propertySection
+               class="ac.soton.multisim.diagram.sheet.custom.NamePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.NamePropertySectionFilter"
+               id="property.section.name"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.StartTimePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentDiagramPropertySectionFilter"
+               id="property.section.startTime"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.stopTime"
+               class="ac.soton.multisim.diagram.sheet.custom.StepSizePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentDiagramPropertySectionFilter"
+               id="property.section.stepSize"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.startTime"
+               class="ac.soton.multisim.diagram.sheet.custom.StopTimePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentDiagramPropertySectionFilter"
+               id="property.section.stopTime"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.StepPeriodPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentPropertySectionFilter"
+               id="property.section.stepPeriod"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.step"
+               class="ac.soton.multisim.diagram.sheet.custom.ReadPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.read"
+               tab="property.tab.read">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.read"
+               class="ac.soton.multisim.diagram.sheet.custom.WaitPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.wait"
+               tab="property.tab.wait">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.wait"
+               class="ac.soton.multisim.diagram.sheet.custom.InputsPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.inputs"
+               tab="property.tab.inputs">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.inputs"
+               class="ac.soton.multisim.diagram.sheet.custom.OutputsPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.outputs"
+               tab="property.tab.outputs">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.ColourPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.DisplayPortPropertySectionFilter"
+               id="property.section.colour"
+               tab="property.tab.overview">
          </propertySection>
       </propertySections>
    </extension>
