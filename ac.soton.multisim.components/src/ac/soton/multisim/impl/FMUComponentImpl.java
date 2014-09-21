@@ -27,8 +27,9 @@ import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
-import ac.soton.multisim.util.custom.SimStatus;
-import ac.soton.multisim.util.custom.SimulationUtil;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.util.SimulationStatus;
+import ac.soton.multisim.util.SimulationUtil;
 import de.prob.cosimulation.FMU;
 
 /**
@@ -268,9 +269,10 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws ModelException 
 	 * @generated NOT
 	 */
-	public IStatus instantiate() {
+	public IStatus instantiate() throws ModelException {
 		assert getPath() != null;
 		
 		// disable notification
@@ -285,11 +287,11 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			try {
 				setFmu(new FMU(getPath()));
 			} catch (IOException e) {
-				return SimStatus.LOAD_ERROR;
+				throw new ModelException("Cannot load FMU file '" + getPath() + "'\nReason: " + e.getMessage());
 			}
 		}
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -314,7 +316,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		for (Port p : getOutputs())
 			p.setValue(SimulationUtil.fmuGet(fmu, p));
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -336,7 +338,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			
 			SimulationUtil.fmuSet(fmu, port, input.getValue());
 		}
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -351,7 +353,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		for (Port port : getOutputs()) {
 			port.setValue(SimulationUtil.fmuGet(fmu, port));
 		}
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -365,7 +367,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		
 		fmu.doStep(time/1000.0, step/1000.0);
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -379,7 +381,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**

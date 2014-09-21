@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package ac.soton.multisim.ui.commands;
+package ac.soton.multisim.ui.providers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +19,13 @@ import org.eclipse.ui.ISources;
  * @author vitaly
  *
  */
-public class SimulationState extends AbstractSourceProvider {
+public class SimulationStateSourceProvider extends AbstractSourceProvider {
 
-	public static final String SIM_ACTIVE = "ac.soton.rms.ui.commands.simulation.active";
-	private static final String ACTIVE = "ACTIVE";
-	private static final String INACTIVE = "INACTIVE";
-	private boolean active;
+	public static final String STATE_SIMULATING = "ac.soton.multisim.state.simulating";
+	
+	private static final String TRUE = "T";
+	private static final String FALSE = "F";
+	private boolean simulating;
 
 	@Override
 	public void dispose() {
@@ -34,23 +35,23 @@ public class SimulationState extends AbstractSourceProvider {
 	@Override
 	public Map getCurrentState() {
 		Map map = new HashMap(1);
-		String value = active ? ACTIVE : INACTIVE;
-		map.put(SIM_ACTIVE, value);
+		String value = simulating ? TRUE : FALSE;
+		map.put(STATE_SIMULATING, value);
 		return map;
 	}
 
 	@Override
 	public String[] getProvidedSourceNames() {
-		return new String[] { SIM_ACTIVE };
+		return new String[] { STATE_SIMULATING };
 	}
 
 	/**
-	 * @param active the active to set
+	 * @param state
 	 */
-	public void setActive(boolean active) {
-		this.active = active;
-		String value = active ? ACTIVE : INACTIVE;
-		fireSourceChanged(ISources.WORKBENCH, SIM_ACTIVE, value);
+	public void setSimulating(boolean state) {
+		this.simulating = state;
+		String value = state ? TRUE : FALSE;
+		fireSourceChanged(ISources.WORKBENCH, STATE_SIMULATING, value);
 	}
 
 }

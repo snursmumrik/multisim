@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package ac.soton.multisim.util.custom;
+package ac.soton.multisim.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,7 +28,7 @@ import de.prob.cosimulation.FMU;
 
 /**
  * @author vitaly
- *
+ * @custom
  */
 public class SimulationUtil {
 	

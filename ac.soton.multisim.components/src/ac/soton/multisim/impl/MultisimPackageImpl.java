@@ -317,6 +317,24 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getComponentDiagram_Arguments() {
+		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentDiagram_RecordTrace() {
+		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getComponent() {
 		return componentEClass;
 	}
@@ -732,6 +750,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__STOP_TIME);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__START_TIME);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__STEP_SIZE);
+		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__ARGUMENTS);
+		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__RECORD_TRACE);
 
 		componentEClass = createEClass(COMPONENT);
 		createEReference(componentEClass, COMPONENT__INPUTS);
@@ -843,6 +863,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEAttribute(getComponentDiagram_StopTime(), ecorePackage.getEInt(), "stopTime", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_StartTime(), ecorePackage.getEInt(), "startTime", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_StepSize(), theEcorePackage.getEInt(), "stepSize", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentDiagram_Arguments(), ecorePackage.getEString(), "arguments", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentDiagram_RecordTrace(), ecorePackage.getEBoolean(), "recordTrace", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponent_Inputs(), this.getPort(), null, "inputs", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

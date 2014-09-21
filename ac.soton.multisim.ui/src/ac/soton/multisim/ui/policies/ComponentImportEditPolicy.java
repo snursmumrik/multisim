@@ -56,7 +56,7 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.diagram.part.MultisimPaletteFactory;
-import ac.soton.multisim.util.custom.SimulationUtil;
+import ac.soton.multisim.util.SimulationUtil;
 
 /**
  * Drag & drop import edit policy for component diagram.

@@ -40,7 +40,7 @@ import ac.soton.multisim.DisplayPort;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableType;
-import ac.soton.multisim.util.custom.SimStatus;
+import ac.soton.multisim.util.SimulationStatus;
 
 /**
  * <!-- begin-user-doc -->
@@ -275,7 +275,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    
 			setChart(chart);
 		}
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -319,7 +319,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    
 		    chart.addTrace(trace);
 		}
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * @generated NOT
 	 */
 	public IStatus readInputs() {
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -351,7 +351,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * @generated NOT
 	 */
 	public IStatus writeOutputs() {
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -368,7 +368,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			input = port.getIn();
 			
 			// if port connected, plot the value
-			if (port.getIn() != null) {
+			if (input != null) {
 				assert port.getTrace() != null;
 				
 				Object value = input.getValue();
@@ -383,7 +383,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				port.getTrace().addPoint(time/1000.0, traceValue);
 			}
 		}
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -396,7 +396,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	    eSetDeliver(true);
 	    for (Port p : getInputs())
 			p.eSetDeliver(true);
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**

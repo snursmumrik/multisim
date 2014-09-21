@@ -38,6 +38,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stopTime"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/startTime"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stepSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/arguments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/recordTrace"/>
     </genClasses>
     <genClasses image="false" ecoreClass="multisim.ecore#//Component">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//Component/inputs"/>
@@ -62,7 +64,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/readInputEvents"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/waitEvents"/>
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/aa"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//FMUComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/path"/>

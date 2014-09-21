@@ -10,12 +10,14 @@
 package ac.soton.multisim.util;
 
 import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
+
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;

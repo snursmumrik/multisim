@@ -35,7 +35,7 @@ import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.diagram.edit.parts.FMUComponentEditPart;
 import ac.soton.multisim.ui.dialogs.FMUParametersDialog;
-import ac.soton.multisim.util.custom.SimulationUtil;
+import ac.soton.multisim.util.SimulationUtil;
 
 /**
  * UI action to modify the FMU component parameters.

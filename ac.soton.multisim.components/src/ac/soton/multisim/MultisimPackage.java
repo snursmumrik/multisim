@@ -134,13 +134,31 @@ public interface MultisimPackage extends EPackage {
 	int COMPONENT_DIAGRAM__STEP_SIZE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_DIAGRAM__ARGUMENTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_DIAGRAM__RECORD_TRACE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Component Diagram</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
+	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.multisim.Component <em>Component</em>}' class.
@@ -1169,6 +1187,28 @@ public interface MultisimPackage extends EPackage {
 	EAttribute getComponentDiagram_StepSize();
 
 	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Arguments</em>'.
+	 * @see ac.soton.multisim.ComponentDiagram#getArguments()
+	 * @see #getComponentDiagram()
+	 * @generated
+	 */
+	EAttribute getComponentDiagram_Arguments();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Record Trace</em>'.
+	 * @see ac.soton.multisim.ComponentDiagram#isRecordTrace()
+	 * @see #getComponentDiagram()
+	 * @generated
+	 */
+	EAttribute getComponentDiagram_RecordTrace();
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.Component <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1692,6 +1732,22 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_DIAGRAM__STEP_SIZE = eINSTANCE.getComponentDiagram_StepSize();
+
+		/**
+		 * The meta object literal for the '<em><b>Arguments</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_DIAGRAM__ARGUMENTS = eINSTANCE.getComponentDiagram_Arguments();
+
+		/**
+		 * The meta object literal for the '<em><b>Record Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_DIAGRAM__RECORD_TRACE = eINSTANCE.getComponentDiagram_RecordTrace();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.Component <em>Component</em>}' class.

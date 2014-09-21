@@ -21,7 +21,6 @@ import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -40,12 +39,15 @@ import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 
 import ac.soton.multisim.Component;
+import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.EventBPort;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
-import ac.soton.multisim.util.custom.SimStatus;
-import ac.soton.multisim.util.custom.SimulationUtil;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
+import ac.soton.multisim.util.SimulationStatus;
+import ac.soton.multisim.util.SimulationUtil;
 
 import com.google.inject.Injector;
 
@@ -429,34 +431,40 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus instantiate() {
+	public IStatus instantiate() throws SimulationException {
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
-			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot load machine component '" + getLabel()
+			throw new SimulationException("Cannot load machine component '" + getLabel()
 					+ "'\nReason: Machine root cannot be determined.");
 		}
 		
-		String fileName = machineRoot.getResource().getRawLocation()
-				.makeAbsolute().toOSString();
+		String fileName = machineRoot.getResource().getRawLocation().makeAbsolute().toOSString();
 		if (fileName.endsWith(".buc")) {
 			fileName = fileName.replace(".buc", ".bcc");
 		} else {
 			fileName = fileName.replace(".bum", ".bcm");
 		}
 
+		Map<String, String> params = new HashMap<String, String>();
+		String args = ((ComponentDiagram) eContainer()).getArguments();
+		if (args != null && !args.trim().isEmpty()) {
+			String[] argArray = args.split(",");
+			try {
+				for (int i=0; i< argArray.length; i++) {
+					String[] arg = argArray[i].split("=");
+					params.put(arg[0], argArray[1]);
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				throw new SimulationException("ProB parameter format is invalid");
+			}
+		}
+
 		Injector injector = ServletContextListener.INJECTOR;
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("IGNORE_HASH_COLLISIONS","TRUE");
-//		params.put("FORGET_STATE_SPACE","TRUE");
-		params.put("MEMO", "TRUE");
-		params.put("TIME_OUT", "4000");
-		params.put("COMPRESSION", "TRUE");
-		params.put("CLPFD", "TRUE");
 		EventBModel model = instance.load(fileName, params, false);
 		if (model == null)
-			return SimStatus.PROB_ERROR;
+			throw new SimulationException("ProB could not load machine file '" + fileName + "' with parameters=" + params.toString());
 		
 		StateSpace s = model.getStatespace();
 		s.startTransaction();	// presumably putting everything into a transaction should make it perform faster
@@ -479,15 +487,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws SimulationException 
 	 * @generated NOT
 	 */
-	public IStatus initialise(int tStart, int tStop) {
+	public IStatus initialise(int tStart, int tStop) throws SimulationException {
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
@@ -495,31 +504,31 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
-			return new SimStatus(Status.ERROR, SimStatus.ID, "Cannot initialise component '" + getLabel()
+			throw new SimulationException("Cannot initialise component '" + getLabel()
 					+ "'\nReason: $initialise_machine operation not found.");
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws Exception 
+	 * @throws SimulationException 
+	 * @throws ModelException 
 	 * @generated NOT
 	 */
-	public IStatus readInputs() {
+	public IStatus readInputs() throws SimulationException, ModelException {
 		assert trace != null;
 		EList<Event> readEvents = getReadInputEvents();
 		
 		// skip if no inputs
 		if (readEvents.isEmpty())
-			return SimStatus.OK_STATUS;
+			return SimulationStatus.OK_STATUS;
 		
 		// build parameter predicate for event execution
 		StringBuilder predicate = new StringBuilder("TRUE=TRUE");
 		for (Port p : getInputs()) {
 			// if port not connected, let ProB to pick the value non-deterministically
-			//XXX: should it pass some default value?
 			if (p.getIn() == null)
 				continue;
 			
@@ -536,20 +545,23 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Event re : readEvents) {
 			try {
 				readOps.add(trace.findOneOp(re.getName(), predicateStr));
-			} catch (BException | IllegalArgumentException e) {
-				return new SimStatus(Status.ERROR, SimStatus.ID, "Event-B error when reading inputs of component '" + getLabel() + "'\n" +
-						"Reason: ProB failed to find an enabled read event '" + re.getName() + "' with the predicate '" + predicateStr + "'", e);
+			} catch (IllegalArgumentException e) {
+				// no operation found -> proceed
+			} catch (BException e) {
+				// BException, i.e. ProB failed
+				throw new SimulationException("Cannot read inputs of component '" + getLabel() + "'\n" +
+						"Reason: ProB failed to find enabled read event '" + re.getName() + "[" + predicateStr + "]'", e);
 			}
 		}
 		
-		// stop if no reads are enabled
+		// no reads are enabled
 		if (readOps.isEmpty())
-			return SimStatus.EVENTB_NO_READS;
+			throw new ModelException("No read events enabled in '" + getLabel() + "'");
 		
 		// execute read event
 		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -570,26 +582,25 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 					((EventBPort) p).getIntToReal()));
 		}
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws ModelException 
 	 * @generated NOT
 	 */
-	public IStatus doStep(int time, int step) {
+	public IStatus doStep(int time, int step) throws ModelException {
 		Set<OpInfo> ops = null;
 		OpInfo nextOp = null;
-		boolean noWait = true;
-		IStatus status = SimStatus.OK_STATUS;
-		
-		while (noWait) {
+		boolean wait = false;
+		while (!wait) {
 			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
 			
 			// check deadlock
 			if (ops == null || ops.isEmpty())
-				return SimStatus.EVENTB_DEADLOCK;
+				throw new ModelException("Deadlock in '" + getLabel() + "'");
 			
 			// find next op
 			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
@@ -597,7 +608,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			// check if wait and read
 			assert nextOp.getName() != null;
 			if (waitSet.contains(nextOp.getName())) {
-				noWait = false;
+				wait = true;
 				if (readSet.contains(nextOp.getName()))
 					break;
 			}
@@ -606,7 +617,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			trace = trace.add(nextOp.getId());
 		}
 
-		return status;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -623,10 +634,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			p.eSetDeliver(true);
 		
 		// save trace
-		String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
-				+ "_" + dateFormat.format(new java.util.Date()) + ".xml";
-		trace.toString();	//XXX has to be called to fix the serialisation bug
-		TraceConverter.save(trace, traceFilePath);
+		if (((ComponentDiagram) eContainer()).isRecordTrace()) {
+			String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
+					+ "_" + getLabel() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
+			trace.toString();	//XXX has to be called to fix the serialisation bug
+			TraceConverter.save(trace, traceFilePath);
+		}
 
 //		// show in ProB
 //		Injector injector = ServletContextListener.INJECTOR;
@@ -636,7 +649,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		trace = null;
 		System.gc();
 		
-		return SimStatus.OK_STATUS;
+		return SimulationStatus.OK_STATUS;
 	}
 
 	/**

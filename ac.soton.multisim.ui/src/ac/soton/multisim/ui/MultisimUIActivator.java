@@ -4,8 +4,10 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -24,14 +26,14 @@ public class MultisimUIActivator extends AbstractUIPlugin {
 	private static MultisimUIActivator plugin;
 	
 	// Multisim job icon
-    public static final String IMAGE_MULTISIM_JOB = "image.multisim.job";
+    public static final String IMAGE_MULTISIM = "image.multisim";
 
     protected void initializeImageRegistry(ImageRegistry registry) {
        Bundle bundle = Platform.getBundle(PLUGIN_ID);
-       IPath path = new Path("icons/SimulateJob.gif");
+       IPath path = new Path("icons/Multisim.png");
        URL url = FileLocator.find(bundle, path, null);
        ImageDescriptor desc = ImageDescriptor.createFromURL(url);
-       registry.put(IMAGE_MULTISIM_JOB, desc);
+       registry.put(IMAGE_MULTISIM, desc);
     }
 	
 	/**
@@ -58,5 +60,35 @@ public class MultisimUIActivator extends AbstractUIPlugin {
 	public static MultisimUIActivator getDefault() {
 		return plugin;
 	}
+	
+	/**
+	 * Logs an error.
+	 * 
+	 * @param error
+	 */
+	public void logError(String error) {
+		logError(error, null);
+	}
 
+	public void logError(String error, Throwable throwable) {
+		if (error == null && throwable != null) {
+			error = throwable.getMessage();
+		}
+		getLog().log(
+				new Status(IStatus.ERROR, MultisimUIActivator.PLUGIN_ID,
+						IStatus.OK, error, throwable));
+		debug(error, throwable);
+	}
+	
+	private void debug(String message, Throwable throwable) {
+		if (!isDebugging()) {
+			return;
+		}
+		if (message != null) {
+			System.err.println(message);
+		}
+		if (throwable != null) {
+			throwable.printStackTrace();
+		}
+	}
 }

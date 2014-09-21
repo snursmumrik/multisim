@@ -22,7 +22,9 @@ import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.Port;
-import ac.soton.multisim.util.custom.SimStatus;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
+import ac.soton.multisim.util.SimulationStatus;
 
 /**
  * @author vitaly
@@ -32,9 +34,10 @@ public class Master {
 	/**
 	 * Parameters
 	 */
-	public static final String PARAM_RECORD_TRACE = "ac.soton.rms.ui.parameters.recordTrace";
-	public static final String PARAM_COMPARE_TRACE = "ac.soton.rms.ui.parameters.compareTrace";
-	public static final String PARAM_CHECK_INVARIANTS = "ac.soton.rms.ui.parameters.checkInvariants";
+	public static final String PARAM_RECORD_TRACE = "ac.soton.multisim.parameters.recordTrace";
+	public static final String PARAM_COMPARE_TRACE = "ac.soton.multisim.parameters.compareTrace";
+	public static final String PARAM_CHECK_INVARIANTS = "ac.soton.multisim.parameters.checkInvariants";
+	public static final String PARAM_START = "ac.soton.multisim.parameters.start";
 	
 	// simulation data
 	private static List<Component> components;
@@ -58,7 +61,7 @@ public class Master {
 	 * @return
 	 */
 	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) {
-		IStatus status = SimStatus.OK_STATUS;
+		IStatus status = SimulationStatus.OK_STATUS;
 		long simulationTime = System.currentTimeMillis();
 		
 		updateList.clear();
@@ -73,7 +76,7 @@ public class Master {
 		
 		status = initialise(monitor);
 
-		if (status == SimStatus.OK_STATUS)
+		if (status == SimulationStatus.OK_STATUS)
 			status = doSteps(monitor);
 		
 		terminate();
@@ -89,14 +92,12 @@ public class Master {
 	 * @return
 	 */
 	private static IStatus getResultStatus(IStatus status, long time) {
-		switch (status.getSeverity()) {
-		case Status.OK:
-			status = new SimStatus(Status.OK, SimStatus.ID, "Simulation finished in " + time/1000 + "s"); break;
-		case Status.ERROR:
-			status = new SimStatus(Status.ERROR, SimStatus.ID, "Simulation terminated after " + time/1000 + "s" + "\nError: " + status.getMessage()); break;
-		case Status.CANCEL:
-			status = new SimStatus(Status.CANCEL, SimStatus.ID, "Simulation cancelled"); break;
-		}
+//		switch (status.getSeverity()) {
+//		case Status.OK:
+//			status = SimulationStatus.createOKStatus("Simulation finished in " + time/1000 + "s"); break;
+//		case Status.ERROR:
+//			status = SimulationStatus.createErrorStatus("Simulation terminated after " + time/1000 + "s" + "\nError: " + status.getMessage()); break;
+//		}
 		
 		return status;
 	}
@@ -108,35 +109,37 @@ public class Master {
 	 * @return
 	 */
 	private static IStatus initialise(IProgressMonitor monitor) {
-		IStatus status = SimStatus.OK_STATUS;
-		
-		for (Component c : components) {
-			monitor.subTask("Initialising component '" + c.getName() + "'");
-			if ((status = c.instantiate()) != SimStatus.OK_STATUS 
-					|| (status = c.initialise(startTime, stopTime)) != SimStatus.OK_STATUS) {
-				return status;
+		IStatus status = SimulationStatus.OK_STATUS;
+		try{
+			for (Component c : components) {
+				monitor.subTask("Initialising component '" + c.getName() + "'");
+				if ((status = c.instantiate()) != SimulationStatus.OK_STATUS 
+						|| (status = c.initialise(startTime, stopTime)) != SimulationStatus.OK_STATUS) {
+					return status;
+				}
+				
+				// first evaluation of DE
+				if (c instanceof EventBComponent)
+					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
+				else if (c instanceof FMUComponent)
+					lastEvalTime.put(c, 0);		// store eval time for CT
+				
+				// initial IO #1
+				if ((status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
+					return status;
+				
+				if (c instanceof EventBComponent)
+					for (Port y : c.getOutputs())
+						preValue.put(y, y.getValue());
+				
 			}
-			
-			// first evaluation of DE
-			if (c instanceof EventBComponent)
-				updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
-			else if (c instanceof FMUComponent)
-				lastEvalTime.put(c, 0);		// store eval time for CT
-			
-			// initial IO #1
-			if ((status = c.writeOutputs()) != SimStatus.OK_STATUS)
-				return status;
-			
-			if (c instanceof EventBComponent)
-				for (Port y : c.getOutputs())
-					preValue.put(y, y.getValue());
-			
+			// initial IO #2
+			for (Component c : components)
+				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
+					return status;
+		} catch (SimulationException | ModelException e) {
+			return SimulationStatus.createErrorStatus("Exception:", e);
 		}
-		// initial IO #2
-		for (Component c : components)
-			if ((status = c.readInputs()) != SimStatus.OK_STATUS)
-				return status;
-		
 		return status;
 	}
 
@@ -149,11 +152,12 @@ public class Master {
 	private static IStatus doSteps(IProgressMonitor monitor) {
 		monitor.beginTask("Simulation", stopTime - startTime);
 		int lastMonitorTick = startTime;
-		IStatus status = SimStatus.OK_STATUS;
+		IStatus status = SimulationStatus.OK_STATUS;
 
+		try {
 		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
 			if (monitor.isCanceled()) {
-				status = SimStatus.CANCEL_STATUS;
+				status = SimulationStatus.CANCEL_STATUS;
 				break;
 			}
 			
@@ -172,8 +176,8 @@ public class Master {
 			// DE step
 			for (EventBComponent c : deList) {
 				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
-				if ((status = c.doStep(currentTime, c.getStepPeriod())) != SimStatus.OK_STATUS
-						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
+				if ((status = c.doStep(currentTime, c.getStepPeriod())) != SimulationStatus.OK_STATUS
+						|| (status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
 					return status;
 				
 				// evaluate any input CT
@@ -199,18 +203,18 @@ public class Master {
 			for (FMUComponent c : ctList) {
 				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
 				int tEval = lastEvalTime .get(c);
-				if ((status = c.doStep(tEval, currentTime - tEval)) != SimStatus.OK_STATUS
-						|| (status = c.writeOutputs()) != SimStatus.OK_STATUS)
+				if ((status = c.doStep(tEval, currentTime - tEval)) != SimulationStatus.OK_STATUS
+						|| (status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
 					return status;
 				lastEvalTime.put(c, currentTime);
 			}
 			
 			// IO
 			for (Component c : deList)
-				if ((status = c.readInputs()) != SimStatus.OK_STATUS)
+				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
 					return status;
 			for (Component c : ctList)
-				if ((status = c.readInputs()) != SimStatus.OK_STATUS)
+				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
 					return status;
 			
 			deList.clear();
@@ -218,6 +222,9 @@ public class Master {
 			
 			monitor.worked(currentTime-lastMonitorTick);
 			lastMonitorTick = currentTime;
+		}
+		} catch (SimulationException | ModelException e) {
+			return SimulationStatus.createErrorStatus("Exception", e);
 		}
 		
 		return status;

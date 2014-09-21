@@ -82,6 +82,8 @@ public class ComponentDiagramItemProvider
 			addStopTimePropertyDescriptor(object);
 			addStartTimePropertyDescriptor(object);
 			addStepSizePropertyDescriptor(object);
+			addArgumentsPropertyDescriptor(object);
+			addRecordTracePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -148,6 +150,50 @@ public class ComponentDiagramItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Arguments feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addArgumentsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ComponentDiagram_arguments_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_arguments_feature", "_UI_ComponentDiagram_type"),
+				 MultisimPackage.Literals.COMPONENT_DIAGRAM__ARGUMENTS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Record Trace feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRecordTracePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ComponentDiagram_recordTrace_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_recordTrace_feature", "_UI_ComponentDiagram_type"),
+				 MultisimPackage.Literals.COMPONENT_DIAGRAM__RECORD_TRACE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -222,6 +268,8 @@ public class ComponentDiagramItemProvider
 			case MultisimPackage.COMPONENT_DIAGRAM__STOP_TIME:
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
+			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.COMPONENT_DIAGRAM__COMPONENTS:

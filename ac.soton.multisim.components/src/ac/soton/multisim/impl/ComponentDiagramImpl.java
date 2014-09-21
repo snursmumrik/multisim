@@ -36,6 +36,8 @@ import ac.soton.multisim.MultisimPackage;
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStepSize <em>Step Size</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#isRecordTrace <em>Record Trace</em>}</li>
  * </ul>
  * </p>
  *
@@ -118,6 +120,46 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @ordered
 	 */
 	protected int stepSize = STEP_SIZE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getArguments() <em>Arguments</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getArguments()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ARGUMENTS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getArguments() <em>Arguments</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getArguments()
+	 * @generated
+	 * @ordered
+	 */
+	protected String arguments = ARGUMENTS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecordTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RECORD_TRACE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecordTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -218,6 +260,48 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getArguments() {
+		return arguments;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setArguments(String newArguments) {
+		String oldArguments = arguments;
+		arguments = newArguments;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS, oldArguments, arguments));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isRecordTrace() {
+		return recordTrace;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRecordTrace(boolean newRecordTrace) {
+		boolean oldRecordTrace = recordTrace;
+		recordTrace = newRecordTrace;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE, oldRecordTrace, recordTrace));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -243,6 +327,10 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return getStartTime();
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 				return getStepSize();
+			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
+				return getArguments();
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
+				return isRecordTrace();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -269,6 +357,12 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 				setStepSize((Integer)newValue);
 				return;
+			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
+				setArguments((String)newValue);
+				return;
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
+				setRecordTrace((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -293,6 +387,12 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 				setStepSize(STEP_SIZE_EDEFAULT);
 				return;
+			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
+				setArguments(ARGUMENTS_EDEFAULT);
+				return;
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
+				setRecordTrace(RECORD_TRACE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -313,6 +413,10 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return startTime != START_TIME_EDEFAULT;
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 				return stepSize != STEP_SIZE_EDEFAULT;
+			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
+				return ARGUMENTS_EDEFAULT == null ? arguments != null : !ARGUMENTS_EDEFAULT.equals(arguments);
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
+				return recordTrace != RECORD_TRACE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -333,6 +437,10 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		result.append(startTime);
 		result.append(", stepSize: ");
 		result.append(stepSize);
+		result.append(", arguments: ");
+		result.append(arguments);
+		result.append(", recordTrace: ");
+		result.append(recordTrace);
 		result.append(')');
 		return result.toString();
 	}

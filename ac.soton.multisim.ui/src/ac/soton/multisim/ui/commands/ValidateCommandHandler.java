@@ -22,7 +22,7 @@ import ac.soton.multisim.diagram.part.ValidateAction;
  * @author vitaly
  *
  */
-public class ValidateCommand extends AbstractHandler {
+public class ValidateCommandHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {

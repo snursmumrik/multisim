@@ -10,6 +10,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepSize" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arguments" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordTrace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" interface="true"
       eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
@@ -120,4 +122,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ProBTrace" instanceClassName="de.prob.statespace.Trace"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SimulationException" instanceClassName="ac.soton.multisim.exception.SimulationException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ModelException" instanceClassName="ac.soton.multisim.exception.ModelException"/>
 </ecore:EPackage>

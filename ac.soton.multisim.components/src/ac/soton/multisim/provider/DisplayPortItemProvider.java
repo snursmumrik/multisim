@@ -163,7 +163,6 @@ public class DisplayPortItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DisplayPort.class)) {
-			case MultisimPackage.DISPLAY_PORT__TRACE:
 			case MultisimPackage.DISPLAY_PORT__COLOR:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

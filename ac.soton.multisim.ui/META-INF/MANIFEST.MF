@@ -18,6 +18,7 @@ Require-Bundle: org.eclipse.core.runtime,
  ac.soton.eventb.emf.core.extension.navigator;bundle-version="2.0.0",
  de.prob.ui;bundle-version="1.0.0",
  org.eventb.core,
- org.eventb.emf.persistence
+ org.eventb.emf.persistence,
+ de.prob.core.rodin;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

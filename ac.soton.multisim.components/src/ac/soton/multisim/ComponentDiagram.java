@@ -24,6 +24,8 @@ import org.eventb.emf.core.EventBNamed;
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStepSize <em>Step Size</em>}</li>
+ *   <li>{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}</li>
  * </ul>
  * </p>
  *
@@ -132,5 +134,57 @@ public interface ComponentDiagram extends EventBNamed {
 	 * @generated
 	 */
 	void setStepSize(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Arguments</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Arguments</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Arguments</em>' attribute.
+	 * @see #setArguments(String)
+	 * @see ac.soton.multisim.MultisimPackage#getComponentDiagram_Arguments()
+	 * @model
+	 * @generated
+	 */
+	String getArguments();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Arguments</em>' attribute.
+	 * @see #getArguments()
+	 * @generated
+	 */
+	void setArguments(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Record Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Record Trace</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Record Trace</em>' attribute.
+	 * @see #setRecordTrace(boolean)
+	 * @see ac.soton.multisim.MultisimPackage#getComponentDiagram_RecordTrace()
+	 * @model
+	 * @generated
+	 */
+	boolean isRecordTrace();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Record Trace</em>' attribute.
+	 * @see #isRecordTrace()
+	 * @generated
+	 */
+	void setRecordTrace(boolean value);
 
 } // ComponentDiagram

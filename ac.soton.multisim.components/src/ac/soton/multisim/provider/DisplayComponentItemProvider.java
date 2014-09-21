@@ -198,7 +198,6 @@ public class DisplayComponentItemProvider
 
 		switch (notification.getFeatureID(DisplayComponent.class)) {
 			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.DISPLAY_COMPONENT__INPUTS:

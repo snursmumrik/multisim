@@ -10,12 +10,14 @@
 package ac.soton.multisim.impl;
 
 import java.awt.Color;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.DisplayPort;
@@ -250,23 +252,22 @@ public class MultisimFactoryImpl extends EFactoryImpl implements MultisimFactory
 	public String convertVariableCausalityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public Color createColorFromString(EDataType eDataType, String initialValue) {
-		return (Color)super.createFromString(eDataType, initialValue);
+		return new Color(Integer.parseInt(initialValue));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public String convertColorToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
+		return ((Color) instanceValue).getRGB() + "";
 	}
 
 	/**

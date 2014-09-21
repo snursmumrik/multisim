@@ -316,7 +316,6 @@ public class EventBComponentItemProvider
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
-			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:

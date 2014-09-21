@@ -19,10 +19,14 @@ import javax.swing.JPanel;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.OpenEditPolicy;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.diagram.edit.parts.DisplayComponentEditPart;
-import ac.soton.multisim.util.custom.SimStatus;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
+import ac.soton.multisim.ui.MultisimUIActivator;
 
 /**
  * Open edit policy for Display edit part to show the chart on double-click.
@@ -41,9 +45,15 @@ public final class DisplayComponentOpenEditPolicy extends OpenEditPolicy {
 				final DisplayComponent component = (DisplayComponent) part.resolveSemanticElement();
 				assert component != null;
 
-				if (component.getChart() == null)
-					if (component.instantiate() != SimStatus.OK_STATUS)
+				if (component.getChart() == null) {
+					try {
+						component.instantiate();
+					} catch (SimulationException | ModelException e) {
+						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Display Error", "Failed to instantiate the Display. See error log for details.");
+						MultisimUIActivator.getDefault().logError("Display instantiation failed", e);
 						return;
+					}
+				}
 				
 				final Chart2D chart = component.getChart();
 

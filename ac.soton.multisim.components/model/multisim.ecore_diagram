@@ -15,6 +15,14 @@
         <element xmi:type="ecore:EAttribute" href="multisim.ecore#//ComponentDiagram/stepSize"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_MD8L0TM8EeSN1--AivnKNQ"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_QneUUD9kEeSWJY07tR5eSg" type="3001">
+        <element xmi:type="ecore:EAttribute" href="multisim.ecore#//ComponentDiagram/arguments"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QneUUT9kEeSWJY07tR5eSg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_QtdAgD9kEeSWJY07tR5eSg" type="3001">
+        <element xmi:type="ecore:EAttribute" href="multisim.ecore#//ComponentDiagram/recordTrace"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QtdAgT9kEeSWJY07tR5eSg"/>
+      </children>
       <styles xmi:type="notation:SortingStyle" xmi:id="_KKJioSt7EeStS7QsMjaE4Q"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_KKJioit7EeStS7QsMjaE4Q"/>
     </children>
@@ -27,7 +35,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_KKJiqCt7EeStS7QsMjaE4Q"/>
     </children>
     <element xmi:type="ecore:EClass" href="multisim.ecore#//ComponentDiagram"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KKF4QSt7EeStS7QsMjaE4Q" x="459" y="27"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KKF4QSt7EeStS7QsMjaE4Q" x="459" y="9"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_KKJiqSt7EeStS7QsMjaE4Q" type="2001" fontName="Lucida Grande">
     <children xmi:type="notation:DecorationNode" xmi:id="_KKKJsCt7EeStS7QsMjaE4Q" type="5001"/>
@@ -282,6 +290,24 @@
     </children>
     <element xmi:type="ecore:EDataType" href="multisim.ecore#//ProBTrace"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KKYMJCt7EeStS7QsMjaE4Q" x="864" y="189"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_Lvat8EGNEeSsyuqzWIaVhw" type="2004" fontName="Lucida Grande">
+    <children xmi:type="notation:DecorationNode" xmi:id="_Lvb8EEGNEeSsyuqzWIaVhw" type="5004"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_LvcjIEGNEeSsyuqzWIaVhw" type="7010">
+      <styles xmi:type="notation:SortingStyle" xmi:id="_LvcjIUGNEeSsyuqzWIaVhw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_LvcjIkGNEeSsyuqzWIaVhw"/>
+    </children>
+    <element xmi:type="ecore:EDataType" href="multisim.ecore#//SimulationException"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Lvat8UGNEeSsyuqzWIaVhw" x="743" y="59"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_NVQqYEGNEeSsyuqzWIaVhw" type="2004" fontName="Lucida Grande">
+    <children xmi:type="notation:DecorationNode" xmi:id="_NVQqYkGNEeSsyuqzWIaVhw" type="5004"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_NVRRcEGNEeSsyuqzWIaVhw" type="7010">
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NVRRcUGNEeSsyuqzWIaVhw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NVRRckGNEeSsyuqzWIaVhw"/>
+    </children>
+    <element xmi:type="ecore:EDataType" href="multisim.ecore#//ModelException"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NVQqYUGNEeSsyuqzWIaVhw" x="745" y="111"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_KECTkSt7EeStS7QsMjaE4Q"/>
   <element xmi:type="ecore:EPackage" href="multisim.ecore#/"/>

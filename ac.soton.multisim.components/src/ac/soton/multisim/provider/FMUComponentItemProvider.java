@@ -245,7 +245,6 @@ public class FMUComponentItemProvider
 		switch (notification.getFeatureID(FMUComponent.class)) {
 			case MultisimPackage.FMU_COMPONENT__STEP_PERIOD:
 			case MultisimPackage.FMU_COMPONENT__PATH:
-			case MultisimPackage.FMU_COMPONENT__FMU:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.FMU_COMPONENT__INPUTS:

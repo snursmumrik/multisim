@@ -11,12 +11,14 @@ package ac.soton.multisim.util;
 
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.ITrace2D;
+
 import java.awt.Color;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 import org.eventb.emf.core.machine.Parameter;
+
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;

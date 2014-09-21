@@ -25,6 +25,9 @@ import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.Port;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
+import ac.soton.multisim.util.SimulationStatus;
 
 /**
  * Master algorithm for FMU-EventB co-simulation.
@@ -34,10 +37,8 @@ import ac.soton.multisim.Port;
  */
 public class TwoListMaster {
 
-	/**
-	 * 
-	 */
 	private static final String PLUGIN_ID = "ac.soton.multisim.components.master";
+	
 	// simulation parameter names
 	public static final String OUTPUT_SEPARATOR = ",";
 	public static final String PARAMETER_START_TIME = "parameter.startTime";
@@ -62,15 +63,15 @@ public class TwoListMaster {
 	/**
 	 * Simulate a diagram.
 	 * @param cd
-	 * @param monitor 
-	 * @param params 
-	 * @return 
+	 * @param monitor
+	 * @param params
+	 * @return
 	 */
 	public static IStatus simulate(ComponentDiagram cd, IProgressMonitor monitor, Map<String, String> params) {
 		diagram = cd;
-		tStart = Integer.parseInt(params.get(PARAMETER_START_TIME));
-		tStop = Integer.parseInt(params.get(PARAMETER_STOP_TIME));
-		step = Integer.parseInt(params.get(PARAMETER_STEP_SIZE));
+		tStart = diagram.getStartTime();
+		tStop = diagram.getStopTime();
+		step = diagram.getStepSize();
 		resultFile = new File(params.get(PARAMETER_OUTPUT_FILE));
 		updateList.clear();
 		evaluationList.clear();
@@ -78,63 +79,67 @@ public class TwoListMaster {
 		IStatus status = Status.OK_STATUS;
 		long simulationTime = System.currentTimeMillis();
 		
-		// instantiate components
-			for (Component c : diagram.getComponents())
-				c.instantiate();
-		
 		// create output file
 		resultWriter = apiCreateOutput((File) resultFile);
 		if (resultWriter == null) {
-			return new Status(IStatus.ERROR, PLUGIN_ID, "Failed to create an output file.");
+			return SimulationStatus.createErrorStatus("Simulation terminated.\nReason: Cannot create an output file.");
 		}
 		
-		// initialisation step
-		for (Component c : diagram.getComponents()) {
-			c.initialise(tStart, tStop);
-			// time-zero initialisation
-			updateList.put(c, tStart);
-		}
-		
-		// header output
-		apiOutputColumns(diagram, resultWriter);
-
-		// simulation loop
-		for (tCurrent = tStart; tCurrent <= tStop; ++tCurrent) {
-			if (monitor.isCanceled()) {
-				status = Status.CANCEL_STATUS;
-				break;
-			}
+		try {
+			// instantiate components
+			for (Component c : diagram.getComponents())
+				c.instantiate();
 			
-			// read update list for evaluation-ready components
+			// initialisation step
 			for (Component c : diagram.getComponents()) {
-				if (tCurrent == updateList.get(c))
-					evaluationList.add(c);
+				c.initialise(tStart, tStop);
+				// time-zero initialisation
+				updateList.put(c, tStart);
 			}
 			
-			if (evaluationList.isEmpty())
-				continue;
-			
-			// only simulate components in evaluation list
-			// read port values
-			for (Component c : evaluationList)
-					c.writeOutputs();
-			
-			// write port values
-			for (Component c : evaluationList)
-					c.readInputs();
-			
-			// do step & update the update list
-			for (Component c : evaluationList) {
-					cStep = c.getStepPeriod() == 0 ? step : c.getStepPeriod();
-					c.doStep(tCurrent, cStep);
-					updateList.put(c, updateList.get(c) + cStep);
+			// header output
+			apiOutputColumns(diagram, resultWriter);
+	
+			// simulation loop
+			for (tCurrent = tStart; tCurrent <= tStop; ++tCurrent) {
+				if (monitor.isCanceled()) {
+					status = Status.CANCEL_STATUS;
+					break;
 				}
-			
-			// clear evaluation list
-			evaluationList.clear();
-			
-			// write output
-			apiOutput(diagram, tCurrent, resultWriter);
+				
+				// read update list for evaluation-ready components
+				for (Component c : diagram.getComponents()) {
+					if (tCurrent == updateList.get(c))
+						evaluationList.add(c);
+				}
+				
+				if (evaluationList.isEmpty())
+					continue;
+				
+				// only simulate components in evaluation list
+				// read port values
+				for (Component c : evaluationList)
+						c.writeOutputs();
+				
+				// write port values
+				for (Component c : evaluationList)
+						c.readInputs();
+				
+				// do step & update the update list
+				for (Component c : evaluationList) {
+						cStep = c.getStepPeriod() == 0 ? step : c.getStepPeriod();
+						c.doStep(tCurrent, cStep);
+						updateList.put(c, updateList.get(c) + cStep);
+					}
+				
+				// clear evaluation list
+				evaluationList.clear();
+				
+				// write output
+				apiOutput(diagram, tCurrent, resultWriter);
+			}
+		} catch (SimulationException | ModelException e) {
+			status = SimulationStatus.createErrorStatus("Simulation terminated.", e);
 		}
 
 		// termination step
@@ -150,7 +155,7 @@ public class TwoListMaster {
 		}
 		
 		if (status.getSeverity() == Status.OK)
-			status = new Status(IStatus.OK, PLUGIN_ID, "Completed in " + (System.currentTimeMillis() - simulationTime) + "ms");
+			status = SimulationStatus.createOKStatus("Completed in " + (System.currentTimeMillis() - simulationTime) + "ms");
 		
 		return status;
 	}
