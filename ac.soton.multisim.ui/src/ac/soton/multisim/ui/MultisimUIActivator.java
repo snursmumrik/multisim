@@ -25,16 +25,26 @@ public class MultisimUIActivator extends AbstractUIPlugin {
 	// The shared instance
 	private static MultisimUIActivator plugin;
 	
-	// Multisim job icon
-    public static final String IMAGE_MULTISIM = "image.multisim";
+	// images
+    public static final String IMAGE_MULTISIM = "icons/Multisim.png";
+	public static final String EVENTB_COMPONENT_IMAGE = "icons/EventBComponent_big.png";
 
+	@Override
     protected void initializeImageRegistry(ImageRegistry registry) {
-       Bundle bundle = Platform.getBundle(PLUGIN_ID);
-       IPath path = new Path("icons/Multisim.png");
-       URL url = FileLocator.find(bundle, path, null);
-       ImageDescriptor desc = ImageDescriptor.createFromURL(url);
-       registry.put(IMAGE_MULTISIM, desc);
+       loadImage(registry, IMAGE_MULTISIM);
+//       loadImage(registry, EVENTB_COMPONENT_IMAGE);
     }
+    
+	protected void loadImage(ImageRegistry registry, String id) {
+		loadImage(registry, id, getBundle().getSymbolicName());
+	}
+
+	protected void loadImage(ImageRegistry registry, String id, String bundleId) {
+		ImageDescriptor descriptor = imageDescriptorFromPlugin(bundleId, id);
+		if (descriptor != null) {
+			registry.put(id, descriptor);
+		}
+	}
 	
 	/**
 	 * The constructor

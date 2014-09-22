@@ -10,7 +10,8 @@ Bundle-Localization: plugin
 Export-Package: ac.soton.multisim.diagram.edit.parts,
  ac.soton.multisim.diagram.navigator,
  ac.soton.multisim.diagram.part,
- ac.soton.multisim.diagram.providers
+ ac.soton.multisim.diagram.providers,
+ ac.soton.multisim.diagram.sheet.custom.common
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.core.expressions,

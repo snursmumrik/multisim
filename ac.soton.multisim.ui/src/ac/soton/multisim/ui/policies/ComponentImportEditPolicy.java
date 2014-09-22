@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditDomain;
@@ -33,6 +34,12 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eventb.core.IEventBRoot;
 import org.eventb.core.basis.MachineRoot;
 import org.eventb.emf.core.AbstractExtension;
@@ -48,7 +55,6 @@ import org.rodinp.core.RodinCore;
 
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
-import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUPort;
 import ac.soton.multisim.MultisimFactory;
@@ -56,6 +62,7 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.diagram.part.MultisimPaletteFactory;
+import ac.soton.multisim.ui.wizards.pages.EventBImportWizard;
 import ac.soton.multisim.util.SimulationUtil;
 
 /**
@@ -110,7 +117,6 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 		
 		private static final String MACHINE_EXTENSION = "bum";
 		private static final String FMU_EXTENSION = "fmu";
-		private static final int DEFAULT_STEP = 1000;
 		
 		private Object importedObject;
 		private ObjectAdapter adapter;
@@ -141,19 +147,24 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 			
 			// get component from input
 			if (importedObject instanceof File) {
-				component = createFMUComponent((File) importedObject);
+				component = importFMUComponent((File) importedObject);
 			} else if (importedObject instanceof Component) {
 				component = (Component) EcoreUtil.copy((Component) importedObject);
 			} else if (importedObject instanceof MachineRoot) {
 				IEventBRoot root = (IEventBRoot) importedObject;
 				EventBElement machine = EMFRodinDB.INSTANCE.loadEventBComponent(root);
+				
+				// check if already defined in machine
 				for (AbstractExtension extension : machine.getExtensions()) {
 					if (MultisimPackage.EXTENSION_ID.equals(extension.getExtensionId())) {
 						component = (Component) EcoreUtil.copy(extension);
 					}
 				}
+				
 				if (component == null) {
-					component = createEventBComponent((Machine) machine);
+					component = importEventBComponent((Machine) machine);
+					if (component == null)
+						return CommandResult.newCancelledCommandResult();
 				}
 			} 
 			
@@ -167,24 +178,54 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 			MultisimPaletteFactory paletteFactory = new MultisimPaletteFactory();
 			EditDomain ed = containerEP.getViewer().getEditDomain();
 			paletteFactory.addToPalette(ed.getPaletteViewer().getPaletteRoot(), component);
+			
 			return CommandResult.newOKCommandResult(new EObjectAdapter(component));
 		}
 		
-		private Component createEventBComponent(Machine machine) {
-			EventBComponent component = MultisimFactory.eINSTANCE.createEventBComponent();
-			component.setName(machine.getName());
-			component.setMachine(machine);
-			component.setStepPeriod(DEFAULT_STEP);
-			return component;
+		/**
+		 * Imports Event-B component from a Machine.
+		 * 
+		 * @param machine
+		 * @return
+		 */
+		private Component importEventBComponent(Machine machine) {
+			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+			EventBImportWizard wiz = new EventBImportWizard(machine);
+			wiz.init(PlatformUI.getWorkbench(), null);
+			WizardDialog wd = new WizardDialog(shell, wiz);
+			wd.create();
+			
+			Rectangle mb = shell.getMonitor().getClientArea();
+			Point dpi = shell.getDisplay().getDPI();
+			if (Platform.OS_MACOSX.equals(Platform.getOS())) {
+				dpi = new Point(110, 110); // OSX DPI is always 72; 110 is a common value for modern LCD screens
+			}
+			int width = dpi.x * 5;
+			int height = dpi.y * 5;
+			int x = mb.x + (mb.width - width) / 2;
+			if (x < mb.x) {
+				x = mb.x;
+			}
+			int y = mb.y + (mb.height - height) / 2;
+			if (y < mb.y) {
+				y = mb.y;
+			}
+			wd.getShell().setLocation(x, y);
+			wd.getShell().setSize(width, height);
+			
+			if (wd.open() != Window.OK)
+				return null;
+			
+			return wiz.getComponent();
 		}
 
 		/**
-		 * Creates an FMU component from a system File.
+		 * Imports FMU component from a system File.
 		 * 
 		 * @param fmuFile
 		 * @return
 		 */
-		private Component createFMUComponent(File fmuFile) {
+		private Component importFMUComponent(File fmuFile) {
 			FMIModelDescription modelDescription;
 			try {
 				modelDescription = FMUFile.parseFMUFile(fmuFile.getAbsolutePath());
