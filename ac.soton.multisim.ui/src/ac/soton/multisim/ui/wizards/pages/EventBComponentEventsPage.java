@@ -58,7 +58,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	public void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
-		layout.marginWidth = layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
 		composite.setLayout(layout);
 
 		Composite group = fillLayoutComposite(new Composite(composite, SWT.NULL));
@@ -81,14 +82,14 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	private void addValidators() {
 		stepPeriodValidator = new DecoratedInputValidator(
 				DecoratedInputValidator.createDecorator(stepPeriodText,
-						"Please enter simulation step period (ms)",
+						"Please enter simulation step size (ms)",
 						FieldDecorationRegistry.DEC_ERROR, false)) {
 			@Override
 			public String isValidInput(String timeString) {
 				try {
 					long input = Integer.parseInt(timeString);
 					if (input <= 0)
-						return "Simulation step period must be greater that zero";
+						return "Simulation step size must be greater that zero";
 				} catch (NumberFormatException e) {
 					return "Invalid number format";
 				}

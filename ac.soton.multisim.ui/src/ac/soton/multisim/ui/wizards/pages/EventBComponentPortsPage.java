@@ -50,8 +50,8 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 		Composite composite = fillLayoutComposite(new Composite(parent, SWT.NULL));
 		
 		// input and output port tables
-		inputsViewer = createLabeledEditableTable(composite, "Input:", "Add/Remove input ports", createPortColumnProviders(), null);
-		outputsViewer = createLabeledEditableTable(composite, "Output:", "Add/Remove output ports", createPortColumnProviders(), null);
+		inputsViewer = createLabeledEditableTable(composite, "Input ports:", "Add/Remove input ports", createPortColumnProviders(VariableCausality.INPUT), null);
+		outputsViewer = createLabeledEditableTable(composite, "Output ports:", "Add/Remove output ports", createPortColumnProviders(VariableCausality.OUTPUT), null);
 		createDialogProviders();
 		
 		setControl(composite);
@@ -73,11 +73,11 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 	}
 
 	/**
-	 * Creates a list of column providers for the port definition tables (both input and output).
-	 * 
+	 * Creates a list of column providers for the port definition tables.
+	 * @param causality 
 	 * @return list of column providers
 	 */
-	private List<ColumnProvider> createPortColumnProviders() {
+	private List<ColumnProvider> createPortColumnProviders(VariableCausality causality) {
 		ArrayList<ColumnProvider> providers = new ArrayList<ColumnProvider>();
 		providers.add(new ColumnProvider("Name", 200, new ColumnLabelProvider() {
 			@Override
@@ -89,6 +89,19 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			public String getText(Object element) {
 				return ((EventBPort) element).getType().toString();
 			}}));
+		if (causality == VariableCausality.INPUT) {
+			providers.add(new ColumnProvider("Parameter", 130, new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					return ((EventBPort) element).getParameter().getName();
+				}}));
+		} else if (causality == VariableCausality.OUTPUT) {
+			providers.add(new ColumnProvider("Variable", 130, new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					return ((EventBPort) element).getVariable().getName();
+				}}));
+		}
 		return providers;
 	}
 	

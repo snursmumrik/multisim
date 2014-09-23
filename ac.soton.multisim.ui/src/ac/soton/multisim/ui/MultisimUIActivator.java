@@ -1,17 +1,10 @@
 package ac.soton.multisim.ui;
 
-import java.net.URL;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -27,12 +20,10 @@ public class MultisimUIActivator extends AbstractUIPlugin {
 	
 	// images
     public static final String IMAGE_MULTISIM = "icons/Multisim.png";
-	public static final String EVENTB_COMPONENT_IMAGE = "icons/EventBComponent_big.png";
 
 	@Override
     protected void initializeImageRegistry(ImageRegistry registry) {
        loadImage(registry, IMAGE_MULTISIM);
-//       loadImage(registry, EVENTB_COMPONENT_IMAGE);
     }
     
 	protected void loadImage(ImageRegistry registry, String id) {

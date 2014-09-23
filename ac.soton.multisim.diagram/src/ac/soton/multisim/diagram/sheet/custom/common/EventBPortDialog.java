@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.machine.Parameter;
@@ -50,6 +51,7 @@ import ac.soton.multisim.VariableType;
  */
 public class EventBPortDialog extends SelectionDialog {
 
+	private Text nameText;
 	private Combo typeCombo;
 	private Combo elementCombo;
 	private Spinner precisionSpinner;
@@ -90,10 +92,17 @@ public class EventBPortDialog extends SelectionDialog {
 		plate.setLayout(layout);
 		plate.setText("Event-B port attributes");
 		
+		// name text
+		Label label = new Label(plate, SWT.NONE);
+		label.setText("Name:");
+		nameText = new Text(plate, SWT.SINGLE | SWT.BORDER);
+		nameText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
+		nameText.setToolTipText("Enter port name or leave empty for the default");
+		
 		// event parameter combo
-		String label = causality == VariableCausality.INPUT ? "Parameter:" : "Variable:";
+		String comboLabel = causality == VariableCausality.INPUT ? "Parameter:" : "Variable:";
 		if (elementMap != null) {
-			elementCombo = createCombo(plate, label, elementMap, new SelectionAdapter() {
+			elementCombo = createCombo(plate, comboLabel, elementMap, new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					validateParameter();
@@ -102,8 +111,8 @@ public class EventBPortDialog extends SelectionDialog {
 		}
 		
 		// type label and combo
-		Label typeLabel = new Label(plate, SWT.NONE);
-		typeLabel.setText("Type:");
+		label = new Label(plate, SWT.NONE);
+		label.setText("Type:");
 		typeCombo = new Combo(plate, SWT.DROP_DOWN | SWT.READ_ONLY);
 		typeCombo.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		typeCombo.setToolTipText("Select a type of the signal");
@@ -124,8 +133,8 @@ public class EventBPortDialog extends SelectionDialog {
 		}
 		
 		// int to real precision spinner/label
-		Label precisionLabel = new Label(plate, SWT.NONE);
-		precisionLabel.setText("Precision:");
+		label = new Label(plate, SWT.NONE);
+		label.setText("Precision:");
 		precisionSpinner = new Spinner (plate, SWT.BORDER);
 		precisionSpinner.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		precisionSpinner.setToolTipText("Set a multiplier for converting FMI Real type to Event-B Integer and back");
@@ -229,9 +238,12 @@ public class EventBPortDialog extends SelectionDialog {
 		String typeStr = typeCombo.getItem(typeCombo.getSelectionIndex());
 		String elementStr = elementCombo.getItem(elementCombo.getSelectionIndex());
 		EventBNamed element = elementMap.get(elementStr);
+		String name = nameText.getText();
+		if (name == null || name.trim().isEmpty())
+			name = element.getName();
 		
 		port = MultisimFactory.eINSTANCE.createEventBPort();
-		port.setName(element.getName());
+		port.setName(name);
 		port.setType(VariableType.getByName(typeStr));
 		port.setCausality(causality);
 		port.setIntToReal(precisionSpinner.getSelection());

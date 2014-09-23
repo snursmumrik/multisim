@@ -76,19 +76,16 @@ public class EditableTableViewerContainer extends TableViewerContainer {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// remember selection
-				int idx = tableViewer.getTable().getSelectionIndex();
-				
-				// select elements to add
 				SelectionDialog selectionDialog = getSelectionDialog();
-//				eventsDialog.setTitle(machine.getName() + " Events");
-//				eventsDialog.setMessage("Please select events for this transition to elaborate");
 				if (Dialog.OK == selectionDialog.open()) {
 					Object[] result = selectionDialog.getResult();
 					if (result != null) {
 						List<Object> newElements = new ArrayList<Object>();
 						for (Object obj : result)
 							newElements.add(obj);
+
+						// remember selection
+						int idx = tableViewer.getTable().getSelectionIndex();
 						
 						Object input = tableViewer.getInput();
 						((List<Object>) input).addAll(newElements);
@@ -250,7 +247,7 @@ public class EditableTableViewerContainer extends TableViewerContainer {
 		this.enabled = enabled;
 		tableViewer.getTable().setEnabled(enabled);
 		addButton.setEnabled(enabled);
-		removeButton.setEnabled(enabled);
+		removeButton.setEnabled(enabled && tableViewer.getTable().getSelectionIndex() >= 0);
 	}
 
 	/**

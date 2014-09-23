@@ -52,6 +52,9 @@ import ac.soton.multisim.util.SimulationUtil;
 import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
+import de.be4.ltl.core.parser.LtlParseException;
+import de.prob.animator.command.ExecuteUntilCommand;
+import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.OpInfo;
@@ -556,7 +559,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		
 		// no reads are enabled
 		if (readOps.isEmpty())
-			throw new ModelException("No read events enabled in '" + getLabel() + "'");
+			throw new ModelException("No read events enabled in '" + getName() + "'");
 		
 		// execute read event
 		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
@@ -595,6 +598,19 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		Set<OpInfo> ops = null;
 		OpInfo nextOp = null;
 		boolean wait = false;
+		
+//		try {
+//			StateSpace stateSpace = trace.getStateSpace();
+//			LTL condition = new LTL("F [wait]");
+//			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
+//			stateSpace.execute(command);
+////			trace = command.getTrace(stateSpace);	// create a new trace
+//			trace = trace.addOps(command.getNewTransitions()); // or add to an existing trace
+//		} catch (LtlParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		while (!wait) {
 			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
 			

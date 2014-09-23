@@ -15,7 +15,6 @@ import org.eventb.emf.core.machine.Machine;
 
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.MultisimFactory;
-import ac.soton.multisim.ui.MultisimUIActivator;
 
 /**
  * Component import wizard that allows to import and configure Event-B component.
@@ -47,6 +46,8 @@ public class EventBImportWizard extends Wizard implements IImportWizard {
 
 	@Override
 	public boolean performFinish() {
+		if (component.getReadInputEvents().isEmpty())
+			component.getInputs().clear();
 		return true;
 	}
 
@@ -61,13 +62,11 @@ public class EventBImportWizard extends Wizard implements IImportWizard {
 		eventsPage = new EventBComponentEventsPage("EventBComponentParamDefinitionPage", component);
 		eventsPage.setTitle("Parameters and Events");
 		eventsPage.setDescription("Specify simulation step size and I/O events");
-		eventsPage.setImageDescriptor(MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_MULTISIM));
 		addPage(eventsPage);
 		
 		portsPage = new EventBComponentPortsPage("EventBComponentVariableDefinitionPage", component);
 		portsPage.setTitle("Ports");
 		portsPage.setDescription("Specify input and output ports for data exchange");
-		portsPage.setImageDescriptor(MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_MULTISIM));
 		addPage(portsPage);
 	}
 
