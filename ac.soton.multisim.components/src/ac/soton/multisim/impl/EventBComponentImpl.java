@@ -52,9 +52,6 @@ import ac.soton.multisim.util.SimulationUtil;
 import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
-import de.be4.ltl.core.parser.LtlParseException;
-import de.prob.animator.command.ExecuteUntilCommand;
-import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.OpInfo;
@@ -438,7 +435,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
-			throw new SimulationException("Cannot load machine component '" + getLabel()
+			throw new SimulationException("Cannot load machine '" + getMachine().getName() + "' of component '" + getName()
 					+ "'\nReason: Machine root cannot be determined.");
 		}
 		
@@ -507,7 +504,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
 		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
-			throw new SimulationException("Cannot initialise component '" + getLabel()
+			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: $initialise_machine operation not found.");
 		
 		return SimulationStatus.OK_STATUS;
@@ -552,7 +549,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				// no operation found -> proceed
 			} catch (BException e) {
 				// BException, i.e. ProB failed
-				throw new SimulationException("Cannot read inputs of component '" + getLabel() + "'\n" +
+				throw new SimulationException("Cannot read inputs of component '" + getName() + "'\n" +
 						"Reason: ProB failed to find enabled read event '" + re.getName() + "[" + predicateStr + "]'", e);
 			}
 		}
@@ -580,7 +577,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			assert p instanceof EventBPort && ((EventBPort) p).getVariable() != null;
 			
 			p.setValue(SimulationUtil.getFMIValue(
-					(String) state.value(p.getName()), 
+					(String) state.value(((EventBPort) p).getVariable().getName()), 
 					p.getType(), 
 					((EventBPort) p).getIntToReal()));
 		}
@@ -616,7 +613,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			
 			// check deadlock
 			if (ops == null || ops.isEmpty())
-				throw new ModelException("Deadlock in '" + getLabel() + "'");
+				throw new ModelException("Deadlock in '" + getName() + "'");
 			
 			// find next op
 			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
@@ -652,7 +649,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// save trace
 		if (((ComponentDiagram) eContainer()).isRecordTrace()) {
 			String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
-					+ "_" + getLabel() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
+					+ "_" + getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
 			trace.toString();	//XXX has to be called to fix the serialisation bug
 			TraceConverter.save(trace, traceFilePath);
 		}

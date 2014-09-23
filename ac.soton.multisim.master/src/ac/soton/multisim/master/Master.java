@@ -15,7 +15,6 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;

@@ -34,7 +34,6 @@ import org.eclipse.ui.services.ISourceProviderService;
 
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.diagram.part.ValidateAction;
-import ac.soton.multisim.master.Master;
 import ac.soton.multisim.master.TwoListMaster;
 import ac.soton.multisim.ui.MultisimUIActivator;
 import ac.soton.multisim.ui.dialogs.SimulationSettingsDialog;
