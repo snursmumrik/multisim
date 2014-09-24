@@ -130,7 +130,7 @@ public class MultisimModelingAssistantProviderOfFMUOutputPortEditPart extends
 	public List<IElementType> doGetRelTypesOnTarget(FMUOutputPortEditPart target) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		// remove incoming handle
-//		types.add(MultisimElementTypes.PortOut_4001);
+		//		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 

@@ -456,7 +456,7 @@
         itemSemanticEditPolicyClassName="DisplayComponentDisplayCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="DisplayComponentDisplayCompartmentViewFactory"
         canonicalEditPolicyClassName="DisplayComponentDisplayCompartmentCanonicalEditPolicy"
-        title="DisplayCompartment"
+        title=""
         needsTitle="false"
         node="//@diagram/@topLevelNodes.0">
       <diagramRunTimeClass
@@ -476,7 +476,7 @@
         itemSemanticEditPolicyClassName="FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="FMUComponentFMUVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="FMUComponentFMUVariablesCompartmentCanonicalEditPolicy"
-        title="FMUVariablesCompartment"
+        title=""
         needsTitle="false"
         node="//@diagram/@topLevelNodes.1">
       <diagramRunTimeClass
@@ -496,7 +496,7 @@
         itemSemanticEditPolicyClassName="EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="EventBComponentEventBVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="EventBComponentEventBVariablesCompartmentCanonicalEditPolicy"
-        title="EventBVariablesCompartment"
+        title=""
         needsTitle="false"
         node="//@diagram/@topLevelNodes.2">
       <diagramRunTimeClass
@@ -515,40 +515,10 @@
           title="Components">
         <entries
             xsi:type="gmfgen:ToolEntry"
-            title="FMU Component"
-            description="Create new FMU component"
-            smallIconPath="/ac.soton.multisim/icons/custom/FMUComponent.gif"
-            genNodes="//@diagram/@topLevelNodes.1"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Event-B Component"
-            description="Create new Event-B component"
-            smallIconPath="/ac.soton.multisim/icons/custom/EventBComponent.gif"
-            genNodes="//@diagram/@topLevelNodes.2"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Display Component"
-            description="Create new Display component"
+            title="Display"
+            description="Create new plotting Display"
             smallIconPath="/ac.soton.multisim/icons/custom/DisplayComponent.gif"
             genNodes="//@diagram/@topLevelNodes.0"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Input Port"
-            description="Create new Input Port"
-            smallIconPath="/ac.soton.multisim/icons/custom/InputPort.gif"
-            genNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.3"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Output Port"
-            description="Create new Output Port"
-            smallIconPath="/ac.soton.multisim/icons/custom/OutputPort.gif"
-            genNodes="//@diagram/@childNodes.2 //@diagram/@childNodes.4"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Connector"
-            description="Create new Connector"
-            smallIconPath="/ac.soton.multisim/icons/custom/Connector.gif"
-            genLinks="//@diagram/@links.0"/>
       </groups>
     </palette>
     <preferencePages

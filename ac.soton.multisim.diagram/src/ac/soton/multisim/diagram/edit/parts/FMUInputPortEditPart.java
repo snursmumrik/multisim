@@ -240,13 +240,13 @@ public class FMUInputPortEditPart extends AbstractBorderItemEditPart {
 	public boolean canAttachNote() {
 		return false;
 	}
-	
+
 	/**
 	 * Mouse-over instant feedback label.
 	 * @custom
 	 */
 	private Label feedbackFigure;
-	
+
 	/* (non-Javadoc)
 	 * @custom
 	 */

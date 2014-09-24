@@ -245,62 +245,12 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String FMUComponent1CreationTool_title;
+	public static String Display1CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String FMUComponent1CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String EventBComponent2CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String EventBComponent2CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String DisplayComponent3CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String DisplayComponent3CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String InputPort4CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String InputPort4CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String OutputPort5CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String OutputPort5CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Connector6CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Connector6CreationTool_desc;
+	public static String Display1CreationTool_desc;
 
 	/**
 	 * @generated

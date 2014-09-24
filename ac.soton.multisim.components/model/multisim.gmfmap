@@ -14,7 +14,7 @@
           href="multisim.ecore#//DisplayComponent"/>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="multisim.gmftool#//@palette/@tools.0/@tools.2"/>
+          href="multisim.gmftool#//@palette/@tools.0/@tools.0"/>
       <diagramNode
           href="multisim.gmfgraph#DisplayComponent"/>
       <children>
@@ -36,9 +36,6 @@
                   body="VariableCausality::Input"/>
             </initializers>
           </domainInitializer>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="multisim.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="multisim.gmfgraph#InputPort"/>
         </ownedChild>
@@ -62,9 +59,6 @@
         <features
             href="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed/name"/>
       </labelMappings>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="multisim.gmftool#//@palette/@tools.0/@tools.0"/>
       <diagramNode
           href="multisim.gmfgraph#FMUComponent"/>
       <children>
@@ -86,9 +80,6 @@
                   body="VariableCausality::Input"/>
             </initializers>
           </domainInitializer>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="multisim.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="multisim.gmfgraph#InputPort"/>
         </ownedChild>
@@ -112,9 +103,6 @@
                   body="VariableCausality::Output"/>
             </initializers>
           </domainInitializer>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="multisim.gmftool#//@palette/@tools.0/@tools.4"/>
           <diagramNode
               href="multisim.gmfgraph#OutputPort"/>
         </ownedChild>
@@ -138,9 +126,6 @@
         <features
             href="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed/name"/>
       </labelMappings>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="multisim.gmftool#//@palette/@tools.0/@tools.1"/>
       <diagramNode
           href="multisim.gmfgraph#EventBComponent"/>
       <children>
@@ -162,9 +147,6 @@
                   body="VariableCausality::Input"/>
             </initializers>
           </domainInitializer>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="multisim.gmftool#//@palette/@tools.0/@tools.3"/>
           <diagramNode
               href="multisim.gmfgraph#InputPort"/>
         </ownedChild>
@@ -188,9 +170,6 @@
                   body="VariableCausality::Output"/>
             </initializers>
           </domainInitializer>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="multisim.gmftool#//@palette/@tools.0/@tools.4"/>
           <diagramNode
               href="multisim.gmfgraph#OutputPort"/>
         </ownedChild>
@@ -202,9 +181,6 @@
     </ownedChild>
   </nodes>
   <links>
-    <tool
-        xsi:type="gmftool:CreationTool"
-        href="multisim.gmftool#//@palette/@tools.0/@tools.5"/>
     <diagramLink
         href="multisim.gmfgraph#Connector"/>
     <linkMetaFeature

@@ -46,7 +46,7 @@ public class MultisimModelingAssistantProviderOfFMUInputPortEditPart extends
 	public List<IElementType> doGetRelTypesOnSource(FMUInputPortEditPart source) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		// remove outgoing handle
-//		types.add(MultisimElementTypes.PortOut_4001);
+		//		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 

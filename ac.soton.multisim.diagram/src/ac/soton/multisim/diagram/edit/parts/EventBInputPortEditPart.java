@@ -246,7 +246,7 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 	 * @custom
 	 */
 	private Label feedbackFigure;
-	
+
 	/* (non-Javadoc)
 	 * @custom
 	 */

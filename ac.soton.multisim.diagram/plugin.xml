@@ -191,7 +191,7 @@ http://www.eclipse.org/legal/epl-v10.html
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
-      <?gmfgen generated="true"?>
+      <?gmfgen generated="false"?>
       <propertyContributor
             contributorId="ac.soton.multisim.diagram"
             labelProvider="ac.soton.multisim.diagram.sheet.MultisimSheetLabelProvider">
@@ -203,7 +203,7 @@ http://www.eclipse.org/legal/epl-v10.html
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
-      <?gmfgen generated="true"?>   
+      <?gmfgen generated="false"?>   
       <propertyTabs contributorId="ac.soton.multisim.diagram">
          <propertyTab
              category="visual"
@@ -259,7 +259,7 @@ http://www.eclipse.org/legal/epl-v10.html
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
-      <?gmfgen generated="true"?>   
+      <?gmfgen generated="false"?>   
       <propertySections contributorId="ac.soton.multisim.diagram">
          <propertySection id="property.section.ConnectorAppearancePropertySection" 
             filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 

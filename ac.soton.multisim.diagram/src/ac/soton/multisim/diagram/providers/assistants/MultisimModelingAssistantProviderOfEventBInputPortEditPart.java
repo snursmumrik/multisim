@@ -47,7 +47,7 @@ public class MultisimModelingAssistantProviderOfEventBInputPortEditPart extends
 			EventBInputPortEditPart source) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		// commented to remove the output connection handle
-//		types.add(MultisimElementTypes.PortOut_4001);
+		//		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
 	}
 

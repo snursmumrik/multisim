@@ -406,5 +406,5 @@ public class FMUComponentEditPart extends AbstractBorderedShapeEditPart {
 	public boolean canAttachNote() {
 		return false;
 	}
-	
+
 }

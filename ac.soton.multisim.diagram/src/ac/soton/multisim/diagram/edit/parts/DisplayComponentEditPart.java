@@ -364,5 +364,5 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 	public boolean canAttachNote() {
 		return false;
 	}
-	
+
 }

@@ -234,5 +234,5 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 	public boolean canAttachNote() {
 		return false;
 	}
-	
+
 }

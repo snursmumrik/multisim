@@ -343,11 +343,13 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 								.nativeToJava(data);
 					}
 				});
-		
+
 		// populate the palette with existing components
 		MultisimPaletteFactory paletteFactory = new MultisimPaletteFactory();
-		PaletteRoot paletteRoot = getDiagramGraphicalViewer().getEditDomain().getPaletteViewer().getPaletteRoot();
-		ComponentDiagram diagram = (ComponentDiagram) getDiagramEditPart().resolveSemanticElement();
+		PaletteRoot paletteRoot = getDiagramGraphicalViewer().getEditDomain()
+				.getPaletteViewer().getPaletteRoot();
+		ComponentDiagram diagram = (ComponentDiagram) getDiagramEditPart()
+				.resolveSemanticElement();
 		for (Component component : diagram.getComponents()) {
 			paletteFactory.addToPalette(paletteRoot, component);
 		}
@@ -377,17 +379,21 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 				//XXX skip multiple selection
 				if (selection.size() > 1)
 					return null;
-				
+
 				Object selectedObject = selection.getFirstElement();
 				if (selectedObject instanceof IFile) {
-					if (FMU_EXTENSION.equals(((IFile) selectedObject).getFileExtension()) ||
-							MACHINE_EXTENSION.equals(((IFile) selectedObject).getFileExtension())) {
+					if (FMU_EXTENSION.equals(((IFile) selectedObject)
+							.getFileExtension())
+							|| MACHINE_EXTENSION
+									.equals(((IFile) selectedObject)
+											.getFileExtension())) {
 						return Collections.singletonList(selectedObject);
 					}
 				} else if (selectedObject instanceof IMachineRoot) {
 					return Collections.singletonList(selectedObject);
 				} else if (selectedObject instanceof MultisimNavigatorItem) {
-					View view = ((MultisimNavigatorItem) selectedObject).getView();
+					View view = ((MultisimNavigatorItem) selectedObject)
+							.getView();
 					selectedObject = view.getElement();
 				} else if (selectedObject instanceof IAdaptable) {
 					IAdaptable adaptable = (IAdaptable) selectedObject;
@@ -400,7 +406,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 				}
 			} else if (transferedObject instanceof String[]) {
 				String[] paths = (String[]) transferedObject;
-				if (paths.length == 1 && paths[0].endsWith("."+FMU_EXTENSION)) {
+				if (paths.length == 1 && paths[0].endsWith("." + FMU_EXTENSION)) {
 					return Collections.singletonList(new File(paths[0]));
 				}
 			}

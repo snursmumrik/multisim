@@ -50,11 +50,13 @@ public class MultisimPaletteFactory {
 	public void addToPalette(PaletteRoot paletteRoot, Component component) {
 		PaletteGroup importedGroup = null;
 		for (Object child : paletteRoot.getChildren()) {
-			if (child instanceof PaletteGroup && "importedComponentsGroup".equals(((PaletteGroup) child).getId())) {
+			if (child instanceof PaletteGroup
+					&& "importedComponentsGroup".equals(((PaletteGroup) child)
+							.getId())) {
 				importedGroup = (PaletteGroup) child;
 				break;
 			}
- 		}
+		}
 		if (importedGroup == null) {
 			importedGroup = new PaletteGroup("Imported") {
 				Set<String> importedIDs = new HashSet<>();
@@ -65,26 +67,30 @@ public class MultisimPaletteFactory {
 						super.add(entry);
 						importedIDs.add(entry.getId());
 					}
-				}};
+				}
+			};
 			importedGroup.setId("importedComponentsGroup");
-			paletteRoot.add(new PaletteSeparator());
+			//			paletteRoot.add(new PaletteSeparator());
 			paletteRoot.add(importedGroup);
 		}
 		String id = null;
 		ImageDescriptor imageDescriptor = null;
 		if (component instanceof EventBComponent) {
 			id = ((EventBComponent) component).getReference();
-			imageDescriptor = MultisimDiagramEditorPlugin.findImageDescriptor("/ac.soton.multisim/icons/custom/EventBComponent.gif");
+			imageDescriptor = MultisimDiagramEditorPlugin
+					.findImageDescriptor("/ac.soton.multisim/icons/custom/EventBComponent.gif");
 		} else if (component instanceof FMUComponent) {
 			id = ((FMUComponent) component).getPath();
-			imageDescriptor = MultisimDiagramEditorPlugin.findImageDescriptor("/ac.soton.multisim/icons/custom/FMUComponent.gif");
+			imageDescriptor = MultisimDiagramEditorPlugin
+					.findImageDescriptor("/ac.soton.multisim/icons/custom/FMUComponent.gif");
 		}
-		
+
 		if (id == null)
 			return;
-		
+
 		//XXX creates element copy so that it is not affected by the original
-		PaletteEntry entry = createComponentInstantiationTool(EcoreUtil.copy(component), imageDescriptor);
+		PaletteEntry entry = createComponentInstantiationTool(
+				EcoreUtil.copy(component), imageDescriptor);
 		entry.setId(id);
 		importedGroup.add(entry);
 	}
@@ -95,8 +101,11 @@ public class MultisimPaletteFactory {
 	 * @return
 	 * @custom
 	 */
-	private PaletteEntry createComponentInstantiationTool(Component component, ImageDescriptor imageDescriptor) {
-		InstantiateComponentTool cit = new InstantiateComponentTool(component.getName(), "Instantiate component "+component.getName(), null, component);
+	private PaletteEntry createComponentInstantiationTool(Component component,
+			ImageDescriptor imageDescriptor) {
+		InstantiateComponentTool cit = new InstantiateComponentTool(
+				component.getName(), "Instantiate component "
+						+ component.getName(), null, component);
 
 		cit.setToolProperty("comp", component);
 		cit.setSmallIcon(imageDescriptor);
@@ -112,109 +121,22 @@ public class MultisimPaletteFactory {
 		PaletteGroup paletteContainer = new PaletteGroup(
 				Messages.Components1Group_title);
 		paletteContainer.setId("createComponents1Group"); //$NON-NLS-1$
-		paletteContainer.add(createFMUComponent1CreationTool());
-		paletteContainer.add(createEventBComponent2CreationTool());
-		paletteContainer.add(createDisplayComponent3CreationTool());
-		paletteContainer.add(createInputPort4CreationTool());
-		paletteContainer.add(createOutputPort5CreationTool());
-		paletteContainer.add(createConnector6CreationTool());
+		paletteContainer.add(createDisplay1CreationTool());
 		return paletteContainer;
 	}
 
 	/**
 	 * @generated
 	 */
-	private ToolEntry createFMUComponent1CreationTool() {
+	private ToolEntry createDisplay1CreationTool() {
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.FMUComponent1CreationTool_title,
-				Messages.FMUComponent1CreationTool_desc,
-				Collections
-						.singletonList(MultisimElementTypes.FMUComponent_2005));
-		entry.setId("createFMUComponent1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(MultisimDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.multisim/icons/custom/FMUComponent.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createEventBComponent2CreationTool() {
-		NodeToolEntry entry = new NodeToolEntry(
-				Messages.EventBComponent2CreationTool_title,
-				Messages.EventBComponent2CreationTool_desc,
-				Collections
-						.singletonList(MultisimElementTypes.EventBComponent_2006));
-		entry.setId("createEventBComponent2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(MultisimDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.multisim/icons/custom/EventBComponent.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createDisplayComponent3CreationTool() {
-		NodeToolEntry entry = new NodeToolEntry(
-				Messages.DisplayComponent3CreationTool_title,
-				Messages.DisplayComponent3CreationTool_desc,
+				Messages.Display1CreationTool_title,
+				Messages.Display1CreationTool_desc,
 				Collections
 						.singletonList(MultisimElementTypes.DisplayComponent_2004));
-		entry.setId("createDisplayComponent3CreationTool"); //$NON-NLS-1$
+		entry.setId("createDisplay1CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(MultisimDiagramEditorPlugin
 				.findImageDescriptor("/ac.soton.multisim/icons/custom/DisplayComponent.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createInputPort4CreationTool() {
-		ArrayList<IElementType> types = new ArrayList<IElementType>(3);
-		types.add(MultisimElementTypes.DisplayPort_3001);
-		types.add(MultisimElementTypes.FMUPort_3002);
-		types.add(MultisimElementTypes.EventBPort_3005);
-		NodeToolEntry entry = new NodeToolEntry(
-				Messages.InputPort4CreationTool_title,
-				Messages.InputPort4CreationTool_desc, types);
-		entry.setId("createInputPort4CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(MultisimDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.multisim/icons/custom/InputPort.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createOutputPort5CreationTool() {
-		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-		types.add(MultisimElementTypes.FMUPort_3003);
-		types.add(MultisimElementTypes.EventBPort_3006);
-		NodeToolEntry entry = new NodeToolEntry(
-				Messages.OutputPort5CreationTool_title,
-				Messages.OutputPort5CreationTool_desc, types);
-		entry.setId("createOutputPort5CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(MultisimDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.multisim/icons/custom/OutputPort.gif")); //$NON-NLS-1$
-		entry.setLargeIcon(entry.getSmallIcon());
-		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private ToolEntry createConnector6CreationTool() {
-		LinkToolEntry entry = new LinkToolEntry(
-				Messages.Connector6CreationTool_title,
-				Messages.Connector6CreationTool_desc,
-				Collections.singletonList(MultisimElementTypes.PortOut_4001));
-		entry.setId("createConnector6CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(MultisimDiagramEditorPlugin
-				.findImageDescriptor("/ac.soton.multisim/icons/custom/Connector.gif")); //$NON-NLS-1$
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -243,35 +165,6 @@ public class MultisimPaletteFactory {
 		 */
 		public Tool createTool() {
 			Tool tool = new UnspecifiedTypeCreationTool(elementTypes);
-			tool.setProperties(getToolProperties());
-			return tool;
-		}
-	}
-
-	/**
-	 * @generated
-	 */
-	private static class LinkToolEntry extends ToolEntry {
-
-		/**
-		 * @generated
-		 */
-		private final List<IElementType> relationshipTypes;
-
-		/**
-		 * @generated
-		 */
-		private LinkToolEntry(String title, String description,
-				List<IElementType> relationshipTypes) {
-			super(title, description, null, null);
-			this.relationshipTypes = relationshipTypes;
-		}
-
-		/**
-		 * @generated
-		 */
-		public Tool createTool() {
-			Tool tool = new UnspecifiedTypeConnectionTool(relationshipTypes);
 			tool.setProperties(getToolProperties());
 			return tool;
 		}
