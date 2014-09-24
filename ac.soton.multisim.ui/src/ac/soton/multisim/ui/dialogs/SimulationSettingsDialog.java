@@ -174,6 +174,7 @@ public class SimulationSettingsDialog extends Dialog {
 		gc.dispose();
 		argsText.setLayoutData(layoutData);
 		argsText.setToolTipText(ARGS_TOOLTIP);
+		argsText.setText(args);
 
 		// record checkbox
 		recordTracesCheck = new Button(composite, SWT.CHECK);

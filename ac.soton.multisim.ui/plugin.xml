@@ -85,6 +85,27 @@
                id="FMUOutputPortEditPart">
          </object>
       </editpolicyProvider>
+      <editpolicyProvider
+            class="ac.soton.multisim.ui.providers.PopupBarEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <context
+               editparts="ComponentDiagramEditPart,EventBComponentEditPart,FMUComponentEditPart">
+         </context>
+         <object
+               class="ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart(ac.soton.multisim.diagram)"
+               id="ComponentDiagramEditPart">
+         </object>
+         <object
+               class="ac.soton.multisim.diagram.edit.parts.DisplayComponentEditPart(ac.soton.multisim.diagram)"
+               id="DisplayComponentEditPart">
+         </object>
+         <object
+               class="ac.soton.multisim.diagram.edit.parts.FMUComponentEditPart(ac.soton.multisim.diagram)"
+               id="FMUComponentEditPart">
+         </object>
+      </editpolicyProvider>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">

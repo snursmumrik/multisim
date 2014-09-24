@@ -453,7 +453,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			try {
 				for (int i=0; i< argArray.length; i++) {
 					String[] arg = argArray[i].split("=");
-					params.put(arg[0], argArray[1]);
+					params.put(arg[0], arg[1]);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				throw new SimulationException("ProB parameter format is invalid");

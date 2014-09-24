@@ -139,7 +139,7 @@ public class TwoListMaster {
 				apiOutput(diagram, tCurrent, resultWriter);
 			}
 		} catch (SimulationException | ModelException e) {
-			status = SimulationStatus.createErrorStatus("Simulation terminated.", e);
+			status = SimulationStatus.createErrorStatus("Simulation terminated.\n" + e.getMessage(), e);
 		}
 
 		// termination step
