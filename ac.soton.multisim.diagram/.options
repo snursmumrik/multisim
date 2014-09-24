@@ -1,0 +1,7 @@
+# Tracing options for the ac.soton.multisim.diagram plug-in
+
+# Common issues
+ac.soton.multisim.diagram/debug=false
+
+# Visual IDs
+ac.soton.multisim.diagram/debug/visualID=false
