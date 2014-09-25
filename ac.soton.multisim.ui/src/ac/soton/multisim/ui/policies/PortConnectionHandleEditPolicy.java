@@ -25,17 +25,29 @@ public final class PortConnectionHandleEditPolicy extends
 	@Override
 	protected ConnectionHandleLocator getConnectionHandleLocator(
 			Point referencePoint) {
-		Rectangle bounds = getHostFigure().getBounds();
+		Rectangle componentBounds = ((GraphicalEditPart) getHost().getParent()).getFigure().getBounds();
+		Rectangle portBounds = getHostFigure().getBounds();
+		Point portCentre = portBounds.getCenter();
+		
 		Point position;
-		Point portLocation = bounds.getCenter();
-		Point componentLocation = ((GraphicalEditPart) getHost().getParent()).getFigure().getBounds().getCenter();
-		switch (componentLocation.getPosition(portLocation)) {
-		case PositionConstants.NORTH: position = bounds.getTop(); break;
-		case PositionConstants.SOUTH: position = bounds.getBottom(); break;
-		case PositionConstants.EAST: position = bounds.getRight(); break;
-		case PositionConstants.WEST: position = bounds.getLeft(); break;
+		switch (componentBounds.getCenter().getPosition(portCentre)) {
+		case PositionConstants.NORTH: position = portBounds.getTop(); break;
+		case PositionConstants.SOUTH: position = portBounds.getBottom(); break;
+		case PositionConstants.EAST: position = portBounds.getRight(); break;
+		case PositionConstants.WEST: position = portBounds.getLeft(); break;
 		default: position = referencePoint;
 		}
+		
+//		if (componentBounds.getLeft().getPosition(portCentre) == PositionConstants.WEST)
+//			position = portBounds.getLeft();
+//		else if (componentBounds.getRight().getPosition(portCentre) == PositionConstants.EAST)
+//			position = portBounds.getRight();
+//		else if (componentBounds.getTop().getPosition(portCentre) == PositionConstants.NORTH)
+//			position = portBounds.getTop();
+//		else if (componentBounds.getBottom().getPosition(portCentre) == PositionConstants.SOUTH)
+//			position = portBounds.getBottom();
+//		else
+//			position = referencePoint;
 		return new ConnectionHandleLocator(getHostFigure(), position);
 	}
 }

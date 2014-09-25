@@ -52,6 +52,9 @@ import ac.soton.multisim.util.SimulationUtil;
 import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
+import de.be4.ltl.core.parser.LtlParseException;
+import de.prob.animator.command.ExecuteUntilCommand;
+import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.AnimationSelector;
@@ -597,39 +600,41 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		OpInfo nextOp = null;
 		boolean wait = false;
 		
-//		try {
-//			StateSpace stateSpace = trace.getStateSpace();
-//			LTL condition = new LTL("F [wait]");
-//			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
-//			stateSpace.execute(command);
-////			trace = command.getTrace(stateSpace);	// create a new trace
+		try {
+			StateSpace stateSpace = trace.getStateSpace();
+			LTL condition = new LTL("F Y [wait]");
+			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
+			stateSpace.execute(command);
+			trace = command.getTrace(stateSpace);	// create a new trace
 //			trace = trace.addOps(command.getNewTransitions()); // or add to an existing trace
-//		} catch (LtlParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		while (!wait) {
-			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
-			
-			// check deadlock
-			if (ops == null || ops.isEmpty())
-				throw new ModelException("Deadlock in '" + getName() + "'");
-			
-			// find next op
-			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
-			
-			// check if wait and read
-			assert nextOp.getName() != null;
-			if (waitSet.contains(nextOp.getName())) {
-				wait = true;
-				if (readSet.contains(nextOp.getName()))
-					break;
-			}
-			
-			// execute
-			trace = trace.add(nextOp.getId());
+			stateSpace.explore(command.getFinalState());
+//			trace = trace.back();
+		} catch (LtlParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+//		while (!wait) {
+//			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
+//			
+//			// check deadlock
+//			if (ops == null || ops.isEmpty())
+//				throw new ModelException("Deadlock in '" + getName() + "'");
+//			
+//			// find next op
+//			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
+//			
+//			// check if wait and read
+//			assert nextOp.getName() != null;
+//			if (waitSet.contains(nextOp.getName())) {
+//				wait = true;
+//				if (readSet.contains(nextOp.getName()))
+//					break;
+//			}
+//			
+//			// execute
+//			trace = trace.add(nextOp.getId());
+//		}
 
 		return SimulationStatus.OK_STATUS;
 	}
