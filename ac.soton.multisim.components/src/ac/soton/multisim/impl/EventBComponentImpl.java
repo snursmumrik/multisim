@@ -54,6 +54,7 @@ import com.google.inject.Injector;
 import de.be4.classicalb.core.parser.exceptions.BException;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
+import de.prob.statespace.AnimationSelector;
 import de.prob.statespace.OpInfo;
 import de.prob.statespace.StateId;
 import de.prob.statespace.StateSpace;
@@ -654,10 +655,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			TraceConverter.save(trace, traceFilePath);
 		}
 
-//		// show in ProB
-//		Injector injector = ServletContextListener.INJECTOR;
-//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-//		selector.addNewAnimation(trace);
+		// show in ProB
+		Injector injector = ServletContextListener.INJECTOR;
+		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+		selector.addNewAnimation(trace);
 		
 		trace = null;
 		System.gc();
