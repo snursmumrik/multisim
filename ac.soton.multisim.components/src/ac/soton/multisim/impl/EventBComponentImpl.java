@@ -87,6 +87,22 @@ import de.prob.webconsole.ServletContextListener;
  * @generated
  */
 public class EventBComponentImpl extends AbstractExtensionImpl implements EventBComponent {
+	private static final String INIT = "$initialise_machine";
+
+	private static final String TT = "TRUE=TRUE";
+
+	private static final String EQ = "=";
+
+	private static final String AND = "&";
+
+	private static final String LTL_END = ")";
+
+	private static final String LTL_OR = "or[";
+
+	private static final String LTL_RBRACKET = "]";
+
+	private static final String LTL_START = "F Y ([";
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,6 +247,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	private StringBuilder ltl = new StringBuilder();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -456,7 +473,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			String[] argArray = args.split(",");
 			try {
 				for (int i=0; i< argArray.length; i++) {
-					String[] arg = argArray[i].split("=");
+					String[] arg = argArray[i].split(EQ);
 					params.put(arg[0], arg[1]);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -476,14 +493,22 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		System.gc();
 		
 		// recall events for doStep matching
-		if (!readSet.isEmpty())
-			readSet.clear();
-		if (!waitSet.isEmpty())
-			waitSet.clear();
-		for (Event re : getReadInputEvents())
-			readSet.add(re.getName());
-		for (Event we : getWaitEvents())
-			waitSet.add(we.getName());
+//		if (!readSet.isEmpty())
+//			readSet.clear();
+//		if (!waitSet.isEmpty())
+//			waitSet.clear();
+//		for (Event re : getReadInputEvents())
+//			readSet.add(re.getName());
+//		for (Event we : getWaitEvents())
+//			waitSet.add(we.getName());
+		
+		if (ltl.length() > 0)
+			ltl.setLength(0);
+		EList<Event> waits = getWaitEvents();
+		ltl.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
+		for (int i=1; i<waits.size(); i++)
+			ltl.append(" or [").append(waits.get(i).getName()).append(LTL_RBRACKET);
+		ltl.append(LTL_END);
 
 		// disable notification for modifying output ports
 		// so that using EMF transactions is not required
@@ -505,9 +530,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
 		assert trace.getCurrent().getOp().getName() != null;
-		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
-		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: $initialise_machine operation not found.");
 		
@@ -530,7 +555,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			return SimulationStatus.OK_STATUS;
 		
 		// build parameter predicate for event execution
-		StringBuilder predicate = new StringBuilder("TRUE=TRUE");
+		StringBuilder predicate = new StringBuilder(TT);
 		for (Port p : getInputs()) {
 			// if port not connected, let ProB to pick the value non-deterministically
 			if (p.getIn() == null)
@@ -540,7 +565,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			assert p.getIn().getValue() != null;
 
 			// add parameter to event predicate string
-			predicate.append("&" + ((EventBPort) p).getParameter().getName() + "=" + SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
+			predicate.append(AND)
+				.append(((EventBPort) p).getParameter().getName())
+				.append(EQ)
+				.append(SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
 		}
 		
 		// find enabled read event
@@ -596,13 +624,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus doStep(int time, int step) throws ModelException {
-		Set<OpInfo> ops = null;
-		OpInfo nextOp = null;
-		boolean wait = false;
+//		Set<OpInfo> ops = null;
+//		OpInfo nextOp = null;
+//		boolean wait = false;
 		
 		try {
 			StateSpace stateSpace = trace.getStateSpace();
-			LTL condition = new LTL("F Y [wait]");
+			LTL condition = new LTL("F Y ([wait] or [wait2])");
 			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
 			stateSpace.execute(command);
 			trace = command.getTrace(stateSpace);	// create a new trace
