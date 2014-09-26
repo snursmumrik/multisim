@@ -8,6 +8,7 @@
 package ac.soton.multisim.diagram.edit.parts;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PositionConstants;
@@ -280,6 +281,22 @@ public class FMUInputPortEditPart extends AbstractBorderItemEditPart {
 			layer.remove(feedbackFigure);
 		}
 		feedbackFigure = null;
+	}
+
+	/* Defaults the anchor to the centre of the figure.
+	 * @custom
+	 */
+	@Override
+	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
+		return getNodeFigure().getConnectionAnchor(NodeFigure.getDefaultAnchorID());
+	}
+
+	/* Defaults the anchor to the centre of the figure.
+	 * @custom
+	 */
+	@Override
+	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
+		return getNodeFigure().getConnectionAnchor(NodeFigure.getDefaultAnchorID());
 	}
 
 }
