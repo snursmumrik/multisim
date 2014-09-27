@@ -119,23 +119,25 @@ public class TwoListMaster {
 				// only simulate components in evaluation list
 				// read port values
 				for (Component c : evaluationList)
-						c.writeOutputs();
+					c.writeOutputs();
 				
 				// write port values
 				for (Component c : evaluationList)
-						c.readInputs();
+					c.readInputs();
 				
 				// do step & update the update list
 				for (Component c : evaluationList) {
-						cStep = c.getStepPeriod() == 0 ? step : c.getStepPeriod();
+					cStep = c.getStepPeriod() == 0 ? step : c.getStepPeriod();
+					if (tCurrent + cStep <= tStop) {
 						c.doStep(tCurrent, cStep);
 						updateList.put(c, updateList.get(c) + cStep);
 					}
+				}
 				
 				// clear evaluation list
 				evaluationList.clear();
 				
-				// write output
+				// write file output
 				apiOutput(diagram, tCurrent, resultWriter);
 			}
 		} catch (SimulationException | ModelException e) {

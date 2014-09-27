@@ -52,8 +52,12 @@ import ac.soton.multisim.util.SimulationUtil;
 import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
+import de.be4.ltl.core.parser.LtlParseException;
+import de.prob.animator.command.ExecuteUntilCommand;
+import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
+import de.prob.statespace.AnimationSelector;
 import de.prob.statespace.OpInfo;
 import de.prob.statespace.StateId;
 import de.prob.statespace.StateSpace;
@@ -83,6 +87,20 @@ import de.prob.webconsole.ServletContextListener;
  * @generated
  */
 public class EventBComponentImpl extends AbstractExtensionImpl implements EventBComponent {
+	
+	/**
+	 * Event-B expression constants.
+	 * @custom
+	 */
+	private static final String INIT = "$initialise_machine";
+	private static final String TT = "TRUE=TRUE";
+	private static final String EQ = "=";
+	private static final String AND = "&";
+	private static final String LTL_END = ")";
+	private static final String LTL_OR = "or[";
+	private static final String LTL_RBRACKET = "]";
+	private static final String LTL_START = "F Y ([";
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -227,6 +245,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	private StringBuilder ltl = new StringBuilder();
+	private StringBuilder readInputPredicate = new StringBuilder();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -452,7 +472,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			String[] argArray = args.split(",");
 			try {
 				for (int i=0; i< argArray.length; i++) {
-					String[] arg = argArray[i].split("=");
+					String[] arg = argArray[i].split(EQ);
 					params.put(arg[0], arg[1]);
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -480,6 +500,14 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			readSet.add(re.getName());
 		for (Event we : getWaitEvents())
 			waitSet.add(we.getName());
+		
+//		if (ltl.length() > 0)
+//			ltl.setLength(0);
+//		EList<Event> waits = getWaitEvents();
+//		ltl.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
+//		for (int i=1; i<waits.size(); i++)
+//			ltl.append(" or [").append(waits.get(i).getName()).append(LTL_RBRACKET);
+//		ltl.append(LTL_END);
 
 		// disable notification for modifying output ports
 		// so that using EMF transactions is not required
@@ -501,9 +529,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
 		assert trace.getCurrent().getOp().getName() != null;
-		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
-		if (!"$initialise_machine".equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: $initialise_machine operation not found.");
 		
@@ -526,7 +554,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			return SimulationStatus.OK_STATUS;
 		
 		// build parameter predicate for event execution
-		StringBuilder predicate = new StringBuilder("TRUE=TRUE");
+		readInputPredicate.setLength(0);
+		readInputPredicate.append(TT);
 		for (Port p : getInputs()) {
 			// if port not connected, let ProB to pick the value non-deterministically
 			if (p.getIn() == null)
@@ -536,12 +565,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			assert p.getIn().getValue() != null;
 
 			// add parameter to event predicate string
-			predicate.append("&" + ((EventBPort) p).getParameter().getName() + "=" + SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
+			readInputPredicate.append(AND)
+				.append(((EventBPort) p).getParameter().getName())
+				.append(EQ)
+				.append(SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
 		}
 		
 		// find enabled read event
 		List<OpInfo> readOps = new ArrayList<OpInfo>();
-		String predicateStr = predicate.toString();
+		String predicateStr = readInputPredicate.toString();
 		for (Event re : readEvents) {
 			try {
 				readOps.add(trace.findOneOp(re.getName(), predicateStr));
@@ -592,43 +624,65 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus doStep(int time, int step) throws ModelException {
+		// skip if current event already a 'wait' event
+		if (waitSet.contains(trace.getCurrent().getOp().getName()))
+			return SimulationStatus.OK_STATUS;
+		
 		Set<OpInfo> ops = null;
 		OpInfo nextOp = null;
 		boolean wait = false;
 		
 //		try {
 //			StateSpace stateSpace = trace.getStateSpace();
-//			LTL condition = new LTL("F [wait]");
+//			LTL condition = new LTL("F Y [wait]");
 //			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
 //			stateSpace.execute(command);
-////			trace = command.getTrace(stateSpace);	// create a new trace
-//			trace = trace.addOps(command.getNewTransitions()); // or add to an existing trace
+//			stateSpace.explore(command.getFinalState());
+//			trace = command.getTrace(stateSpace).back();	// create a new trace
+////			trace = trace.addOps(command.getNewTransitions()); // or add to an existing trace
+////			trace = trace.back();
 //		} catch (LtlParseException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 		
-		while (!wait) {
-			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
+//		while (!wait) {
+//			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
+//			
+//			// check deadlock
+//			if (ops == null || ops.isEmpty())
+//				throw new ModelException("Deadlock in '" + getName() + "'");
+//			
+//			// find next op
+//			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
+//			
+//			// check if wait and read
+//			assert nextOp.getName() != null;
+//			if (waitSet.contains(nextOp.getName())) {
+//				wait = true;
+//				if (readSet.contains(nextOp.getName()))
+//					break;
+//			}
+//			
+//			// execute
+//			trace = trace.add(nextOp.getId());
+//		}
+		
+		// version #2
+		int i = 0;
+		while (i < 1000) {
+			trace = trace.anyEvent(null);
+			//FIXME: if the wait is also a read, shouldn't be executed
+			if (waitSet.contains(trace.getCurrent().getOp().getName()))
+				break;
 			
-			// check deadlock
-			if (ops == null || ops.isEmpty())
+			if (trace.getNextTransitions().isEmpty())
 				throw new ModelException("Deadlock in '" + getName() + "'");
-			
-			// find next op
-			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
-			
-			// check if wait and read
-			assert nextOp.getName() != null;
-			if (waitSet.contains(nextOp.getName())) {
-				wait = true;
-				if (readSet.contains(nextOp.getName()))
-					break;
-			}
-			
-			// execute
-			trace = trace.add(nextOp.getId());
+			i++;
 		}
+		
+		if (i == 1000)
+			throw new ModelException("Potential infinite loop in doStep() of '" + getName() + "': Maximum number of 1000 events reached");
 
 		return SimulationStatus.OK_STATUS;
 	}
@@ -654,10 +708,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			TraceConverter.save(trace, traceFilePath);
 		}
 
-//		// show in ProB
-//		Injector injector = ServletContextListener.INJECTOR;
-//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-//		selector.addNewAnimation(trace);
+		// show in ProB
+		Injector injector = ServletContextListener.INJECTOR;
+		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+		selector.addNewAnimation(trace);
 		
 		trace = null;
 		System.gc();

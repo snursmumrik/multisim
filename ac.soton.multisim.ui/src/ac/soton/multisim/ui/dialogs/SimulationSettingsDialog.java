@@ -46,12 +46,13 @@ public class SimulationSettingsDialog extends Dialog {
 	private static final int START_DEFAULT = 0;
 	private static final int STOP_DEFAULT = 1000;
 	private static final int STEP_DEFAULT = 100;
+	private static final String ARGUMENTS_DEFAULT = "CLPFD=FALSE,MEMO=TRUE,MAX_OPERATIONS=1";
 	private static final String ARGS_TOOLTIP = "Comma-separated <argument>=<value>\nExamples:\n"+
 				"IGNORE_HASH_COLLISIONS=TRUE\n"+
 				"FORGET_STATE_SPACE=TRUE\nMEMO=TRUE\n"+	// storing statespace -  gains a bit of performance (but it could increase the memory footprint)
 				"TIME_OUT=4000\n"+
 				"COMPRESSION=TRUE\n" +
-				"CLPFD=TRUE\n" +
+				"CLPFD=FALSE\n" +
 				"MAX_OPERATIONS=1\n" +
 				"NUMBER_OF_ANIMATED_ABSTRACTIONS=1"; // only interested in seeing the variables at the lowest level of abstraction.
 	
@@ -97,7 +98,7 @@ public class SimulationSettingsDialog extends Dialog {
 		startTime = diagram.getStartTime() > 0 ? diagram.getStartTime() : START_DEFAULT;
 		stopTime = diagram.getStopTime() > 0 ? diagram.getStopTime() : STOP_DEFAULT;
 		stepSize = diagram.getStepSize() > 0 ? diagram.getStepSize() : STEP_DEFAULT;
-		args = diagram.getArguments();
+		args = diagram.getArguments() != null ? diagram.getArguments() : ARGUMENTS_DEFAULT;
 		record = diagram.isRecordTrace();
 		
 		startTimeValid = true;

@@ -17,7 +17,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditDomain;
@@ -36,7 +35,6 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -62,6 +60,7 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.diagram.part.MultisimPaletteFactory;
+import ac.soton.multisim.ui.DisplayUtil;
 import ac.soton.multisim.ui.wizards.pages.EventBImportWizard;
 import ac.soton.multisim.util.SimulationUtil;
 
@@ -76,7 +75,7 @@ import ac.soton.multisim.util.SimulationUtil;
  * @author vitaly
  *
  */
-public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
+public class ImportEditPolicy extends DiagramDragDropEditPolicy {
 
 	// dummy components for the initial value of an element adapter passed to a view request
 	private static final Object dummyEventBComponent = MultisimFactory.eINSTANCE.createEventBComponent();
@@ -195,23 +194,9 @@ public class ComponentImportEditPolicy extends DiagramDragDropEditPolicy {
 			WizardDialog wd = new WizardDialog(shell, wiz);
 			wd.create();
 			
-			Rectangle mb = shell.getMonitor().getClientArea();
-			Point dpi = shell.getDisplay().getDPI();
-			if (Platform.OS_MACOSX.equals(Platform.getOS())) {
-				dpi = new Point(110, 110); // OSX DPI is always 72; 110 is a common value for modern LCD screens
-			}
-			int width = dpi.x * 5;
-			int height = dpi.y * 5;
-			int x = mb.x + (mb.width - width) / 2;
-			if (x < mb.x) {
-				x = mb.x;
-			}
-			int y = mb.y + (mb.height - height) / 2;
-			if (y < mb.y) {
-				y = mb.y;
-			}
-			wd.getShell().setLocation(x, y);
-			wd.getShell().setSize(width, height);
+			Rectangle bounds = DisplayUtil.inchToDisplay(shell, 5, 5);
+			wd.getShell().setLocation(bounds.x, bounds.y);
+			wd.getShell().setSize(bounds.width, bounds.height);
 			
 			if (wd.open() != Window.OK)
 				return null;
