@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -242,7 +243,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @custom
 	 */
 	private Random random = new Random(System.currentTimeMillis());
-	private Set<String> readSet = new HashSet<String>();
 	private Set<String> waitSet = new HashSet<String>();
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	private StringBuilder ltl = new StringBuilder();
@@ -492,22 +492,18 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		System.gc();
 		
 		// recall events for doStep matching
-		if (!readSet.isEmpty())
-			readSet.clear();
 		if (!waitSet.isEmpty())
 			waitSet.clear();
-		for (Event re : getReadInputEvents())
-			readSet.add(re.getName());
 		for (Event we : getWaitEvents())
 			waitSet.add(we.getName());
 		
-//		if (ltl.length() > 0)
-//			ltl.setLength(0);
-//		EList<Event> waits = getWaitEvents();
-//		ltl.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
-//		for (int i=1; i<waits.size(); i++)
-//			ltl.append(" or [").append(waits.get(i).getName()).append(LTL_RBRACKET);
-//		ltl.append(LTL_END);
+		// 'wait' event enabledness LTL formula
+		ltl.setLength(0);
+		EList<Event> waits = getWaitEvents();
+		ltl.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
+		for (int i=1; i<waits.size(); i++)
+			ltl.append(LTL_OR).append(waits.get(i).getName()).append(LTL_RBRACKET);
+		ltl.append(LTL_END);
 
 		// disable notification for modifying output ports
 		// so that using EMF transactions is not required
@@ -621,68 +617,26 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @throws ModelException 
+	 * @throws SimulationException 
 	 * @generated NOT
 	 */
-	public IStatus doStep(int time, int step) throws ModelException {
-		// skip if current event already a 'wait' event
+	public IStatus doStep(int time, int step) throws ModelException, SimulationException {
+		// skip if current event is already a 'wait' event
 		if (waitSet.contains(trace.getCurrent().getOp().getName()))
 			return SimulationStatus.OK_STATUS;
 		
-		Set<OpInfo> ops = null;
-		OpInfo nextOp = null;
-		boolean wait = false;
-		
-//		try {
-//			StateSpace stateSpace = trace.getStateSpace();
-//			LTL condition = new LTL("F Y [wait]");
-//			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
-//			stateSpace.execute(command);
-//			stateSpace.explore(command.getFinalState());
-//			trace = command.getTrace(stateSpace).back();	// create a new trace
-////			trace = trace.addOps(command.getNewTransitions()); // or add to an existing trace
-////			trace = trace.back();
-//		} catch (LtlParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-//		while (!wait) {
-//			ops = trace.getStateSpace().evaluateOps(trace.getNextTransitions());
-//			
-//			// check deadlock
-//			if (ops == null || ops.isEmpty())
-//				throw new ModelException("Deadlock in '" + getName() + "'");
-//			
-//			// find next op
-//			nextOp = (OpInfo) ops.toArray()[random.nextInt(ops.size())];
-//			
-//			// check if wait and read
-//			assert nextOp.getName() != null;
-//			if (waitSet.contains(nextOp.getName())) {
-//				wait = true;
-//				if (readSet.contains(nextOp.getName()))
-//					break;
-//			}
-//			
-//			// execute
-//			trace = trace.add(nextOp.getId());
-//		}
-		
-		// version #2
-		int i = 0;
-		while (i < 1000) {
-			trace = trace.anyEvent(null);
-			//FIXME: if the wait is also a read, shouldn't be executed
-			if (waitSet.contains(trace.getCurrent().getOp().getName()))
-				break;
-			
-			if (trace.getNextTransitions().isEmpty())
-				throw new ModelException("Deadlock in '" + getName() + "'");
-			i++;
+		try {
+			StateSpace stateSpace = trace.getStateSpace();
+			LTL condition = new LTL(ltl.toString());
+			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
+			stateSpace.execute(command);
+			trace = trace.addOps(command.getNewTransitions());
+		} catch (LtlParseException e) {
+			throw new SimulationException("LTL parse failure '" + ltl.toString() + "'", e);
 		}
 		
-		if (i == 1000)
-			throw new ModelException("Potential infinite loop in doStep() of '" + getName() + "': Maximum number of 1000 events reached");
+		if (trace.getNextTransitions().isEmpty())
+			throw new ModelException("Deadlock in '" + getName() + "'");
 
 		return SimulationStatus.OK_STATUS;
 	}

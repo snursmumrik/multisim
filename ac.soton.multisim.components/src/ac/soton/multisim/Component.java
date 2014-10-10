@@ -141,10 +141,11 @@ public interface Component extends EventBNamed {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @throws ModelException 
+	 * @throws SimulationException 
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus doStep(int time, int step) throws ModelException;
+	IStatus doStep(int time, int step) throws ModelException, SimulationException;
 
 	/**
 	 * <!-- begin-user-doc -->

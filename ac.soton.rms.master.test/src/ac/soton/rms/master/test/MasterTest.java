@@ -39,15 +39,15 @@ import org.junit.Test;
 import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
 
-import ac.soton.rms.components.ComponentDiagram;
-import ac.soton.rms.components.ComponentsFactory;
-import ac.soton.rms.components.EventBComponent;
-import ac.soton.rms.components.EventBPort;
-import ac.soton.rms.components.FMUComponent;
-import ac.soton.rms.components.FMUPort;
-import ac.soton.rms.components.VariableCausality;
-import ac.soton.rms.components.VariableType;
-import ac.soton.rms.master.Master;
+import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.MultisimFactory;
+import ac.soton.multisim.EventBComponent;
+import ac.soton.multisim.EventBPort;
+import ac.soton.multisim.FMUComponent;
+import ac.soton.multisim.FMUPort;
+import ac.soton.multisim.VariableCausality;
+import ac.soton.multisim.VariableType;
+import ac.soton.multisim.master.Master;
 
 import com.google.inject.Injector;
 
@@ -138,14 +138,14 @@ public class MasterTest extends AbstractEventBTests {
 		Resource resource = rs.getResource(uri, true);
 		Machine m = (Machine) resource.getContents().get(0);
 
-		ComponentDiagram diagram = ComponentsFactory.eINSTANCE.createComponentDiagram();
+		ComponentDiagram diagram = MultisimFactory.eINSTANCE.createComponentDiagram();
 		
-		EventBComponent d1 = ComponentsFactory.eINSTANCE.createEventBComponent();
+		EventBComponent d1 = MultisimFactory.eINSTANCE.createEventBComponent();
 		d1.setMachine(m);
 		for (Event e : m.getEvents()) {
 			if (e.getName().equals("read")) {
 				d1.getReadInputEvents().add(e);
-				EventBPort u = ComponentsFactory.eINSTANCE.createEventBPort();
+				EventBPort u = MultisimFactory.eINSTANCE.createEventBPort();
 				u.setParameter(e.getParameters().get(0));
 				u.setType(VariableType.INTEGER);
 				u.setCausality(VariableCausality.INPUT);
@@ -154,7 +154,7 @@ public class MasterTest extends AbstractEventBTests {
 				d1.getWaitEvents().add(e);
 			}
 		}
-		EventBPort y = ComponentsFactory.eINSTANCE.createEventBPort();
+		EventBPort y = MultisimFactory.eINSTANCE.createEventBPort();
 		y.setVariable(m.getVariables().get(m.getVariables().get(0).getName().equals("y") ? 0 : 1));
 		y.setType(VariableType.INTEGER);
 		y.setCausality(VariableCausality.OUTPUT);
@@ -226,14 +226,14 @@ public class MasterTest extends AbstractEventBTests {
 		Resource resource = rs.getResource(uri, true);
 		Machine m = (Machine) resource.getContents().get(0);
 
-		ComponentDiagram diagram = ComponentsFactory.eINSTANCE.createComponentDiagram();
+		ComponentDiagram diagram = MultisimFactory.eINSTANCE.createComponentDiagram();
 		
-		EventBComponent de = ComponentsFactory.eINSTANCE.createEventBComponent();
+		EventBComponent de = MultisimFactory.eINSTANCE.createEventBComponent();
 		de.setMachine(m);
 		for (Event e : m.getEvents()) {
 			if (e.getName().equals("read")) {
 				de.getReadInputEvents().add(e);
-				EventBPort u = ComponentsFactory.eINSTANCE.createEventBPort();
+				EventBPort u = MultisimFactory.eINSTANCE.createEventBPort();
 				u.setParameter(e.getParameters().get(0));
 				u.setType(VariableType.INTEGER);
 				u.setCausality(VariableCausality.INPUT);
@@ -242,22 +242,22 @@ public class MasterTest extends AbstractEventBTests {
 				de.getWaitEvents().add(e);
 			}
 		}
-		EventBPort y = ComponentsFactory.eINSTANCE.createEventBPort();
+		EventBPort y = MultisimFactory.eINSTANCE.createEventBPort();
 		y.setVariable(m.getVariables().get(m.getVariables().get(0).getName().equals("y") ? 0 : 1));
 		y.setType(VariableType.INTEGER);
 		y.setCausality(VariableCausality.OUTPUT);
 		de.getOutputs().add(y);
 		de.setStepPeriod(3000);
 		
-		FMUComponent ct = ComponentsFactory.eINSTANCE.createFMUComponent();
+		FMUComponent ct = MultisimFactory.eINSTANCE.createFMUComponent();
 		ct.setName(CT_NAME+"1");
 		ct.setPath(fmuFile.getPath());
-		FMUPort uc = ComponentsFactory.eINSTANCE.createFMUPort();
+		FMUPort uc = MultisimFactory.eINSTANCE.createFMUPort();
 		uc.setCausality(VariableCausality.INPUT);
 		uc.setType(VariableType.INTEGER);
 		uc.setName("u");
 		ct.getInputs().add(uc);
-		FMUPort yc = ComponentsFactory.eINSTANCE.createFMUPort();
+		FMUPort yc = MultisimFactory.eINSTANCE.createFMUPort();
 		yc.setCausality(VariableCausality.OUTPUT);
 		yc.setType(VariableType.INTEGER);
 		yc.setName("y");
