@@ -9,16 +9,16 @@
  */
 package ac.soton.multisim.util;
 
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.ITrace2D;
-
 import java.awt.Color;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 import org.eventb.emf.core.machine.Parameter;
-
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
@@ -165,6 +164,10 @@ public class MultisimValidator extends EObjectValidator {
 				return validateColor((Color)value, diagnostics, context);
 			case MultisimPackage.PRO_BTRACE:
 				return validateProBTrace((Trace)value, diagnostics, context);
+			case MultisimPackage.SIMULATION_EXCEPTION:
+				return validateSimulationException((SimulationException)value, diagnostics, context);
+			case MultisimPackage.MODEL_EXCEPTION:
+				return validateModelException((ModelException)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -308,7 +311,7 @@ public class MultisimValidator extends EObjectValidator {
 	 */
 	public boolean validateEventBComponent_validMachineReference(EventBComponent eventBComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		Machine m = eventBComponent.getMachine();
-		//XXX null is checked by another validation constraint
+		//NOTE: null is checked by another validation constraint
 		if (m != null && m.eIsProxy()) {
 			if (diagnostics != null) {
 				diagnostics.add
@@ -346,14 +349,14 @@ public class MultisimValidator extends EObjectValidator {
 	/**
 	 * Validates the validPath constraint of '<em>FMU Component</em>'.
 	 * <!-- begin-user-doc -->
-	 * FMU path must point to an existing file.
+	 * FMU path must point to an existing .fmu file.
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public boolean validateFMUComponent_validPath(FMUComponent fmuComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		String path = fmuComponent.getPath();
-		//XXX null is checked by another rule
-		if (path != null && new File(path).exists() == false) {
+		//NOTE: null is checked by another rule
+		if (path != null && (path.endsWith(".fmu") == false || new File(path).exists() == false)) {
 			if (diagnostics != null) {
 				diagnostics.add
 					(new BasicDiagnostic
@@ -450,7 +453,32 @@ public class MultisimValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(fmuPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(fmuPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePort_compatibleType(fmuPort, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFMUPort_validFMUReference(fmuPort, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validFMUReference constraint of '<em>FMU Port</em>'.
+	 * <!-- begin-user-doc -->
+	 * FMU variable must have a valid FMU reference (name from the modelDescription.xml).
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateFMUPort_validFMUReference(FMUPort fmuPort, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		// TODO implement actual FMU reference validation
+		if (fmuPort.getName() == null) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(new BasicDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "Undefined name",	
+						 new Object[] { fmuPort }));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -481,15 +509,20 @@ public class MultisimValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateEventBPort_validEventBReference(EventBPort eventBPort, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		//TODO: cover type&reference combinations and set the error message accordingly
-		if (eventBPort.getParameter() == null && eventBPort.getVariable() == null) {
+		String errorText = null;
+		if (eventBPort.getCausality() == VariableCausality.INPUT && eventBPort.getParameter() == null)
+			errorText = "Undefined 'read' event parameter";
+		else if (eventBPort.getCausality() == VariableCausality.OUTPUT && eventBPort.getVariable() == null)
+			errorText = "Undefined machine variable";
+		
+		if (errorText != null) {
 			if (diagnostics != null) {
 				diagnostics.add
 					(new BasicDiagnostic
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "No variable or parameter is defined",	
+						 errorText,	
 						 new Object[] { eventBPort }));
 			}
 			return false;
@@ -619,6 +652,24 @@ public class MultisimValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateProBTrace(Trace proBTrace, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSimulationException(SimulationException simulationException, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateModelException(ModelException modelException, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
 

@@ -51,7 +51,9 @@ import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
 import de.be4.ltl.core.parser.LtlParseException;
+import de.prob.Main;
 import de.prob.animator.command.ExecuteUntilCommand;
+import de.prob.animator.domainobjects.EvalResult;
 import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
@@ -61,7 +63,6 @@ import de.prob.statespace.StateId;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 import de.prob.statespace.TraceConverter;
-import de.prob.webconsole.ServletContextListener;
 
 /**
  * <!-- begin-user-doc -->
@@ -463,6 +464,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			fileName = fileName.replace(".bum", ".bcm");
 		}
 
+		// parse ProB arguments
 		Map<String, String> params = new HashMap<String, String>();
 		String args = ((ComponentDiagram) eContainer()).getArguments();
 		if (args != null && !args.trim().isEmpty()) {
@@ -477,13 +479,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			}
 		}
 
-		Injector injector = ServletContextListener.INJECTOR;
+		// load a machine
+		Injector injector = Main.getInjector();
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
 		EventBModel model = instance.load(fileName, params, false);
 		if (model == null)
 			throw new SimulationException("ProB could not load machine file '" + fileName + "' with parameters=" + params.toString());
-		
-		StateSpace s = model.getStatespace();
+
+		// get a trace
+		StateSpace s = model.getStateSpace();
 		s.startTransaction();	// presumably putting everything into a transaction should make it perform faster
 		trace = new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
 		System.gc();
@@ -591,10 +595,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	public void writeOutputs() {
 		StateId state = trace.getCurrentState();
-		
 		for (Port p : getOutputs()) {
 			p.setValue(SimulationUtil.getFMIValue(
-					(String) state.value(((EventBPort) p).getVariable().getName()), 
+					((EvalResult) state.eval(((EventBPort) p).getVariable().getName())).getValue(), 
 					p.getType(), 
 					((EventBPort) p).getIntToReal()));
 		}
@@ -646,7 +649,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		}
 
 		// show in ProB
-		Injector injector = ServletContextListener.INJECTOR;
+		Injector injector = Main.getInjector();
 		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
 		selector.addNewAnimation(trace);
 		

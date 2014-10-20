@@ -115,8 +115,8 @@ public class DisplayPortImpl extends PortImpl implements DisplayPort {
 	public void setTrace(ITrace2D newTrace) {
 		ITrace2D oldTrace = trace;
 		trace = newTrace;
-//		if (eNotificationRequired())
-//			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.DISPLAY_PORT__TRACE, oldTrace, trace));
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.DISPLAY_PORT__TRACE, oldTrace, trace));
 	}
 
 	/**

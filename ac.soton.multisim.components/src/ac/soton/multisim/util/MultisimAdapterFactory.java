@@ -17,7 +17,6 @@ import org.eventb.emf.core.AbstractExtension;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.EventBObject;
-
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;

@@ -19,7 +19,7 @@ package ac.soton.multisim;
  *
  *
  * @see ac.soton.multisim.MultisimPackage#getFMUPort()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='validFMUReference'"
  * @generated
  */
 public interface FMUPort extends Port {

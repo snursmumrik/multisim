@@ -44,6 +44,8 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.VariableType;
+import ac.soton.multisim.exception.ModelException;
+import ac.soton.multisim.exception.SimulationException;
 import ac.soton.multisim.util.MultisimValidator;
 import de.prob.statespace.Trace;
 
@@ -193,6 +195,20 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * @generated
 	 */
 	private EDataType proBTraceEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType simulationExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType modelExceptionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -722,6 +738,24 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getSimulationException() {
+		return simulationExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getModelException() {
+		return modelExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MultisimFactory getMultisimFactory() {
 		return (MultisimFactory)getEFactoryInstance();
 	}
@@ -809,6 +843,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		chart2DEDataType = createEDataType(CHART2_D);
 		colorEDataType = createEDataType(COLOR);
 		proBTraceEDataType = createEDataType(PRO_BTRACE);
+		simulationExceptionEDataType = createEDataType(SIMULATION_EXCEPTION);
+		modelExceptionEDataType = createEDataType(MODEL_EXCEPTION);
 	}
 
 	/**
@@ -871,21 +907,28 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEReference(getComponent_Outputs(), this.getPort(), null, "outputs", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponent_StepPeriod(), ecorePackage.getEInt(), "stepPeriod", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(componentEClass, this.getIStatus(), "instantiate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(componentEClass, null, "instantiate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, this.getSimulationException());
+		addEException(op, this.getModelException());
 
-		EOperation op = addEOperation(componentEClass, this.getIStatus(), "initialise", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(componentEClass, null, "initialise", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEInt(), "tStart", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEInt(), "tStop", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, this.getSimulationException());
 
-		addEOperation(componentEClass, this.getIStatus(), "readInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(componentEClass, null, "readInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, this.getSimulationException());
+		addEException(op, this.getModelException());
 
-		addEOperation(componentEClass, this.getIStatus(), "writeOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(componentEClass, null, "writeOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(componentEClass, this.getIStatus(), "doStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(componentEClass, null, "doStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEInt(), "time", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEInt(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, this.getSimulationException());
+		addEException(op, this.getModelException());
 
-		addEOperation(componentEClass, this.getIStatus(), "terminate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(componentEClass, null, "terminate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(eventBComponentEClass, EventBComponent.class, "EventBComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventBComponent_Machine(), theMachinePackage.getMachine(), null, "machine", null, 1, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -947,6 +990,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEDataType(chart2DEDataType, Chart2D.class, "Chart2D", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(colorEDataType, Color.class, "Color", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(proBTraceEDataType, Trace.class, "ProBTrace", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(simulationExceptionEDataType, SimulationException.class, "SimulationException", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(modelExceptionEDataType, ModelException.class, "ModelException", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -991,6 +1036,12 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 			 "constraints", "compatibleType"
 		   });		
 		addAnnotation
+		  (fmuPortEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "validFMUReference"
+		   });		
+		addAnnotation
 		  (eventBPortEClass, 
 		   source, 
 		   new String[] {
@@ -1019,7 +1070,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		   },
 		   new URI[] {
 			 URI.createURI(CorePackage.eNS_URI).appendFragment("//machine/Machine")
-		   });					
+		   });						
 	}
 
 } //MultisimPackageImpl

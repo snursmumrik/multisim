@@ -102,9 +102,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws SimulationException 
-	 * @throws ModelException 
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model exceptions="ac.soton.multisim.SimulationException ac.soton.multisim.ModelException"
 	 * @generated
 	 */
 	void instantiate() throws SimulationException, ModelException;
@@ -112,8 +110,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws SimulationException 
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model exceptions="ac.soton.multisim.SimulationException"
 	 * @generated
 	 */
 	void initialise(int tStart, int tStop) throws SimulationException;
@@ -121,9 +118,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws SimulationException 
-	 * @throws ModelException 
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model exceptions="ac.soton.multisim.SimulationException ac.soton.multisim.ModelException"
 	 * @generated
 	 */
 	void readInputs() throws SimulationException, ModelException;
@@ -131,7 +126,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model
 	 * @generated
 	 */
 	void writeOutputs();
@@ -139,9 +134,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws ModelException 
-	 * @throws SimulationException 
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model exceptions="ac.soton.multisim.SimulationException ac.soton.multisim.ModelException"
 	 * @generated
 	 */
 	void doStep(int time, int step) throws ModelException, SimulationException;
@@ -149,7 +142,7 @@ public interface Component extends EventBNamed {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="ac.soton.multisim.IStatus"
+	 * @model
 	 * @generated
 	 */
 	void terminate();

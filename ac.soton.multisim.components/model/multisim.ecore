@@ -15,18 +15,18 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" interface="true"
       eSuperTypes="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed">
-    <eOperations name="instantiate" eType="#//IStatus"/>
-    <eOperations name="initialise" eType="#//IStatus">
+    <eOperations name="instantiate" eExceptions="#//SimulationException #//ModelException"/>
+    <eOperations name="initialise" eExceptions="#//SimulationException">
       <eParameters name="tStart" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
       <eParameters name="tStop" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
     </eOperations>
-    <eOperations name="readInputs" eType="#//IStatus"/>
-    <eOperations name="writeOutputs" eType="#//IStatus"/>
-    <eOperations name="doStep" eType="#//IStatus">
+    <eOperations name="readInputs" eExceptions="#//SimulationException #//ModelException"/>
+    <eOperations name="writeOutputs"/>
+    <eOperations name="doStep" eExceptions="#//SimulationException #//ModelException">
       <eParameters name="time" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
       <eParameters name="step" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
     </eOperations>
-    <eOperations name="terminate" eType="#//IStatus"/>
+    <eOperations name="terminate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
         eType="#//Port" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
@@ -90,7 +90,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FMUPort" eSuperTypes="#//Port">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="validFMUReference"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventBPort" eSuperTypes="#//Port">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="validEventBReference"/>
@@ -122,6 +126,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.awt.Color"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ProBTrace" instanceClassName="de.prob.statespace.Trace"
       serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="SimulationException" instanceClassName="ac.soton.multisim.exception.SimulationException"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="ModelException" instanceClassName="ac.soton.multisim.exception.ModelException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SimulationException" instanceClassName="ac.soton.multisim.exception.SimulationException"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ModelException" instanceClassName="ac.soton.multisim.exception.ModelException"
+      serializable="false"/>
 </ecore:EPackage>

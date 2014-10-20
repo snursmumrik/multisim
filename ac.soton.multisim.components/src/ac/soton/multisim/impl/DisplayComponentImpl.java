@@ -16,13 +16,11 @@ import info.monitorenter.gui.chart.ZoomableChart;
 import info.monitorenter.gui.chart.axis.AxisLinear;
 import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,7 +30,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
-
 import ac.soton.multisim.Component;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.DisplayPort;

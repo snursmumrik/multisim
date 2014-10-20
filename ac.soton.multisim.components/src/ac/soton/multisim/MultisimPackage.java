@@ -1133,6 +1133,26 @@ public interface MultisimPackage extends EPackage {
 	int PRO_BTRACE = 18;
 
 	/**
+	 * The meta object id for the '<em>Simulation Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see ac.soton.multisim.exception.SimulationException
+	 * @see ac.soton.multisim.impl.MultisimPackageImpl#getSimulationException()
+	 * @generated
+	 */
+	int SIMULATION_EXCEPTION = 19;
+
+	/**
+	 * The meta object id for the '<em>Model Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see ac.soton.multisim.exception.ModelException
+	 * @see ac.soton.multisim.impl.MultisimPackageImpl#getModelException()
+	 * @generated
+	 */
+	int MODEL_EXCEPTION = 20;
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.ComponentDiagram <em>Component Diagram</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1670,6 +1690,28 @@ public interface MultisimPackage extends EPackage {
 	EDataType getProBTrace();
 
 	/**
+	 * Returns the meta object for data type '{@link ac.soton.multisim.exception.SimulationException <em>Simulation Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Simulation Exception</em>'.
+	 * @see ac.soton.multisim.exception.SimulationException
+	 * @model instanceClass="ac.soton.multisim.exception.SimulationException" serializeable="false"
+	 * @generated
+	 */
+	EDataType getSimulationException();
+
+	/**
+	 * Returns the meta object for data type '{@link ac.soton.multisim.exception.ModelException <em>Model Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Model Exception</em>'.
+	 * @see ac.soton.multisim.exception.ModelException
+	 * @model instanceClass="ac.soton.multisim.exception.ModelException" serializeable="false"
+	 * @generated
+	 */
+	EDataType getModelException();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2128,6 +2170,26 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType PRO_BTRACE = eINSTANCE.getProBTrace();
+
+		/**
+		 * The meta object literal for the '<em>Simulation Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see ac.soton.multisim.exception.SimulationException
+		 * @see ac.soton.multisim.impl.MultisimPackageImpl#getSimulationException()
+		 * @generated
+		 */
+		EDataType SIMULATION_EXCEPTION = eINSTANCE.getSimulationException();
+
+		/**
+		 * The meta object literal for the '<em>Model Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see ac.soton.multisim.exception.ModelException
+		 * @see ac.soton.multisim.impl.MultisimPackageImpl#getModelException()
+		 * @generated
+		 */
+		EDataType MODEL_EXCEPTION = eINSTANCE.getModelException();
 
 	}
 
