@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -46,7 +45,6 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
-import ac.soton.multisim.util.SimulationStatus;
 import ac.soton.multisim.util.SimulationUtil;
 
 import com.google.inject.Injector;
@@ -450,7 +448,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus instantiate() throws SimulationException {
+	public void instantiate() throws SimulationException {
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
@@ -515,8 +513,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// while setting port value
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -525,7 +521,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @throws SimulationException 
 	 * @generated NOT
 	 */
-	public IStatus initialise(int tStart, int tStop) throws SimulationException {
+	public void initialise(int tStart, int tStop) throws SimulationException {
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
@@ -534,8 +530,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: $initialise_machine operation not found.");
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -545,12 +539,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @throws ModelException 
 	 * @generated NOT
 	 */
-	public IStatus readInputs() throws SimulationException, ModelException {
+	public void readInputs() throws SimulationException, ModelException {
 		EList<Event> readEvents = getReadInputEvents();
 		
 		// skip if no inputs
 		if (readEvents.isEmpty())
-			return SimulationStatus.OK_STATUS;
+			return;
 		
 		// build parameter predicate for event execution
 		stringBuilder.setLength(0);
@@ -588,8 +582,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		
 		// execute read event
 		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -597,7 +589,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus writeOutputs() {
+	public void writeOutputs() {
 		StateId state = trace.getCurrentState();
 		
 		for (Port p : getOutputs()) {
@@ -606,8 +598,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 					p.getType(), 
 					((EventBPort) p).getIntToReal()));
 		}
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -617,10 +607,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @throws SimulationException 
 	 * @generated NOT
 	 */
-	public IStatus doStep(int time, int step) throws ModelException, SimulationException {
+	public void doStep(int time, int step) throws ModelException, SimulationException {
 		// skip if current event is already a 'wait' event
 		if (waitSet.contains(trace.getCurrent().getOp().getName()))
-			return SimulationStatus.OK_STATUS;
+			return;
 		
 		StateSpace stateSpace = trace.getStateSpace();
 		ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), ltl);
@@ -633,8 +623,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			if (command.isDeadlocked())
 				throw new ModelException("Deadlock in '" + getName() + "'");
 		}
-
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -642,7 +630,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus terminate() {
+	public void terminate() {
 		trace.getStateSpace().endTransaction();
 		
 		// re-enable notifications
@@ -664,8 +652,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		
 		trace = null;
 		System.gc();
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**

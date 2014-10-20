@@ -112,10 +112,8 @@ public class Master {
 		try{
 			for (Component c : components) {
 				monitor.subTask("Initialising component '" + c.getName() + "'");
-				if ((status = c.instantiate()) != SimulationStatus.OK_STATUS 
-						|| (status = c.initialise(startTime, stopTime)) != SimulationStatus.OK_STATUS) {
-					return status;
-				}
+				c.instantiate();
+				c.initialise(startTime, stopTime);
 				
 				// first evaluation of DE
 				if (c instanceof EventBComponent)
@@ -124,8 +122,7 @@ public class Master {
 					lastEvalTime.put(c, 0);		// store eval time for CT
 				
 				// initial IO #1
-				if ((status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.writeOutputs();
 				
 				if (c instanceof EventBComponent)
 					for (Port y : c.getOutputs())
@@ -134,8 +131,7 @@ public class Master {
 			}
 			// initial IO #2
 			for (Component c : components)
-				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.readInputs();
 		} catch (SimulationException | ModelException e) {
 			return SimulationStatus.createErrorStatus("Exception:", e);
 		}
@@ -175,9 +171,8 @@ public class Master {
 			// DE step
 			for (EventBComponent c : deList) {
 				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
-				if ((status = c.doStep(currentTime, c.getStepPeriod())) != SimulationStatus.OK_STATUS
-						|| (status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.doStep(currentTime, c.getStepPeriod());
+				c.writeOutputs();
 				
 				// evaluate any input CT
 				for (Port u : c.getInputs()) {
@@ -202,19 +197,16 @@ public class Master {
 			for (FMUComponent c : ctList) {
 				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
 				int tEval = lastEvalTime .get(c);
-				if ((status = c.doStep(tEval, currentTime - tEval)) != SimulationStatus.OK_STATUS
-						|| (status = c.writeOutputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.doStep(tEval, currentTime - tEval);
+				c.writeOutputs();
 				lastEvalTime.put(c, currentTime);
 			}
 			
 			// IO
 			for (Component c : deList)
-				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.readInputs();
 			for (Component c : ctList)
-				if ((status = c.readInputs()) != SimulationStatus.OK_STATUS)
-					return status;
+				c.readInputs();
 			
 			deList.clear();
 			ctList.clear();

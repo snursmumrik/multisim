@@ -23,7 +23,6 @@ import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -40,7 +39,6 @@ import ac.soton.multisim.DisplayPort;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableType;
-import ac.soton.multisim.util.SimulationStatus;
 
 /**
  * <!-- begin-user-doc -->
@@ -223,7 +221,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus instantiate() {
+	public void instantiate() {
 		if (getChart() == null) {
 			
 			// new chart with double-click zoom out
@@ -275,7 +273,6 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    
 			setChart(chart);
 		}
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -283,7 +280,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus initialise(int tStart, int tStop) {
+	public void initialise(int tStart, int tStop) {
 		Chart2D chart = getChart();
 		assert chart != null;
 		
@@ -319,7 +316,6 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    
 		    chart.addTrace(trace);
 		}
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -341,8 +337,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus readInputs() {
-		return SimulationStatus.OK_STATUS;
+	public void readInputs() {
 	}
 
 	/**
@@ -350,8 +345,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus writeOutputs() {
-		return SimulationStatus.OK_STATUS;
+	public void writeOutputs() {
 	}
 
 	/**
@@ -359,7 +353,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus doStep(int time, int step) {
+	public void doStep(int time, int step) {
 		DisplayPort port = null;
 		Port input = null;
 		for (Port p : getInputs()) {
@@ -383,7 +377,6 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				port.getTrace().addPoint(time/1000.0, traceValue);
 			}
 		}
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -391,12 +384,11 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus terminate() {
+	public void terminate() {
 	    // re-enable notification
 	    eSetDeliver(true);
 	    for (Port p : getInputs())
 			p.eSetDeliver(true);
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**

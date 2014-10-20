@@ -9,7 +9,6 @@
  */
 package ac.soton.multisim;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eventb.emf.core.EventBNamed;
 
@@ -108,7 +107,7 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus instantiate() throws SimulationException, ModelException;
+	void instantiate() throws SimulationException, ModelException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,7 +116,7 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus initialise(int tStart, int tStop) throws SimulationException;
+	void initialise(int tStart, int tStop) throws SimulationException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -127,7 +126,7 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus readInputs() throws SimulationException, ModelException;
+	void readInputs() throws SimulationException, ModelException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -135,7 +134,7 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus writeOutputs();
+	void writeOutputs();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -145,7 +144,7 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus doStep(int time, int step) throws ModelException, SimulationException;
+	void doStep(int time, int step) throws ModelException, SimulationException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -153,6 +152,6 @@ public interface Component extends EventBNamed {
 	 * @model dataType="ac.soton.multisim.IStatus"
 	 * @generated
 	 */
-	IStatus terminate();
+	void terminate();
 
 } // Component

@@ -12,7 +12,6 @@ package ac.soton.multisim.impl;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -28,7 +27,6 @@ import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
-import ac.soton.multisim.util.SimulationStatus;
 import ac.soton.multisim.util.SimulationUtil;
 import de.prob.cosimulation.FMU;
 
@@ -272,11 +270,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * @throws ModelException 
 	 * @generated NOT
 	 */
-	public IStatus instantiate() throws ModelException {
-		assert getPath() != null;
-		
+	public void instantiate() throws ModelException {
 		// disable notification
-		eSetDeliver(false);
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
@@ -285,13 +280,11 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			fmu.reset();
 		} else {
 			try {
-				setFmu(new FMU(getPath()));
+				fmu = new FMU(getPath());
 			} catch (IOException e) {
 				throw new ModelException("Cannot load FMU file '" + getPath() + "'\nReason: " + e.getMessage());
 			}
 		}
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -299,10 +292,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus initialise(int tStart, int tStop) {
-		FMU fmu = getFmu();
-		assert fmu != null;
-		
+	public void initialise(int tStart, int tStop) {
 		// initialise parameters that have non-default values
 		for (FMUParameter param : getParameters()) {
 			if (!param.getStartValue().equals(param.getDefaultValue()))
@@ -315,8 +305,6 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		// update outputs
 		for (Port p : getOutputs())
 			p.setValue(SimulationUtil.fmuGet(fmu, p));
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -324,10 +312,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus readInputs() {
-		FMU fmu = getFmu();
-		assert fmu != null;
-		
+	public void readInputs() {
 		for (Port port : getInputs()) {
 			Port input = port.getIn();
 			
@@ -338,7 +323,6 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			
 			SimulationUtil.fmuSet(fmu, port, input.getValue());
 		}
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -346,14 +330,10 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus writeOutputs() {
-		FMU fmu = getFmu();
-		assert fmu != null;
-		
+	public void writeOutputs() {
 		for (Port port : getOutputs()) {
 			port.setValue(SimulationUtil.fmuGet(fmu, port));
 		}
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -361,13 +341,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus doStep(int time, int step) {
-		FMU fmu = getFmu();
-		assert fmu != null;
-		
+	public void doStep(int time, int step) {
 		fmu.doStep(time/1000.0, step/1000.0);
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
@@ -375,13 +350,10 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public IStatus terminate() {
+	public void terminate() {
 		// re-enable notification
-		eSetDeliver(true);
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
-		
-		return SimulationStatus.OK_STATUS;
 	}
 
 	/**
