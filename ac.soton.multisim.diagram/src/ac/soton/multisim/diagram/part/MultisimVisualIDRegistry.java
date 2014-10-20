@@ -20,7 +20,6 @@ import ac.soton.multisim.EventBPort;
 import ac.soton.multisim.FMUPort;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
-import ac.soton.multisim.diagram.edit.parts.DisplayComponentDisplayCompartmentEditPart;
 import ac.soton.multisim.diagram.edit.parts.DisplayComponentEditPart;
 import ac.soton.multisim.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.multisim.diagram.edit.parts.EventBComponentEditPart;
@@ -224,9 +223,6 @@ public class MultisimVisualIDRegistry {
 			}
 			break;
 		case DisplayComponentEditPart.VISUAL_ID:
-			if (DisplayComponentDisplayCompartmentEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
 			if (DisplayPortEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
@@ -351,7 +347,6 @@ public class MultisimVisualIDRegistry {
 	 */
 	public static boolean isCompartmentVisualID(int visualID) {
 		switch (visualID) {
-		case DisplayComponentDisplayCompartmentEditPart.VISUAL_ID:
 		case FMUComponentFMUVariablesCompartmentEditPart.VISUAL_ID:
 		case EventBComponentEventBVariablesCompartmentEditPart.VISUAL_ID:
 			return true;

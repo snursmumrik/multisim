@@ -163,22 +163,7 @@
               name="alignment"
               value="org.eclipse.draw2d.PositionConstants.CENTER"/>
         </children>
-        <children
-            xsi:type="gmfgraph:Rectangle"
-            name="DisplayCompartmentFigure">
-          <layoutData
-              xsi:type="gmfgraph:BorderLayoutData"
-              alignment="FILL"
-              vertical="true"/>
-          <backgroundColor
-              xsi:type="gmfgraph:RGBColor"
-              red="171"
-              green="206"
-              blue="238"/>
-        </children>
       </actualFigure>
-      <accessors
-          figure="//@figures.0/@descriptors.5/@actualFigure/@children.1"/>
     </descriptors>
   </figures>
   <nodes
@@ -230,11 +215,6 @@
       figure="EventBComponentFigure"
       collapsible="true"
       accessor="//@figures.0/@descriptors.1/@accessors.1"/>
-  <compartments
-      name="DisplayCompartment"
-      figure="DisplayComponentFigure"
-      collapsible="true"
-      accessor="//@figures.0/@descriptors.5/@accessors.0"/>
   <labels
       name="FMUComponentName"
       figure="FMUComponentFigure"

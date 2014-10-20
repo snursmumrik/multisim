@@ -398,7 +398,7 @@ http://www.eclipse.org/legal/epl-v10.html
             <method name="getType()" value="5003,5004"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
-            <method name="getType()" value="7004,7005,7006"/>
+            <method name="getType()" value="7005,7006"/>
          </object>
          <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
       </editpartProvider>

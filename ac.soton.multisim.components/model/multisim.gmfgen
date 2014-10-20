@@ -293,7 +293,6 @@
         notationViewFactoryClassName="DisplayComponentViewFactory"
         canonicalEditPolicyClassName="DisplayComponentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.0"
-        compartments="//@diagram/@compartments.0"
         graphicalNodeEditPolicyClassName="DisplayComponentGraphicalNodeEditPolicy"
         createCommandClassName="DisplayComponentCreateCommand">
       <diagramRunTimeClass
@@ -305,7 +304,7 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="DisplayComponentFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class DisplayComponentFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.draw2d.RectangleFigure fFigureDisplayCompartmentFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public DisplayComponentFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;org.eclipse.draw2d.BorderLayout layoutThis = new org.eclipse.draw2d.BorderLayout();&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#x9;this.setForegroundColor(org.eclipse.draw2d.ColorConstants.gray);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel displayComponentLabelFigure0 = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;&#xA;displayComponentLabelFigure0.setText(&quot;Display&quot;);&#xA;&#x9;displayComponentLabelFigure0.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);&#xA;displayComponentLabelFigure0.setAlignment(org.eclipse.draw2d.PositionConstants.CENTER);&#xA;&#xA;this.add(displayComponentLabelFigure0, org.eclipse.draw2d.BorderLayout.TOP);&#xA;&#xA;&#xA;&#xA;fFigureDisplayCompartmentFigure = new org.eclipse.draw2d.RectangleFigure();&#xA;&#xA;&#x9;fFigureDisplayCompartmentFigure.setBackgroundColor(FFIGUREDISPLAYCOMPARTMENTFIGURE_BACK&#xA;);&#xA;&#xA;this.add(fFigureDisplayCompartmentFigure, org.eclipse.draw2d.BorderLayout.CENTER);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.draw2d.RectangleFigure getFigureDisplayCompartmentFigure() {&#xA;&#x9;&#x9;return fFigureDisplayCompartmentFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 97, 167, 219);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color FFIGUREDISPLAYCOMPARTMENTFIGURE_BACK = new org.eclipse.swt.graphics.Color(null, 171, 206, 238);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class DisplayComponentFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public DisplayComponentFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;org.eclipse.draw2d.BorderLayout layoutThis = new org.eclipse.draw2d.BorderLayout();&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#x9;this.setForegroundColor(org.eclipse.draw2d.ColorConstants.gray);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel displayComponentLabelFigure0 = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;&#xA;displayComponentLabelFigure0.setText(&quot;Display&quot;);&#xA;&#x9;displayComponentLabelFigure0.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);&#xA;displayComponentLabelFigure0.setAlignment(org.eclipse.draw2d.PositionConstants.CENTER);&#xA;&#xA;this.add(displayComponentLabelFigure0, org.eclipse.draw2d.BorderLayout.TOP);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 97, 167, 219);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
             fixedForeground="true"
@@ -327,7 +326,7 @@
         notationViewFactoryClassName="FMUComponentViewFactory"
         canonicalEditPolicyClassName="FMUComponentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.1 //@diagram/@childNodes.2"
-        compartments="//@diagram/@compartments.1"
+        compartments="//@diagram/@compartments.0"
         graphicalNodeEditPolicyClassName="FMUComponentGraphicalNodeEditPolicy"
         createCommandClassName="FMUComponentCreateCommand">
       <diagramRunTimeClass
@@ -380,7 +379,7 @@
         notationViewFactoryClassName="EventBComponentViewFactory"
         canonicalEditPolicyClassName="EventBComponentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.3 //@diagram/@childNodes.4"
-        compartments="//@diagram/@compartments.2"
+        compartments="//@diagram/@compartments.1"
         graphicalNodeEditPolicyClassName="EventBComponentGraphicalNodeEditPolicy"
         createCommandClassName="EventBComponentCreateCommand">
       <diagramRunTimeClass
@@ -451,32 +450,12 @@
           targetEnd="//@expressionProviders/@providers.0/@expressions.11"/>
     </links>
     <compartments
-        visualID="7004"
-        editPartClassName="DisplayComponentDisplayCompartmentEditPart"
-        itemSemanticEditPolicyClassName="DisplayComponentDisplayCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="DisplayComponentDisplayCompartmentViewFactory"
-        canonicalEditPolicyClassName="DisplayComponentDisplayCompartmentCanonicalEditPolicy"
-        title=""
-        needsTitle="false"
-        node="//@diagram/@topLevelNodes.0">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <viewmap
-          xsi:type="gmfgen:ParentAssignedViewmap"
-          getterName="getFigureDisplayCompartmentFigure"
-          figureQualifiedClassName="org.eclipse.draw2d.RectangleFigure">
-        <attributes
-            xsi:type="gmfgen:StyleAttributes"
-            fixedBackground="true"/>
-      </viewmap>
-    </compartments>
-    <compartments
         visualID="7005"
         editPartClassName="FMUComponentFMUVariablesCompartmentEditPart"
         itemSemanticEditPolicyClassName="FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="FMUComponentFMUVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="FMUComponentFMUVariablesCompartmentCanonicalEditPolicy"
-        title=""
+        title="FMUVariablesCompartment"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.1">
       <diagramRunTimeClass
@@ -496,7 +475,7 @@
         itemSemanticEditPolicyClassName="EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="EventBComponentEventBVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="EventBComponentEventBVariablesCompartmentCanonicalEditPolicy"
-        title=""
+        title="EventBVariablesCompartment"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.2">
       <diagramRunTimeClass

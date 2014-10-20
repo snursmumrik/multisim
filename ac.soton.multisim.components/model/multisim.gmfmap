@@ -40,10 +40,6 @@
               href="multisim.gmfgraph#InputPort"/>
         </ownedChild>
       </children>
-      <compartments>
-        <compartment
-            href="multisim.gmfgraph#DisplayCompartment"/>
-      </compartments>
     </ownedChild>
   </nodes>
   <nodes>

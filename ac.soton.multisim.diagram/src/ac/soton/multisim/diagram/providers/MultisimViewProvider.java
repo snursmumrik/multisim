@@ -50,7 +50,6 @@ import org.eclipse.swt.graphics.FontData;
 
 import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
 import ac.soton.multisim.diagram.edit.parts.ConnectorEditPart;
-import ac.soton.multisim.diagram.edit.parts.DisplayComponentDisplayCompartmentEditPart;
 import ac.soton.multisim.diagram.edit.parts.DisplayComponentEditPart;
 import ac.soton.multisim.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.multisim.diagram.edit.parts.EventBComponentEditPart;
@@ -321,11 +320,6 @@ public class MultisimViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		createCompartment(
-				node,
-				MultisimVisualIDRegistry
-						.getType(DisplayComponentDisplayCompartmentEditPart.VISUAL_ID),
-				true, false, true, true);
 		return node;
 	}
 

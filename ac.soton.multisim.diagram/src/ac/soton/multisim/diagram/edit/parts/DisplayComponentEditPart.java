@@ -22,12 +22,9 @@ import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
-import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
@@ -134,80 +131,6 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof DisplayComponentDisplayCompartmentEditPart) {
-			IFigure pane = getPrimaryShape()
-					.getFigureDisplayCompartmentFigure();
-			setupContentPane(pane); // FIXME each comparment should handle his content pane in his own way 
-			pane.add(((DisplayComponentDisplayCompartmentEditPart) childEditPart)
-					.getFigure());
-			return true;
-		}
-		if (childEditPart instanceof DisplayPortEditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.WEST);
-			getBorderedFigure().getBorderItemContainer().add(
-					((DisplayPortEditPart) childEditPart).getFigure(), locator);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected boolean removeFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof DisplayComponentDisplayCompartmentEditPart) {
-			IFigure pane = getPrimaryShape()
-					.getFigureDisplayCompartmentFigure();
-			pane.remove(((DisplayComponentDisplayCompartmentEditPart) childEditPart)
-					.getFigure());
-			return true;
-		}
-		if (childEditPart instanceof DisplayPortEditPart) {
-			getBorderedFigure().getBorderItemContainer().remove(
-					((DisplayPortEditPart) childEditPart).getFigure());
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected void addChildVisual(EditPart childEditPart, int index) {
-		if (addFixedChild(childEditPart)) {
-			return;
-		}
-		super.addChildVisual(childEditPart, -1);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected void removeChildVisual(EditPart childEditPart) {
-		if (removeFixedChild(childEditPart)) {
-			return;
-		}
-		super.removeChildVisual(childEditPart);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
-		if (editPart instanceof DisplayComponentDisplayCompartmentEditPart) {
-			return getPrimaryShape().getFigureDisplayCompartmentFigure();
-		}
-		if (editPart instanceof IBorderItemEditPart) {
-			return getBorderedFigure().getBorderItemContainer();
-		}
-		return getContentPane();
-	}
-
-	/**
-	 * @generated
-	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(40, 40);
 		return result;
@@ -299,11 +222,6 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		private RectangleFigure fFigureDisplayCompartmentFigure;
-
-		/**
-		 * @generated
-		 */
 		public DisplayComponentFigure() {
 
 			BorderLayout layoutThis = new BorderLayout();
@@ -328,20 +246,6 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 
 			this.add(displayComponentLabelFigure0, BorderLayout.TOP);
 
-			fFigureDisplayCompartmentFigure = new RectangleFigure();
-
-			fFigureDisplayCompartmentFigure
-					.setBackgroundColor(FFIGUREDISPLAYCOMPARTMENTFIGURE_BACK);
-
-			this.add(fFigureDisplayCompartmentFigure, BorderLayout.CENTER);
-
-		}
-
-		/**
-		 * @generated
-		 */
-		public RectangleFigure getFigureDisplayCompartmentFigure() {
-			return fFigureDisplayCompartmentFigure;
 		}
 
 	}
@@ -350,12 +254,6 @@ public class DisplayComponentEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	static final Color THIS_BACK = new Color(null, 97, 167, 219);
-
-	/**
-	 * @generated
-	 */
-	static final Color FFIGUREDISPLAYCOMPARTMENTFIGURE_BACK = new Color(null,
-			171, 206, 238);
 
 	/* (non-Javadoc)
 	 * @custom

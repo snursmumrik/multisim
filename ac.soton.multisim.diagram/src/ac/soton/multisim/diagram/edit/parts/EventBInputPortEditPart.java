@@ -288,7 +288,8 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 	 */
 	@Override
 	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return getNodeFigure().getConnectionAnchor(NodeFigure.getDefaultAnchorID());
+		return getNodeFigure().getConnectionAnchor(
+				NodeFigure.getDefaultAnchorID());
 	}
 
 	/* Defaults the anchor to the centre of the figure.
@@ -296,7 +297,8 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 	 */
 	@Override
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		return getNodeFigure().getConnectionAnchor(NodeFigure.getDefaultAnchorID());
+		return getNodeFigure().getConnectionAnchor(
+				NodeFigure.getDefaultAnchorID());
 	}
 
 }

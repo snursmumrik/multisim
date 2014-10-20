@@ -25,7 +25,6 @@ import org.eclipse.gmf.runtime.notation.View;
 
 import ac.soton.multisim.diagram.edit.commands.DisplayPortCreateCommand;
 import ac.soton.multisim.diagram.edit.parts.ConnectorEditPart;
-import ac.soton.multisim.diagram.edit.parts.DisplayComponentDisplayCompartmentEditPart;
 import ac.soton.multisim.diagram.edit.parts.DisplayPortEditPart;
 import ac.soton.multisim.diagram.part.MultisimVisualIDRegistry;
 import ac.soton.multisim.diagram.providers.MultisimElementTypes;
@@ -113,14 +112,6 @@ public class DisplayComponentItemSemanticEditPolicy extends
 						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
-				break;
-			case DisplayComponentDisplayCompartmentEditPart.VISUAL_ID:
-				for (Iterator<?> cit = node.getChildren().iterator(); cit
-						.hasNext();) {
-					Node cnode = (Node) cit.next();
-					switch (MultisimVisualIDRegistry.getVisualID(cnode)) {
-					}
-				}
 				break;
 			}
 		}

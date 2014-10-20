@@ -62,9 +62,6 @@ public class MultisimEditPartFactory implements EditPartFactory {
 			case EventBOutputPortEditPart.VISUAL_ID:
 				return new EventBOutputPortEditPart(view);
 
-			case DisplayComponentDisplayCompartmentEditPart.VISUAL_ID:
-				return new DisplayComponentDisplayCompartmentEditPart(view);
-
 			case FMUComponentFMUVariablesCompartmentEditPart.VISUAL_ID:
 				return new FMUComponentFMUVariablesCompartmentEditPart(view);
 
