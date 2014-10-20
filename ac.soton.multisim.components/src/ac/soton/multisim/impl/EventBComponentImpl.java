@@ -21,7 +21,6 @@ import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -101,6 +100,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private static final String LTL_OR = "or[";
 	private static final String LTL_RBRACKET = "]";
 	private static final String LTL_START = "F Y ([";
+
+	/**
+	 * @custom
+	 */
+	private Random random = new Random(System.currentTimeMillis());
+	private Set<String> waitSet = new HashSet<String>();
+	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	private LTL ltl;
+	private StringBuilder stringBuilder = new StringBuilder();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -238,15 +246,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected Trace trace = TRACE_EDEFAULT;
-
-	/**
-	 * @custom
-	 */
-	private Random random = new Random(System.currentTimeMillis());
-	private Set<String> waitSet = new HashSet<String>();
-	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-	private StringBuilder ltl = new StringBuilder();
-	private StringBuilder readInputPredicate = new StringBuilder();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -498,12 +497,18 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			waitSet.add(we.getName());
 		
 		// 'wait' event enabledness LTL formula
-		ltl.setLength(0);
+		stringBuilder.setLength(0);
 		EList<Event> waits = getWaitEvents();
-		ltl.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
+		stringBuilder.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
 		for (int i=1; i<waits.size(); i++)
-			ltl.append(LTL_OR).append(waits.get(i).getName()).append(LTL_RBRACKET);
-		ltl.append(LTL_END);
+			stringBuilder.append(LTL_OR).append(waits.get(i).getName()).append(LTL_RBRACKET);
+		stringBuilder.append(LTL_END);
+
+		try {
+			ltl = new LTL(stringBuilder.toString());
+		} catch (LtlParseException e) {
+			throw new SimulationException("LTL parse failure '" + ltl.toString() + "'", e);
+		}
 
 		// disable notification for modifying output ports
 		// so that using EMF transactions is not required
@@ -524,7 +529,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
-		assert trace.getCurrent().getOp().getName() != null;
 		if (!INIT.equals(trace.getCurrent().getOp().getName()))
 			trace = trace.anyEvent(null);
 		if (!INIT.equals(trace.getCurrent().getOp().getName()))
@@ -542,7 +546,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus readInputs() throws SimulationException, ModelException {
-		assert trace != null;
 		EList<Event> readEvents = getReadInputEvents();
 		
 		// skip if no inputs
@@ -550,18 +553,15 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			return SimulationStatus.OK_STATUS;
 		
 		// build parameter predicate for event execution
-		readInputPredicate.setLength(0);
-		readInputPredicate.append(TT);
+		stringBuilder.setLength(0);
+		stringBuilder.append(TT);
 		for (Port p : getInputs()) {
 			// if port not connected, let ProB to pick the value non-deterministically
 			if (p.getIn() == null)
 				continue;
 			
-			assert p instanceof EventBPort && ((EventBPort) p).getParameter() != null;
-			assert p.getIn().getValue() != null;
-
 			// add parameter to event predicate string
-			readInputPredicate.append(AND)
+			stringBuilder.append(AND)
 				.append(((EventBPort) p).getParameter().getName())
 				.append(EQ)
 				.append(SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
@@ -569,16 +569,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		
 		// find enabled read event
 		List<OpInfo> readOps = new ArrayList<OpInfo>();
-		String predicateStr = readInputPredicate.toString();
+		String predicate = stringBuilder.toString();
 		for (Event re : readEvents) {
 			try {
-				readOps.add(trace.findOneOp(re.getName(), predicateStr));
+				readOps.add(trace.findOneOp(re.getName(), predicate));
 			} catch (IllegalArgumentException e) {
 				// no operation found -> proceed
 			} catch (BException e) {
 				// BException, i.e. ProB failed
 				throw new SimulationException("Cannot read inputs of component '" + getName() + "'\n" +
-						"Reason: ProB failed to find enabled read event '" + re.getName() + "[" + predicateStr + "]'", e);
+						"Reason: ProB failed to find enabled read event '" + re.getName() + "[" + predicate + "]'", e);
 			}
 		}
 		
@@ -598,12 +598,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus writeOutputs() {
-		assert trace != null;
 		StateId state = trace.getCurrentState();
 		
 		for (Port p : getOutputs()) {
-			assert p instanceof EventBPort && ((EventBPort) p).getVariable() != null;
-			
 			p.setValue(SimulationUtil.getFMIValue(
 					(String) state.value(((EventBPort) p).getVariable().getName()), 
 					p.getType(), 
@@ -625,18 +622,17 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (waitSet.contains(trace.getCurrent().getOp().getName()))
 			return SimulationStatus.OK_STATUS;
 		
-		try {
-			StateSpace stateSpace = trace.getStateSpace();
-			LTL condition = new LTL(ltl.toString());
-			ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), condition);
-			stateSpace.execute(command);
-			trace = trace.addOps(command.getNewTransitions());
-		} catch (LtlParseException e) {
-			throw new SimulationException("LTL parse failure '" + ltl.toString() + "'", e);
-		}
+		StateSpace stateSpace = trace.getStateSpace();
+		ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), ltl);
+		stateSpace.execute(command);
+		trace = trace.addOps(command.getNewTransitions());
 		
-		if (trace.getNextTransitions().isEmpty())
-			throw new ModelException("Deadlock in '" + getName() + "'");
+		if (!command.isSuccess()) {
+			if (command.conditionNotReached())
+				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop)");
+			if (command.isDeadlocked())
+				throw new ModelException("Deadlock in '" + getName() + "'");
+		}
 
 		return SimulationStatus.OK_STATUS;
 	}
@@ -647,7 +643,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public IStatus terminate() {
-		assert trace != null;
 		trace.getStateSpace().endTransaction();
 		
 		// re-enable notifications

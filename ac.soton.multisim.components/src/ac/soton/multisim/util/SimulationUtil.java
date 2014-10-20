@@ -7,6 +7,11 @@
  */
 package ac.soton.multisim.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
@@ -22,6 +27,10 @@ import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
 
 import ac.soton.multisim.AbstractVariable;
+import ac.soton.multisim.Component;
+import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.DisplayComponent;
+import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.VariableType;
 import de.prob.cosimulation.FMU;
@@ -31,6 +40,8 @@ import de.prob.cosimulation.FMU;
  * @custom
  */
 public class SimulationUtil {
+	
+	public static final String OUTPUT_SEPARATOR = ",";
 	
 	/**
 	 * Returns Event-B Root element of a machine.
@@ -209,5 +220,75 @@ public class SimulationUtil {
 		case output: return VariableCausality.OUTPUT;
 		default: return VariableCausality.NONE;
 		}
+	}
+	
+	/**
+	 * Creates an output file writer.
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException 
+	 */
+	public static BufferedWriter apiCreateOutput(File file) throws IOException {
+		if (!file.exists())
+			file.createNewFile();
+		return new BufferedWriter(new FileWriter((File) file));
+	}
+
+	/**
+	 * Writes diabgram variable columns to the output file writer.
+	 * 
+	 * @param diagram
+	 * @param writer
+	 * @throws IOException 
+	 */
+	public static void apiOutputColumns(ComponentDiagram diagram, BufferedWriter writer) throws IOException {
+		writer.write("time");
+		for (Component c : diagram.getComponents()) {
+			//XXX: current hack to ignore display component for outputs
+			if (c instanceof DisplayComponent)
+				continue;
+			
+			String name = c.getName();
+			for (Port p : c.getOutputs())
+				writer.write(OUTPUT_SEPARATOR + name + "." + p.getName());
+		}
+		writer.write('\n');
+	}
+
+	/**
+	 * Writes diagram variable values at specific simulation time to the output file writer.
+	 * 
+	 * @param diagram
+	 * @param time
+	 * @param writer
+	 * @throws IOException 
+	 */
+	public static void apiOutput(ComponentDiagram diagram, long time, BufferedWriter writer) throws IOException {
+		writer.write(Long.toString(time));
+		for (Component c : diagram.getComponents()) {
+			//XXX: current hack to ignore display component for outputs
+			if (c instanceof DisplayComponent)
+				continue;
+			
+			for (Port p : c.getOutputs()) {
+				writer.write(OUTPUT_SEPARATOR + toPlotValue(p.getValue().toString()));
+			}
+		}
+		writer.write('\n');
+	}
+
+	/**
+	 * Converts boolean string to integer string for plotting.
+	 * @param value
+	 * @return
+	 */
+	private static String toPlotValue(String value) {
+		assert value != null;
+		if ("false".equals(value.toLowerCase()))
+			return "0";
+		if ("true".equals(value.toLowerCase()))
+			return "1";
+		return value;
 	}
 }

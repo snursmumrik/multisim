@@ -10,7 +10,6 @@ package ac.soton.multisim.master;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,11 +22,10 @@ import org.eclipse.core.runtime.Status;
 
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
-import ac.soton.multisim.DisplayComponent;
-import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
 import ac.soton.multisim.util.SimulationStatus;
+import ac.soton.multisim.util.SimulationUtil;
 
 /**
  * Master algorithm for FMU-EventB co-simulation.
@@ -40,7 +38,6 @@ public class TwoListMaster {
 	private static final String PLUGIN_ID = "ac.soton.multisim.components.master";
 	
 	// simulation parameter names
-	public static final String OUTPUT_SEPARATOR = ",";
 	public static final String PARAMETER_START_TIME = "parameter.startTime";
 	public static final String PARAMETER_STOP_TIME = "parameter.stopTime";
 	public static final String PARAMETER_STEP_SIZE = "parameter.stepSize";
@@ -79,13 +76,10 @@ public class TwoListMaster {
 		IStatus status = Status.OK_STATUS;
 		long simulationTime = System.currentTimeMillis();
 		
-		// create output file
-		resultWriter = apiCreateOutput((File) resultFile);
-		if (resultWriter == null) {
-			return SimulationStatus.createErrorStatus("Simulation terminated.\nReason: Cannot create an output file.");
-		}
-		
 		try {
+			// create output file
+			resultWriter = SimulationUtil.apiCreateOutput((File) resultFile);
+
 			// instantiate components
 			for (Component c : diagram.getComponents())
 				c.instantiate();
@@ -98,7 +92,7 @@ public class TwoListMaster {
 			}
 			
 			// header output
-			apiOutputColumns(diagram, resultWriter);
+			SimulationUtil.apiOutputColumns(diagram, resultWriter);
 	
 			// simulation loop
 			for (tCurrent = tStart; tCurrent <= tStop; ++tCurrent) {
@@ -138,9 +132,9 @@ public class TwoListMaster {
 				evaluationList.clear();
 				
 				// write file output
-				apiOutput(diagram, tCurrent, resultWriter);
+				SimulationUtil.apiOutput(diagram, tCurrent, resultWriter);
 			}
-		} catch (SimulationException | ModelException e) {
+		} catch (SimulationException | ModelException | IOException e) {
 			status = SimulationStatus.createErrorStatus("Simulation terminated.\n" + e.getMessage(), e);
 		}
 
@@ -160,65 +154,6 @@ public class TwoListMaster {
 			status = SimulationStatus.createOKStatus("Completed in " + (System.currentTimeMillis() - simulationTime) + "ms");
 		
 		return status;
-	}
-
-	private static void apiOutputColumns(ComponentDiagram diagram, BufferedWriter writer) {
-		try {
-			writer.write("time");
-			for (Component c : diagram.getComponents()) {
-				//XXX: current hack to ignore display component for outputs
-				if (c instanceof DisplayComponent)
-					continue;
-				
-				String name = c.getName();
-				for (Port p : c.getOutputs())
-					writer.write(OUTPUT_SEPARATOR + name + "." + p.getName());
-			}
-			writer.write('\n');
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private static void apiOutput(ComponentDiagram diagram, long time, BufferedWriter writer) {
-		try {
-			writer.write(Long.toString(time));
-			for (Component c : diagram.getComponents()) {
-				//XXX: current hack to ignore display component for outputs
-				if (c instanceof DisplayComponent)
-					continue;
-				
-				for (Port p : c.getOutputs()) {
-					writer.write(OUTPUT_SEPARATOR + toPlotValue(p.getValue().toString()));
-				}
-			}
-			writer.write('\n');
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private static String toPlotValue(String value) {
-		assert value != null;
-		if ("false".equals(value.toLowerCase()))
-			return "0";
-		if ("true".equals(value.toLowerCase()))
-			return "1";
-		return value;
-	}
-
-	private static BufferedWriter apiCreateOutput(File file) {
-		try {
-			if (!file.exists())
-				file.createNewFile();
-			return new BufferedWriter(new FileWriter((File) file));
-		} catch (IOException e) {
-			e.printStackTrace();
-			//TODO: log output file error
-			return null;
-		}
 	}
 
 }
