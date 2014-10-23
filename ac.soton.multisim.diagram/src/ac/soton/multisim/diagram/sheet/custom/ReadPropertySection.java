@@ -49,7 +49,7 @@ public class ReadPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List getOwnedRows() {
+	protected List<Event> getOwnedRows() {
 		return ((EventBComponent) eObject).getReadInputEvents();
 	}
 
@@ -73,8 +73,8 @@ public class ReadPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List<Object> getColumnLabelText() {
-		ArrayList<Object> values = new ArrayList<Object>();
+	protected List<String> getColumnLabelText() {
+		ArrayList<String> values = new ArrayList<String>();
 		values.add("Event");
 		values.add("Refines");
 		values.add("Parameters");

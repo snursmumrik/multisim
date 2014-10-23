@@ -48,7 +48,7 @@ public class WaitPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List getOwnedRows() {
+	protected List<Event> getOwnedRows() {
 		return ((EventBComponent) eObject).getWaitEvents();
 	}
 
@@ -66,8 +66,8 @@ public class WaitPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List<Object> getColumnLabelText() {
-		ArrayList<Object> values = new ArrayList<Object>();
+	protected List<String> getColumnLabelText() {
+		ArrayList<String> values = new ArrayList<String>();
 		values.add("Event");
 		values.add("Refines");		
 		return values;

@@ -19,6 +19,7 @@ import org.eventb.emf.core.machine.Machine;
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.EventBPort;
 import ac.soton.multisim.MultisimPackage;
+import ac.soton.multisim.Port;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractTablePropertySection;
 import ac.soton.multisim.diagram.sheet.custom.common.EventBPortDialog;
@@ -37,7 +38,7 @@ public class OutputsPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List getOwnedRows() {
+	protected List<Port> getOwnedRows() {
 		return ((EventBComponent) eObject).getOutputs();
 	}
 
@@ -57,8 +58,8 @@ public class OutputsPropertySection extends AbstractTablePropertySection {
 	}
 
 	@Override
-	protected List<Object> getColumnLabelText() {
-		ArrayList<Object> values = new ArrayList<Object>();
+	protected List<String> getColumnLabelText() {
+		ArrayList<String> values = new ArrayList<String>();
 		values.add("Name");
 		values.add("Type");
 		values.add("Variable");

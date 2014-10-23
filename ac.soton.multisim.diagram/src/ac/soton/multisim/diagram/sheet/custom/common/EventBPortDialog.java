@@ -135,7 +135,7 @@ public class EventBPortDialog extends SelectionDialog {
 		// int to real precision spinner/label
 		label = new Label(plate, SWT.NONE);
 		label.setText("Precision:");
-		precisionSpinner = new Spinner (plate, SWT.BORDER);
+		precisionSpinner = new Spinner(plate, SWT.BORDER);
 		precisionSpinner.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		precisionSpinner.setToolTipText("Set a multiplier for converting FMI Real type to Event-B Integer and back");
 		precisionSpinner.setMinimum(0);

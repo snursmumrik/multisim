@@ -57,7 +57,7 @@ public abstract class AbstractTablePropertySection
 	/**
 	 * the title columns for the section.
 	 */
-	protected List columns;
+	protected List<Object> columns;
 
 	/**
 	 * the add button for the section.
@@ -86,12 +86,12 @@ public abstract class AbstractTablePropertySection
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-		List labels = getColumnLabelText();
-		columns = new ArrayList();
+		List<String> labels = getColumnLabelText();
+		columns = new ArrayList<Object>();
 
-		for (Iterator i = labels.iterator(); i.hasNext();) {
+		for (Iterator<String> i = labels.iterator(); i.hasNext();) {
 			TableColumn column = new TableColumn(table, SWT.NONE);
-			column.setText((String) i.next());
+			column.setText(i.next());
 			columns.add(column);
 		}
 
@@ -104,8 +104,7 @@ public abstract class AbstractTablePropertySection
 		shell.dispose();
 
 		addButton = getWidgetFactory().createButton(composite,
-			MessageFormat.format("Add {0}",//$NON-NLS-1$
-				new String[] {getButtonLabelText()}), SWT.PUSH);
+			MessageFormat.format("Add {0}", getButtonLabelText()), SWT.PUSH);
 		data = new FormData();
 		data.left = new FormAttachment(0, labelWidth);
 		data.bottom = new FormAttachment(100, 0);
@@ -121,7 +120,7 @@ public abstract class AbstractTablePropertySection
 				AddCommand addCommand;
 				if (newChild instanceof Collection)
 					addCommand = (AddCommand) AddCommand.create(
-							editingDomain, eObject, getFeature(), (Collection) newChild);
+							editingDomain, eObject, getFeature(), newChild);
 				else
 					addCommand = (AddCommand) AddCommand.create(
 						editingDomain, eObject, getFeature(), newChild);
@@ -131,8 +130,7 @@ public abstract class AbstractTablePropertySection
 		});
 
 		removeButton = getWidgetFactory().createButton(composite,
-			MessageFormat.format("Remove {0}",//$NON-NLS-1$
-				new String[] {getButtonLabelText()}), SWT.PUSH);
+			MessageFormat.format("Remove {0}", getButtonLabelText()), SWT.PUSH);
 		data = new FormData();
 		data.left = new FormAttachment(addButton, 0);
 		data.bottom = new FormAttachment(100, 0);
@@ -146,7 +144,8 @@ public abstract class AbstractTablePropertySection
 				int index = table.getSelectionIndex();
 				Object object = table.getSelection()[0].getData();
 				EList<EObject> newValues = new BasicEList<EObject>();
-				Iterator<EObject> it = ((EList) eObject.eGet(getFeature())).iterator();
+				@SuppressWarnings("unchecked")
+				Iterator<EObject> it = ((EList<EObject>) eObject.eGet(getFeature())).iterator();
 				for (; it.hasNext(); ) {
 					EObject value = it.next();
 					if (!value.equals(object))
@@ -222,13 +221,13 @@ public abstract class AbstractTablePropertySection
 		table.removeAll();
 		removeButton.setEnabled(false);
 
-		for (Iterator i = getOwnedRows().iterator(); i.hasNext();) {
+		for (Iterator<?> i = getOwnedRows().iterator(); i.hasNext();) {
 			Object next = i.next();
 
 			// create the table item
 			TableItem item = new TableItem(table, SWT.NONE);
 			String[] values = new String[columns.size()];
-			List valuesForRow = getValuesForRow(next);
+			List<Object> valuesForRow = getValuesForRow(next);
 			for (int j = 0; j < columns.size(); j++) {
 				values[j] = (String) valuesForRow.get(j);
 			}
@@ -236,7 +235,7 @@ public abstract class AbstractTablePropertySection
 			item.setData(next);
 		}
 
-		for (Iterator i = columns.iterator(); i.hasNext();) {
+		for (Iterator<Object> i = columns.iterator(); i.hasNext();) {
 			((TableColumn) i.next()).pack();
 		}
 	}
@@ -254,7 +253,7 @@ public abstract class AbstractTablePropertySection
 	 * 
 	 * @return the list of the row objects.
 	 */
-	protected abstract List getOwnedRows();
+	protected abstract List<? extends EObject> getOwnedRows();
 
 	/**
 	 * Get the values for the row in the table.
@@ -263,14 +262,14 @@ public abstract class AbstractTablePropertySection
 	 *            an object in the row of the table.
 	 * @return the list of string values for the row.
 	 */
-	protected abstract List getValuesForRow(Object object);
+	protected abstract List<Object> getValuesForRow(Object object);
 
 	/**
 	 * Get the labels for the columns for the table.
 	 * 
 	 * @return the labels for the columns.
 	 */
-	protected abstract List getColumnLabelText();
+	protected abstract List<String> getColumnLabelText();
 
 	/**
 	 * Get a new child instance for the result of clicking the add button.

@@ -368,6 +368,38 @@ http://www.eclipse.org/legal/epl-v10.html
                id="property.section.colour"
                tab="property.tab.overview">
          </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.TypePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.PortPropertySectionFilter"
+               id="property.section.type"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.ParameterPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBInputPortPropertySectionFilter"
+               id="property.section.parameter"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.VariablePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBOutputPortPropertySectionFilter"
+               id="property.section.variable"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.type"
+               class="ac.soton.multisim.diagram.sheet.custom.PrecisionPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBPortPropertySectionFilter"
+               id="property.section.precision"
+               tab="property.tab.overview">
+         </propertySection>
       </propertySections>
    </extension>
 
