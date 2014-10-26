@@ -324,7 +324,7 @@ http://www.eclipse.org/legal/epl-v10.html
                afterSection="property.section.name"
                class="ac.soton.multisim.diagram.sheet.custom.StepPeriodPropertySection"
                enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentPropertySectionFilter"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.NonDisplayComponentPropertySectionFilter"
                id="property.section.stepPeriod"
                tab="property.tab.overview">
          </propertySection>
@@ -372,7 +372,7 @@ http://www.eclipse.org/legal/epl-v10.html
                afterSection="property.section.name"
                class="ac.soton.multisim.diagram.sheet.custom.TypePropertySection"
                enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.PortPropertySectionFilter"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.NonDisplayPortPropertySectionFilter"
                id="property.section.type"
                tab="property.tab.overview">
          </propertySection>

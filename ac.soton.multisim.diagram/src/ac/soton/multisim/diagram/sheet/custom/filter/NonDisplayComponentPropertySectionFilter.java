@@ -7,18 +7,22 @@
  */
 package ac.soton.multisim.diagram.sheet.custom.filter;
 
+import org.eclipse.emf.ecore.EObject;
+
 import ac.soton.multisim.Component;
+import ac.soton.multisim.DisplayComponent;
 
 /**
  * @author vitaly
  *
  */
-public class ComponentPropertySectionFilter extends
+public class NonDisplayComponentPropertySectionFilter extends
 		AbstractPropertySectionFilter {
 
 	@Override
 	public boolean select(Object toTest) {
-		return unwrap(toTest) instanceof Component;
+		EObject element = unwrap(toTest);
+		return element instanceof Component && false == element instanceof DisplayComponent;
 	}
 
 }

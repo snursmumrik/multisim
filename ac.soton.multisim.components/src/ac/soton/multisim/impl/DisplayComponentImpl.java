@@ -16,11 +16,13 @@ import info.monitorenter.gui.chart.ZoomableChart;
 import info.monitorenter.gui.chart.axis.AxisLinear;
 import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
+
 import ac.soton.multisim.Component;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.DisplayPort;
@@ -218,12 +221,12 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@SuppressWarnings("serial")
 	public void instantiate() {
-		if (getChart() == null) {
+		if (chart == null) {
 			
 			// new chart with double-click zoom out
-			@SuppressWarnings("serial")
-			Chart2D chart = new ZoomableChart() {
+			chart = new ZoomableChart() {
 				long lastClickTime;
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -239,8 +242,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    chart.removeAxisYLeft(chart.getAxisY());
 		    
 		    // empty label formatter for drawing border-like axes without marks
-		    @SuppressWarnings("serial")
-			LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getIntegerInstance()) {
+		    LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getIntegerInstance()) {
 		    	@Override
 		    	public String format(double value) {
 		    		return "0";
@@ -264,11 +266,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    
 		    chart.setVisible(false);
 		    // disable notification
-		    eSetDeliver(false);
 		    for (Port p : getInputs())
 				p.eSetDeliver(false);
-		    
-			setChart(chart);
 		}
 	}
 
@@ -278,15 +277,11 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * @generated NOT
 	 */
 	public void initialise(int tStart, int tStop) {
-		Chart2D chart = getChart();
-		assert chart != null;
-		
 		// remove previous traces
 		chart.removeAllTraces();	//XXX: is that required? do removed ports keep traces in a chart?
 
 		// setup traces for all connected ports
 		for (Port p : getInputs()) {
-			assert p instanceof DisplayPort;
 			DisplayPort port = (DisplayPort) p;
 			Port input = port.getIn();
 			
@@ -354,14 +349,11 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		DisplayPort port = null;
 		Port input = null;
 		for (Port p : getInputs()) {
-			assert p instanceof DisplayPort;
 			port = (DisplayPort) p;
 			input = port.getIn();
 			
 			// if port connected, plot the value
 			if (input != null) {
-				assert port.getTrace() != null;
-				
 				Object value = input.getValue();
 				double traceValue = 0;
 				if (input.getType() == VariableType.REAL) {
@@ -383,7 +375,6 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 */
 	public void terminate() {
 	    // re-enable notification
-	    eSetDeliver(true);
 	    for (Port p : getInputs())
 			p.eSetDeliver(true);
 	}

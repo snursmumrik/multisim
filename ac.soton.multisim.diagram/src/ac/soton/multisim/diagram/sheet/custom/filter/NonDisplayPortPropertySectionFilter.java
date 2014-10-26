@@ -7,17 +7,21 @@
  */
 package ac.soton.multisim.diagram.sheet.custom.filter;
 
+import org.eclipse.emf.ecore.EObject;
+
+import ac.soton.multisim.DisplayPort;
 import ac.soton.multisim.Port;
 
 /**
  * @author vitaly
  *
  */
-public class PortPropertySectionFilter extends AbstractPropertySectionFilter {
+public class NonDisplayPortPropertySectionFilter extends AbstractPropertySectionFilter {
 	
 	@Override
 	public boolean select(Object toTest) {
-		return unwrap(toTest) instanceof Port;
+		EObject element = unwrap(toTest);
+		return element instanceof Port && false == element instanceof DisplayPort;
 	}
 
 }
