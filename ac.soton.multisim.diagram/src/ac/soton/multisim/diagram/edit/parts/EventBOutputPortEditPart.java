@@ -11,6 +11,7 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
@@ -24,6 +25,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
+import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
@@ -34,7 +36,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
-import ac.soton.multisim.Port;
+import ac.soton.multisim.EventBPort;
+import ac.soton.multisim.VariableType;
 import ac.soton.multisim.diagram.edit.policies.EventBOutputPortItemSemanticEditPolicy;
 
 /**
@@ -251,13 +254,20 @@ public class EventBOutputPortEditPart extends AbstractBorderItemEditPart {
 		super.showTargetFeedback(request);
 		// the feedback layer figures do not receive mouse e
 		if (feedbackFigure == null) {
-			feedbackFigure = new Label(
-					((Port) resolveSemanticElement()).getName());
+			EventBPort port = (EventBPort) resolveSemanticElement();
+			feedbackFigure = new Label("Name:  " + port.getName() +
+					"\nVariable: " + (port.getVariable() != null ? port.getVariable().getName() : "null") + 
+					"\nType:  " + port.getType().getName() +
+					(port.getType() == VariableType.REAL ? "\nPrecis: " + port.getIntToReal() : ""));
 			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
-			Rectangle bounds = feedbackFigure.getTextBounds().getCopy();
+			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()
-					.translate(13, -bounds.height));
+					.translate(0, 20));
 			feedbackFigure.setBounds(bounds);
+			feedbackFigure.setForegroundColor(ColorConstants.tooltipForeground);
+			feedbackFigure.setBackgroundColor(ColorConstants.tooltipBackground);
+			feedbackFigure.setOpaque(true);
+			feedbackFigure.setBorder(new LineBorder());
 
 			IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
 			layer.add(feedbackFigure);
@@ -270,6 +280,9 @@ public class EventBOutputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public void eraseTargetFeedback(Request request) {
 		super.eraseTargetFeedback(request);
+		if (request instanceof CreateConnectionRequest)
+			return;
+		
 		IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
 		if (layer != null && feedbackFigure != null
 				&& feedbackFigure.getParent() != null) {
