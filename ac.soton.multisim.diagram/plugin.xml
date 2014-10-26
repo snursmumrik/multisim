@@ -400,6 +400,14 @@ http://www.eclipse.org/legal/epl-v10.html
                id="property.section.precision"
                tab="property.tab.overview">
          </propertySection>
+         <propertySection
+               afterSection="property.section.type"
+               class="ac.soton.multisim.diagram.sheet.custom.DescriptionPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.FMUPortPropertySectionFilter"
+               id="property.section.description"
+               tab="property.tab.overview">
+         </propertySection>
       </propertySections>
    </extension>
 
