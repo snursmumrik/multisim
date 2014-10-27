@@ -639,6 +639,15 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDisplayComponent_BufferSize() {
+		return (EAttribute)displayComponentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDisplayPort() {
 		return displayPortEClass;
 	}
@@ -827,6 +836,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 
 		displayComponentEClass = createEClass(DISPLAY_COMPONENT);
 		createEAttribute(displayComponentEClass, DISPLAY_COMPONENT__CHART);
+		createEAttribute(displayComponentEClass, DISPLAY_COMPONENT__BUFFER_SIZE);
 
 		displayPortEClass = createEClass(DISPLAY_PORT);
 		createEAttribute(displayPortEClass, DISPLAY_PORT__TRACE);
@@ -965,6 +975,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 
 		initEClass(displayComponentEClass, DisplayComponent.class, "DisplayComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDisplayComponent_Chart(), this.getChart2D(), "chart", null, 0, 1, DisplayComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDisplayComponent_BufferSize(), theEcorePackage.getEInt(), "bufferSize", "1500", 0, 1, DisplayComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(displayPortEClass, DisplayPort.class, "DisplayPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDisplayPort_Trace(), this.getITrace2D(), "trace", null, 0, 1, DisplayPort.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

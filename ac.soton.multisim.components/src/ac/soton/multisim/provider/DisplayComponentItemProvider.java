@@ -81,6 +81,7 @@ public class DisplayComponentItemProvider
 
 			addStepPeriodPropertyDescriptor(object);
 			addChartPropertyDescriptor(object);
+			addBufferSizePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -125,6 +126,28 @@ public class DisplayComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Buffer Size feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBufferSizePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DisplayComponent_bufferSize_feature"),
+				 getString("_UI_DisplayComponent_bufferSize_description"),
+				 MultisimPackage.Literals.DISPLAY_COMPONENT__BUFFER_SIZE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}

@@ -109,8 +109,8 @@ public final class PortConnectionHandleEditPolicy extends
 	}
 
 	@Override
-	protected List getHandleFigures() {
-		List list = new ArrayList(2);
+	protected List<ConnectionHandle> getHandleFigures() {
+		List<ConnectionHandle> list = new ArrayList<>(2);
 		
 		String tooltip;
 		tooltip = buildTooltip(HandleDirection.INCOMING);

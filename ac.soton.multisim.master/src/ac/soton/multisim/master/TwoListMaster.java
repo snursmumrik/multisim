@@ -35,6 +35,7 @@ import ac.soton.multisim.util.SimulationUtil;
  */
 public class TwoListMaster {
 
+	@SuppressWarnings("unused")
 	private static final String PLUGIN_ID = "ac.soton.multisim.components.master";
 	
 	// simulation parameter names

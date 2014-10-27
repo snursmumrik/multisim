@@ -16,13 +16,11 @@ import info.monitorenter.gui.chart.ZoomableChart;
 import info.monitorenter.gui.chart.axis.AxisLinear;
 import info.monitorenter.gui.chart.labelformatters.LabelFormatterNumber;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Random;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,7 +30,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.impl.EventBNamedImpl;
-
 import ac.soton.multisim.Component;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.DisplayPort;
@@ -51,17 +48,14 @@ import ac.soton.multisim.VariableType;
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getChart <em>Chart</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getBufferSize <em>Buffer Size</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComponent {
-	/**
-	 * Maximum size of the visible chart trace.
-	 * @custom
-	 */
-	private static final int MAX_TRACE_SIZE = 1500;
+
 	/**
 	 * Random colour generator.
 	 * @custom
@@ -130,6 +124,25 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	 * @ordered
 	 */
 	protected Chart2D chart = CHART_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getBufferSize() <em>Buffer Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBufferSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int BUFFER_SIZE_EDEFAULT = 1500;
+	/**
+	 * The cached value of the '{@link #getBufferSize() <em>Buffer Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBufferSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected int bufferSize = BUFFER_SIZE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -219,6 +232,27 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getBufferSize() {
+		return bufferSize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBufferSize(int newBufferSize) {
+		int oldBufferSize = bufferSize;
+		bufferSize = newBufferSize;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE, oldBufferSize, bufferSize));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@SuppressWarnings("serial")
@@ -265,9 +299,6 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    chart.getAxisY().getAxisTitle().setTitle("");
 		    
 		    chart.setVisible(false);
-		    // disable notification
-		    for (Port p : getInputs())
-				p.eSetDeliver(false);
 		}
 	}
 
@@ -280,6 +311,10 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		// remove previous traces
 		chart.removeAllTraces();	//XXX: is that required? do removed ports keep traces in a chart?
 
+	    // disable notification
+	    for (Port p : getInputs())
+			p.eSetDeliver(false);
+
 		// setup traces for all connected ports
 		for (Port p : getInputs()) {
 			DisplayPort port = (DisplayPort) p;
@@ -291,7 +326,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			// prepare traces
 		    ITrace2D trace = port.getTrace();
 		    if (trace == null) {
-		    	trace = new Trace2DLtd(MAX_TRACE_SIZE);
+		    	trace = new Trace2DLtd(bufferSize);
 			    port.setTrace(trace);
 		    } else {
 		    	trace.removeAllPoints();
@@ -411,6 +446,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				return getStepPeriod();
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				return getChart();
+			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
+				return getBufferSize();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -438,6 +475,9 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				setChart((Chart2D)newValue);
 				return;
+			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
+				setBufferSize((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -462,6 +502,9 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				setChart(CHART_EDEFAULT);
 				return;
+			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
+				setBufferSize(BUFFER_SIZE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -482,6 +525,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				return CHART_EDEFAULT == null ? chart != null : !CHART_EDEFAULT.equals(chart);
+			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
+				return bufferSize != BUFFER_SIZE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -500,6 +545,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		result.append(stepPeriod);
 		result.append(", chart: ");
 		result.append(chart);
+		result.append(", bufferSize: ");
+		result.append(bufferSize);
 		result.append(')');
 		return result.toString();
 	}

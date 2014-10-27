@@ -9,7 +9,7 @@ package ac.soton.multisim.diagram.sheet.custom;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import ac.soton.multisim.EventBPort;
+import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractSpinnerPropertySection;
 
@@ -17,11 +17,11 @@ import ac.soton.multisim.diagram.sheet.custom.common.AbstractSpinnerPropertySect
  * @author vitaly
  *
  */
-public class PrecisionPropertySection extends AbstractSpinnerPropertySection {
+public class BufferSizePropertySection extends AbstractSpinnerPropertySection {
 
 	@Override
 	protected int getFeatureValue() {
-		return ((EventBPort) eObject).getIntToReal();
+		return ((DisplayComponent) eObject).getBufferSize();
 	}
 
 	@Override
@@ -31,21 +31,21 @@ public class PrecisionPropertySection extends AbstractSpinnerPropertySection {
 
 	@Override
 	protected int getMaxValue() {
-		return 10;
+		return 10000;
 	}
 
 	@Override
 	protected int getMinValue() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	protected String getLabelText() {
-		return "Precision:";
+		return "Buffer Size:";
 	}
 
 	@Override
 	protected EStructuralFeature getFeature() {
-		return MultisimPackage.Literals.EVENT_BPORT__INT_TO_REAL;
+		return MultisimPackage.Literals.DISPLAY_COMPONENT__BUFFER_SIZE;
 	}
 }

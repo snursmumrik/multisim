@@ -94,6 +94,8 @@
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//DisplayComponent">
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayComponent/chart"/>
+      <genFeatures notify="false" createChild="false" propertyDescription="Plotted trace point buffer size."
+          ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayComponent/bufferSize"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//DisplayPort">
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//DisplayPort/trace"/>

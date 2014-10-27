@@ -21,6 +21,7 @@ import info.monitorenter.gui.chart.Chart2D;
  * The following features are supported:
  * <ul>
  *   <li>{@link ac.soton.multisim.DisplayComponent#getChart <em>Chart</em>}</li>
+ *   <li>{@link ac.soton.multisim.DisplayComponent#getBufferSize <em>Buffer Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,5 +62,32 @@ public interface DisplayComponent extends Component {
 	 * @generated
 	 */
 	void setChart(Chart2D value);
+
+	/**
+	 * Returns the value of the '<em><b>Buffer Size</b></em>' attribute.
+	 * The default value is <code>"1500"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Buffer Size</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Buffer Size</em>' attribute.
+	 * @see #setBufferSize(int)
+	 * @see ac.soton.multisim.MultisimPackage#getDisplayComponent_BufferSize()
+	 * @model default="1500"
+	 * @generated
+	 */
+	int getBufferSize();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.multisim.DisplayComponent#getBufferSize <em>Buffer Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Buffer Size</em>' attribute.
+	 * @see #getBufferSize()
+	 * @generated
+	 */
+	void setBufferSize(int value);
 
 } // DisplayComponent

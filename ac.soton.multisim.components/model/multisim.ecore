@@ -106,6 +106,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="DisplayComponent" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="chart" eType="#//Chart2D"
         transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bufferSize" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
+        defaultValueLiteral="1500"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DisplayPort" eSuperTypes="#//Port">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">

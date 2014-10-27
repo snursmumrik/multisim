@@ -408,6 +408,14 @@ http://www.eclipse.org/legal/epl-v10.html
                id="property.section.description"
                tab="property.tab.overview">
          </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.BufferSizePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.DisplayComponentPropertySectionFilter"
+               id="property.section.buffer"
+               tab="property.tab.overview">
+         </propertySection>
       </propertySections>
    </extension>
 

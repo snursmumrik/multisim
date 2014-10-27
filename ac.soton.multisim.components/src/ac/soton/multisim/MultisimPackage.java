@@ -944,13 +944,22 @@ public interface MultisimPackage extends EPackage {
 	int DISPLAY_COMPONENT__CHART = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Buffer Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISPLAY_COMPONENT__BUFFER_SIZE = COMPONENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Display Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DISPLAY_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 1;
+	int DISPLAY_COMPONENT_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.multisim.impl.DisplayPortImpl <em>Display Port</em>}' class.
@@ -1572,6 +1581,17 @@ public interface MultisimPackage extends EPackage {
 	EAttribute getDisplayComponent_Chart();
 
 	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.DisplayComponent#getBufferSize <em>Buffer Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Buffer Size</em>'.
+	 * @see ac.soton.multisim.DisplayComponent#getBufferSize()
+	 * @see #getDisplayComponent()
+	 * @generated
+	 */
+	EAttribute getDisplayComponent_BufferSize();
+
+	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.DisplayPort <em>Display Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2064,6 +2084,14 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DISPLAY_COMPONENT__CHART = eINSTANCE.getDisplayComponent_Chart();
+
+		/**
+		 * The meta object literal for the '<em><b>Buffer Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DISPLAY_COMPONENT__BUFFER_SIZE = eINSTANCE.getDisplayComponent_BufferSize();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.impl.DisplayPortImpl <em>Display Port</em>}' class.

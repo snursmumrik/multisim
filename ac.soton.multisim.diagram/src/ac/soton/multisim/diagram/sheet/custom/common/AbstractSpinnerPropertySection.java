@@ -10,6 +10,7 @@ package ac.soton.multisim.diagram.sheet.custom.common;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,6 +19,7 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -78,13 +80,6 @@ public abstract class AbstractSpinnerPropertySection
 	}
 
 	/**
-	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
-	 */
-	public void refresh() {
-		spinner.setSelection(getFeatureValue());
-	}
-
-	/**
 	 * Get the value of the feature as int for the spinner section.
 	 * 
 	 * @return the value of the feature as int.
@@ -108,4 +103,10 @@ public abstract class AbstractSpinnerPropertySection
 	 * @return
 	 */
 	protected abstract int getMinValue();
+
+	@Override
+	public void setInput(IWorkbenchPart part, ISelection selection) {
+		super.setInput(part, selection);
+		spinner.setSelection(getFeatureValue());
+	}
 }
