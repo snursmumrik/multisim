@@ -552,11 +552,11 @@ http://www.eclipse.org/legal/epl-v10.html
       </metamodel>
       <metamodel nsURI="http://soton.ac.uk/models/multisim/2.0">
          <metamodelType
-               id="ac.soton.multisim.diagram.EventBComponent_2006"
-               name="%metatype.name.EventBComponent_2006"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="EventBComponent"
-               edithelper="ac.soton.multisim.diagram.edit.helpers.EventBComponentEditHelper">
+               edithelper="ac.soton.multisim.diagram.edit.helpers.EventBComponentEditHelper"
+               id="ac.soton.multisim.diagram.EventBComponent_2006"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               name="%metatype.name.EventBComponent_2006">
             <param name="semanticHint" value="2006"/>
          </metamodelType>
       </metamodel>

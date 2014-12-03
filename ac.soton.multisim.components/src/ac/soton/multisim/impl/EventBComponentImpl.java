@@ -49,7 +49,6 @@ import ac.soton.multisim.util.SimulationUtil;
 
 import com.google.inject.Injector;
 
-import de.be4.classicalb.core.parser.exceptions.BException;
 import de.be4.ltl.core.parser.LtlParseException;
 import de.prob.Main;
 import de.prob.animator.command.ExecuteUntilCommand;
@@ -58,7 +57,6 @@ import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.AnimationSelector;
-import de.prob.statespace.OpInfo;
 import de.prob.statespace.StateId;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
@@ -566,26 +564,23 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		}
 		
 		// find enabled read event
-		List<OpInfo> readOps = new ArrayList<OpInfo>();
+		List<String> enabled = new ArrayList<>();
 		String predicate = stringBuilder.toString();
 		for (Event re : readEvents) {
 			try {
-				readOps.add(trace.findOneOp(re.getName(), predicate));
+				if (trace.canExecuteEvent(re.getName(), predicate))
+					enabled.add(re.getName());//old: findOneOp(re.getName(), predicate));
 			} catch (IllegalArgumentException e) {
 				// no operation found -> proceed
-			} catch (BException e) {
-				// BException, i.e. ProB failed
-				throw new SimulationException("Cannot read inputs of component '" + getName() + "'\n" +
-						"Reason: ProB failed to find enabled read event '" + re.getName() + "[" + predicate + "]'", e);
 			}
 		}
 		
 		// no reads are enabled
-		if (readOps.isEmpty())
-			throw new ModelException("No read events enabled in '" + getName() + "'");
+		if (enabled.isEmpty())
+			throw new ModelException("No read events enabled in '" + getName() + "' for a predicate: " + predicate);
 		
 		// execute read event
-		trace = trace.add(readOps.get(random.nextInt(readOps.size())).getId());
+		trace = trace.execute(enabled.get(random.nextInt(enabled.size())), predicate);
 	}
 
 	/**

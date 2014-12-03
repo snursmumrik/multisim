@@ -171,6 +171,28 @@
             wizardId="ac.soton.multisim.diagram.part.MultisimCreationWizardID">
          <enablement></enablement>
       </commonWizard>
+      <navigatorContent
+            contentProvider="ac.soton.multisim.ui.navigator.FMUNavigatorContentProvider"
+            icon="icons/FMU.png"
+            id="ac.soton.multisim.ui.navigator.content.fmu"
+            labelProvider="ac.soton.multisim.ui.navigator.FMUNavigatorLabelProvider"
+            name="FMU File"
+            priority="low">
+         <triggerPoints>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+            </adapt>
+         </triggerPoints>
+      </navigatorContent>
+      <actionProvider
+            class="ac.soton.multisim.ui.navigator.FMUNavigatorActionProvider"
+            id="ac.soton.multisim.ui.navigator.fmuActionProvider">
+         <enablement>
+            <instanceof
+                  value="ac.soton.multisim.util.FMUResource">
+            </instanceof>
+         </enablement>
+      </actionProvider>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
@@ -179,6 +201,9 @@
          <includes>
             <contentExtension
                   pattern="ac.soton.multisim.ui.navigator.content">
+            </contentExtension>
+            <contentExtension
+                  pattern="ac.soton.multisim.ui.navigator.content.fmu">
             </contentExtension>
          </includes>
       </viewerContentBinding>
@@ -193,6 +218,9 @@
             </actionExtension>
             <actionExtension
                   pattern="ac.soton.multisim.ui.navigator.eventbActionProvider">
+            </actionExtension>
+            <actionExtension
+                  pattern="ac.soton.multisim.ui.navigator.fmuActionProvider">
             </actionExtension>
          </includes>
       </viewerActionBinding>
@@ -247,6 +275,10 @@
             categoryId="ac.soton.multisim.ui.commands"
             id="ac.soton.multisim.ui.command.simulate"
             name="Simulate">
+      </command>
+      <command
+            id="ac.soton.multisim.ui.command1"
+            name="Test">
       </command>
    </extension>
    <extension

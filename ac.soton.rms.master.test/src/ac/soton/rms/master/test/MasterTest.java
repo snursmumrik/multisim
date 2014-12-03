@@ -446,7 +446,7 @@ public class MasterTest extends AbstractEventBTests {
 		Trace trace = new Trace(s);
 		
 		trace = trace.anyEvent(null);
-		Object value = trace.getCurrentState().value("y");
+		Object value = trace.getCurrentState().eval("y");
 		trace = trace.anyEvent(null);
 	}
 	

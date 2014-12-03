@@ -29,6 +29,7 @@ public class MultisimUIActivator extends AbstractUIPlugin {
 	public static final String IMAGE_HANDLE_OUT_SOUTH = "icons/handle_outgoing_south.png";
 	public static final String IMAGE_HANDLE_OUT_WEST = "icons/handle_outgoing_west.png";
 	public static final String IMAGE_HANDLE_OUT_EAST = "icons/handle_outgoing_east.png";
+    public static final String IMAGE_FMU = "icons/FMU.png";
 
 	@Override
     protected void initializeImageRegistry(ImageRegistry registry) {
@@ -41,6 +42,7 @@ public class MultisimUIActivator extends AbstractUIPlugin {
        loadImage(registry, IMAGE_HANDLE_OUT_SOUTH);
        loadImage(registry, IMAGE_HANDLE_OUT_WEST);
        loadImage(registry, IMAGE_HANDLE_OUT_EAST);
+       loadImage(registry, IMAGE_FMU);
     }
     
 	protected void loadImage(ImageRegistry registry, String id) {

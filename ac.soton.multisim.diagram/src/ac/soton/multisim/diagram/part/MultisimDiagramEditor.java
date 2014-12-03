@@ -7,7 +7,6 @@
  */
 package ac.soton.multisim.diagram.part;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -70,6 +69,7 @@ import org.eventb.core.IMachineRoot;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.diagram.navigator.MultisimNavigatorItem;
+import ac.soton.multisim.util.FMUResource;
 
 /**
  * @generated
@@ -325,6 +325,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	@Override
 	protected void initializeGraphicalViewer() {
 		super.initializeGraphicalViewer();
+		// workspace element drag listener
 		getDiagramGraphicalViewer().addDropTargetListener(
 				new DropTargetListener(getDiagramGraphicalViewer(),
 						LocalSelectionTransfer.getTransfer()) {
@@ -334,6 +335,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 								.getSelection();
 					}
 				});
+		// file drag listener
 		getDiagramGraphicalViewer().addDropTargetListener(
 				new DropTargetListener(getDiagramGraphicalViewer(),
 						FileTransfer.getInstance()) {
@@ -363,7 +365,6 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	private abstract class DropTargetListener extends DiagramDropTargetListener {
 
 		private static final String FMU_EXTENSION = "fmu";
-		private static final String MACHINE_EXTENSION = "bum";
 
 		public DropTargetListener(EditPartViewer viewer, Transfer xfer) {
 			super(viewer, xfer);
@@ -381,19 +382,12 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 					return null;
 
 				Object selectedObject = selection.getFirstElement();
-				if (selectedObject instanceof IFile) {
-					if (FMU_EXTENSION.equals(((IFile) selectedObject)
-							.getFileExtension())
-							|| MACHINE_EXTENSION
-									.equals(((IFile) selectedObject)
-											.getFileExtension())) {
-						return Collections.singletonList(selectedObject);
-					}
+				if (selectedObject instanceof FMUResource) {
+					return selection.toList();
 				} else if (selectedObject instanceof IMachineRoot) {
-					return Collections.singletonList(selectedObject);
+					return selection.toList();
 				} else if (selectedObject instanceof MultisimNavigatorItem) {
-					View view = ((MultisimNavigatorItem) selectedObject)
-							.getView();
+					View view = ((MultisimNavigatorItem) selectedObject).getView();
 					selectedObject = view.getElement();
 				} else if (selectedObject instanceof IAdaptable) {
 					IAdaptable adaptable = (IAdaptable) selectedObject;
@@ -407,14 +401,13 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 			} else if (transferedObject instanceof String[]) {
 				String[] paths = (String[]) transferedObject;
 				if (paths.length == 1 && paths[0].endsWith("." + FMU_EXTENSION)) {
-					return Collections.singletonList(new File(paths[0]));
+					return Collections.singletonList(new FMUResource(paths[0]));
 				}
 			}
 
 			ArrayList<EObject> result = new ArrayList<EObject>(uris.size());
 			for (URI nextURI : uris) {
-				EObject modelObject = getEditingDomain().getResourceSet()
-						.getEObject(nextURI, true);
+				EObject modelObject = getEditingDomain().getResourceSet().getEObject(nextURI, true);
 				result.add(modelObject);
 			}
 			return result;

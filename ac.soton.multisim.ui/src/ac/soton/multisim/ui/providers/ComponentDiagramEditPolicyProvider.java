@@ -15,7 +15,7 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPolicies
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
 import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
-import ac.soton.multisim.ui.policies.ImportEditPolicy;
+import ac.soton.multisim.ui.policies.DragDropImportEditPolicy;
 
 /**
  * Component diagram (root) edit policy provider.
@@ -45,7 +45,7 @@ public class ComponentDiagramEditPolicyProvider implements IEditPolicyProvider {
 
 	@Override
 	public void createEditPolicies(EditPart editPart) {
-		editPart.installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new ImportEditPolicy());
+		editPart.installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropImportEditPolicy());
 	}
 
 }

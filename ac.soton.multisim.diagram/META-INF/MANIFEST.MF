@@ -7,7 +7,8 @@ Bundle-ClassPath: .
 Bundle-Activator: ac.soton.multisim.diagram.part.MultisimDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: ac.soton.multisim.diagram.edit.parts,
+Export-Package: ac.soton.multisim.diagram.edit.commands,
+ ac.soton.multisim.diagram.edit.parts,
  ac.soton.multisim.diagram.navigator,
  ac.soton.multisim.diagram.part,
  ac.soton.multisim.diagram.providers,
