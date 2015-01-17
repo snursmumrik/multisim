@@ -294,7 +294,7 @@ public class MultisimValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 MessageFormat.format("Inconsistent read input events ''{1}'' and ''{2}'' (mismatched number/names of parameters)", new Object[] { event1.getName(), event2.getName() }),	
+						 MessageFormat.format("Read events ''{1}'' and ''{2}'' should match in number/name of parameters", new Object[] { event1.getName(), event2.getName() }),	
 						 new Object[] { eventBComponent }));
 			}
 			return false;
@@ -319,7 +319,7 @@ public class MultisimValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "Invalid Machine reference",
+						 "Invalid machine reference",
 						 new Object[] { eventBComponent }));
 			}
 			return false;
@@ -511,9 +511,9 @@ public class MultisimValidator extends EObjectValidator {
 	public boolean validateEventBPort_validEventBReference(EventBPort eventBPort, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		String errorText = null;
 		if (eventBPort.getCausality() == VariableCausality.INPUT && eventBPort.getParameter() == null)
-			errorText = "Undefined 'read' event parameter";
+			errorText = "Undefined input parameter";
 		else if (eventBPort.getCausality() == VariableCausality.OUTPUT && eventBPort.getVariable() == null)
-			errorText = "Undefined machine variable";
+			errorText = "Undefined output variable";
 		
 		if (errorText != null) {
 			if (diagnostics != null) {
@@ -575,7 +575,7 @@ public class MultisimValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 "String type is not supported by Display",	
+						 "String input not allowed by Display",	
 						 new Object[] { displayPort }));
 			}
 			return false;

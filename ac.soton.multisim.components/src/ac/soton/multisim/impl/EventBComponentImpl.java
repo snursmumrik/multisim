@@ -55,12 +55,14 @@ import de.prob.animator.command.ExecuteUntilCommand;
 import de.prob.animator.domainobjects.EvalResult;
 import de.prob.animator.domainobjects.LTL;
 import de.prob.model.eventb.EventBModel;
+import de.prob.scripting.Api;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.AnimationSelector;
-import de.prob.statespace.StateId;
+import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 import de.prob.statespace.TraceConverter;
+import de.prob2.ui.eclipse.VersionController;
 
 /**
  * <!-- begin-user-doc -->
@@ -444,10 +446,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Customised ProB animator startup code from {@link de.prob.ui.eventb.StartAnimationHandler#execute(ExecutionEvent)}
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public void instantiate() throws SimulationException {
+		VersionController.ensureInstalled();
+		
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
@@ -480,7 +485,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// load a machine
 		Injector injector = Main.getInjector();
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
-		EventBModel model = instance.load(fileName, params, false);
+		EventBModel model = instance.load(fileName, params, Api.getDEFAULT());
 		if (model == null)
 			throw new SimulationException("ProB could not load machine file '" + fileName + "' with parameters=" + params.toString());
 
@@ -515,6 +520,24 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// while setting port value
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
+		
+		// add animation
+		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+		selector.addNewAnimation(trace);
+		
+//		// switch perspective
+//		final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+//		IPerspectiveDescriptor activePerspective = workbenchWindow.getActivePage().getPerspective();
+//		Display.getCurrent().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					workbenchWindow.getWorkbench().showPerspective("de.prob2.perspective", workbenchWindow);
+//				} catch (WorkbenchException e) {
+//
+//				}
+//			}
+//		});
 	}
 
 	/**
@@ -527,9 +550,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
-		if (!INIT.equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			trace = trace.anyEvent(null);
-		if (!INIT.equals(trace.getCurrent().getOp().getName()))
+		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: $initialise_machine operation not found.");
 	}
@@ -589,7 +612,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void writeOutputs() {
-		StateId state = trace.getCurrentState();
+		State state = trace.getCurrentState();
 		for (Port p : getOutputs()) {
 			p.setValue(SimulationUtil.getFMIValue(
 					((EvalResult) state.eval(((EventBPort) p).getVariable().getName())).getValue(), 
@@ -607,13 +630,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	public void doStep(int time, int step) throws ModelException, SimulationException {
 		// skip if current event is already a 'wait' event
-		if (waitSet.contains(trace.getCurrent().getOp().getName()))
+		if (waitSet.contains(trace.getCurrentTransition().getName()))
 			return;
 		
 		StateSpace stateSpace = trace.getStateSpace();
 		ExecuteUntilCommand command = new ExecuteUntilCommand(trace.getStateSpace(), trace.getCurrentState(), ltl);
 		stateSpace.execute(command);
-		trace = trace.addOps(command.getNewTransitions());
+		trace = trace.addTransitions(command.getNewTransitions());
 		
 		if (!command.isSuccess()) {
 			if (command.conditionNotReached())
