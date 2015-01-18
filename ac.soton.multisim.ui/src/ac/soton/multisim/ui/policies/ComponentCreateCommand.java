@@ -178,7 +178,7 @@ public class ComponentCreateCommand extends EditElementCommand {
 	}	
 	
 	/**
-	 * Imports Event-B component from a Machine.
+	 * Imports Event-B component from a Machine via configuration wizard.
 	 * 
 	 * @param machine
 	 * @return

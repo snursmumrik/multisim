@@ -7,7 +7,6 @@
  */
 package ac.soton.multisim.diagram.part;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -19,9 +18,7 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.gef.palette.PaletteSeparator;
 import org.eclipse.gef.palette.ToolEntry;
-import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -47,7 +44,7 @@ public class MultisimPaletteFactory {
 	/**
 	 * @custom
 	 */
-	public void addToPalette(PaletteRoot paletteRoot, Component component) {
+	public static void addToPalette(PaletteRoot paletteRoot, Component component) {
 		PaletteGroup importedGroup = null;
 		for (Object child : paletteRoot.getChildren()) {
 			if (child instanceof PaletteGroup
@@ -101,7 +98,7 @@ public class MultisimPaletteFactory {
 	 * @return
 	 * @custom
 	 */
-	private PaletteEntry createComponentInstantiationTool(Component component,
+	private static PaletteEntry createComponentInstantiationTool(Component component,
 			ImageDescriptor imageDescriptor) {
 		InstantiateComponentTool cit = new InstantiateComponentTool(
 				component.getName(), "Instantiate component "

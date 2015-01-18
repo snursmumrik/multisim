@@ -34,7 +34,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
@@ -57,6 +59,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
@@ -65,6 +68,17 @@ import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
  * @generated
  */
 public class MultisimDiagramEditorUtil {
+	
+	/**
+	 * Adds new component to the palette of edit domain's viewer.
+	 * @param editDomain
+	 * @param component
+	 * @custom
+	 */
+	public static void addPaletteComponent(EditDomain editDomain, Component component) {
+		PaletteRoot paletteRoot = editDomain.getPaletteViewer().getPaletteRoot();
+		MultisimPaletteFactory.addToPalette(paletteRoot, component);
+	}
 
 	/**
 	 * @generated

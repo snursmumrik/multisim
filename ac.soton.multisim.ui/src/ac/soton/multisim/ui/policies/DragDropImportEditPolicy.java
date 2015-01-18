@@ -7,10 +7,14 @@
  */
 package ac.soton.multisim.ui.policies;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.common.core.command.CompositeCommand;
 import org.eclipse.gmf.runtime.diagram.core.edithelpers.CreateElementRequestAdapter;
 import org.eclipse.gmf.runtime.diagram.ui.commands.CreateCommand;
@@ -30,6 +34,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eventb.core.basis.MachineRoot;
 
 import ac.soton.multisim.Component;
+import ac.soton.multisim.diagram.part.MultisimDiagramEditorUtil;
 import ac.soton.multisim.diagram.providers.MultisimElementTypes;
 import ac.soton.multisim.util.FMUResource;
 
@@ -82,7 +87,25 @@ public class DragDropImportEditPolicy extends DiagramDragDropEditPolicy {
 		SemanticCreateCommand semanticCommand = new SemanticCreateCommand(adapter, createElementCommand);
 
 		// view command
-		CreateCommand viewCommand = new CreateCommand(editingDomain, descriptor, (View) (getHost().getModel()));
+		CreateCommand viewCommand = new CreateCommand(editingDomain, descriptor, (View) (getHost().getModel())) {
+
+			@Override
+			protected CommandResult doExecuteWithResult(
+					IProgressMonitor monitor, IAdaptable info)
+					throws ExecutionException {
+				CommandResult result = super.doExecuteWithResult(monitor, info);
+				
+				// if success, add component to palette
+				if (result.getStatus().isOK()) {
+					Object value = getCommandResult().getReturnValue();
+					if (value instanceof ViewAndElementDescriptor) {
+						Object comp = ((ViewAndElementDescriptor) value).getElementAdapter().getAdapter(Component.class);
+						if (comp instanceof Component)
+							MultisimDiagramEditorUtil.addPaletteComponent(getHost().getViewer().getEditDomain(), (Component) comp);
+					}
+				}
+				return result;
+			}};
 
 		// relocate command
 		Point dropLocation = dropRequest.getLocation().getCopy();

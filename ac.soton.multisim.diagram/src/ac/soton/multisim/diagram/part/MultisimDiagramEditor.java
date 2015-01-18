@@ -325,6 +325,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	@Override
 	protected void initializeGraphicalViewer() {
 		super.initializeGraphicalViewer();
+		
 		// workspace element drag listener
 		getDiagramGraphicalViewer().addDropTargetListener(
 				new DropTargetListener(getDiagramGraphicalViewer(),
@@ -347,13 +348,12 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 				});
 
 		// populate the palette with existing components
-		MultisimPaletteFactory paletteFactory = new MultisimPaletteFactory();
 		PaletteRoot paletteRoot = getDiagramGraphicalViewer().getEditDomain()
 				.getPaletteViewer().getPaletteRoot();
 		ComponentDiagram diagram = (ComponentDiagram) getDiagramEditPart()
 				.resolveSemanticElement();
 		for (Component component : diagram.getComponents()) {
-			paletteFactory.addToPalette(paletteRoot, component);
+			MultisimPaletteFactory.addToPalette(paletteRoot, component);
 		}
 	}
 
@@ -364,13 +364,14 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	 */
 	private abstract class DropTargetListener extends DiagramDropTargetListener {
 
+		//XXX: this is not flexible
 		private static final String FMU_EXTENSION = "fmu";
 
 		public DropTargetListener(EditPartViewer viewer, Transfer xfer) {
 			super(viewer, xfer);
 		}
 
-		protected List getObjectsBeingDropped() {
+		protected List<?> getObjectsBeingDropped() {
 			TransferData data = getCurrentEvent().currentDataType;
 			HashSet<URI> uris = new HashSet<URI>();
 
