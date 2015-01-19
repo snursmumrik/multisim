@@ -99,7 +99,7 @@ public class SimulationSettingsDialog extends Dialog {
 		stopTime = diagram.getStopTime() > 0 ? diagram.getStopTime() : STOP_DEFAULT;
 		stepSize = diagram.getStepSize() > 0 ? diagram.getStepSize() : STEP_DEFAULT;
 		args = diagram.getArguments() != null ? diagram.getArguments() : ARGUMENTS_DEFAULT;
-		record = diagram.isRecordTrace();
+		record = diagram.isRecordOutputs();
 		
 		startTimeValid = true;
 		stopTimeValid = true;
@@ -296,7 +296,7 @@ public class SimulationSettingsDialog extends Dialog {
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_StopTime(), stopTime));
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_StepSize(), stepSize));
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_Arguments(), args));
-		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_RecordTrace(), record));
+		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_RecordOutputs(), record));
 		editingDomain.getCommandStack().execute(cc);
 	}
 

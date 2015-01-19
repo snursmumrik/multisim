@@ -83,7 +83,7 @@ public class ComponentDiagramItemProvider
 			addStartTimePropertyDescriptor(object);
 			addStepSizePropertyDescriptor(object);
 			addArgumentsPropertyDescriptor(object);
-			addRecordTracePropertyDescriptor(object);
+			addRecordOutputsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -177,19 +177,19 @@ public class ComponentDiagramItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Record Trace feature.
+	 * This adds a property descriptor for the Record Outputs feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addRecordTracePropertyDescriptor(Object object) {
+	protected void addRecordOutputsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ComponentDiagram_recordTrace_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_recordTrace_feature", "_UI_ComponentDiagram_type"),
-				 MultisimPackage.Literals.COMPONENT_DIAGRAM__RECORD_TRACE,
+				 getString("_UI_ComponentDiagram_recordOutputs_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_recordOutputs_feature", "_UI_ComponentDiagram_type"),
+				 MultisimPackage.Literals.COMPONENT_DIAGRAM__RECORD_OUTPUTS,
 				 true,
 				 false,
 				 false,
@@ -269,7 +269,7 @@ public class ComponentDiagramItemProvider
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
-			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.COMPONENT_DIAGRAM__COMPONENTS:

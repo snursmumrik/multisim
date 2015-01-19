@@ -87,6 +87,7 @@ public class EventBComponentItemProvider
 			addReadInputEventsPropertyDescriptor(object);
 			addWaitEventsPropertyDescriptor(object);
 			addTracePropertyDescriptor(object);
+			addRecordTracePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -153,6 +154,28 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Record Trace feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRecordTracePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventBComponent_recordTrace_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_recordTrace_feature", "_UI_EventBComponent_type"),
+				 MultisimPackage.Literals.EVENT_BCOMPONENT__RECORD_TRACE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -316,6 +339,7 @@ public class EventBComponentItemProvider
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
+			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:

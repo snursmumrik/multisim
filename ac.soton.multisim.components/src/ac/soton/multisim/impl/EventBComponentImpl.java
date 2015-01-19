@@ -80,6 +80,7 @@ import de.prob2.ui.eclipse.VersionController;
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getReadInputEvents <em>Read Input Events</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
  * </ul>
  * </p>
  *
@@ -247,6 +248,25 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected Trace trace = TRACE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecordTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RECORD_TRACE_EDEFAULT = false;
+	/**
+	 * The cached value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecordTrace()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -335,6 +355,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		trace = newTrace;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__TRACE, oldTrace, trace));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isRecordTrace() {
+		return recordTrace;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRecordTrace(boolean newRecordTrace) {
+		boolean oldRecordTrace = recordTrace;
+		recordTrace = newRecordTrace;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE, oldRecordTrace, recordTrace));
 	}
 
 	/**
@@ -659,7 +700,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			p.eSetDeliver(true);
 		
 		// save trace
-		if (((ComponentDiagram) eContainer()).isRecordTrace()) {
+		if (isRecordTrace()) {
 			String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
 					+ "_" + getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
 			trace.toString();	//XXX has to be called to fix the serialisation bug
@@ -735,6 +776,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getWaitEvents();
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				return getTrace();
+			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+				return isRecordTrace();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -779,6 +822,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace((Trace)newValue);
 				return;
+			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+				setRecordTrace((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -818,6 +864,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace(TRACE_EDEFAULT);
 				return;
+			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+				setRecordTrace(RECORD_TRACE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -848,6 +897,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return waitEvents != null && !waitEvents.isEmpty();
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
+			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+				return recordTrace != RECORD_TRACE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -918,6 +969,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		result.append(composed);
 		result.append(", trace: ");
 		result.append(trace);
+		result.append(", recordTrace: ");
+		result.append(recordTrace);
 		result.append(')');
 		return result.toString();
 	}

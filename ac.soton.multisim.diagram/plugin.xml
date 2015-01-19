@@ -809,7 +809,7 @@ http://www.eclipse.org/legal/epl-v10.html
    <extension
          point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
       <decoratorProvider
-            class="ac.soton.multisim.diagram.providers.custom.MultisimDecoratorProvider">
+            class="ac.soton.multisim.diagram.providers.custom.RecordDecoratorProvider">
          <Priority
                name="Lowest">
          </Priority>

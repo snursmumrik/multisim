@@ -143,13 +143,13 @@ public interface MultisimPackage extends EPackage {
 	int COMPONENT_DIAGRAM__ARGUMENTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
+	 * The feature id for the '<em><b>Record Outputs</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM__RECORD_TRACE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 5;
+	int COMPONENT_DIAGRAM__RECORD_OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Component Diagram</em>' class.
@@ -379,13 +379,22 @@ public interface MultisimPackage extends EPackage {
 	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
+	int EVENT_BCOMPONENT_FEATURE_COUNT = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.multisim.impl.FMUComponentImpl <em>FMU Component</em>}' class.
@@ -1227,15 +1236,15 @@ public interface MultisimPackage extends EPackage {
 	EAttribute getComponentDiagram_Arguments();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}'.
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#isRecordOutputs <em>Record Outputs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Record Trace</em>'.
-	 * @see ac.soton.multisim.ComponentDiagram#isRecordTrace()
+	 * @return the meta object for the attribute '<em>Record Outputs</em>'.
+	 * @see ac.soton.multisim.ComponentDiagram#isRecordOutputs()
 	 * @see #getComponentDiagram()
 	 * @generated
 	 */
-	EAttribute getComponentDiagram_RecordTrace();
+	EAttribute getComponentDiagram_RecordOutputs();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.Component <em>Component</em>}'.
@@ -1344,6 +1353,17 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEventBComponent_Trace();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.EventBComponent#isRecordTrace <em>Record Trace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Record Trace</em>'.
+	 * @see ac.soton.multisim.EventBComponent#isRecordTrace()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_RecordTrace();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.FMUComponent <em>FMU Component</em>}'.
@@ -1804,12 +1824,12 @@ public interface MultisimPackage extends EPackage {
 		EAttribute COMPONENT_DIAGRAM__ARGUMENTS = eINSTANCE.getComponentDiagram_Arguments();
 
 		/**
-		 * The meta object literal for the '<em><b>Record Trace</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Record Outputs</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute COMPONENT_DIAGRAM__RECORD_TRACE = eINSTANCE.getComponentDiagram_RecordTrace();
+		EAttribute COMPONENT_DIAGRAM__RECORD_OUTPUTS = eINSTANCE.getComponentDiagram_RecordOutputs();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.Component <em>Component</em>}' class.
@@ -1894,6 +1914,14 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EVENT_BCOMPONENT__TRACE = eINSTANCE.getEventBComponent_Trace();
+
+		/**
+		 * The meta object literal for the '<em><b>Record Trace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__RECORD_TRACE = eINSTANCE.getEventBComponent_RecordTrace();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.impl.FMUComponentImpl <em>FMU Component</em>}' class.

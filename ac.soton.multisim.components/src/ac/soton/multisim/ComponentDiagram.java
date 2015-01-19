@@ -25,7 +25,7 @@ import org.eventb.emf.core.EventBNamed;
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStepSize <em>Step Size</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}</li>
- *   <li>{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.multisim.ComponentDiagram#isRecordOutputs <em>Record Outputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,29 +162,29 @@ public interface ComponentDiagram extends EventBNamed {
 	void setArguments(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Record Trace</b></em>' attribute.
+	 * Returns the value of the '<em><b>Record Outputs</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Record Trace</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Record Outputs</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Record Trace</em>' attribute.
-	 * @see #setRecordTrace(boolean)
-	 * @see ac.soton.multisim.MultisimPackage#getComponentDiagram_RecordTrace()
+	 * @return the value of the '<em>Record Outputs</em>' attribute.
+	 * @see #setRecordOutputs(boolean)
+	 * @see ac.soton.multisim.MultisimPackage#getComponentDiagram_RecordOutputs()
 	 * @model
 	 * @generated
 	 */
-	boolean isRecordTrace();
+	boolean isRecordOutputs();
 
 	/**
-	 * Sets the value of the '{@link ac.soton.multisim.ComponentDiagram#isRecordTrace <em>Record Trace</em>}' attribute.
+	 * Sets the value of the '{@link ac.soton.multisim.ComponentDiagram#isRecordOutputs <em>Record Outputs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Record Trace</em>' attribute.
-	 * @see #isRecordTrace()
+	 * @param value the new value of the '<em>Record Outputs</em>' attribute.
+	 * @see #isRecordOutputs()
 	 * @generated
 	 */
-	void setRecordTrace(boolean value);
+	void setRecordOutputs(boolean value);
 
 } // ComponentDiagram

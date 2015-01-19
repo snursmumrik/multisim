@@ -37,7 +37,7 @@ import ac.soton.multisim.MultisimPackage;
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStepSize <em>Step Size</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getArguments <em>Arguments</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#isRecordOutputs <em>Record Outputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,24 +142,24 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	protected String arguments = ARGUMENTS_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * The default value of the '{@link #isRecordOutputs() <em>Record Outputs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRecordTrace()
+	 * @see #isRecordOutputs()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean RECORD_TRACE_EDEFAULT = false;
+	protected static final boolean RECORD_OUTPUTS_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isRecordTrace() <em>Record Trace</em>}' attribute.
+	 * The cached value of the '{@link #isRecordOutputs() <em>Record Outputs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRecordTrace()
+	 * @see #isRecordOutputs()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
+	protected boolean recordOutputs = RECORD_OUTPUTS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -281,8 +281,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isRecordTrace() {
-		return recordTrace;
+	public boolean isRecordOutputs() {
+		return recordOutputs;
 	}
 
 	/**
@@ -290,11 +290,11 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRecordTrace(boolean newRecordTrace) {
-		boolean oldRecordTrace = recordTrace;
-		recordTrace = newRecordTrace;
+	public void setRecordOutputs(boolean newRecordOutputs) {
+		boolean oldRecordOutputs = recordOutputs;
+		recordOutputs = newRecordOutputs;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE, oldRecordTrace, recordTrace));
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS, oldRecordOutputs, recordOutputs));
 	}
 
 	/**
@@ -329,8 +329,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return getStepSize();
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				return getArguments();
-			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
-				return isRecordTrace();
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
+				return isRecordOutputs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -360,8 +360,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				setArguments((String)newValue);
 				return;
-			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
-				setRecordTrace((Boolean)newValue);
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
+				setRecordOutputs((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -390,8 +390,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				setArguments(ARGUMENTS_EDEFAULT);
 				return;
-			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
-				setRecordTrace(RECORD_TRACE_EDEFAULT);
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
+				setRecordOutputs(RECORD_OUTPUTS_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -415,8 +415,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return stepSize != STEP_SIZE_EDEFAULT;
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				return ARGUMENTS_EDEFAULT == null ? arguments != null : !ARGUMENTS_EDEFAULT.equals(arguments);
-			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_TRACE:
-				return recordTrace != RECORD_TRACE_EDEFAULT;
+			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
+				return recordOutputs != RECORD_OUTPUTS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -439,8 +439,8 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		result.append(stepSize);
 		result.append(", arguments: ");
 		result.append(arguments);
-		result.append(", recordTrace: ");
-		result.append(recordTrace);
+		result.append(", recordOutputs: ");
+		result.append(recordOutputs);
 		result.append(')');
 		return result.toString();
 	}

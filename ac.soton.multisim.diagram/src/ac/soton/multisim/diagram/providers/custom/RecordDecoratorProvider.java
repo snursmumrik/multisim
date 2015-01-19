@@ -7,47 +7,18 @@
  */
 package ac.soton.multisim.diagram.providers.custom;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
-import org.eclipse.gmf.runtime.diagram.ui.services.decorator.AbstractDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.CreateDecoratorsOperation;
-import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecorator;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.decorator.IDecoratorTarget;
-
-import ac.soton.multisim.Component;
+import org.eclipse.gmf.runtime.notation.Node;
 
 /**
  * @author vitaly
  *
  */
-public class MultisimDecoratorProvider extends AbstractProvider implements IDecoratorProvider {
-
-	/**
-	 * @author vitaly
-	 *
-	 */
-	public class RecordDecorator extends AbstractDecorator {
-
-		public RecordDecorator(IDecoratorTarget decoratorTarget) {
-			super(decoratorTarget);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void activate() {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void refresh() {
-			// TODO Auto-generated method stub
-			
-		}
-
-	}
+public class RecordDecoratorProvider extends AbstractProvider implements IDecoratorProvider {
 
 	public static final String RECORD = "recordDecorator";
 
@@ -57,16 +28,14 @@ public class MultisimDecoratorProvider extends AbstractProvider implements IDeco
   			return false;
   		}
 		
-		IAdaptable adapter = ((CreateDecoratorsOperation) operation).getDecoratorTarget();
-  		Object element = adapter.getAdapter(Component.class);
-  		
-  		return element != null;//ReviewDecorator.getDecoratorTargetNode(decoratorTarget) != null;
+		IDecoratorTarget decoratorTarget = ((CreateDecoratorsOperation) operation).getDecoratorTarget();
+  		return RecordDecorator.getDecoratorTargetNode(decoratorTarget) != null;
 	}
 
 	@Override
 	public void createDecorators(IDecoratorTarget decoratorTarget) {
-		Object element = decoratorTarget.getAdapter(Component.class);//Node node = ReviewDecorator.getDecoratorTargetNode(decoratorTarget);
-		if (element != null) {
+		Node node = RecordDecorator.getDecoratorTargetNode(decoratorTarget);
+		if (node != null) {
 			decoratorTarget.installDecorator(RECORD, new RecordDecorator(decoratorTarget));
 		}
 	}
