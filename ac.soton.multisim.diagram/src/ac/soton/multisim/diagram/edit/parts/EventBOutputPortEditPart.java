@@ -258,13 +258,13 @@ public class EventBOutputPortEditPart extends AbstractBorderItemEditPart {
 		if (feedbackFigure == null) {
 			EventBPort port = (EventBPort) resolveSemanticElement();
 			feedbackFigure = new Label("Name:  " + port.getName() +
-					"\nVariable: " + (port.getVariable() != null ? port.getVariable().getName() : "null") + 
+					"\nVar.: " + (port.getVariable() != null ? port.getVariable().getName() : "null") + 
 					"\nType:  " + port.getType().getName() +
-					(port.getType() == VariableType.REAL ? "\nPrecis: " + port.getIntToReal() : ""));
+					(port.getType() == VariableType.REAL ? "\nPrec.: " + port.getIntToReal() : ""));
 			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
 			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()
-					.translate(0, 20));
+					.translate(20, 20));
 			feedbackFigure.setBounds(bounds);
 			feedbackFigure.setForegroundColor(ColorConstants.tooltipForeground);
 			feedbackFigure.setBackgroundColor(ColorConstants.tooltipBackground);

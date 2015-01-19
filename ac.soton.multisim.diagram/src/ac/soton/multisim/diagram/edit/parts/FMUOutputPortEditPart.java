@@ -254,13 +254,13 @@ public class FMUOutputPortEditPart extends AbstractBorderItemEditPart {
 		// the feedback layer figures do not receive mouse e
 		if (feedbackFigure == null) {
 			FMUPort port = (FMUPort) resolveSemanticElement();
-			feedbackFigure = new Label("Name:  " + port.getName() +
-					"\nInfo:  " + port.getDescription() + 
-					"\nType:  " + port.getType().getName());
+			feedbackFigure = new Label("Name:  " + port.getName() + 
+					"\nType:  " + port.getType().getName() +
+					"\nDesc.:  " + port.getDescription());
 			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
 			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()
-					.translate(0, 20));
+					.translate(20, 20));
 			feedbackFigure.setBounds(bounds);
 			feedbackFigure.setForegroundColor(ColorConstants.tooltipForeground);
 			feedbackFigure.setBackgroundColor(ColorConstants.tooltipBackground);

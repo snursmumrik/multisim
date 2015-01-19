@@ -265,7 +265,7 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 			feedbackFigure = new Label("Name:  " + port.getName() +
 					"\nParam: " + (port.getParameter() != null ? port.getParameter().getName() : "null") + 
 					"\nType:  " + port.getType().getName() +
-					(port.getType() == VariableType.REAL ? "\nPrecis: " + port.getIntToReal() : ""));
+					(port.getType() == VariableType.REAL ? "\nPrec.: " + port.getIntToReal() : ""));
 			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
 			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()

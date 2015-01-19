@@ -806,6 +806,22 @@ http://www.eclipse.org/legal/epl-v10.html
    <extension point="org.eclipse.ui.handlers" id="menu-handlers">
       <?gmfgen generated="true"?>
    </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <decoratorProvider
+            class="ac.soton.multisim.diagram.providers.custom.MultisimDecoratorProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <object
+               class="org.eclipse.gmf.runtime.notation.Node(org.eclipse.gmf.runtime.notation)"
+               id="NODE">
+         </object>
+         <context
+               decoratorTargets="NODE">
+         </context>
+      </decoratorProvider>
+   </extension>
 
    <!-- optionally, specify keybindings -->
 </plugin>

@@ -61,7 +61,7 @@ public class SimulationSettingsDialog extends Dialog {
 	private Text stopTimeText;
 	private Text stepSizeText;
 	private Text argsText;
-	private Button recordTracesCheck;
+	private Button recordOutputs;
 	private ControlDecoration timeErrorDecorator;
 	private ControlDecoration stepTimeErrorDecorator;
 	
@@ -178,9 +178,9 @@ public class SimulationSettingsDialog extends Dialog {
 		argsText.setText(args);
 
 		// record checkbox
-		recordTracesCheck = new Button(composite, SWT.CHECK);
-		recordTracesCheck.setLayoutData(getAttachedData(argsText, false));
-		recordTracesCheck.setText("Record Event-B traces");
+		recordOutputs = new Button(composite, SWT.CHECK);
+		recordOutputs.setLayoutData(getAttachedData(argsText, false));
+		recordOutputs.setText("Record Event-B traces");
 		
 		// validators
 		addValidators();
@@ -283,7 +283,7 @@ public class SimulationSettingsDialog extends Dialog {
 			stopTime = Integer.parseInt(stopTimeText.getText().trim());
 			stepSize = Integer.parseInt(stepSizeText.getText().trim());
 			args = argsText.getText().trim();
-			record = recordTracesCheck.getSelection();
+			record = recordOutputs.getSelection();
 			saveToModel();
 		}
 		super.buttonPressed(buttonId);
