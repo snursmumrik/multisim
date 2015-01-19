@@ -25,7 +25,6 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
-import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
@@ -257,6 +256,9 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public void showTargetFeedback(Request request) {
 		super.showTargetFeedback(request);
+		if ("selection hover".equals(request.getType().toString()))
+			return;
+		
 		// the feedback layer figures do not receive mouse e
 		if (feedbackFigure == null) {
 			EventBPort port = (EventBPort) resolveSemanticElement();
@@ -267,7 +269,7 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
 			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()
-					.translate(0, 20));
+					.translate(20, 20));
 			feedbackFigure.setBounds(bounds);
 			feedbackFigure.setForegroundColor(ColorConstants.tooltipForeground);
 			feedbackFigure.setBackgroundColor(ColorConstants.tooltipBackground);
@@ -285,9 +287,7 @@ public class EventBInputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public void eraseTargetFeedback(Request request) {
 		super.eraseTargetFeedback(request);
-		if (request instanceof CreateConnectionRequest)
-			return;
-		
+
 		IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
 		if (layer != null && feedbackFigure != null
 				&& feedbackFigure.getParent() != null) {
