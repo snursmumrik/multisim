@@ -101,7 +101,7 @@ public class MultisimPaletteFactory {
 	private static PaletteEntry createComponentInstantiationTool(Component component,
 			ImageDescriptor imageDescriptor) {
 		InstantiateComponentTool cit = new InstantiateComponentTool(
-				component.getName(), "Instantiate component "
+				component.getName(), "Instantiate "
 						+ component.getName(), null, component);
 
 		cit.setToolProperty("comp", component);
