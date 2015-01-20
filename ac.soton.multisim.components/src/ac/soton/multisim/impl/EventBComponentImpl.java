@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -61,7 +62,6 @@ import de.prob.statespace.AnimationSelector;
 import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
-import de.prob.statespace.TraceConverter;
 import de.prob2.ui.eclipse.VersionController;
 
 /**
@@ -562,9 +562,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
-		// add animation
-		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-		selector.addNewAnimation(trace);
+//		// add animation
+//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+//		selector.addNewAnimation(trace);
 		
 //		// switch perspective
 //		final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -595,7 +595,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			trace = trace.anyEvent(null);
 		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
-					+ "'\nReason: $initialise_machine operation not found.");
+					+ "'\nReason: '$initialise_machine' operation not found.");
 	}
 
 	/**
@@ -616,7 +616,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		stringBuilder.setLength(0);
 		stringBuilder.append(TT);
 		for (Port p : getInputs()) {
-			// if port not connected, let ProB to pick the value non-deterministically
+			// if port not connected, let ProB pick the value non-deterministically
 			if (p.getIn() == null)
 				continue;
 			
@@ -633,7 +633,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Event re : readEvents) {
 			try {
 				if (trace.canExecuteEvent(re.getName(), predicate))
-					enabled.add(re.getName());//old: findOneOp(re.getName(), predicate));
+					enabled.add(re.getName());
 			} catch (IllegalArgumentException e) {
 				// no operation found -> proceed
 			}
@@ -645,6 +645,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		
 		// execute read event
 		trace = trace.execute(enabled.get(random.nextInt(enabled.size())), predicate);
+		
+//		// recording
+//		if (isRecordTrace()) {
+//			recordOp(trace.getCurrentTransition());
+//		}
 	}
 
 	/**
@@ -680,10 +685,14 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		trace = trace.addTransitions(command.getNewTransitions());
 		
 		if (!command.isSuccess()) {
+//			if (isRecordTrace()) {
+//				recordOps(command.getNewTransitions());
+//			}
+			
 			if (command.conditionNotReached())
-				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop)");
+				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop).\nSee recorded trace or animation for details.");
 			if (command.isDeadlocked())
-				throw new ModelException("Deadlock in '" + getName() + "'");
+				throw new ModelException("Deadlock in '" + getName() + "'\nSee recorded trace or animation for details.");
 		}
 	}
 
@@ -703,8 +712,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (isRecordTrace()) {
 			String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
 					+ "_" + getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
-			trace.toString();	//XXX has to be called to fix the serialisation bug
-			TraceConverter.save(trace, traceFilePath);
+//			trace.toString();	//XXX has to be called to fix the serialisation bug
+//			TraceConverter.save(trace, traceFilePath);
+//			recordFinish(traceFilePath);
 		}
 
 		// show in ProB

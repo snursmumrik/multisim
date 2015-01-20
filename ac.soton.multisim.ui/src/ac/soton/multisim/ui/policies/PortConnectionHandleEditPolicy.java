@@ -66,6 +66,7 @@ public final class PortConnectionHandleEditPolicy extends
 		public MultisimHandle(IGraphicalEditPart ownerEditPart,
 				HandleDirection relationshipDirection, String tooltip) {
 			super(ownerEditPart, relationshipDirection, tooltip);
+			this.setToolTip(null);
 		}
 
 		@Override

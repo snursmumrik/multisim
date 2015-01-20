@@ -180,7 +180,8 @@ public class SimulationSettingsDialog extends Dialog {
 		// record checkbox
 		recordOutputs = new Button(composite, SWT.CHECK);
 		recordOutputs.setLayoutData(getAttachedData(argsText, false));
-		recordOutputs.setText("Record Event-B traces");
+		recordOutputs.setText("Record outputs");
+		recordOutputs.setSelection(record);
 		
 		// validators
 		addValidators();

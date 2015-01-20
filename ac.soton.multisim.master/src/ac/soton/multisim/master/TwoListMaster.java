@@ -37,12 +37,6 @@ public class TwoListMaster {
 
 	@SuppressWarnings("unused")
 	private static final String PLUGIN_ID = "ac.soton.multisim.components.master";
-	
-	// simulation parameter names
-	public static final String PARAMETER_START_TIME = "parameter.startTime";
-	public static final String PARAMETER_STOP_TIME = "parameter.stopTime";
-	public static final String PARAMETER_STEP_SIZE = "parameter.stepSize";
-	public static final String PARAMETER_OUTPUT_FILE = "parameter.outputFile";
 
 	// parameters
 	private static ComponentDiagram diagram;
@@ -55,22 +49,20 @@ public class TwoListMaster {
 	private static Map<Component, Integer> updateList = new HashMap<Component, Integer>();
 	private static List<Component> evaluationList = new ArrayList<Component>();
 	
-	private static File resultFile;
 	private static BufferedWriter resultWriter;
 
 	/**
 	 * Simulate a diagram.
 	 * @param cd
 	 * @param monitor
-	 * @param params
+	 * @param outputFile
 	 * @return
 	 */
-	public static IStatus simulate(ComponentDiagram cd, IProgressMonitor monitor, Map<String, String> params) {
+	public static IStatus simulate(ComponentDiagram cd, IProgressMonitor monitor, File outputFile) {
 		diagram = cd;
 		tStart = diagram.getStartTime();
 		tStop = diagram.getStopTime();
 		step = diagram.getStepSize();
-		resultFile = new File(params.get(PARAMETER_OUTPUT_FILE));
 		updateList.clear();
 		evaluationList.clear();
 		int cStep;
@@ -79,7 +71,11 @@ public class TwoListMaster {
 		
 		try {
 			// create output file
-			resultWriter = SimulationUtil.apiCreateOutput((File) resultFile);
+			if (diagram.isRecordOutputs()) {
+				if (outputFile == null)
+					outputFile = new File(System.getProperty("user.home")+"/results.csv");
+				resultWriter = SimulationUtil.apiCreateOutput(outputFile);
+			}
 
 			// instantiate components
 			for (Component c : diagram.getComponents())
@@ -133,10 +129,11 @@ public class TwoListMaster {
 				evaluationList.clear();
 				
 				// write file output
-				SimulationUtil.apiOutput(diagram, tCurrent, resultWriter);
+				if (diagram.isRecordOutputs())
+					SimulationUtil.apiOutput(diagram, tCurrent, resultWriter);
 			}
 		} catch (SimulationException | ModelException | IOException e) {
-			status = SimulationStatus.createErrorStatus("Simulation terminated.\n" + e.getMessage(), e);
+			status = SimulationStatus.createErrorStatus("Terminated due to an exception:\n" + e.getMessage(), e);
 		}
 
 		// termination step
@@ -152,7 +149,8 @@ public class TwoListMaster {
 		}
 		
 		if (status.getSeverity() == Status.OK)
-			status = SimulationStatus.createOKStatus("Completed in " + (System.currentTimeMillis() - simulationTime) + "ms");
+			status = SimulationStatus.createOKStatus("Finished in " + (System.currentTimeMillis() - simulationTime) + "ms"
+					+ (diagram.isRecordOutputs() ? "\nOutput saved to '"+outputFile.getAbsolutePath().toString()+"'" : ""));
 		
 		return status;
 	}

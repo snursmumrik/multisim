@@ -265,7 +265,7 @@ public class SimulationUtil {
 	 * @throws IOException 
 	 */
 	public static void apiOutput(ComponentDiagram diagram, long time, BufferedWriter writer) throws IOException {
-		writer.write(Long.toString(time));
+		writer.write(Double.toString(time/1000.0));
 		for (Component c : diagram.getComponents()) {
 			//XXX: current hack to ignore display component for outputs
 			if (c instanceof DisplayComponent)

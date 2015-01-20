@@ -7,8 +7,7 @@
  */
 package ac.soton.multisim.ui.commands;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,7 +25,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IProgressConstants;
@@ -63,13 +61,8 @@ public class SimulateCommandHandler extends AbstractHandler {
 			return null;
 		
 		// get output path
-		IEditorInput input = editor.getEditorInput();
-		IResource res = (IResource) input.getAdapter(IResource.class);
-		String resultFilePath = res.getLocation().removeLastSegments(1).append("results.csv").toOSString();
-
-		// simulation parameters
-		final Map<String, String> params = new HashMap<String, String>();
-		params.put(TwoListMaster.PARAMETER_OUTPUT_FILE, resultFilePath);
+		IResource res = (IResource) editor.getEditorInput().getAdapter(IResource.class);
+		final String outputPath = res.getLocation().removeLastSegments(1).append("results.csv").toOSString();
 		
 		// source provider service
 	    ISourceProviderService sourceProviderService = (ISourceProviderService) HandlerUtil
@@ -81,7 +74,7 @@ public class SimulateCommandHandler extends AbstractHandler {
 		final Job job = new Job(JOB_NAME) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				return TwoListMaster.simulate(diagram, monitor, params);
+				return TwoListMaster.simulate(diagram, monitor, new File(outputPath));
 			}
 			@Override
 			public boolean belongsTo(Object family) {
@@ -89,8 +82,8 @@ public class SimulateCommandHandler extends AbstractHandler {
 			}
 		};
 		
-		job.setUser(true);				// user UI job
-		job.setPriority(Job.LONG);		// long-running job scheduling (lower priority than interactive and short, but higher than build)
+		job.setUser(true);												// user UI job
+		job.setPriority(Job.LONG);										// long-running job scheduling (lower priority than interactive and short, but higher than build)
 		job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);		// keep only one job in progress monitor
 		job.setProperty(IProgressConstants.ICON_PROPERTY, MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_MULTISIM));	// job icon
 		job.addJobChangeListener(new JobChangeAdapter() {
