@@ -88,6 +88,7 @@ public class EventBComponentItemProvider
 			addWaitEventsPropertyDescriptor(object);
 			addTracePropertyDescriptor(object);
 			addRecordTracePropertyDescriptor(object);
+			addTraceFileNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -176,6 +177,28 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Trace File Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTraceFileNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventBComponent_traceFileName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_traceFileName_feature", "_UI_EventBComponent_type"),
+				 MultisimPackage.Literals.EVENT_BCOMPONENT__TRACE_FILE_NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -340,6 +363,7 @@ public class EventBComponentItemProvider
 			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
+			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:

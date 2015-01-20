@@ -450,6 +450,15 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getEventBComponent_TraceFileName() {
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFMUComponent() {
 		return fmuComponentEClass;
 	}
@@ -817,6 +826,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__WAIT_EVENTS);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__RECORD_TRACE);
+		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE_FILE_NAME);
 
 		fmuComponentEClass = createEClass(FMU_COMPONENT);
 		createEAttribute(fmuComponentEClass, FMU_COMPONENT__PATH);
@@ -957,6 +967,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEReference(getEventBComponent_WaitEvents(), theMachinePackage.getEvent(), null, "waitEvents", null, 1, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_Trace(), this.getProBTrace(), "trace", null, 0, 1, EventBComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_RecordTrace(), ecorePackage.getEBoolean(), "recordTrace", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEventBComponent_TraceFileName(), ecorePackage.getEString(), "traceFileName", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuComponentEClass, FMUComponent.class, "FMUComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFMUComponent_Path(), ecorePackage.getEString(), "path", null, 1, 1, FMUComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

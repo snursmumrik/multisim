@@ -187,4 +187,11 @@ public interface ComponentDiagram extends EventBNamed {
 	 */
 	void setRecordOutputs(boolean value);
 
+	/**
+	 * Generates simulation status report.
+	 * @return
+	 * @custom
+	 */
+	String createStatusReport();
+
 } // ComponentDiagram

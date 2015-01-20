@@ -23,6 +23,7 @@ import org.eventb.emf.core.impl.EventBNamedImpl;
 
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.MultisimPackage;
 
 /**
@@ -443,6 +444,24 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		result.append(recordOutputs);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 * Temporary logic: generates status report. 
+	 * (non-Javadoc)
+	 * @see ac.soton.multisim.ComponentDiagram#createStatusReport()
+	 * @custom
+	 */
+	@Override
+	public String createStatusReport() {
+		StringBuffer sb = new StringBuffer("");
+		for (Component c : components)
+			if (c instanceof EventBComponent) {
+				EventBComponent ebc = (EventBComponent) c;
+				if (ebc.isRecordTrace() && ebc.getTraceFileName() != null)
+					sb .append("Trace recorded to '"+ebc.getTraceFileName()+"'\n");
+			}
+		return sb.toString();
 	}
 
 } //ComponentDiagramImpl

@@ -9,6 +9,9 @@
  */
 package ac.soton.multisim.impl;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +65,7 @@ import de.prob.statespace.AnimationSelector;
 import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
+import de.prob.statespace.Transition;
 import de.prob2.ui.eclipse.VersionController;
 
 /**
@@ -81,6 +85,7 @@ import de.prob2.ui.eclipse.VersionController;
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTraceFileName <em>Trace File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -109,7 +114,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	private LTL ltl;
 	private StringBuilder stringBuilder = new StringBuilder();
-
+	private BufferedWriter traceWriter;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -267,6 +272,26 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected boolean recordTrace = RECORD_TRACE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getTraceFileName() <em>Trace File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTraceFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TRACE_FILE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTraceFileName() <em>Trace File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTraceFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String traceFileName = TRACE_FILE_NAME_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -376,6 +401,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		recordTrace = newRecordTrace;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE, oldRecordTrace, recordTrace));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getTraceFileName() {
+		return traceFileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTraceFileName(String newTraceFileName) {
+		String oldTraceFileName = traceFileName;
+		traceFileName = newTraceFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME, oldTraceFileName, traceFileName));
 	}
 
 	/**
@@ -555,6 +601,16 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		} catch (LtlParseException e) {
 			throw new SimulationException("LTL parse failure '" + ltl.toString() + "'", e);
 		}
+		
+		// trace output file
+		if (isRecordTrace()) {
+			traceFileName = WorkspaceSynchronizer
+					.getFile(machine.eResource()).getLocation()
+					.removeFileExtension().toOSString()
+					+ "_" + getName()
+					+ "_" + dateFormat.format(new java.util.Date()) + ".xml";
+			recordStart(fileName, traceFileName);
+		}
 
 		// disable notification for modifying output ports
 		// so that using EMF transactions is not required
@@ -685,9 +741,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		trace = trace.addTransitions(command.getNewTransitions());
 		
 		if (!command.isSuccess()) {
-//			if (isRecordTrace()) {
-//				recordOps(command.getNewTransitions());
-//			}
+			if (isRecordTrace()) {
+				recordOps(command.getNewTransitions());
+			}
 			
 			if (command.conditionNotReached())
 				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop).\nSee recorded trace or animation for details.");
@@ -699,6 +755,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws SimulationException 
 	 * @generated NOT
 	 */
 	public void terminate() {
@@ -709,13 +766,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			p.eSetDeliver(true);
 		
 		// save trace
-		if (isRecordTrace()) {
-			String traceFilePath = WorkspaceSynchronizer.getFile(machine.eResource()).getLocation().removeFileExtension().toOSString()
-					+ "_" + getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
-//			trace.toString();	//XXX has to be called to fix the serialisation bug
-//			TraceConverter.save(trace, traceFilePath);
-//			recordFinish(traceFilePath);
-		}
+		if (isRecordTrace())
+			recordEnd();
 
 		// show in ProB
 		Injector injector = Main.getInjector();
@@ -788,6 +840,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getTrace();
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				return isRecordTrace();
+			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
+				return getTraceFileName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -835,6 +889,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				setRecordTrace((Boolean)newValue);
 				return;
+			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
+				setTraceFileName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -877,6 +934,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				setRecordTrace(RECORD_TRACE_EDEFAULT);
 				return;
+			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
+				setTraceFileName(TRACE_FILE_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -909,6 +969,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 				return recordTrace != RECORD_TRACE_EDEFAULT;
+			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
+				return TRACE_FILE_NAME_EDEFAULT == null ? traceFileName != null : !TRACE_FILE_NAME_EDEFAULT.equals(traceFileName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -981,6 +1043,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		result.append(trace);
 		result.append(", recordTrace: ");
 		result.append(recordTrace);
+		result.append(", traceFileName: ");
+		result.append(traceFileName);
 		result.append(')');
 		return result.toString();
 	}
@@ -990,6 +1054,72 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public String getExtensionId() {
 		return MultisimPackage.EXTENSION_ID;
+	}
+	
+	/**
+	 * Records the header of the trace (instantiates buffer).
+	 * @param modelName
+	 * @param traceFileName 
+	 * @return recorded file name
+	 * @throws SimulationException
+	 */
+	private String recordStart(String modelName, String traceFileName) throws SimulationException {
+		try {
+			traceWriter = new BufferedWriter(new FileWriter(traceFileName));
+			traceWriter.append("<trace><model>").append(name).append("</model>");
+		} catch (IOException e) {
+			throw new SimulationException("Cannot create a trace file", e);
+		}
+		return traceFileName;
+	}
+	
+	/**
+	 * Records an operation.
+	 * @param op
+	 * @custom
+	 */
+	private void recordOp(Transition op) {
+		op.evaluate();
+		try {
+			traceWriter.append("<Operation name=\"").append(op.getName()).append("\">");
+			for (String p : op.getParams()) {
+				traceWriter.append("<Parameter name=\"").append(p).append("\"/>");
+			}
+			traceWriter.append("</Operation>\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Records a list of operations.
+	 * @param ops
+	 * @custom
+	 */
+	private void recordOps(List<Transition> ops) {
+		trace.getStateSpace().evaluateTransitions(ops);
+		for (Transition op : ops) {
+			recordOp(op);
+		}
+	}
+
+	/**
+	 * Records the end of the trace file and writes the buffer.
+	 * @custom
+	 */
+	private void recordEnd() {
+		if (traceWriter != null) {
+			try {
+				traceWriter.write("</trace>");
+			} catch (IOException e) {
+				traceFileName = null;
+//				throw new SimulationException("Cannot write to a trace file", e);
+			} finally {
+				try {
+					traceWriter.close();
+				} catch (IOException e) {}
+			}
+		}
 	}
 
 } //EventBComponentImpl

@@ -49,6 +49,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="trace" eType="#//ProBTrace"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordTrace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="traceFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FMUComponent" eSuperTypes="#//Component">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">

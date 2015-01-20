@@ -30,6 +30,7 @@ import de.prob.statespace.Trace;
  *   <li>{@link ac.soton.multisim.EventBComponent#getWaitEvents <em>Wait Events</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#isRecordTrace <em>Record Trace</em>}</li>
+ *   <li>{@link ac.soton.multisim.EventBComponent#getTraceFileName <em>Trace File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -180,5 +181,31 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * @generated
 	 */
 	void setRecordTrace(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Trace File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Trace File Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Trace File Name</em>' attribute.
+	 * @see #setTraceFileName(String)
+	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_TraceFileName()
+	 * @model
+	 * @generated
+	 */
+	String getTraceFileName();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.multisim.EventBComponent#getTraceFileName <em>Trace File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Trace File Name</em>' attribute.
+	 * @see #getTraceFileName()
+	 * @generated
+	 */
+	void setTraceFileName(String value);
 
 } // EventBComponent

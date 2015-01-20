@@ -25,7 +25,6 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
-import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
@@ -251,6 +250,9 @@ public class FMUOutputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public void showTargetFeedback(Request request) {
 		super.showTargetFeedback(request);
+		if ("selection hover".equals(request.getType().toString()))
+			return;
+		
 		// the feedback layer figures do not receive mouse e
 		if (feedbackFigure == null) {
 			FMUPort port = (FMUPort) resolveSemanticElement();
@@ -278,8 +280,6 @@ public class FMUOutputPortEditPart extends AbstractBorderItemEditPart {
 	@Override
 	public void eraseTargetFeedback(Request request) {
 		super.eraseTargetFeedback(request);
-		if (request instanceof CreateConnectionRequest)
-			return;
 		
 		IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
 		if (layer != null && feedbackFigure != null
