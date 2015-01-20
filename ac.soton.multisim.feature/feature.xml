@@ -67,10 +67,14 @@
       <import plugin="org.eclipse.emf.transaction" version="1.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.5.0" match="greaterOrEqual"/>
       <import plugin="ac.soton.multisim.master" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="ac.soton.eventb.emf.core.extension.navigator" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="ac.soton.multisim.diagram" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="de.prob2.kernel.bundle"/>
-      <import plugin="de.prob2.ui.eclipse"/>
+      <import plugin="ac.soton.eventb.emf.core.extension.navigator" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eventb.emf.core.edit"/>
+      <import plugin="de.prob2.kernel.bundle" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.prob2.ui.eclipse" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.rodinp.core" version="1.7.0" match="greaterOrEqual"/>
+      <import plugin="org.rodinp.core.emf" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eventb.emf.persistence"/>
    </requires>
 
    <plugin
