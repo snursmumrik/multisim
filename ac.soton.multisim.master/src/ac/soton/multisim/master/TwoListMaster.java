@@ -150,7 +150,7 @@ public class TwoListMaster {
 		
 		if (status.getSeverity() == Status.OK)
 			status = SimulationStatus.createOKStatus("Finished in " + (System.currentTimeMillis() - simulationTime) + "ms"
-					+ (diagram.isRecordOutputs() ? "\nOutput saved to '"+outputFile.getAbsolutePath().toString()+"'" : "")
+					+ (diagram.isRecordOutputs() ? "\nOutput saved to '"+outputFile.getAbsolutePath().toString()+"'\n" : "")
 					+ diagram.createStatusReport());
 		
 		return status;

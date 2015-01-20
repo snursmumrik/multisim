@@ -416,6 +416,14 @@ http://www.eclipse.org/legal/epl-v10.html
                id="property.section.buffer"
                tab="property.tab.overview">
          </propertySection>
+         <propertySection
+               afterSection="property.section.stepPeriod"
+               class="ac.soton.multisim.diagram.sheet.custom.RecordTracePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.recordTrace"
+               tab="property.tab.overview">
+         </propertySection>
       </propertySections>
    </extension>
 
