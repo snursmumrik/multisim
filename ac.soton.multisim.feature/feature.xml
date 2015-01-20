@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="ac.soton.multisim.feature"
-      label="Multisim Feature"
+      label="MultiSim"
       version="1.0.0.qualifier"
       provider-name="University of Southampton"
       plugin="ac.soton.multisim.branding">
@@ -81,7 +81,8 @@
          id="ac.soton.multisim"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="ac.soton.multisim.diagram"
@@ -94,18 +95,21 @@
          id="ac.soton.multisim.master"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="ac.soton.multisim.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="ac.soton.multisim.branding"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
