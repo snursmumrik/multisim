@@ -647,8 +647,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
-		if (!INIT.equals(trace.getCurrentTransition().getName()))
+		recordOp(trace.getCurrent().getTransition());
+		if (!INIT.equals(trace.getCurrentTransition().getName())) {
 			trace = trace.anyEvent(null);
+			recordOp(trace.getCurrent().getTransition());
+		}
 		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
 					+ "'\nReason: '$initialise_machine' operation not found.");
@@ -702,10 +705,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// execute read event
 		trace = trace.execute(enabled.get(random.nextInt(enabled.size())), predicate);
 		
-//		// recording
-//		if (isRecordTrace()) {
-//			recordOp(trace.getCurrentTransition());
-//		}
+		// recording
+		if (isRecordTrace()) {
+			recordOp(trace.getCurrentTransition());
+		}
 	}
 
 	/**
