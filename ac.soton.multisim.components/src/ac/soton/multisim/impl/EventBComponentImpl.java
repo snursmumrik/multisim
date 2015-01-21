@@ -1069,7 +1069,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private String recordStart(String modelName, String traceFileName) throws SimulationException {
 		try {
 			traceWriter = new BufferedWriter(new FileWriter(traceFileName));
-			traceWriter.append("<trace><model>").append(name).append("</model>");
+			traceWriter.append("<trace><model>").append(modelName).append("</model>");
 		} catch (IOException e) {
 			throw new SimulationException("Cannot create a trace file", e);
 		}
