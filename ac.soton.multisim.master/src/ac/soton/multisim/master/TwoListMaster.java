@@ -89,7 +89,8 @@ public class TwoListMaster {
 			}
 			
 			// header output
-			SimulationUtil.apiOutputColumns(diagram, resultWriter);
+			if (diagram.isRecordOutputs())
+				SimulationUtil.apiOutputColumns(diagram, resultWriter);
 	
 			// simulation loop
 			for (tCurrent = tStart; tCurrent <= tStop; ++tCurrent) {
@@ -141,11 +142,13 @@ public class TwoListMaster {
 			c.terminate();
 		
 		// close file
-		try {
-			resultWriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (resultWriter != null) {
+			try {
+				resultWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if (status.getSeverity() == Status.OK)

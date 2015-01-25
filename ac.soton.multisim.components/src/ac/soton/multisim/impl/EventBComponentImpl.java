@@ -647,10 +647,12 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// execute first two events: 'setup_constants' and 'initialise'
 		//NOTE: setup_constants can be absent if there are no constants
 		trace = trace.anyEvent(null);
-		recordOp(trace.getCurrent().getTransition());
+		if (isRecordTrace())
+			recordOp(trace.getCurrent().getTransition());
 		if (!INIT.equals(trace.getCurrentTransition().getName())) {
 			trace = trace.anyEvent(null);
-			recordOp(trace.getCurrent().getTransition());
+			if (isRecordTrace())
+				recordOp(trace.getCurrent().getTransition());
 		}
 		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
