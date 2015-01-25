@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -300,5 +303,27 @@ public class ValidateAction extends Action {
 			}
 		}
 		return targetElementCollector;
+	}
+	
+	/**
+	 * Returns a list of error markers of the file.
+	 * 
+	 * @param file diagram file
+	 * @return list of error markers
+	 * @throws CoreException if file markers cannot be read
+	 * @custom
+	 */
+	public static List<IMarker> getErrorMarkers(IFile file) throws CoreException {
+		IMarker[] markers = file.findMarkers(
+				MultisimMarkerNavigationProvider.MARKER_TYPE, true,
+				IResource.DEPTH_ZERO);
+		List<IMarker> errors = new ArrayList<IMarker>();
+		for (IMarker marker : markers) {
+			int severity = marker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+			if (severity == IMarker.SEVERITY_ERROR)
+				errors.add(marker);
+		}
+
+		return errors;
 	}
 }

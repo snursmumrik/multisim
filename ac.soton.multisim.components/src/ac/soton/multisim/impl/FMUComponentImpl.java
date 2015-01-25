@@ -280,7 +280,7 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 			try {
 				fmu = new FMU(getPath());
 			} catch (IOException e) {
-				throw new ModelException("Cannot load FMU file '" + getPath() + "'\nReason: " + e.getMessage());
+				throw new ModelException("Cannot load FMU file '" + getPath() + "':\n" + e.getMessage());
 			}
 		}
 	}

@@ -544,7 +544,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
 		if (machineRoot == null) {
 			throw new SimulationException("Cannot load machine '" + getMachine().getName() + "' of component '" + getName()
-					+ "'\nReason: Machine root cannot be determined.");
+					+ "':\nMachine root cannot be determined.");
 		}
 		
 		String fileName = machineRoot.getResource().getRawLocation().makeAbsolute().toOSString();
@@ -656,7 +656,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		}
 		if (!INIT.equals(trace.getCurrentTransition().getName()))
 			throw new SimulationException("Cannot initialise component '" + getName()
-					+ "'\nReason: '$initialise_machine' operation not found.");
+					+ "':\nOperation '$initialise_machine' not found.");
 	}
 
 	/**
@@ -753,7 +753,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			if (command.conditionNotReached())
 				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop).\nSee recorded trace or animation for details.");
 			if (command.isDeadlocked())
-				throw new ModelException("Deadlock in '" + getName() + "'\nSee recorded trace or animation for details.");
+				throw new ModelException("Deadlock in component '" + getName() + "'\nSee recorded trace or animation for details.");
 		}
 	}
 
