@@ -32,8 +32,8 @@ public class DisplayUtil {
 		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
 			dpi = new Point(110, 110); // OSX DPI is always 72; 110 is a common value for modern LCD screens
 		}
-		int width = dpi.x * 5;
-		int height = dpi.y * 5;
+		int width = dpi.x * w;
+		int height = dpi.y * h;
 		int x = mb.x + (mb.width - width) / 2;
 		if (x < mb.x) {
 			x = mb.x;
