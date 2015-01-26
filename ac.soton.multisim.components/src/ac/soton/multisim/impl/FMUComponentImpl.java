@@ -11,6 +11,7 @@ package ac.soton.multisim.impl;
 
 import java.io.IOException;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,7 +20,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.impl.EventBNamedImpl;
+
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
@@ -502,6 +505,20 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 		result.append(fmu);
 		result.append(')');
 		return result.toString();
+	}
+	
+
+	/**
+	 * Override of {@link org.eventb.emf.core.impl.EventBNamedImpl#setName(String)}
+	 * Removes the transform of : and . characters in the name attribute.
+	 * @custom
+	 */
+	@Override
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EVENT_BNAMED__NAME, oldName, name));
 	}
 
 } //FMUComponentImpl
