@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -117,14 +118,13 @@ public abstract class AbstractTablePropertySection
 				if (newChild == null)
 					return;
 				EditingDomain editingDomain = ((DiagramEditor) getPart()).getEditingDomain();
-				AddCommand addCommand;
-				if (newChild instanceof Collection)
-					addCommand = (AddCommand) AddCommand.create(
-							editingDomain, eObject, getFeature(), newChild);
-				else
-					addCommand = (AddCommand) AddCommand.create(
-						editingDomain, eObject, getFeature(), newChild);
-				editingDomain.getCommandStack().execute(addCommand);
+				Command cmd;
+				if (newChild instanceof Collection) {
+					cmd = AddCommand.create(editingDomain, eObject, getFeature(), (Collection) newChild);
+				} else {
+					cmd = AddCommand.create(editingDomain, eObject, getFeature(), newChild);
+				}
+				editingDomain.getCommandStack().execute(cmd);
 				refresh();
 			}
 		});
