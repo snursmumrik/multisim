@@ -276,7 +276,7 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    chart.removeAxisYLeft(chart.getAxisY());
 		    
 		    // empty label formatter for drawing border-like axes without marks
-		    LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getIntegerInstance()) {
+		    LabelFormatterNumber lf = new LabelFormatterNumber(NumberFormat.getNumberInstance()) {
 		    	@Override
 		    	public String format(double value) {
 		    		return "0";
@@ -284,8 +284,8 @@ public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComp
 		    };
 		    
 		    // set new axes (draw x/y at the top/right to make a border, but without the scale)
-		    chart.setAxisXBottom(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getIntegerInstance())), 0);
-		    chart.setAxisYLeft(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getIntegerInstance())), 0);
+		    chart.setAxisXBottom(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getNumberInstance())), 0);
+		    chart.setAxisYLeft(new AxisLinear<IAxisScalePolicy>(new LabelFormatterNumber(NumberFormat.getNumberInstance())), 0);
 		    chart.setAxisYRight(new AxisLinear<IAxisScalePolicy>(lf), 0);
 		    chart.setAxisXTop(new AxisLinear<IAxisScalePolicy>(lf), 0);
 		    
