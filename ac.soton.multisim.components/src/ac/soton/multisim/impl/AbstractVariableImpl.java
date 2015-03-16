@@ -12,6 +12,7 @@ package ac.soton.multisim.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.impl.EventBNamedImpl;
 
 import ac.soton.multisim.AbstractVariable;
@@ -334,6 +335,19 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 		result.append(description);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 * Override of {@link org.eventb.emf.core.impl.EventBNamedImpl#setName(String)}
+	 * Removes the transform of : and . characters in the name attribute.
+	 * @custom
+	 */
+	@Override
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EVENT_BNAMED__NAME, oldName, name));
 	}
 
 } //AbstractVariableImpl
