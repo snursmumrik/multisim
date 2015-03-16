@@ -36,6 +36,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.tooling.runtime.edit.policies.reparent.CreationEditPolicyWithCustomReparent;
 import org.eclipse.swt.graphics.Color;
 
+import ac.soton.multisim.diagram.edit.parts.custom.AbstractPortEditPart;
 import ac.soton.multisim.diagram.edit.policies.EventBComponentCanonicalEditPolicy;
 import ac.soton.multisim.diagram.edit.policies.EventBComponentItemSemanticEditPolicy;
 import ac.soton.multisim.diagram.part.MultisimVisualIDRegistry;
@@ -162,7 +163,7 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
 					PositionConstants.EAST);
 			getBorderedFigure().getBorderItemContainer().add(
-					((EventBOutputPortEditPart) childEditPart).getFigure(),
+					((AbstractPortEditPart) childEditPart).getFigure(),
 					locator);
 			return true;
 		}
@@ -190,7 +191,7 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 		}
 		if (childEditPart instanceof EventBOutputPortEditPart) {
 			getBorderedFigure().getBorderItemContainer().remove(
-					((EventBOutputPortEditPart) childEditPart).getFigure());
+					((AbstractPortEditPart) childEditPart).getFigure());
 			return true;
 		}
 		return false;

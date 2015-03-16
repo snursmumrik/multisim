@@ -8,41 +8,32 @@
 package ac.soton.multisim.diagram.edit.parts;
 
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 
-import ac.soton.multisim.EventBPort;
-import ac.soton.multisim.VariableType;
+import ac.soton.multisim.diagram.edit.parts.custom.AbstractPortEditPart;
 import ac.soton.multisim.diagram.edit.policies.EventBOutputPortItemSemanticEditPolicy;
 
 /**
  * @generated
  */
-public class EventBOutputPortEditPart extends AbstractBorderItemEditPart {
+public class EventBOutputPortEditPart extends AbstractPortEditPart {
 
 	/**
 	 * @generated
@@ -229,84 +220,6 @@ public class EventBOutputPortEditPart extends AbstractBorderItemEditPart {
 			this.setBackgroundColor(ColorConstants.gray);
 		}
 
-	}
-
-	/* (non-Javadoc)
-	 * @custom
-	 */
-	@Override
-	public boolean canAttachNote() {
-		return false;
-	}
-
-	/**
-	 * Mouse-over instant feedback label.
-	 * @custom
-	 */
-	private Label feedbackFigure;
-
-	/* (non-Javadoc)
-	 * @custom
-	 */
-	@Override
-	public void showTargetFeedback(Request request) {
-		super.showTargetFeedback(request);
-		if ("selection hover".equals(request.getType().toString()))
-			return;
-
-		// the feedback layer figures do not receive mouse e
-		if (feedbackFigure == null) {
-			EventBPort port = (EventBPort) resolveSemanticElement();
-			feedbackFigure = new Label("Name:  " + port.getName() +
-					"\nVar.: " + (port.getVariable() != null ? port.getVariable().getName() : "null") + 
-					"\nType:  " + port.getType().getName() +
-					(port.getType() == VariableType.REAL ? "\nPrec.: " + port.getIntToReal() : ""));
-			feedbackFigure.setFont(new Font(null, "Arial", 12, SWT.NORMAL));
-			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
-			bounds.setLocation(getFigure().getBounds().getLocation()
-					.translate(20, 20));
-			feedbackFigure.setBounds(bounds);
-			feedbackFigure.setForegroundColor(ColorConstants.tooltipForeground);
-			feedbackFigure.setBackgroundColor(ColorConstants.tooltipBackground);
-			feedbackFigure.setOpaque(true);
-			feedbackFigure.setBorder(new LineBorder());
-
-			IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
-			layer.add(feedbackFigure);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @custom
-	 */
-	@Override
-	public void eraseTargetFeedback(Request request) {
-		super.eraseTargetFeedback(request);
-		
-		IFigure layer = getLayer(LayerConstants.FEEDBACK_LAYER);
-		if (layer != null && feedbackFigure != null
-				&& feedbackFigure.getParent() != null) {
-			layer.remove(feedbackFigure);
-		}
-		feedbackFigure = null;
-	}
-
-	/* Defaults the anchor to the centre of the figure.
-	 * @custom
-	 */
-	@Override
-	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return getNodeFigure().getConnectionAnchor(
-				NodeFigure.getDefaultAnchorID());
-	}
-
-	/* Defaults the anchor to the centre of the figure.
-	 * @custom
-	 */
-	@Override
-	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		return getNodeFigure().getConnectionAnchor(
-				NodeFigure.getDefaultAnchorID());
 	}
 
 }
