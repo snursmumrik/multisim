@@ -48,6 +48,16 @@ public class ColorPicker extends CLabel {
                 new MouseAdapter() {
                     @Override
                     public void mouseDown(MouseEvent e) {
+                    	// reset by right-click
+                    	if (e.button == 3) {
+                    		update(null);
+                    		Event event = new Event();
+							event.time = e.time;
+							event.data = null;
+                    		notifyListeners(SWT.Modify, event);
+                    		return;
+                    	}
+                    		
                         ColorDialog dialog = new ColorDialog(new Shell(Display.getCurrent(), SWT.SHELL_TRIM));
                         dialog.setRGB(selectedColor == null ? defaultRGB : selectedColor.getRGB());
                         RGB selected = dialog.open();

@@ -30,7 +30,7 @@ import ac.soton.multisim.diagram.sheet.custom.common.AbstractMultisimPropertySec
 import ac.soton.multisim.diagram.sheet.custom.common.ColorPicker;
 
 /**
- * Name property section for NamedElement.
+ * Colour property section for DisplayPort.
  * 
  * @author vitaly
  *
@@ -82,14 +82,18 @@ public class ColourPropertySection extends AbstractMultisimPropertySection {
 	 * @param e 
 	 */
 	protected void handlePickerModified(ModifyEvent e) {
+		EditingDomain editingDomain = ((MultisimDiagramEditor) getPart()).getEditingDomain();
 		RGB rgb = (RGB) e.data;
 		if (rgb != null) {
-			EditingDomain editingDomain = ((MultisimDiagramEditor) getPart()).getEditingDomain();
 			Object value = new java.awt.Color(rgb.red, rgb.green, rgb.blue);
 			/* apply the property change to single selected object */
 			editingDomain.getCommandStack().execute(
 					SetCommand.create(editingDomain, eObject, getFeature(),
 							value));
+		} else {
+			editingDomain.getCommandStack().execute(
+					SetCommand.create(editingDomain, eObject, getFeature(),
+							null));
 		}
 	}
 

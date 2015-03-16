@@ -14,6 +14,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -29,6 +30,7 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
+import ac.soton.multisim.DisplayPort;
 import ac.soton.multisim.diagram.edit.policies.DisplayPortItemSemanticEditPolicy;
 
 /**
@@ -219,6 +221,16 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 		public InputPortFigure() {
 			this.setForegroundColor(ColorConstants.gray);
 			this.setBackgroundColor(THIS_BACK);
+			updateFace();
+		}
+
+		private void updateFace() {
+			DisplayPort port = (DisplayPort) DisplayPortEditPart.this.resolveSemanticElement();
+			java.awt.Color c = port.getColor();
+			if (c != null)
+				this.setBackgroundColor(new Color(null, c.getRed(), c.getGreen(), c.getBlue()));
+			else
+				this.setBackgroundColor(THIS_BACK);
 		}
 
 	}
@@ -252,6 +264,16 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
 		return getNodeFigure().getConnectionAnchor(
 				NodeFigure.getDefaultAnchorID());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart#handleNotificationEvent(org.eclipse.emf.common.notify.Notification)
+	 */
+	@Override
+	protected void handleNotificationEvent(Notification notification) {
+		if (notification.getNotifier() instanceof DisplayPort)
+			getPrimaryShape().updateFace();
+		super.handleNotificationEvent(notification);
 	}
 
 }
