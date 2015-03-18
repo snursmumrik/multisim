@@ -55,7 +55,7 @@ public abstract class AbstractPortEditPart extends AbstractBorderItemEditPart {
 		if (feedbackFigure == null) {
 			Port port = (Port) resolveSemanticElement();
 			feedbackFigure = new Label(labelName(port) + labelPrecision(port) + labelDescription(port));
-			feedbackFigure.setFont(new Font(null, "Courier", 12, SWT.NORMAL));
+			feedbackFigure.setFont(new Font(null, "Courier", 10, SWT.NORMAL));
 			Rectangle bounds = feedbackFigure.getTextBounds().getCopy().expand(3, 0);
 			bounds.setLocation(getFigure().getBounds().getLocation()
 					.translate(20, 20));
