@@ -11,7 +11,6 @@ package ac.soton.multisim.impl;
 
 import java.io.IOException;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,7 +21,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.impl.EventBNamedImpl;
-
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;

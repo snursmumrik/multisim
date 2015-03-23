@@ -190,7 +190,7 @@ public class ComponentCreateCommand extends EditElementCommand {
 		WizardDialog wd = new WizardDialog(shell, wiz);
 		wd.create();
 		
-		Rectangle bounds = DisplayUtil.inchToDisplay(shell, 6, 5);
+		Rectangle bounds = DisplayUtil.inchToDisplay(shell, 5, 5);
 		wd.getShell().setLocation(bounds.x, bounds.y);
 		wd.getShell().setSize(bounds.width, bounds.height);
 		

@@ -70,6 +70,7 @@ public class EventBPortDialog extends SelectionDialog {
 	 */
 	public EventBPortDialog(Shell shell, VariableCausality causality, EList<? extends EventBNamed> elements) {
 		super(shell);
+		this.setTitle("New "+ causality.getName() + " Port");
 		this.causality = causality;
 		elementMap = new HashMap<String, EventBNamed>(elements.size());
 		for (EventBNamed el : elements) {

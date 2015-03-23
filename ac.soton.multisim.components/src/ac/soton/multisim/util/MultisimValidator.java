@@ -454,6 +454,7 @@ public class MultisimValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(fmuPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePort_compatibleType(fmuPort, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFMUPort_validFMUReference(fmuPort, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFMUPort_inputConnected(fmuPort, diagnostics, context);
 		return result;
 	}
 
@@ -474,6 +475,29 @@ public class MultisimValidator extends EObjectValidator {
 						 DIAGNOSTIC_SOURCE,
 						 0,
 						 "Undefined name",	
+						 new Object[] { fmuPort }));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the inputConnected constraint of '<em>FMU Port</em>'.
+	 * <!-- begin-user-doc -->
+	 * FMU inputs must be connected to input signals.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateFMUPort_inputConnected(FMUPort fmuPort, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (fmuPort.getCausality() == VariableCausality.INPUT && fmuPort.getIn() == null) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(new BasicDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "FMU input must be connected",	
 						 new Object[] { fmuPort }));
 			}
 			return false;

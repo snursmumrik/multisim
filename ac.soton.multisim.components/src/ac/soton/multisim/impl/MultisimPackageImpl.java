@@ -1072,7 +1072,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		  (fmuPortEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "validFMUReference"
+			 "constraints", "validFMUReference\ninputConnected"
 		   });		
 		addAnnotation
 		  (eventBPortEClass, 
