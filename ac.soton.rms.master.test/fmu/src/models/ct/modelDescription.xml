@@ -13,4 +13,10 @@
   <ScalarVariable name="y" valueReference="1" description="counts the seconds" causality = "output">
      <Integer start="0"/>
   </ScalarVariable>
+  <ScalarVariable name="p2" valueReference="2" description="parameter 2" variability = "parameter">
+     <Integer start="2"/>
+  </ScalarVariable>
+  <ScalarVariable name="p3" valueReference="3" description="parameter 3" variability = "parameter">
+     <Integer start="3"/>
+  </ScalarVariable>
 </ModelVariables>

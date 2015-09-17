@@ -8,7 +8,9 @@
 package ac.soton.multisim.ui.viewers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -27,6 +29,28 @@ import ac.soton.multisim.ui.providers.ColumnProvider;
  *
  */
 public class FMUParameterTableViewer extends ColumnProviderTableViewer {
+	
+	public static final String MODIFIED_PARAMETERS = "modified_key";
+	private Set<Object> modified = new HashSet<Object>();
+	
+	@Override
+	public Object getData(String key) {
+		if (key.equals(MODIFIED_PARAMETERS))
+			return modified;
+		return super.getData(key);
+	}
+	
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setData(String key, Object value) {
+		if (key.equals(MODIFIED_PARAMETERS))
+			modified = (Set<Object>) value;
+		super.setData(key, value);
+	}
+
+
 
 	public FMUParameterTableViewer(Composite parent, int style) {
 		super(parent, style);
@@ -87,22 +111,29 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 			FMUParameter param = (FMUParameter) element;
 			String valueStr = String.valueOf(value);
 			Object startValue = null;
-			switch (param.getType()) {
-			case BOOLEAN:
-				startValue = Boolean.parseBoolean(valueStr);
-				break;
-			case INTEGER:
-				startValue = Integer.parseInt(valueStr);
-				break;
-			case REAL:
-				startValue = Double.parseDouble(valueStr);
-				break;
-			case STRING:
-				startValue = valueStr;
+			if (valueStr == null || valueStr.trim().isEmpty()) {
+				startValue = param.getDefaultValue();
+			} else {
+				switch (param.getType()) {
+				case BOOLEAN:
+					startValue = Boolean.parseBoolean(valueStr);
+					break;
+				case INTEGER:
+					startValue = Integer.parseInt(valueStr);
+					break;
+				case REAL:
+					startValue = Double.parseDouble(valueStr);
+					break;
+				case STRING:
+					startValue = valueStr;
+				}
 			}
-			assert startValue != null;
 			param.setStartValue(startValue);
 			getViewer().update(element, null);
+			if (param.getDefaultValue().equals(startValue))
+				modified.remove(param);
+			else
+				modified.add(param);
 		}
 	}
 

@@ -9,13 +9,16 @@ package ac.soton.multisim.ui.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -50,9 +53,13 @@ public class SetParametersAction implements IObjectActionDelegate {
 	@Override
 	public void run(IAction action) {
 		final FMUComponent component = (FMUComponent) selectedElement.getNotationView().getElement();
-		FMIModelDescription modelDescription = null;
+		
+		Map<String, Object> componentParams = new HashMap<String, Object>(component.getParameters().size());
+		for (FMUParameter p : component.getParameters())
+			componentParams.put(p.getName(), p.getStartValue());
 		
 		// read model description
+		FMIModelDescription modelDescription = null;
 		if (component.getFmu() != null) {
 			modelDescription = component.getFmu().getModelDescription();
 		} else {
@@ -63,33 +70,35 @@ public class SetParametersAction implements IObjectActionDelegate {
 			try {
 				modelDescription = FMUFile.parseFMUFile(component.getPath());
 			} catch (IOException e) {
-				MessageDialog.openError(Display.getDefault().getActiveShell(), "Parameters Failure", "Could not read the FMU '" + component.getPath() + "'.");
+				MessageDialog.openError(Display.getDefault().getActiveShell(), "Parameters Failure", "Could not read the FMU file '" + component.getPath() + "'.");
 				return;
 			}
 		}
 		
 		// list all the parameters
-		final List<FMUParameter> parameters = new ArrayList<FMUParameter>();
-		if (component.getParameters().isEmpty()) {
-			for (FMIScalarVariable variable : modelDescription.modelVariables) {
-				if (variable.variability == Variability.parameter) {	//XXX according to specification a parameter must also be an input, i.e. variable.causality == Causality.input
-					FMUParameter param = MultisimFactory.eINSTANCE.createFMUParameter();
-					param.setName(variable.name);
-					param.setCausality(SimulationUtil.fmiGetCausality(variable));
-					param.setType(SimulationUtil.fmiGetType(variable));
-					param.setDefaultValue(SimulationUtil.fmiGetDefaultValue(variable));
+		final List<FMUParameter> allParams = new ArrayList<FMUParameter>(modelDescription.modelVariables.size());
+		Set<FMUParameter> modifiedParams = new HashSet<FMUParameter>(componentParams.size());
+		for (FMIScalarVariable variable : modelDescription.modelVariables) {
+			if (variable.variability == Variability.parameter) {	//XXX according to specification a parameter must also be an input, i.e. variable.causality == Causality.input
+				FMUParameter param = MultisimFactory.eINSTANCE.createFMUParameter();
+				param.setName(variable.name);
+				param.setCausality(SimulationUtil.fmiGetCausality(variable));
+				param.setType(SimulationUtil.fmiGetType(variable));
+				param.setDefaultValue(SimulationUtil.fmiGetDefaultValue(variable));
+				param.setDescription(variable.description);
+				allParams.add(param);
+				if (componentParams.containsKey(variable.name)) {
+					param.setStartValue(componentParams.get(variable.name));
+					modifiedParams.add(param);
+				} else {
 					param.setStartValue(param.getDefaultValue());
-					param.setDescription(variable.description);
-					parameters.add(param);
 				}
 			}
-		} else {
-			parameters.addAll(EcoreUtil.copyAll(component.getParameters()));
 		}
 		
 		// display configuration window
-		FMUParametersDialog dialog = new FMUParametersDialog(Display.getCurrent().getActiveShell(), parameters);
-		dialog.setParameters(parameters);
+		final FMUParametersDialog dialog = new FMUParametersDialog(Display.getCurrent().getActiveShell(), allParams);
+		dialog.setModified(modifiedParams);
 		dialog.create();
 		if (Window.OK == dialog.open()) {
 			try {
@@ -98,7 +107,7 @@ public class SetParametersAction implements IObjectActionDelegate {
 					protected IStatus doExecute(IProgressMonitor monitor,
 							IAdaptable info) throws ExecutionException {
 						component.getParameters().clear();
-						component.getParameters().addAll(parameters);
+						component.getParameters().addAll(dialog.getModified());
 						return null;
 					}
 				}.execute(null, null);

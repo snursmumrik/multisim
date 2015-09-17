@@ -8,7 +8,9 @@ package ac.soton.multisim.ui.dialogs;
  */
 
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.TableViewer;
@@ -33,10 +35,11 @@ public class FMUParametersDialog extends Dialog {
 
 	private List<FMUParameter> parameters;
 	private TableViewer viewer;
+	private Set<FMUParameter> modified;
 
 	/**
 	 * @param parentShell
-	 * @param parameters 
+	 * @param parameters up-to-date parameter list 
 	 */
 	public FMUParametersDialog(Shell parentShell, List<FMUParameter> parameters) {
 		super(parentShell);
@@ -54,6 +57,7 @@ public class FMUParametersDialog extends Dialog {
 	    viewer = new FMUParameterTableViewer(container, SWT.MULTI | SWT.H_SCROLL
 	          | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		viewer.setInput(parameters);
+		viewer.setData(FMUParameterTableViewer.MODIFIED_PARAMETERS, modified);
 
 	    return container;
 	}
@@ -63,11 +67,24 @@ public class FMUParametersDialog extends Dialog {
 		if (viewer != null)
 			viewer.setInput(params);
 	}
+
+	public void setModified(Set<FMUParameter> modifiedParams) {
+		modified = modifiedParams;
+		if (viewer != null)
+			viewer.setData(FMUParameterTableViewer.MODIFIED_PARAMETERS, modifiedParams);
+	}
 	
 	public List<FMUParameter> getParameters() {
 		return parameters;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Collection<? extends FMUParameter> getModified() {
+		if (viewer != null)
+			return (Collection<? extends FMUParameter>) viewer.getData(FMUParameterTableViewer.MODIFIED_PARAMETERS);
+		return null;
+	}
+	
 	@Override
 	protected Point getInitialSize() {
 		if (parameters.size() > 0) {
