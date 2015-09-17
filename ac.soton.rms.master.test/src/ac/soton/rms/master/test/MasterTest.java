@@ -40,11 +40,11 @@ import org.rodinp.core.IRodinFile;
 import org.rodinp.core.RodinCore;
 
 import ac.soton.multisim.ComponentDiagram;
-import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.EventBPort;
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUPort;
+import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.VariableCausality;
 import ac.soton.multisim.VariableType;
 import ac.soton.multisim.master.Master;
@@ -52,11 +52,12 @@ import ac.soton.multisim.master.Master;
 import com.google.inject.Injector;
 
 import de.be4.classicalb.core.parser.exceptions.BException;
+import de.prob.Main;
 import de.prob.model.eventb.EventBModel;
+import de.prob.scripting.Api;
 import de.prob.scripting.EventBFactory;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
-import de.prob.webconsole.ServletContextListener;
 
 /**
  *  Creates an example component connection graph:
@@ -388,11 +389,10 @@ public class MasterTest extends AbstractEventBTests {
 			fileName = fileName.replace(".bum", ".bcm");
 		}
 
-		Injector injector = ServletContextListener.INJECTOR;
+		Injector injector = Main.getInjector();
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
-		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
-		@SuppressWarnings("deprecation")
-		StateSpace s = model.getStatespace();
+		EventBModel model = instance.load(fileName, new HashMap<String, String>(), Api.getDEFAULT());	//FIXME: add exception handling if loading fails
+		StateSpace s = model.getStateSpace();
 		return new Trace(s);	//NOTE: don't use setTrace() method to avoid notification
 	}
 	
@@ -438,15 +438,15 @@ public class MasterTest extends AbstractEventBTests {
 			fileName = fileName.replace(".bum", ".bcm");
 		}
 
-		Injector injector = ServletContextListener.INJECTOR;
+		Injector injector = Main.getInjector();
 		final EventBFactory instance = injector.getInstance(EventBFactory.class);
-		EventBModel model = instance.load(fileName, new HashMap<String, String>(), true);	//FIXME: add exception handling if loading fails
-		@SuppressWarnings("deprecation")
-		StateSpace s = model.getStatespace();
+		EventBModel model = instance.load(fileName, new HashMap<String, String>(), Api.getDEFAULT());	//FIXME: add exception handling if loading fails
+		StateSpace s = model.getStateSpace();
 		Trace trace = new Trace(s);
 		
 		trace = trace.anyEvent(null);
 		Object value = trace.getCurrentState().eval("y");
+		assertNotNull(value);
 		trace = trace.anyEvent(null);
 	}
 	
