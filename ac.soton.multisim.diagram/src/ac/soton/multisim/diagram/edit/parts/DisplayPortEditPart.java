@@ -216,7 +216,7 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 	public class InputPortFigure extends RectangleFigure {
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public InputPortFigure() {
 			this.setForegroundColor(ColorConstants.gray);
@@ -224,6 +224,9 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 			updateFace();
 		}
 
+		/*
+		 * @custom
+		 */
 		private void updateFace() {
 			DisplayPort port = (DisplayPort) DisplayPortEditPart.this.resolveSemanticElement();
 			java.awt.Color c = port.getColor();

@@ -8,11 +8,11 @@
 package ac.soton.multisim.diagram.sheet.custom.common;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
@@ -68,7 +68,7 @@ public class EventBPortDialog extends SelectionDialog {
 	 * @param causality
 	 * @param elements
 	 */
-	public EventBPortDialog(Shell shell, VariableCausality causality, EList<? extends EventBNamed> elements) {
+	public EventBPortDialog(Shell shell, VariableCausality causality, Collection<? extends EventBNamed> elements) {
 		super(shell);
 		this.setTitle("New "+ causality.getName() + " Port");
 		this.causality = causality;
@@ -98,7 +98,7 @@ public class EventBPortDialog extends SelectionDialog {
 		label.setText("Name:");
 		nameText = new Text(plate, SWT.SINGLE | SWT.BORDER);
 		nameText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-		nameText.setToolTipText("Enter port name or leave empty for the default");
+		nameText.setToolTipText("Port name (empty = Event-B element name)");
 		
 		// event parameter combo
 		String comboLabel = causality == VariableCausality.INPUT ? "Parameter:" : "Variable:";
@@ -110,13 +110,14 @@ public class EventBPortDialog extends SelectionDialog {
 				}
 			});
 		}
+		elementCombo.setToolTipText("Linked Event-B element");
 		
 		// type label and combo
 		label = new Label(plate, SWT.NONE);
 		label.setText("Type:");
 		typeCombo = new Combo(plate, SWT.DROP_DOWN | SWT.READ_ONLY);
 		typeCombo.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-		typeCombo.setToolTipText("Select a type of the signal");
+		typeCombo.setToolTipText("Type of the signal");
 		typeCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -124,13 +125,12 @@ public class EventBPortDialog extends SelectionDialog {
 			}
 		});
 		{
-			assert VariableType.VALUES.size() > 0;
 			String[] items = new String[VariableType.VALUES.size()];
 			for (int i = 0; i < VariableType.VALUES.size(); i++) {
 				items[i] = VariableType.VALUES.get(i).getName();
 			}
 			typeCombo.setItems(items);
-			typeCombo.select(0);
+			typeCombo.select(VariableType.BOOLEAN.getValue());
 		}
 		
 		// int to real precision spinner/label
@@ -138,7 +138,7 @@ public class EventBPortDialog extends SelectionDialog {
 		label.setText("Precision:");
 		precisionSpinner = new Spinner(plate, SWT.BORDER);
 		precisionSpinner.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-		precisionSpinner.setToolTipText("Set a multiplier for converting FMI Real type to Event-B Integer and back");
+		precisionSpinner.setToolTipText("Order of conversion from FMI Real type to Event-B Integer and back");
 		precisionSpinner.setMinimum(0);
 		precisionSpinner.setMaximum(10);
 		precisionSpinner.setSelection(0);
@@ -146,6 +146,7 @@ public class EventBPortDialog extends SelectionDialog {
 		
 		// validators & initial validation
 		createValidators();
+		validateType();
 		
 		plate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		return composite;

@@ -8,12 +8,21 @@
 package ac.soton.multisim.ui.wizards.pages;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.SelectionDialog;
+import org.eventb.emf.core.EventBNamed;
+import org.eventb.emf.core.machine.Event;
+import org.eventb.emf.core.machine.MachinePackage;
+import org.eventb.emf.core.machine.Parameter;
 
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.EventBPort;
@@ -61,7 +70,16 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 		inputsViewer.setSelectionDialogProvider(new SelectionDialogProvider() {
 			@Override
 			public SelectionDialog getDialog() {
-				return new EventBPortDialog(getShell(), VariableCausality.INPUT, component.getReadInputEvents().get(0).getParameters());
+				Event event = component.getReadInputEvents().get(0);
+				EList<Parameter> parameters = new BasicEList<Parameter>();
+				while (event != null) {
+					parameters.addAll(event.getParameters());
+					if (event.isExtended())
+						event = event.getRefines().get(0);
+					else
+						event = null;
+				}
+				return new EventBPortDialog(getShell(), VariableCausality.INPUT, parameters);
 			}
 		});
 		outputsViewer.setSelectionDialogProvider(new SelectionDialogProvider() {
@@ -116,6 +134,18 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			outputsViewer.setInput(null, component.getOutputs());
 			
 			((Composite) getControl()).layout(true, true);
+			
+//			Map<String, Parameter> paramMap = new HashMap<String, Parameter>();
+//			Event readEvent = component.getReadInputEvents().get(0);
+//			while (readEvent != null) {
+//				for (Parameter p : readEvent.getParameters())
+//					paramMap.put(p.getName(), p);
+//				
+//				if (readEvent.isExtended())
+//					readEvent = readEvent.getRefines().get(0);
+//				else
+//					readEvent = null;
+//			}
 			
 			// disable input port definition if read input events not defined
 			//FIXME: handle case if read event has been redefined and some of ports left are pointing to the wrong event (not read event anymore)

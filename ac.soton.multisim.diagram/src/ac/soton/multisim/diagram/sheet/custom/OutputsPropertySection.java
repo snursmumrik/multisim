@@ -76,7 +76,7 @@ public class OutputsPropertySection extends AbstractTablePropertySection {
 		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite()
 				.getShell(), VariableCausality.OUTPUT,
 				machine.getVariables());
-		inputDialog.setTitle("New Output");
+		inputDialog.setTitle("New Output Port");
 		if (Dialog.OK == inputDialog.open()) {
 			Object[] result = inputDialog.getResult();
 			return result[0];

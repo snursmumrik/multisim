@@ -134,7 +134,7 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof EventBComponentNameEditPart) {
@@ -152,15 +152,16 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 			return true;
 		}
 		if (childEditPart instanceof EventBInputPortEditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
+			BorderItemLocator locator = new MyBorderItemLocator(getMainFigure(),
 					PositionConstants.WEST);
-			getBorderedFigure().getBorderItemContainer().add(
+			IFigure container = getBorderedFigure().getBorderItemContainer();
+			container.add(
 					((EventBInputPortEditPart) childEditPart).getFigure(),
 					locator);
 			return true;
 		}
 		if (childEditPart instanceof EventBOutputPortEditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
+			BorderItemLocator locator = new MyBorderItemLocator(getMainFigure(),
 					PositionConstants.EAST);
 			getBorderedFigure().getBorderItemContainer().add(
 					((AbstractPortEditPart) childEditPart).getFigure(),

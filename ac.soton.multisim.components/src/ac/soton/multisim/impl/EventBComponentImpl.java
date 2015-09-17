@@ -588,7 +588,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Event we : getWaitEvents())
 			waitSet.add(we.getName());
 		
-		// 'wait' event enabledness LTL formula
+		// 'wait' event enabledness LTL formula: F Y ([wait event 1] or [wait event 2] or ...)
+		// F - execute until an event is enabled; Y - execute the enabled event as well
 		stringBuilder.setLength(0);
 		EList<Event> waits = getWaitEvents();
 		stringBuilder.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
@@ -618,23 +619,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
 		
-//		// add animation
-//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-//		selector.addNewAnimation(trace);
-		
-//		// switch perspective
-//		final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-//		IPerspectiveDescriptor activePerspective = workbenchWindow.getActivePage().getPerspective();
-//		Display.getCurrent().asyncExec(new Runnable() {
-//			@Override
-//			public void run() {
-//				try {
-//					workbenchWindow.getWorkbench().showPerspective("de.prob2.perspective", workbenchWindow);
-//				} catch (WorkbenchException e) {
-//
-//				}
-//			}
-//		});
+		// add animation
+		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+		selector.addNewAnimation(trace);
 	}
 
 	/**

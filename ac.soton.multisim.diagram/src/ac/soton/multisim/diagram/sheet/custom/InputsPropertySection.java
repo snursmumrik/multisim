@@ -8,13 +8,17 @@
 package ac.soton.multisim.diagram.sheet.custom;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Composite;
+import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
+import org.eventb.emf.core.machine.Parameter;
 
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.EventBPort;
@@ -73,10 +77,22 @@ public class InputsPropertySection extends AbstractTablePropertySection {
 		if (machine == null)
 			return null;
 
-		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite()
-				.getShell(), VariableCausality.INPUT,
-				component.getReadInputEvents().get(0).getParameters());
-		inputDialog.setTitle("New Input");
+		// set of parameters from all refinements
+		Map<String, Parameter> paramMap = new HashMap<String, Parameter>();
+		Event readEvent = component.getReadInputEvents().get(0);
+		while (readEvent != null) {
+			for (Parameter p : readEvent.getParameters())
+				paramMap.put(p.getName(), p);
+			
+			if (readEvent.isExtended())
+				readEvent = readEvent.getRefines().get(0);
+			else
+				readEvent = null;
+		}
+		
+		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite().getShell(), 
+				VariableCausality.INPUT, paramMap.values());
+		inputDialog.setTitle("New Input Port");
 		if (Dialog.OK == inputDialog.open()) {
 			Object[] result = inputDialog.getResult();
 			return result[0];

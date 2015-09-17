@@ -67,8 +67,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		
 		group = fillLayoutComposite(new Composite(composite, SWT.NULL));
-		readEventsViewer = createLabeledEditableTable(group, "Read input events:", "Add/Remove events for reading input signals", createEventColumnProviders(), null);
-		waitEventsViewer = createLabeledEditableTable(group, "Wait events (one or more):", "Add/Remove events for simulation step wait", createEventColumnProviders(), null);
+		readEventsViewer = createLabeledEditableTable(group, "StartStep events:", "Add/Remove events for reading input signals", createEventColumnProviders(), null);
+		waitEventsViewer = createLabeledEditableTable(group, "EndStep events:", "Add/Remove events for simulation step wait", createEventColumnProviders(), null);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		addValidators();
