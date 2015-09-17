@@ -36,9 +36,11 @@ public class FMUParametersDialog extends Dialog {
 
 	/**
 	 * @param parentShell
+	 * @param parameters 
 	 */
-	public FMUParametersDialog(Shell parentShell) {
+	public FMUParametersDialog(Shell parentShell, List<FMUParameter> parameters) {
 		super(parentShell);
+		this.parameters = parameters;
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class FMUParametersDialog extends Dialog {
 	    
 	    viewer = new FMUParameterTableViewer(container, SWT.MULTI | SWT.H_SCROLL
 	          | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		viewer.setInput(parameters); 
+		viewer.setInput(parameters);
 
 	    return container;
 	}
@@ -68,7 +70,23 @@ public class FMUParametersDialog extends Dialog {
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 300);
+		if (parameters.size() > 0) {
+			int rows = parameters.size();
+			if (rows <= 3) rows = 3;
+			else if (rows > 20) rows = 20;
+			
+			int newTableHeight = viewer.getTable().getItemHeight() * rows;
+			
+			Point size = super.getInitialSize();
+			Point tableSize = viewer.getTable().getSize();
+			return new Point(500, size.y - tableSize.y + newTableHeight);
+		}
+		return new Point(500, 300);
+	}
+
+	@Override
+	protected boolean isResizable() {
+		return true;
 	}
 
 	@Override

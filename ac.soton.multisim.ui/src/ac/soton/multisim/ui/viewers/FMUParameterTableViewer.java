@@ -35,7 +35,7 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 	@Override
 	protected List<ColumnProvider> createColumnProviders() {
 		ArrayList<ColumnProvider> providers = new ArrayList<ColumnProvider>();
-		providers.add(new ColumnProvider("Name", 200, new ColumnLabelProvider() {
+		providers.add(new ColumnProvider("Name", 168, new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
 				return ((FMUParameter) element).getName();
@@ -52,7 +52,7 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 				return value == null ? null : value.toString();
 			}}, 
 			new StartValueEditingSupport(this)));
-		providers.add(new ColumnProvider("Description", 200, new ColumnLabelProvider() {
+		providers.add(new ColumnProvider("Description", 170, new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
 				return ((FMUParameter) element).getDescription();

@@ -88,7 +88,7 @@ public class SetParametersAction implements IObjectActionDelegate {
 		}
 		
 		// display configuration window
-		FMUParametersDialog dialog = new FMUParametersDialog(Display.getCurrent().getActiveShell());
+		FMUParametersDialog dialog = new FMUParametersDialog(Display.getCurrent().getActiveShell(), parameters);
 		dialog.setParameters(parameters);
 		dialog.create();
 		if (Window.OK == dialog.open()) {
