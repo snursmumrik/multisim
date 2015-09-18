@@ -424,6 +424,14 @@ http://www.eclipse.org/legal/epl-v10.html
                id="property.section.recordTrace"
                tab="property.tab.overview">
          </propertySection>
+         <propertySection
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.FMUPathPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.FMUComponentPropertySectionFilter"
+               id="property.section.path"
+               tab="property.tab.overview">
+         </propertySection>
       </propertySections>
    </extension>
 
