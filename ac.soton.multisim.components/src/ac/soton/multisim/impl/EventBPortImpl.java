@@ -306,17 +306,4 @@ public class EventBPortImpl extends PortImpl implements EventBPort {
 				: (getVariable() == null ? noName : getVariable().getName());
 	}
 
-	/* Returns corresponding referenced Event-B element's comment.
-	 * @custom
-	 */
-	@Override
-	public String getDescription() {
-		String desc = super.getDescription();
-		return getCausality() == VariableCausality.INPUT ? 
-				(getParameter() == null ? desc : getParameter().getComment())
-				: (getVariable() == null ? desc : getVariable().getComment());
-	}
-	
-	
-
 } //EventBPortImpl

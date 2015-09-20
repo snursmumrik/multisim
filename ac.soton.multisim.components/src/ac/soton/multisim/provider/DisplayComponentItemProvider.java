@@ -12,7 +12,6 @@ package ac.soton.multisim.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,8 +27,8 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eventb.emf.core.provider.EventBNamedItemProvider;
-
+import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.provider.EventBNamedCommentedElementItemProvider;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.MultisimPackage;
@@ -41,7 +40,7 @@ import ac.soton.multisim.MultisimPackage;
  * @generated
  */
 public class DisplayComponentItemProvider
-	extends EventBNamedItemProvider
+	extends EventBNamedCommentedElementItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -241,6 +240,11 @@ public class DisplayComponentItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(CorePackage.Literals.EVENT_BELEMENT__EXTENSIONS,
+				 MultisimFactory.eINSTANCE.createEventBComponent()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -40,8 +40,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	
 	// UI elements
 	private Text stepPeriodText;
-	private EditableTableViewerContainer readEventsViewer;
-	private EditableTableViewerContainer waitEventsViewer;
+	private EditableTableViewerContainer startStepEventsViewer;
+	private EditableTableViewerContainer endStepEventsViewer;
 	private DecoratedInputValidator stepPeriodValidator;
 	private boolean stepPeriodValid;
 
@@ -67,8 +67,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		
 		group = fillLayoutComposite(new Composite(composite, SWT.NULL));
-		readEventsViewer = createLabeledEditableTable(group, "StartStep events:", "Add/Remove events for reading input signals", createEventColumnProviders(), null);
-		waitEventsViewer = createLabeledEditableTable(group, "EndStep events:", "Add/Remove events for simulation step wait", createEventColumnProviders(), null);
+		startStepEventsViewer = createLabeledEditableTable(group, "StartStep events:", "Add/Remove events indicating simulation step start and reading inputs", createEventColumnProviders(), null);
+		endStepEventsViewer = createLabeledEditableTable(group, "EndStep events:", "Add/Remove events indicating simulation step end", createEventColumnProviders(), null);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		addValidators();
@@ -109,13 +109,13 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 					component.setStepPeriod(Integer.parseInt(stepPeriodText.getText()));
 			}
 		});
-		readEventsViewer.setChangeListener(new Listener() {
+		startStepEventsViewer.setChangeListener(new Listener() {
 			@Override
 			public void handleEvent(org.eclipse.swt.widgets.Event event) {
 				validatePage();
 			}
 		});
-		waitEventsViewer.setChangeListener(new Listener() {
+		endStepEventsViewer.setChangeListener(new Listener() {
 			@Override
 			public void handleEvent(org.eclipse.swt.widgets.Event event) {
 				validatePage();
@@ -162,8 +162,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 			
 			// set input
 			stepPeriodText.setText(Integer.toString(component.getStepPeriod()));
-			readEventsViewer.setInput(component.getMachine().getEvents(), component.getReadInputEvents());
-			waitEventsViewer.setInput(component.getMachine().getEvents(), component.getWaitEvents());
+			startStepEventsViewer.setInput(component.getMachine().getEvents(), component.getStartStepEvents());
+			endStepEventsViewer.setInput(component.getMachine().getEvents(), component.getEndStepEvents());
 			
 			((Composite) getControl()).layout(true, true);
 			
@@ -177,7 +177,8 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	public void validatePage() {
 		boolean valid = true;
 		valid &= stepPeriodValid;
-		valid &= waitEventsViewer.getInput() != null && ((List<?>) waitEventsViewer.getInput()).size() > 0;
+		valid &= startStepEventsViewer.getInput() != null && ((List<?>) startStepEventsViewer.getInput()).size() > 0;
+		valid &= endStepEventsViewer.getInput() != null && ((List<?>) endStepEventsViewer.getInput()).size() > 0;
 		
 		setPageComplete(valid);
 	}

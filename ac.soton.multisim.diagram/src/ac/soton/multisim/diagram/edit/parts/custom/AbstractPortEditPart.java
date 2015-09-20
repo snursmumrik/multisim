@@ -98,9 +98,9 @@ public abstract class AbstractPortEditPart extends AbstractBorderItemEditPart {
 	 * @return
 	 */
 	private String labelDescription(Port port) {
-		String description = port.getDescription();
-		if (description != null && !description.trim().isEmpty())
-			return "\n\"" + description + "\"";
+		String comment = port.getComment();
+		if (comment != null && !comment.trim().isEmpty())
+			return "\n\"" + comment + "\"";
 		return "";
 	}
 	

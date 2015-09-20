@@ -8,19 +8,18 @@
 package ac.soton.multisim.diagram.sheet.custom.filter;
 
 import org.eclipse.emf.ecore.EObject;
-
-import ac.soton.multisim.FMUPort;
+import org.eventb.emf.core.EventBCommentedElement;
 
 /**
  * @author vitaly
  *
  */
-public class FMUPortPropertySectionFilter extends AbstractPropertySectionFilter {
+public class CommentPropertySectionFilter extends AbstractPropertySectionFilter {
 	
 	@Override
 	public boolean select(Object toTest) {
 		EObject element = unwrap(toTest);
-		return element instanceof FMUPort;
+		return element instanceof EventBCommentedElement;
 	}
 
 }

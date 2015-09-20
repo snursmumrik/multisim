@@ -51,7 +51,7 @@ public class FMUComponentFMUVariablesCompartmentEditPart extends
 	 * @generated
 	 */
 	public String getCompartmentName() {
-		return null;//Messages.FMUComponentFMUVariablesCompartmentEditPart_title;
+		return Messages.FMUComponentFMUVariablesCompartmentEditPart_title;
 	}
 
 	/**

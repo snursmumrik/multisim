@@ -325,7 +325,7 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 	@Override
 	protected void initializeGraphicalViewer() {
 		super.initializeGraphicalViewer();
-		
+
 		// workspace element drag listener
 		getDiagramGraphicalViewer().addDropTargetListener(
 				new DropTargetListener(getDiagramGraphicalViewer(),
@@ -388,7 +388,8 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 				} else if (selectedObject instanceof IMachineRoot) {
 					return selection.toList();
 				} else if (selectedObject instanceof MultisimNavigatorItem) {
-					View view = ((MultisimNavigatorItem) selectedObject).getView();
+					View view = ((MultisimNavigatorItem) selectedObject)
+							.getView();
 					selectedObject = view.getElement();
 				} else if (selectedObject instanceof IAdaptable) {
 					IAdaptable adaptable = (IAdaptable) selectedObject;
@@ -408,7 +409,8 @@ public class MultisimDiagramEditor extends DiagramDocumentEditor implements
 
 			ArrayList<EObject> result = new ArrayList<EObject>(uris.size());
 			for (URI nextURI : uris) {
-				EObject modelObject = getEditingDomain().getResourceSet().getEObject(nextURI, true);
+				EObject modelObject = getEditingDomain().getResourceSet()
+						.getEObject(nextURI, true);
 				result.add(modelObject);
 			}
 			return result;

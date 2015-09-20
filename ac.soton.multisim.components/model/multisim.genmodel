@@ -63,8 +63,8 @@
     <genClasses ecoreClass="multisim.ecore#//EventBComponent">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/machine"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/composed"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/readInputEvents"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/waitEvents"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/startStepEvents"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference multisim.ecore#//EventBComponent/endStepEvents"/>
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/recordTrace"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/traceFileName"/>
@@ -82,10 +82,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/causality"/>
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//AbstractVariable/description"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//FMUParameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUParameter/defaultValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUParameter/startValue"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//FMUPort"/>

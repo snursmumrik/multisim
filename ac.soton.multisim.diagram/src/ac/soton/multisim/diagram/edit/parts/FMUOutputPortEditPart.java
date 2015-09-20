@@ -31,7 +31,7 @@ import ac.soton.multisim.diagram.edit.parts.custom.AbstractPortEditPart;
 import ac.soton.multisim.diagram.edit.policies.FMUOutputPortItemSemanticEditPolicy;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class FMUOutputPortEditPart extends AbstractPortEditPart {
 

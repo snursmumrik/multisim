@@ -36,7 +36,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eventb.core.IEventBRoot;
 import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.EventBCommented;
+import org.eventb.emf.core.EventBCommentedElement;
 import org.eventb.emf.core.EventBNamed;
+import org.eventb.emf.core.EventBNamedCommentedElement;
 import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
@@ -75,14 +78,15 @@ import de.prob2.ui.eclipse.VersionController;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getComment <em>Comment</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getMachine <em>Machine</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isComposed <em>Composed</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getReadInputEvents <em>Read Input Events</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getWaitEvents <em>Wait Events</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getStartStepEvents <em>Start Step Events</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getEndStepEvents <em>End Step Events</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTraceFileName <em>Trace File Name</em>}</li>
@@ -110,7 +114,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @custom
 	 */
 	private Random random = new Random(System.currentTimeMillis());
-	private Set<String> waitSet = new HashSet<String>();
+	private Set<String> endStepSet = new HashSet<String>();
 	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	private LTL ltl;
 	private StringBuilder stringBuilder = new StringBuilder();
@@ -122,6 +126,24 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
+	/**
+	 * The default value of the '{@link #getComment() <em>Comment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComment()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMMENT_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getComment() <em>Comment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComment()
+	 * @generated
+	 * @ordered
+	 */
+	protected String comment = COMMENT_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -213,25 +235,23 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected boolean composed = COMPOSED_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReadInputEvents() <em>Read Input Events</em>}' reference list.
+	 * The cached value of the '{@link #getStartStepEvents() <em>Start Step Events</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReadInputEvents()
+	 * @see #getStartStepEvents()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Event> readInputEvents;
-
+	protected EList<Event> startStepEvents;
 	/**
-	 * The cached value of the '{@link #getWaitEvents() <em>Wait Events</em>}' reference list.
+	 * The cached value of the '{@link #getEndStepEvents() <em>End Step Events</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getWaitEvents()
+	 * @see #getEndStepEvents()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Event> waitEvents;
-
+	protected EList<Event> endStepEvents;
 	/**
 	 * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -308,6 +328,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	protected EClass eStaticClass() {
 		return MultisimPackage.Literals.EVENT_BCOMPONENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setComment(String newComment) {
+		String oldComment = comment;
+		comment = newComment;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__COMMENT, oldComment, comment));
 	}
 
 	/**
@@ -512,11 +553,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Event> getReadInputEvents() {
-		if (readInputEvents == null) {
-			readInputEvents = new EObjectResolvingEList<Event>(Event.class, this, MultisimPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS);
+	public EList<Event> getStartStepEvents() {
+		if (startStepEvents == null) {
+			startStepEvents = new EObjectResolvingEList<Event>(Event.class, this, MultisimPackage.EVENT_BCOMPONENT__START_STEP_EVENTS);
 		}
-		return readInputEvents;
+		return startStepEvents;
 	}
 
 	/**
@@ -524,11 +565,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Event> getWaitEvents() {
-		if (waitEvents == null) {
-			waitEvents = new EObjectResolvingEList<Event>(Event.class, this, MultisimPackage.EVENT_BCOMPONENT__WAIT_EVENTS);
+	public EList<Event> getEndStepEvents() {
+		if (endStepEvents == null) {
+			endStepEvents = new EObjectResolvingEList<Event>(Event.class, this, MultisimPackage.EVENT_BCOMPONENT__END_STEP_EVENTS);
 		}
-		return waitEvents;
+		return endStepEvents;
 	}
 
 	/**
@@ -583,18 +624,18 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		System.gc();
 		
 		// recall events for doStep matching
-		if (!waitSet.isEmpty())
-			waitSet.clear();
-		for (Event we : getWaitEvents())
-			waitSet.add(we.getName());
+		EList<Event> endStep = getEndStepEvents();
+		if (!endStepSet.isEmpty())
+			endStepSet.clear();
+		for (Event e : endStep)
+			endStepSet.add(e.getName());
 		
-		// 'wait' event enabledness LTL formula: F Y ([wait event 1] or [wait event 2] or ...)
+		// 'EndStep' event enabledness LTL formula: F Y ([event 1] or [event 2] or ...)
 		// F - execute until an event is enabled; Y - execute the enabled event as well
 		stringBuilder.setLength(0);
-		EList<Event> waits = getWaitEvents();
-		stringBuilder.append(LTL_START).append(waits.get(0).getName()).append(LTL_RBRACKET);
-		for (int i=1; i<waits.size(); i++)
-			stringBuilder.append(LTL_OR).append(waits.get(i).getName()).append(LTL_RBRACKET);
+		stringBuilder.append(LTL_START).append(endStep.get(0).getName()).append(LTL_RBRACKET);
+		for (int i=1; i<endStep.size(); i++)
+			stringBuilder.append(LTL_OR).append(endStep.get(i).getName()).append(LTL_RBRACKET);
 		stringBuilder.append(LTL_END);
 
 		try {
@@ -654,13 +695,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void readInputs() throws SimulationException, ModelException {
-		EList<Event> readEvents = getReadInputEvents();
-		
-		// skip if no inputs
-		if (readEvents.isEmpty())
-			return;
-		
-		// build parameter predicate for event execution
+		// build parameter predicate for 'StartStep' event execution
 		stringBuilder.setLength(0);
 		stringBuilder.append(TT);
 		for (Port p : getInputs()) {
@@ -673,30 +708,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				.append(((EventBPort) p).getParameter().getName())
 				.append(EQ)
 				.append(SimulationUtil.getEventBValue(p.getIn().getValue(), p.getType(), ((EventBPort) p).getIntToReal()));
-		}
-		
-		// find enabled read event
-		List<String> enabled = new ArrayList<>();
-		String predicate = stringBuilder.toString();
-		for (Event re : readEvents) {
-			try {
-				if (trace.canExecuteEvent(re.getName(), predicate))
-					enabled.add(re.getName());
-			} catch (IllegalArgumentException e) {
-				// no operation found -> proceed
-			}
-		}
-		
-		// no reads are enabled
-		if (enabled.isEmpty())
-			throw new ModelException("No read events enabled in '" + getName() + "' for a predicate: " + predicate);
-		
-		// execute read event
-		trace = trace.execute(enabled.get(random.nextInt(enabled.size())), predicate);
-		
-		// recording
-		if (isRecordTrace()) {
-			recordOp(trace.getCurrentTransition());
 		}
 	}
 
@@ -723,8 +734,33 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void doStep(int time, int step) throws ModelException, SimulationException {
-		// skip if current event is already a 'wait' event
-		if (waitSet.contains(trace.getCurrentTransition().getName()))
+		// find enabled 'StartStep' event
+		List<String> enabled = new ArrayList<>();
+		String predicate = stringBuilder.toString();
+		EList<Event> startStep = getStartStepEvents();
+		for (Event event : startStep) {
+			try {
+				if (trace.canExecuteEvent(event.getName(), predicate))
+					enabled.add(event.getName());
+			} catch (IllegalArgumentException e) {
+				// no operation found -> proceed
+			}
+		}
+		
+		// no 'StartStep' events are enabled
+		if (enabled.isEmpty())
+			throw new ModelException("No enabled 'StartStep' events found in '" + getName() + "' for a predicate: " + predicate);
+		
+		// execute one of the enabled 'StartStep' events
+		trace = trace.execute(enabled.get(random.nextInt(enabled.size())), predicate);
+		
+		// recording
+		if (isRecordTrace()) {
+			recordOp(trace.getCurrentTransition());
+		}
+				
+		// skip if current event is already an 'EndStep' event
+		if (endStepSet.contains(trace.getCurrentTransition().getName()))
 			return;
 		
 		StateSpace stateSpace = trace.getStateSpace();
@@ -738,7 +774,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			}
 			
 			if (command.conditionNotReached())
-				throw new SimulationException("ExecuteUntilCommand not completed (possible infinite loop).\nSee recorded trace or animation for details.");
+				throw new SimulationException("ExecuteUntilCommand cannot be completed (possible infinite loop).\nSee recorded trace or animation for details.");
 			if (command.isDeadlocked())
 				throw new ModelException("Deadlock in component '" + getName() + "'\nSee recorded trace or animation for details.");
 		}
@@ -761,10 +797,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (isRecordTrace())
 			recordEnd();
 
-		// show in ProB
-		Injector injector = Main.getInjector();
-		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-		selector.addNewAnimation(trace);
+//		// show in ProB
+//		Injector injector = Main.getInjector();
+//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+//		selector.addNewAnimation(trace);
 		
 		trace = null;
 		System.gc();
@@ -811,6 +847,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
+				return getComment();
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 				return getName();
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:
@@ -824,10 +862,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return basicGetMachine();
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 				return isComposed();
-			case MultisimPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
-				return getReadInputEvents();
-			case MultisimPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
-				return getWaitEvents();
+			case MultisimPackage.EVENT_BCOMPONENT__START_STEP_EVENTS:
+				return getStartStepEvents();
+			case MultisimPackage.EVENT_BCOMPONENT__END_STEP_EVENTS:
+				return getEndStepEvents();
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				return getTrace();
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
@@ -847,6 +885,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
+				setComment((String)newValue);
+				return;
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 				setName((String)newValue);
 				return;
@@ -867,13 +908,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 				setComposed((Boolean)newValue);
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
-				getReadInputEvents().clear();
-				getReadInputEvents().addAll((Collection<? extends Event>)newValue);
+			case MultisimPackage.EVENT_BCOMPONENT__START_STEP_EVENTS:
+				getStartStepEvents().clear();
+				getStartStepEvents().addAll((Collection<? extends Event>)newValue);
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
-				getWaitEvents().clear();
-				getWaitEvents().addAll((Collection<? extends Event>)newValue);
+			case MultisimPackage.EVENT_BCOMPONENT__END_STEP_EVENTS:
+				getEndStepEvents().clear();
+				getEndStepEvents().addAll((Collection<? extends Event>)newValue);
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace((Trace)newValue);
@@ -896,6 +937,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
+				setComment(COMMENT_EDEFAULT);
+				return;
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -914,11 +958,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 				setComposed(COMPOSED_EDEFAULT);
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
-				getReadInputEvents().clear();
+			case MultisimPackage.EVENT_BCOMPONENT__START_STEP_EVENTS:
+				getStartStepEvents().clear();
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
-				getWaitEvents().clear();
+			case MultisimPackage.EVENT_BCOMPONENT__END_STEP_EVENTS:
+				getEndStepEvents().clear();
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				setTrace(TRACE_EDEFAULT);
@@ -941,6 +985,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
+				return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:
@@ -953,10 +999,10 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return machine != null;
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 				return composed != COMPOSED_EDEFAULT;
-			case MultisimPackage.EVENT_BCOMPONENT__READ_INPUT_EVENTS:
-				return readInputEvents != null && !readInputEvents.isEmpty();
-			case MultisimPackage.EVENT_BCOMPONENT__WAIT_EVENTS:
-				return waitEvents != null && !waitEvents.isEmpty();
+			case MultisimPackage.EVENT_BCOMPONENT__START_STEP_EVENTS:
+				return startStepEvents != null && !startStepEvents.isEmpty();
+			case MultisimPackage.EVENT_BCOMPONENT__END_STEP_EVENTS:
+				return endStepEvents != null && !endStepEvents.isEmpty();
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE:
 				return TRACE_EDEFAULT == null ? trace != null : !TRACE_EDEFAULT.equals(trace);
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
@@ -974,9 +1020,25 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBCommented.class) {
+			switch (derivedFeatureID) {
+				case MultisimPackage.EVENT_BCOMPONENT__COMMENT: return CorePackage.EVENT_BCOMMENTED__COMMENT;
+				default: return -1;
+			}
+		}
+		if (baseClass == EventBCommentedElement.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == EventBNamed.class) {
 			switch (derivedFeatureID) {
 				case MultisimPackage.EVENT_BCOMPONENT__NAME: return CorePackage.EVENT_BNAMED__NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == EventBNamedCommentedElement.class) {
+			switch (derivedFeatureID) {
 				default: return -1;
 			}
 		}
@@ -998,9 +1060,25 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == EventBCommented.class) {
+			switch (baseFeatureID) {
+				case CorePackage.EVENT_BCOMMENTED__COMMENT: return MultisimPackage.EVENT_BCOMPONENT__COMMENT;
+				default: return -1;
+			}
+		}
+		if (baseClass == EventBCommentedElement.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == EventBNamed.class) {
 			switch (baseFeatureID) {
 				case CorePackage.EVENT_BNAMED__NAME: return MultisimPackage.EVENT_BCOMPONENT__NAME;
+				default: return -1;
+			}
+		}
+		if (baseClass == EventBNamedCommentedElement.class) {
+			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}
@@ -1025,7 +1103,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (comment: ");
+		result.append(comment);
+		result.append(", name: ");
 		result.append(name);
 		result.append(", stepPeriod: ");
 		result.append(stepPeriod);

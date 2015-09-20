@@ -84,14 +84,14 @@ public class SetParametersAction implements IObjectActionDelegate {
 				param.setName(variable.name);
 				param.setCausality(SimulationUtil.fmiGetCausality(variable));
 				param.setType(SimulationUtil.fmiGetType(variable));
-				param.setDefaultValue(SimulationUtil.fmiGetDefaultValue(variable));
-				param.setDescription(variable.description);
+				param.setValue(SimulationUtil.fmiGetDefaultValue(variable));
+				param.setComment(variable.description);
 				allParams.add(param);
 				if (componentParams.containsKey(variable.name)) {
 					param.setStartValue(componentParams.get(variable.name));
 					modifiedParams.add(param);
 				} else {
-					param.setStartValue(param.getDefaultValue());
+					param.setStartValue(param.getValue());
 				}
 			}
 		}

@@ -29,7 +29,7 @@ import ac.soton.multisim.diagram.sheet.custom.common.AbstractTablePropertySectio
 import ac.soton.multisim.diagram.sheet.custom.common.EventBPortDialog;
 
 /**
- * Wait property section for wait events.
+ * Property section for input ports.
  * 
  * @author vitaly/cfsnook
  *
@@ -79,15 +79,15 @@ public class InputsPropertySection extends AbstractTablePropertySection {
 
 		// set of parameters from all refinements
 		Map<String, Parameter> paramMap = new HashMap<String, Parameter>();
-		Event readEvent = component.getReadInputEvents().get(0);
-		while (readEvent != null) {
-			for (Parameter p : readEvent.getParameters())
+		Event event = component.getStartStepEvents().get(0);
+		while (event != null) {
+			for (Parameter p : event.getParameters())
 				paramMap.put(p.getName(), p);
 			
-			if (readEvent.isExtended())
-				readEvent = readEvent.getRefines().get(0);
+			if (event.isExtended())
+				event = event.getRefines().get(0);
 			else
-				readEvent = null;
+				event = null;
 		}
 		
 		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite().getShell(), 

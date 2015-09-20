@@ -22,18 +22,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
+import org.eventb.emf.core.machine.Parameter;
 
 import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractTablePropertySection;
 
 /**
- * Wait property section for wait events.
+ * Property section for 'StartStep' events.
  * 
  * @author vitaly/cfsnook
  *
  */
-public class WaitPropertySection extends AbstractTablePropertySection {
+public class StartStepPropertySection extends AbstractTablePropertySection {
 	
 	private static ILabelProvider eventLabelProvider = new LabelProvider() {
 
@@ -49,19 +50,25 @@ public class WaitPropertySection extends AbstractTablePropertySection {
 
 	@Override
 	protected List<Event> getOwnedRows() {
-		return ((EventBComponent) eObject).getWaitEvents();
+		return ((EventBComponent) eObject).getStartStepEvents();
 	}
 
 	@Override
 	protected EStructuralFeature getFeature() {
-		return MultisimPackage.eINSTANCE.getEventBComponent_WaitEvents();
+		return MultisimPackage.eINSTANCE.getEventBComponent_StartStepEvents();
 	}
 
 	@Override
 	protected List<Object> getValuesForRow(Object object) {
+		Event event = (Event) object;
 		ArrayList<Object> values = new ArrayList<Object>();
-		values.add(((Event) object).getName());
-		values.add(((Event) object).getRefinesNames().toString().substring(1).replace("]",""));		
+		values.add(event.getName());
+		values.add(event.getRefinesNames().toString().substring(1).replace("]",""));
+		List<String> paramNames = new ArrayList<>(event.getParameters().size());
+		for (Parameter param : event.getParameters()) {
+			paramNames.add(param.getName());
+		}
+		values.add(paramNames.toString().substring(1).replace("]",""));		
 		return values;
 	}
 
@@ -69,7 +76,8 @@ public class WaitPropertySection extends AbstractTablePropertySection {
 	protected List<String> getColumnLabelText() {
 		ArrayList<String> values = new ArrayList<String>();
 		values.add("Event");
-		values.add("Refines");		
+		values.add("Refines");
+		values.add("Parameters");
 		return values;
 	}
 
@@ -82,12 +90,12 @@ public class WaitPropertySection extends AbstractTablePropertySection {
 		ListSelectionDialog eventsDialog = new ListSelectionDialog(getPart()
 				.getSite().getShell(), machine.getEvents(),
 				ArrayContentProvider.getInstance(), eventLabelProvider,
-				"Select wait events:");
+				"Select 'StartStep' events:");
 		eventsDialog.setTitle(machine.getName() + " Events");
 		if (Dialog.OK == eventsDialog.open()) {
 			Object[] result = eventsDialog.getResult();
 			if (result.length > 0) {
-				Set<Event> existingEvents = new HashSet<>(((EventBComponent) eObject).getWaitEvents());
+				Set<Event> existingEvents = new HashSet<>(((EventBComponent) eObject).getStartStepEvents());
 				List<Event> events = new ArrayList<Event>();
 				for (Object obj : result) {
 					if (!existingEvents.contains(obj))

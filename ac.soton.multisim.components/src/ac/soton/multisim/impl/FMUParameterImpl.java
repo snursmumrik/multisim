@@ -23,7 +23,6 @@ import ac.soton.multisim.MultisimPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link ac.soton.multisim.impl.FMUParameterImpl#getDefaultValue <em>Default Value</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.FMUParameterImpl#getStartValue <em>Start Value</em>}</li>
  * </ul>
  * </p>
@@ -37,26 +36,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
-
-	/**
-	 * The default value of the '{@link #getDefaultValue() <em>Default Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDefaultValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Object DEFAULT_VALUE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDefaultValue() <em>Default Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDefaultValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected Object defaultValue = DEFAULT_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getStartValue() <em>Start Value</em>}' attribute.
@@ -102,27 +81,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDefaultValue(Object newDefaultValue) {
-		Object oldDefaultValue = defaultValue;
-		defaultValue = newDefaultValue;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.FMU_PARAMETER__DEFAULT_VALUE, oldDefaultValue, defaultValue));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Object getStartValue() {
 		return startValue;
 	}
@@ -147,8 +105,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MultisimPackage.FMU_PARAMETER__DEFAULT_VALUE:
-				return getDefaultValue();
 			case MultisimPackage.FMU_PARAMETER__START_VALUE:
 				return getStartValue();
 		}
@@ -163,9 +119,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MultisimPackage.FMU_PARAMETER__DEFAULT_VALUE:
-				setDefaultValue(newValue);
-				return;
 			case MultisimPackage.FMU_PARAMETER__START_VALUE:
 				setStartValue(newValue);
 				return;
@@ -181,9 +134,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MultisimPackage.FMU_PARAMETER__DEFAULT_VALUE:
-				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
-				return;
 			case MultisimPackage.FMU_PARAMETER__START_VALUE:
 				setStartValue(START_VALUE_EDEFAULT);
 				return;
@@ -199,8 +149,6 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MultisimPackage.FMU_PARAMETER__DEFAULT_VALUE:
-				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
 			case MultisimPackage.FMU_PARAMETER__START_VALUE:
 				return START_VALUE_EDEFAULT == null ? startValue != null : !START_VALUE_EDEFAULT.equals(startValue);
 		}
@@ -217,9 +165,7 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (defaultValue: ");
-		result.append(defaultValue);
-		result.append(", startValue: ");
+		result.append(" (startValue: ");
 		result.append(startValue);
 		result.append(')');
 		return result.toString();

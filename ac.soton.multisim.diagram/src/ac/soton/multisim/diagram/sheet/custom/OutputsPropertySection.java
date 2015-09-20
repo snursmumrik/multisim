@@ -25,7 +25,7 @@ import ac.soton.multisim.diagram.sheet.custom.common.AbstractTablePropertySectio
 import ac.soton.multisim.diagram.sheet.custom.common.EventBPortDialog;
 
 /**
- * Wait property section for wait events.
+ * Property section for output ports.
  * 
  * @author vitaly/cfsnook
  *

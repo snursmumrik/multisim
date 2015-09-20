@@ -10,8 +10,7 @@
 package ac.soton.multisim;
 
 import org.eclipse.emf.common.util.EList;
-import org.eventb.emf.core.EventBNamed;
-
+import org.eventb.emf.core.EventBNamedCommentedElement;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
 
@@ -33,7 +32,7 @@ import ac.soton.multisim.exception.SimulationException;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Component extends EventBNamed {
+public interface Component extends EventBNamedCommentedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

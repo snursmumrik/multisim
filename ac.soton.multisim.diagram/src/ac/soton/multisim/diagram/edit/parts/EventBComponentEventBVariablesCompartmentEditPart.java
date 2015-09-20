@@ -51,7 +51,7 @@ public class EventBComponentEventBVariablesCompartmentEditPart extends
 	 * @generated
 	 */
 	public String getCompartmentName() {
-		return null;//Messages.EventBComponentEventBVariablesCompartmentEditPart_title;
+		return Messages.EventBComponentEventBVariablesCompartmentEditPart_title;
 	}
 
 	/**

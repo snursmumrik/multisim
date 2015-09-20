@@ -48,6 +48,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gef;visibility:=reexport,
  org.eventb.core,
  org.rodinp.core,
- org.rodinp.core.emf
+ org.rodinp.core.emf,
+ org.eventb.emf.core.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

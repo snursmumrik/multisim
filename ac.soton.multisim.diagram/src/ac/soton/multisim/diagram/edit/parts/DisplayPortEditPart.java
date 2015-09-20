@@ -228,10 +228,12 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 		 * @custom
 		 */
 		private void updateFace() {
-			DisplayPort port = (DisplayPort) DisplayPortEditPart.this.resolveSemanticElement();
+			DisplayPort port = (DisplayPort) DisplayPortEditPart.this
+					.resolveSemanticElement();
 			java.awt.Color c = port.getColor();
 			if (c != null)
-				this.setBackgroundColor(new Color(null, c.getRed(), c.getGreen(), c.getBlue()));
+				this.setBackgroundColor(new Color(null, c.getRed(), c
+						.getGreen(), c.getBlue()));
 			else
 				this.setBackgroundColor(THIS_BACK);
 		}

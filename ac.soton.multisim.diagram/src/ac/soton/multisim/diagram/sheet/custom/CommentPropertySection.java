@@ -8,36 +8,37 @@
 package ac.soton.multisim.diagram.sheet.custom;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eventb.emf.core.EventBCommentedElement;
 
-import ac.soton.multisim.FMUPort;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractTextPropertySection;
 
 /**
- * Description property section for the FMU port.
+ * Description property section for the commented element.
  * 
  * @author vitaly
  *
  */
-public class DescriptionPropertySection extends AbstractTextPropertySection {
+public class CommentPropertySection extends AbstractTextPropertySection {
 
 	@Override
 	protected String getPropertyNameLabel() {
-		return "Description:";
+		return "Comment:";
 	}
 
 	@Override
 	protected void setPropertyValue(EObject object, Object value) {
-		((FMUPort) object).setDescription((String) value);
+		((EventBCommentedElement) object).setComment((String) value);
 	}
 
 	@Override
 	protected String getPropertyValueString() {
-		return ((FMUPort) getEObject()).getDescription();
+		String comment = ((EventBCommentedElement) getEObject()).getComment();
+		return comment == null ? "" : comment;
 	}
 
 	@Override
 	protected String getPropertyChangeCommandName() {
-		return "change description";
+		return "change comment";
 	}
 
 }

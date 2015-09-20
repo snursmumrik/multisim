@@ -26,8 +26,8 @@ import de.prob.statespace.Trace;
  * <ul>
  *   <li>{@link ac.soton.multisim.EventBComponent#getMachine <em>Machine</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#isComposed <em>Composed</em>}</li>
- *   <li>{@link ac.soton.multisim.EventBComponent#getReadInputEvents <em>Read Input Events</em>}</li>
- *   <li>{@link ac.soton.multisim.EventBComponent#getWaitEvents <em>Wait Events</em>}</li>
+ *   <li>{@link ac.soton.multisim.EventBComponent#getStartStepEvents <em>Start Step Events</em>}</li>
+ *   <li>{@link ac.soton.multisim.EventBComponent#getEndStepEvents <em>End Step Events</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#isRecordTrace <em>Record Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#getTraceFileName <em>Trace File Name</em>}</li>
@@ -99,36 +99,36 @@ public interface EventBComponent extends AbstractExtension, Component {
 	void setComposed(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Read Input Events</b></em>' reference list.
+	 * Returns the value of the '<em><b>Start Step Events</b></em>' reference list.
 	 * The list contents are of type {@link org.eventb.emf.core.machine.Event}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Read Input Events</em>' reference isn't clear,
+	 * If the meaning of the '<em>Start Step Events</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Read Input Events</em>' reference list.
-	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_ReadInputEvents()
-	 * @model
-	 * @generated
-	 */
-	EList<Event> getReadInputEvents();
-
-	/**
-	 * Returns the value of the '<em><b>Wait Events</b></em>' reference list.
-	 * The list contents are of type {@link org.eventb.emf.core.machine.Event}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Wait Events</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Wait Events</em>' reference list.
-	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_WaitEvents()
+	 * @return the value of the '<em>Start Step Events</em>' reference list.
+	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_StartStepEvents()
 	 * @model required="true"
 	 * @generated
 	 */
-	EList<Event> getWaitEvents();
+	EList<Event> getStartStepEvents();
+
+	/**
+	 * Returns the value of the '<em><b>End Step Events</b></em>' reference list.
+	 * The list contents are of type {@link org.eventb.emf.core.machine.Event}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>End Step Events</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>End Step Events</em>' reference list.
+	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_EndStepEvents()
+	 * @model required="true"
+	 * @generated
+	 */
+	EList<Event> getEndStepEvents();
 
 	/**
 	 * Returns the value of the '<em><b>Trace</b></em>' attribute.

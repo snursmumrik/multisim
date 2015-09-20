@@ -19,6 +19,8 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Composite;
 
+import com.google.common.base.Objects;
+
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.ui.providers.ColumnProvider;
 
@@ -79,7 +81,7 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 		providers.add(new ColumnProvider("Description", 170, new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
-				return ((FMUParameter) element).getDescription();
+				return ((FMUParameter) element).getComment();
 			}}));
 		return providers;
 	}
@@ -112,7 +114,7 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 			String valueStr = String.valueOf(value);
 			Object startValue = null;
 			if (valueStr == null || valueStr.trim().isEmpty()) {
-				startValue = param.getDefaultValue();
+				startValue = param.getValue();
 			} else {
 				switch (param.getType()) {
 				case BOOLEAN:
@@ -130,7 +132,7 @@ public class FMUParameterTableViewer extends ColumnProviderTableViewer {
 			}
 			param.setStartValue(startValue);
 			getViewer().update(element, null);
-			if (param.getDefaultValue().equals(startValue))
+			if (Objects.equal(startValue, param.getValue()))
 				modified.remove(param);
 			else
 				modified.add(param);

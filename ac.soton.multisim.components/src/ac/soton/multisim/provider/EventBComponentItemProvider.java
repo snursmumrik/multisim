@@ -80,17 +80,40 @@ public class EventBComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addCommentPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
 			addStepPeriodPropertyDescriptor(object);
 			addMachinePropertyDescriptor(object);
 			addComposedPropertyDescriptor(object);
-			addReadInputEventsPropertyDescriptor(object);
-			addWaitEventsPropertyDescriptor(object);
+			addStartStepEventsPropertyDescriptor(object);
+			addEndStepEventsPropertyDescriptor(object);
 			addTracePropertyDescriptor(object);
 			addRecordTracePropertyDescriptor(object);
 			addTraceFileNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Comment feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addCommentPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventBCommented_comment_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBCommented_comment_feature", "_UI_EventBCommented_type"),
+				 CorePackage.Literals.EVENT_BCOMMENTED__COMMENT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -248,19 +271,19 @@ public class EventBComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Read Input Events feature.
+	 * This adds a property descriptor for the Start Step Events feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addReadInputEventsPropertyDescriptor(Object object) {
+	protected void addStartStepEventsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EventBComponent_readInputEvents_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_readInputEvents_feature", "_UI_EventBComponent_type"),
-				 MultisimPackage.Literals.EVENT_BCOMPONENT__READ_INPUT_EVENTS,
+				 getString("_UI_EventBComponent_startStepEvents_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_startStepEvents_feature", "_UI_EventBComponent_type"),
+				 MultisimPackage.Literals.EVENT_BCOMPONENT__START_STEP_EVENTS,
 				 true,
 				 false,
 				 true,
@@ -270,19 +293,19 @@ public class EventBComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Wait Events feature.
+	 * This adds a property descriptor for the End Step Events feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addWaitEventsPropertyDescriptor(Object object) {
+	protected void addEndStepEventsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EventBComponent_waitEvents_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_waitEvents_feature", "_UI_EventBComponent_type"),
-				 MultisimPackage.Literals.EVENT_BCOMPONENT__WAIT_EVENTS,
+				 getString("_UI_EventBComponent_endStepEvents_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_endStepEvents_feature", "_UI_EventBComponent_type"),
+				 MultisimPackage.Literals.EVENT_BCOMPONENT__END_STEP_EVENTS,
 				 true,
 				 false,
 				 true,
@@ -359,6 +382,7 @@ public class EventBComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EventBComponent.class)) {
+			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
 			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:

@@ -37,14 +37,14 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 	public List<IElementType> getRelTypesOnSource(IAdaptable source) {
 		IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
 				.getAdapter(IGraphicalEditPart.class);
-		return doGetRelTypesOnSource((AbstractPortEditPart) sourceEditPart);
+		return doGetRelTypesOnSource((EventBOutputPortEditPart) sourceEditPart);
 	}
 
 	/**
 	 * @generated
 	 */
 	public List<IElementType> doGetRelTypesOnSource(
-			AbstractPortEditPart source) {
+			EventBOutputPortEditPart source) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		types.add(MultisimElementTypes.PortOut_4001);
 		return types;
@@ -61,14 +61,14 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
 		return doGetRelTypesOnSourceAndTarget(
-				(AbstractPortEditPart) sourceEditPart, targetEditPart);
+				(EventBOutputPortEditPart) sourceEditPart, targetEditPart);
 	}
 
 	/**
 	 * @generated
 	 */
 	public List<IElementType> doGetRelTypesOnSourceAndTarget(
-			AbstractPortEditPart source, IGraphicalEditPart targetEditPart) {
+			EventBOutputPortEditPart source, IGraphicalEditPart targetEditPart) {
 		List<IElementType> types = new LinkedList<IElementType>();
 		if (targetEditPart instanceof DisplayPortEditPart) {
 			types.add(MultisimElementTypes.PortOut_4001);
@@ -96,7 +96,7 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 			IElementType relationshipType) {
 		IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
 				.getAdapter(IGraphicalEditPart.class);
-		return doGetTypesForTarget((AbstractPortEditPart) sourceEditPart,
+		return doGetTypesForTarget((EventBOutputPortEditPart) sourceEditPart,
 				relationshipType);
 	}
 
@@ -104,7 +104,7 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 	 * @generated
 	 */
 	public List<IElementType> doGetTypesForTarget(
-			AbstractPortEditPart source, IElementType relationshipType) {
+			EventBOutputPortEditPart source, IElementType relationshipType) {
 		List<IElementType> types = new ArrayList<IElementType>();
 		if (relationshipType == MultisimElementTypes.PortOut_4001) {
 			types.add(MultisimElementTypes.DisplayPort_3001);
@@ -123,14 +123,23 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 	public List<IElementType> getRelTypesOnTarget(IAdaptable target) {
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		return doGetRelTypesOnTarget((AbstractPortEditPart) targetEditPart);
+		return doGetRelTypesOnTarget((EventBOutputPortEditPart) targetEditPart);
+	}
+
+	/**
+	 * @generated
+	 */
+	public List<IElementType> doGetRelTypesOnTarget(
+			EventBOutputPortEditPart target) {
+		List<IElementType> types = new ArrayList<IElementType>(1);
+		types.add(MultisimElementTypes.PortOut_4001);
+		return types;
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	public List<IElementType> doGetRelTypesOnTarget(
-			AbstractPortEditPart target) {
+	public List<IElementType> doGetRelTypesOnTarget(AbstractPortEditPart target) {
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		// commented to remove incoming connection handle
 		//		types.add(MultisimElementTypes.PortOut_4001);
@@ -145,7 +154,7 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 			IElementType relationshipType) {
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		return doGetTypesForSource((AbstractPortEditPart) targetEditPart,
+		return doGetTypesForSource((EventBOutputPortEditPart) targetEditPart,
 				relationshipType);
 	}
 
@@ -153,7 +162,7 @@ public class MultisimModelingAssistantProviderOfEventBOutputPortEditPart extends
 	 * @generated
 	 */
 	public List<IElementType> doGetTypesForSource(
-			AbstractPortEditPart target, IElementType relationshipType) {
+			EventBOutputPortEditPart target, IElementType relationshipType) {
 		List<IElementType> types = new ArrayList<IElementType>();
 		if (relationshipType == MultisimElementTypes.PortOut_4001) {
 			types.add(MultisimElementTypes.DisplayPort_3001);

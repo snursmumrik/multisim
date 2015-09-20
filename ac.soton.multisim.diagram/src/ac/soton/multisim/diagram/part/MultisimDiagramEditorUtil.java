@@ -68,15 +68,17 @@ import ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart;
  * @generated
  */
 public class MultisimDiagramEditorUtil {
-	
+
 	/**
 	 * Adds new component to the palette of edit domain's viewer.
 	 * @param editDomain
 	 * @param component
 	 * @custom
 	 */
-	public static void addPaletteComponent(EditDomain editDomain, Component component) {
-		PaletteRoot paletteRoot = editDomain.getPaletteViewer().getPaletteRoot();
+	public static void addPaletteComponent(EditDomain editDomain,
+			Component component) {
+		PaletteRoot paletteRoot = editDomain.getPaletteViewer()
+				.getPaletteRoot();
 		MultisimPaletteFactory.addToPalette(paletteRoot, component);
 	}
 

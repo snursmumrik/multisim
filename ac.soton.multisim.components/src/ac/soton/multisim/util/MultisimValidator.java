@@ -258,13 +258,14 @@ public class MultisimValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateEventBComponent_consistentReadEvents(EventBComponent eventBComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		EList<Event> reads = eventBComponent.getReadInputEvents();
+		EList<Event> events = eventBComponent.getStartStepEvents();
+		
 		// skip single event
-		if (reads.size() <= 1)
+		if (events.size() <= 1)
 			return true;
 		
 		// read first
-		Event event1 = reads.get(0);
+		Event event1 = events.get(0);
 		Set<String> paramNames = new HashSet<String>(event1.getParameters().size());
 		for (Parameter p : event1.getParameters())
 			paramNames.add(p.getName());
@@ -272,7 +273,7 @@ public class MultisimValidator extends EObjectValidator {
 		// compare to the rest
 		boolean failed = false;
 		Event event2 = null;
-		for (Event e : reads) {
+		for (Event e : events) {
 			if (event1.getParameters().size() != e.getParameters().size()) {
 				event2 = e;
 				failed = true;
@@ -294,7 +295,7 @@ public class MultisimValidator extends EObjectValidator {
 						(Diagnostic.ERROR,
 						 DIAGNOSTIC_SOURCE,
 						 0,
-						 MessageFormat.format("Read events ''{1}'' and ''{2}'' should match in number/name of parameters", new Object[] { event1.getName(), event2.getName() }),	
+						 MessageFormat.format("'StartStep' events ''{1}'' and ''{2}'' should match in number/name of parameters", new Object[] { event1.getName(), event2.getName() }),	
 						 new Object[] { eventBComponent }));
 			}
 			return false;

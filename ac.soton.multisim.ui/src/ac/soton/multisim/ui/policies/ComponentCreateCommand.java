@@ -242,7 +242,7 @@ public class ComponentCreateCommand extends EditElementCommand {
 		variable.setName(scalarVariable.name);
 		variable.setType(SimulationUtil.fmiGetType(scalarVariable));
 		variable.setCausality(VariableCausality.INPUT);
-		variable.setDescription(scalarVariable.description);
+		variable.setComment(scalarVariable.description);
 		component.getInputs().add((Port) variable);
 	}
 
@@ -258,7 +258,7 @@ public class ComponentCreateCommand extends EditElementCommand {
 		variable.setName(scalarVariable.name);
 		variable.setType(SimulationUtil.fmiGetType(scalarVariable));
 		variable.setCausality(VariableCausality.OUTPUT);
-		variable.setDescription(scalarVariable.description);
+		variable.setComment(scalarVariable.description);
 		component.getOutputs().add((Port) variable);
 	}
 

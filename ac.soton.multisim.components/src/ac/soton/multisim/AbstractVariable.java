@@ -9,7 +9,7 @@
  */
 package ac.soton.multisim;
 
-import org.eventb.emf.core.EventBNamed;
+import org.eventb.emf.core.EventBNamedCommentedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +22,6 @@ import org.eventb.emf.core.EventBNamed;
  *   <li>{@link ac.soton.multisim.AbstractVariable#getType <em>Type</em>}</li>
  *   <li>{@link ac.soton.multisim.AbstractVariable#getCausality <em>Causality</em>}</li>
  *   <li>{@link ac.soton.multisim.AbstractVariable#getValue <em>Value</em>}</li>
- *   <li>{@link ac.soton.multisim.AbstractVariable#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,7 +29,7 @@ import org.eventb.emf.core.EventBNamed;
  * @model abstract="true"
  * @generated
  */
-public interface AbstractVariable extends EventBNamed {
+public interface AbstractVariable extends EventBNamedCommentedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,31 +120,5 @@ public interface AbstractVariable extends EventBNamed {
 	 * @generated
 	 */
 	void setValue(Object value);
-
-	/**
-	 * Returns the value of the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Description</em>' attribute.
-	 * @see #setDescription(String)
-	 * @see ac.soton.multisim.MultisimPackage#getAbstractVariable_Description()
-	 * @model
-	 * @generated
-	 */
-	String getDescription();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.multisim.AbstractVariable#getDescription <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Description</em>' attribute.
-	 * @see #getDescription()
-	 * @generated
-	 */
-	void setDescription(String value);
 
 } // AbstractVariable

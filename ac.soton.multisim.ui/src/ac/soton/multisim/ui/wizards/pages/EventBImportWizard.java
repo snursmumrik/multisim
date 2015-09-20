@@ -42,12 +42,11 @@ public class EventBImportWizard extends Wizard implements IImportWizard {
 		component.setName(machine.getName());
 		component.setMachine(machine);
 		component.setStepPeriod(DEFAULT_STEP);
+		component.setComment(machine.getComment());
 	}
 
 	@Override
 	public boolean performFinish() {
-		if (component.getReadInputEvents().isEmpty())
-			component.getInputs().clear();
 		return true;
 	}
 

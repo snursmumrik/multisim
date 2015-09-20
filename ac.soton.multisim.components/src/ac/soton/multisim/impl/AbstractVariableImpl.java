@@ -13,8 +13,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eventb.emf.core.CorePackage;
-import org.eventb.emf.core.impl.EventBNamedImpl;
-
+import org.eventb.emf.core.impl.EventBNamedCommentedElementImpl;
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.VariableCausality;
@@ -30,13 +29,12 @@ import ac.soton.multisim.VariableType;
  *   <li>{@link ac.soton.multisim.impl.AbstractVariableImpl#getType <em>Type</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.AbstractVariableImpl#getCausality <em>Causality</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.AbstractVariableImpl#getValue <em>Value</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.AbstractVariableImpl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class AbstractVariableImpl extends EventBNamedImpl implements AbstractVariable {
+public abstract class AbstractVariableImpl extends EventBNamedCommentedElementImpl implements AbstractVariable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,26 +101,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 	 * @ordered
 	 */
 	protected Object value = VALUE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String DESCRIPTION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -211,27 +189,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDescription(String newDescription) {
-		String oldDescription = description;
-		description = newDescription;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION, oldDescription, description));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -241,8 +198,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 				return getCausality();
 			case MultisimPackage.ABSTRACT_VARIABLE__VALUE:
 				return getValue();
-			case MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION:
-				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -263,9 +218,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 				return;
 			case MultisimPackage.ABSTRACT_VARIABLE__VALUE:
 				setValue(newValue);
-				return;
-			case MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION:
-				setDescription((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -288,9 +240,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 			case MultisimPackage.ABSTRACT_VARIABLE__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
-			case MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION:
-				setDescription(DESCRIPTION_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -309,8 +258,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 				return causality != CAUSALITY_EDEFAULT;
 			case MultisimPackage.ABSTRACT_VARIABLE__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION:
-				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -331,8 +278,6 @@ public abstract class AbstractVariableImpl extends EventBNamedImpl implements Ab
 		result.append(causality);
 		result.append(", value: ");
 		result.append(value);
-		result.append(", description: ");
-		result.append(description);
 		result.append(')');
 		return result.toString();
 	}

@@ -304,7 +304,7 @@ public class ValidateAction extends Action {
 		}
 		return targetElementCollector;
 	}
-	
+
 	/**
 	 * Returns a list of error markers of the file.
 	 * 
@@ -313,13 +313,15 @@ public class ValidateAction extends Action {
 	 * @throws CoreException if file markers cannot be read
 	 * @custom
 	 */
-	public static List<IMarker> getErrorMarkers(IFile file) throws CoreException {
+	public static List<IMarker> getErrorMarkers(IFile file)
+			throws CoreException {
 		IMarker[] markers = file.findMarkers(
 				MultisimMarkerNavigationProvider.MARKER_TYPE, true,
 				IResource.DEPTH_ZERO);
 		List<IMarker> errors = new ArrayList<IMarker>();
 		for (IMarker marker : markers) {
-			int severity = marker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+			int severity = marker.getAttribute(IMarker.SEVERITY,
+					IMarker.SEVERITY_INFO);
 			if (severity == IMarker.SEVERITY_ERROR)
 				errors.add(marker);
 		}

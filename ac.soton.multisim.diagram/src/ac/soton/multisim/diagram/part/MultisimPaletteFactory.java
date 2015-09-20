@@ -21,6 +21,7 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.gmf.tooling.runtime.part.DefaultNodeToolEntry;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import ac.soton.multisim.Component;
@@ -98,11 +99,11 @@ public class MultisimPaletteFactory {
 	 * @return
 	 * @custom
 	 */
-	private static PaletteEntry createComponentInstantiationTool(Component component,
-			ImageDescriptor imageDescriptor) {
+	private static PaletteEntry createComponentInstantiationTool(
+			Component component, ImageDescriptor imageDescriptor) {
 		InstantiateComponentTool cit = new InstantiateComponentTool(
-				component.getName(), "Instantiate "
-						+ component.getName(), null, component);
+				component.getName(), "Instantiate " + component.getName(),
+				null, component);
 
 		cit.setToolProperty("comp", component);
 		cit.setSmallIcon(imageDescriptor);
@@ -126,7 +127,7 @@ public class MultisimPaletteFactory {
 	 * @generated
 	 */
 	private ToolEntry createDisplay1CreationTool() {
-		NodeToolEntry entry = new NodeToolEntry(
+		DefaultNodeToolEntry entry = new DefaultNodeToolEntry(
 				Messages.Display1CreationTool_title,
 				Messages.Display1CreationTool_desc,
 				Collections
@@ -136,34 +137,5 @@ public class MultisimPaletteFactory {
 				.findImageDescriptor("/ac.soton.multisim/icons/custom/DisplayComponent.gif")); //$NON-NLS-1$
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
-	}
-
-	/**
-	 * @generated
-	 */
-	private static class NodeToolEntry extends ToolEntry {
-
-		/**
-		 * @generated
-		 */
-		private final List<IElementType> elementTypes;
-
-		/**
-		 * @generated
-		 */
-		private NodeToolEntry(String title, String description,
-				List<IElementType> elementTypes) {
-			super(title, description, null, null);
-			this.elementTypes = elementTypes;
-		}
-
-		/**
-		 * @generated
-		 */
-		public Tool createTool() {
-			Tool tool = new UnspecifiedTypeCreationTool(elementTypes);
-			tool.setProperties(getToolProperties());
-			return tool;
-		}
 	}
 }

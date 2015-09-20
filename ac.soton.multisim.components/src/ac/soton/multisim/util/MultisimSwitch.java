@@ -9,12 +9,16 @@
  */
 package ac.soton.multisim.util;
 
+import ac.soton.multisim.*;
 import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eventb.emf.core.AbstractExtension;
+import org.eventb.emf.core.EventBCommented;
+import org.eventb.emf.core.EventBCommentedElement;
 import org.eventb.emf.core.EventBElement;
 import org.eventb.emf.core.EventBNamed;
+import org.eventb.emf.core.EventBNamedCommentedElement;
 import org.eventb.emf.core.EventBObject;
 import ac.soton.multisim.AbstractVariable;
 import ac.soton.multisim.Component;
@@ -120,7 +124,12 @@ public class MultisimSwitch<T> {
 			case MultisimPackage.COMPONENT: {
 				Component component = (Component)theEObject;
 				T result = caseComponent(component);
+				if (result == null) result = caseEventBNamedCommentedElement(component);
+				if (result == null) result = caseEventBCommentedElement(component);
 				if (result == null) result = caseEventBNamed(component);
+				if (result == null) result = caseEventBElement(component);
+				if (result == null) result = caseEventBCommented(component);
+				if (result == null) result = caseEventBObject(component);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -129,9 +138,12 @@ public class MultisimSwitch<T> {
 				T result = caseEventBComponent(eventBComponent);
 				if (result == null) result = caseAbstractExtension(eventBComponent);
 				if (result == null) result = caseComponent(eventBComponent);
-				if (result == null) result = caseEventBElement(eventBComponent);
-				if (result == null) result = caseEventBNamed(eventBComponent);
+				if (result == null) result = caseEventBNamedCommentedElement(eventBComponent);
 				if (result == null) result = caseEventBObject(eventBComponent);
+				if (result == null) result = caseEventBCommentedElement(eventBComponent);
+				if (result == null) result = caseEventBNamed(eventBComponent);
+				if (result == null) result = caseEventBElement(eventBComponent);
+				if (result == null) result = caseEventBCommented(eventBComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -139,7 +151,12 @@ public class MultisimSwitch<T> {
 				FMUComponent fmuComponent = (FMUComponent)theEObject;
 				T result = caseFMUComponent(fmuComponent);
 				if (result == null) result = caseComponent(fmuComponent);
+				if (result == null) result = caseEventBNamedCommentedElement(fmuComponent);
+				if (result == null) result = caseEventBCommentedElement(fmuComponent);
 				if (result == null) result = caseEventBNamed(fmuComponent);
+				if (result == null) result = caseEventBElement(fmuComponent);
+				if (result == null) result = caseEventBCommented(fmuComponent);
+				if (result == null) result = caseEventBObject(fmuComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -147,14 +164,24 @@ public class MultisimSwitch<T> {
 				Port port = (Port)theEObject;
 				T result = casePort(port);
 				if (result == null) result = caseAbstractVariable(port);
+				if (result == null) result = caseEventBNamedCommentedElement(port);
+				if (result == null) result = caseEventBCommentedElement(port);
 				if (result == null) result = caseEventBNamed(port);
+				if (result == null) result = caseEventBElement(port);
+				if (result == null) result = caseEventBCommented(port);
+				if (result == null) result = caseEventBObject(port);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case MultisimPackage.ABSTRACT_VARIABLE: {
 				AbstractVariable abstractVariable = (AbstractVariable)theEObject;
 				T result = caseAbstractVariable(abstractVariable);
+				if (result == null) result = caseEventBNamedCommentedElement(abstractVariable);
+				if (result == null) result = caseEventBCommentedElement(abstractVariable);
 				if (result == null) result = caseEventBNamed(abstractVariable);
+				if (result == null) result = caseEventBElement(abstractVariable);
+				if (result == null) result = caseEventBCommented(abstractVariable);
+				if (result == null) result = caseEventBObject(abstractVariable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -162,7 +189,12 @@ public class MultisimSwitch<T> {
 				FMUParameter fmuParameter = (FMUParameter)theEObject;
 				T result = caseFMUParameter(fmuParameter);
 				if (result == null) result = caseAbstractVariable(fmuParameter);
+				if (result == null) result = caseEventBNamedCommentedElement(fmuParameter);
+				if (result == null) result = caseEventBCommentedElement(fmuParameter);
 				if (result == null) result = caseEventBNamed(fmuParameter);
+				if (result == null) result = caseEventBElement(fmuParameter);
+				if (result == null) result = caseEventBCommented(fmuParameter);
+				if (result == null) result = caseEventBObject(fmuParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -171,7 +203,12 @@ public class MultisimSwitch<T> {
 				T result = caseFMUPort(fmuPort);
 				if (result == null) result = casePort(fmuPort);
 				if (result == null) result = caseAbstractVariable(fmuPort);
+				if (result == null) result = caseEventBNamedCommentedElement(fmuPort);
+				if (result == null) result = caseEventBCommentedElement(fmuPort);
 				if (result == null) result = caseEventBNamed(fmuPort);
+				if (result == null) result = caseEventBElement(fmuPort);
+				if (result == null) result = caseEventBCommented(fmuPort);
+				if (result == null) result = caseEventBObject(fmuPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -180,7 +217,12 @@ public class MultisimSwitch<T> {
 				T result = caseEventBPort(eventBPort);
 				if (result == null) result = casePort(eventBPort);
 				if (result == null) result = caseAbstractVariable(eventBPort);
+				if (result == null) result = caseEventBNamedCommentedElement(eventBPort);
+				if (result == null) result = caseEventBCommentedElement(eventBPort);
 				if (result == null) result = caseEventBNamed(eventBPort);
+				if (result == null) result = caseEventBElement(eventBPort);
+				if (result == null) result = caseEventBCommented(eventBPort);
+				if (result == null) result = caseEventBObject(eventBPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -188,7 +230,12 @@ public class MultisimSwitch<T> {
 				DisplayComponent displayComponent = (DisplayComponent)theEObject;
 				T result = caseDisplayComponent(displayComponent);
 				if (result == null) result = caseComponent(displayComponent);
+				if (result == null) result = caseEventBNamedCommentedElement(displayComponent);
+				if (result == null) result = caseEventBCommentedElement(displayComponent);
 				if (result == null) result = caseEventBNamed(displayComponent);
+				if (result == null) result = caseEventBElement(displayComponent);
+				if (result == null) result = caseEventBCommented(displayComponent);
+				if (result == null) result = caseEventBObject(displayComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -197,7 +244,12 @@ public class MultisimSwitch<T> {
 				T result = caseDisplayPort(displayPort);
 				if (result == null) result = casePort(displayPort);
 				if (result == null) result = caseAbstractVariable(displayPort);
+				if (result == null) result = caseEventBNamedCommentedElement(displayPort);
+				if (result == null) result = caseEventBCommentedElement(displayPort);
 				if (result == null) result = caseEventBNamed(displayPort);
+				if (result == null) result = caseEventBElement(displayPort);
+				if (result == null) result = caseEventBCommented(displayPort);
+				if (result == null) result = caseEventBObject(displayPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -412,6 +464,51 @@ public class MultisimSwitch<T> {
 	 * @generated
 	 */
 	public T caseEventBElement(EventBElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Event BCommented</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Event BCommented</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEventBCommented(EventBCommented object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Event BCommented Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Event BCommented Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEventBCommentedElement(EventBCommentedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Event BNamed Commented Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Event BNamed Commented Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEventBNamedCommentedElement(EventBNamedCommentedElement object) {
 		return null;
 	}
 

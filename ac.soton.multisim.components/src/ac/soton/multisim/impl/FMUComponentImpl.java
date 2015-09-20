@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.CorePackage;
-import org.eventb.emf.core.impl.EventBNamedImpl;
+import org.eventb.emf.core.impl.EventBNamedCommentedElementImpl;
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
@@ -47,7 +47,7 @@ import de.prob.cosimulation.FMU;
  *
  * @generated
  */
-public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
+public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements FMUComponent {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -293,10 +293,8 @@ public class FMUComponentImpl extends EventBNamedImpl implements FMUComponent {
 	 */
 	public void initialise(int tStart, int tStop) {
 		// initialise parameters that have non-default values
-		for (FMUParameter param : getParameters()) {
-			if (!param.getStartValue().equals(param.getDefaultValue()))
-				SimulationUtil.fmuSet(fmu, param, param.getStartValue());
-		}
+		for (FMUParameter param : getParameters())
+			SimulationUtil.fmuSet(fmu, param, param.getStartValue());
 		
 		// initialise FMU
 		fmu.initialize(tStart/1000.0, tStop/1000.0);

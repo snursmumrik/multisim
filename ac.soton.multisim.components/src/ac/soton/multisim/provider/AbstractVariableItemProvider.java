@@ -12,7 +12,6 @@ package ac.soton.multisim.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -27,9 +26,10 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eventb.emf.core.provider.EventBNamedItemProvider;
-
+import org.eventb.emf.core.CorePackage;
+import org.eventb.emf.core.provider.EventBNamedCommentedElementItemProvider;
 import ac.soton.multisim.AbstractVariable;
+import ac.soton.multisim.MultisimFactory;
 import ac.soton.multisim.MultisimPackage;
 
 /**
@@ -39,7 +39,7 @@ import ac.soton.multisim.MultisimPackage;
  * @generated
  */
 public class AbstractVariableItemProvider
-	extends EventBNamedItemProvider
+	extends EventBNamedCommentedElementItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -80,7 +80,6 @@ public class AbstractVariableItemProvider
 			addTypePropertyDescriptor(object);
 			addCausalityPropertyDescriptor(object);
 			addValuePropertyDescriptor(object);
-			addDescriptionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -152,28 +151,6 @@ public class AbstractVariableItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Description feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_AbstractVariable_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractVariable_description_feature", "_UI_AbstractVariable_type"),
-				 MultisimPackage.Literals.ABSTRACT_VARIABLE__DESCRIPTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -201,7 +178,6 @@ public class AbstractVariableItemProvider
 		switch (notification.getFeatureID(AbstractVariable.class)) {
 			case MultisimPackage.ABSTRACT_VARIABLE__TYPE:
 			case MultisimPackage.ABSTRACT_VARIABLE__CAUSALITY:
-			case MultisimPackage.ABSTRACT_VARIABLE__DESCRIPTION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
@@ -218,6 +194,11 @@ public class AbstractVariableItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(CorePackage.Literals.EVENT_BELEMENT__EXTENSIONS,
+				 MultisimFactory.eINSTANCE.createEventBComponent()));
 	}
 
 }

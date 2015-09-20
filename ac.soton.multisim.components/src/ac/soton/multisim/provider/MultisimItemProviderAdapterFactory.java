@@ -509,6 +509,54 @@ public class MultisimItemProviderAdapterFactory extends MultisimAdapterFactory i
 							(CorePackage.Literals.ANNOTATION__CONTENTS,
 							 MultisimFactory.eINSTANCE.createEventBComponent()));
 
+				
+				annotation = MultisimPackage.Literals.FMU_COMPONENT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createFMUComponent()));
+
+				
+				annotation = MultisimPackage.Literals.FMU_PARAMETER.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createFMUParameter()));
+
+				
+				annotation = MultisimPackage.Literals.FMU_PORT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createFMUPort()));
+
+				
+				annotation = MultisimPackage.Literals.EVENT_BPORT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createEventBPort()));
+
+				
+				annotation = MultisimPackage.Literals.DISPLAY_COMPONENT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createDisplayComponent()));
+
+				
+				annotation = MultisimPackage.Literals.DISPLAY_PORT.getEAnnotation("org.eventb.emf.core.extendedMetaClasses");
+				if (annotation == null  || annotation.getReferences().contains(object.eClass()))
+					newChildDescriptors.add
+						(createChildParameter
+							(CorePackage.Literals.ANNOTATION__CONTENTS,
+							 MultisimFactory.eINSTANCE.createDisplayPort()));
+
 				return null;
 			}
  

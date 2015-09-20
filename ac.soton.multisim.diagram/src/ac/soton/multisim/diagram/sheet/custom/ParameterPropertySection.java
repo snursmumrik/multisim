@@ -20,7 +20,7 @@ import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractEnumerationPropertySection;
 
 /**
- * Parameter property section.
+ * Parameter property section for the Event-B input port.
  * 
  * @author vitaly
  *
@@ -44,7 +44,7 @@ public class ParameterPropertySection extends AbstractEnumerationPropertySection
 		EObject container = ((EventBPort) eObject).eContainer();
 		if (container instanceof EventBComponent) {
 			EventBComponent component = (EventBComponent) container;
-			EList<Event> reads = component.getReadInputEvents();
+			EList<Event> reads = component.getStartStepEvents();
 			if (reads.size() > 0) {
 				parameters = reads.get(0).getAllContained(MachinePackage.Literals.PARAMETER, true);
 				String[] values = new String[parameters.size()];

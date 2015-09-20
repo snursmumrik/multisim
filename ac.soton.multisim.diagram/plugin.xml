@@ -226,18 +226,18 @@ http://www.eclipse.org/legal/epl-v10.html
           <propertyTab
                 afterTab="property.tab.overview"
                 category="overview"
-                id="property.tab.read"
+                id="property.tab.startStep"
                 image="icons/obj16/Read.png"
                 indented="true"
-                label="Read">
+                label="Start Step">
           </propertyTab>
           <propertyTab
-                afterTab="property.tab.read"
+                afterTab="property.tab.startStep"
                 category="overview"
-                id="property.tab.wait"
+                id="property.tab.endStep"
                 image="icons/obj16/Wait.png"
                 indented="true"
-                label="Wait">
+                label="End Step">
           </propertyTab>
           <propertyTab
                 afterTab="property.tab.wait"
@@ -297,6 +297,14 @@ http://www.eclipse.org/legal/epl-v10.html
                tab="property.tab.overview">
          </propertySection>
          <propertySection
+               afterSection="property.section.type"
+               class="ac.soton.multisim.diagram.sheet.custom.CommentPropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.CommentPropertySectionFilter"
+               id="property.section.comment"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
                afterSection="property.section.name"
                class="ac.soton.multisim.diagram.sheet.custom.StartTimePropertySection"
                enablesFor="1"
@@ -329,23 +337,23 @@ http://www.eclipse.org/legal/epl-v10.html
                tab="property.tab.overview">
          </propertySection>
          <propertySection
-               afterSection="property.section.step"
-               class="ac.soton.multisim.diagram.sheet.custom.ReadPropertySection"
+               afterSection="property.section.stepPeriod"
+               class="ac.soton.multisim.diagram.sheet.custom.StartStepPropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
-               id="property.section.read"
-               tab="property.tab.read">
+               id="property.section.startStep"
+               tab="property.tab.startStep">
          </propertySection>
          <propertySection
-               afterSection="property.section.read"
-               class="ac.soton.multisim.diagram.sheet.custom.WaitPropertySection"
+               afterSection="property.section.startStep"
+               class="ac.soton.multisim.diagram.sheet.custom.EndStepPropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
-               id="property.section.wait"
-               tab="property.tab.wait">
+               id="property.section.endStep"
+               tab="property.tab.endStep">
          </propertySection>
          <propertySection
-               afterSection="property.section.wait"
+               afterSection="property.section.endStep"
                class="ac.soton.multisim.diagram.sheet.custom.InputsPropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
@@ -398,14 +406,6 @@ http://www.eclipse.org/legal/epl-v10.html
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBPortPropertySectionFilter"
                id="property.section.precision"
-               tab="property.tab.overview">
-         </propertySection>
-         <propertySection
-               afterSection="property.section.type"
-               class="ac.soton.multisim.diagram.sheet.custom.DescriptionPropertySection"
-               enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.FMUPortPropertySectionFilter"
-               id="property.section.description"
                tab="property.tab.overview">
          </propertySection>
          <propertySection
@@ -568,11 +568,11 @@ http://www.eclipse.org/legal/epl-v10.html
       </metamodel>
       <metamodel nsURI="http://soton.ac.uk/models/multisim/2.0">
          <metamodelType
-               eclass="EventBComponent"
-               edithelper="ac.soton.multisim.diagram.edit.helpers.EventBComponentEditHelper"
                id="ac.soton.multisim.diagram.EventBComponent_2006"
+               name="%metatype.name.EventBComponent_2006"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               name="%metatype.name.EventBComponent_2006">
+               eclass="EventBComponent"
+               edithelper="ac.soton.multisim.diagram.edit.helpers.EventBComponentEditHelper">
             <param name="semanticHint" value="2006"/>
          </metamodelType>
       </metamodel>

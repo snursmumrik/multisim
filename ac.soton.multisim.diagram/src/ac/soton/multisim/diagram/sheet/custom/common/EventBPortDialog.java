@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.SelectionDialog;
-import org.eventb.emf.core.EventBNamed;
+import org.eventb.emf.core.EventBNamedCommentedElement;
 import org.eventb.emf.core.machine.Parameter;
 import org.eventb.emf.core.machine.Variable;
 
@@ -55,7 +55,7 @@ public class EventBPortDialog extends SelectionDialog {
 	private Combo typeCombo;
 	private Combo elementCombo;
 	private Spinner precisionSpinner;
-	private Map<String, EventBNamed> elementMap;
+	private Map<String, EventBNamedCommentedElement> elementMap;
 	private DecoratedInputValidator elementValidator;
 	private boolean elementValid;
 	private EventBPort port;
@@ -68,12 +68,12 @@ public class EventBPortDialog extends SelectionDialog {
 	 * @param causality
 	 * @param elements
 	 */
-	public EventBPortDialog(Shell shell, VariableCausality causality, Collection<? extends EventBNamed> elements) {
+	public EventBPortDialog(Shell shell, VariableCausality causality, Collection<? extends EventBNamedCommentedElement> elements) {
 		super(shell);
 		this.setTitle("New "+ causality.getName() + " Port");
 		this.causality = causality;
-		elementMap = new HashMap<String, EventBNamed>(elements.size());
-		for (EventBNamed el : elements) {
+		elementMap = new HashMap<String, EventBNamedCommentedElement>(elements.size());
+		for (EventBNamedCommentedElement el : elements) {
 			elementMap.put(el.getName(), el);
 		}
 	}
@@ -239,7 +239,7 @@ public class EventBPortDialog extends SelectionDialog {
 	protected void okPressed() {
 		String typeStr = typeCombo.getItem(typeCombo.getSelectionIndex());
 		String elementStr = elementCombo.getItem(elementCombo.getSelectionIndex());
-		EventBNamed element = elementMap.get(elementStr);
+		EventBNamedCommentedElement element = elementMap.get(elementStr);
 		String name = nameText.getText();
 		if (name == null || name.trim().isEmpty())
 			name = element.getName();
@@ -249,6 +249,7 @@ public class EventBPortDialog extends SelectionDialog {
 		port.setType(VariableType.getByName(typeStr));
 		port.setCausality(causality);
 		port.setIntToReal(precisionSpinner.getSelection());
+		port.setComment(element.getComment());
 
 		if (causality == VariableCausality.INPUT) {
 			port.setParameter((Parameter) element);

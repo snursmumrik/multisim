@@ -8,20 +8,15 @@
 package ac.soton.multisim.ui.wizards.pages;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.SelectionDialog;
-import org.eventb.emf.core.EventBNamed;
 import org.eventb.emf.core.machine.Event;
-import org.eventb.emf.core.machine.MachinePackage;
 import org.eventb.emf.core.machine.Parameter;
 
 import ac.soton.multisim.EventBComponent;
@@ -70,7 +65,7 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 		inputsViewer.setSelectionDialogProvider(new SelectionDialogProvider() {
 			@Override
 			public SelectionDialog getDialog() {
-				Event event = component.getReadInputEvents().get(0);
+				Event event = component.getStartStepEvents().get(0);
 				EList<Parameter> parameters = new BasicEList<Parameter>();
 				while (event != null) {
 					parameters.addAll(event.getParameters());
@@ -149,7 +144,7 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			
 			// disable input port definition if read input events not defined
 			//FIXME: handle case if read event has been redefined and some of ports left are pointing to the wrong event (not read event anymore)
-			inputsViewer.setEnabled(component.getReadInputEvents().isEmpty() == false);
+			inputsViewer.setEnabled(component.getStartStepEvents().isEmpty() == false);
 		}
 	}
 

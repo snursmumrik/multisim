@@ -414,7 +414,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEventBComponent_ReadInputEvents() {
+	public EReference getEventBComponent_StartStepEvents() {
 		return (EReference)eventBComponentEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -423,7 +423,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEventBComponent_WaitEvents() {
+	public EReference getEventBComponent_EndStepEvents() {
 		return (EReference)eventBComponentEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -558,15 +558,6 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAbstractVariable_Description() {
-		return (EAttribute)abstractVariableEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getFMUParameter() {
 		return fmuParameterEClass;
 	}
@@ -576,17 +567,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getFMUParameter_DefaultValue() {
-		return (EAttribute)fmuParameterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getFMUParameter_StartValue() {
-		return (EAttribute)fmuParameterEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)fmuParameterEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -822,8 +804,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		eventBComponentEClass = createEClass(EVENT_BCOMPONENT);
 		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__MACHINE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__COMPOSED);
-		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__READ_INPUT_EVENTS);
-		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__WAIT_EVENTS);
+		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__START_STEP_EVENTS);
+		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__END_STEP_EVENTS);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__RECORD_TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE_FILE_NAME);
@@ -841,10 +823,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		createEAttribute(abstractVariableEClass, ABSTRACT_VARIABLE__TYPE);
 		createEAttribute(abstractVariableEClass, ABSTRACT_VARIABLE__CAUSALITY);
 		createEAttribute(abstractVariableEClass, ABSTRACT_VARIABLE__VALUE);
-		createEAttribute(abstractVariableEClass, ABSTRACT_VARIABLE__DESCRIPTION);
 
 		fmuParameterEClass = createEClass(FMU_PARAMETER);
-		createEAttribute(fmuParameterEClass, FMU_PARAMETER__DEFAULT_VALUE);
 		createEAttribute(fmuParameterEClass, FMU_PARAMETER__START_VALUE);
 
 		fmuPortEClass = createEClass(FMU_PORT);
@@ -911,12 +891,12 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 
 		// Add supertypes to classes
 		componentDiagramEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
-		componentEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
+		componentEClass.getESuperTypes().add(theCorePackage.getEventBNamedCommentedElement());
 		eventBComponentEClass.getESuperTypes().add(theCorePackage.getAbstractExtension());
 		eventBComponentEClass.getESuperTypes().add(this.getComponent());
 		fmuComponentEClass.getESuperTypes().add(this.getComponent());
 		portEClass.getESuperTypes().add(this.getAbstractVariable());
-		abstractVariableEClass.getESuperTypes().add(theCorePackage.getEventBNamed());
+		abstractVariableEClass.getESuperTypes().add(theCorePackage.getEventBNamedCommentedElement());
 		fmuParameterEClass.getESuperTypes().add(this.getAbstractVariable());
 		fmuPortEClass.getESuperTypes().add(this.getPort());
 		eventBPortEClass.getESuperTypes().add(this.getPort());
@@ -963,8 +943,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEClass(eventBComponentEClass, EventBComponent.class, "EventBComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventBComponent_Machine(), theMachinePackage.getMachine(), null, "machine", null, 1, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_Composed(), ecorePackage.getEBoolean(), "composed", null, 1, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEventBComponent_ReadInputEvents(), theMachinePackage.getEvent(), null, "readInputEvents", null, 0, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEventBComponent_WaitEvents(), theMachinePackage.getEvent(), null, "waitEvents", null, 1, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEventBComponent_StartStepEvents(), theMachinePackage.getEvent(), null, "startStepEvents", null, 1, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEventBComponent_EndStepEvents(), theMachinePackage.getEvent(), null, "endStepEvents", null, 1, -1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_Trace(), this.getProBTrace(), "trace", null, 0, 1, EventBComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_RecordTrace(), ecorePackage.getEBoolean(), "recordTrace", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_TraceFileName(), ecorePackage.getEString(), "traceFileName", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -982,10 +962,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEAttribute(getAbstractVariable_Type(), this.getVariableType(), "type", null, 1, 1, AbstractVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractVariable_Causality(), this.getVariableCausality(), "causality", null, 1, 1, AbstractVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractVariable_Value(), ecorePackage.getEJavaObject(), "value", null, 0, 1, AbstractVariable.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAbstractVariable_Description(), ecorePackage.getEString(), "description", null, 0, 1, AbstractVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuParameterEClass, FMUParameter.class, "FMUParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFMUParameter_DefaultValue(), ecorePackage.getEJavaObject(), "defaultValue", null, 0, 1, FMUParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFMUParameter_StartValue(), ecorePackage.getEJavaObject(), "startValue", null, 0, 1, FMUParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuPortEClass, FMUPort.class, "FMUPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

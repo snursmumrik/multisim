@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eventb.emf.core.impl.EventBNamedImpl;
+import org.eventb.emf.core.impl.EventBNamedCommentedElementImpl;
 import ac.soton.multisim.Component;
 import ac.soton.multisim.DisplayComponent;
 import ac.soton.multisim.DisplayPort;
@@ -54,7 +54,7 @@ import ac.soton.multisim.VariableType;
  *
  * @generated
  */
-public class DisplayComponentImpl extends EventBNamedImpl implements DisplayComponent {
+public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implements DisplayComponent {
 
 	/**
 	 * Random colour generator.
