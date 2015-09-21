@@ -117,7 +117,7 @@ public class Master {
 				
 				// first evaluation of DE
 				if (c instanceof EventBComponent)
-					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepPeriod());
+					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepSize());
 				else if (c instanceof FMUComponent)
 					lastEvalTime.put(c, 0);		// store eval time for CT
 				
@@ -159,7 +159,7 @@ public class Master {
 			for (Component c : components) {
 				if (updateList.containsKey(c) && currentTime == updateList.get(c)) {
 					deList.add((EventBComponent) c);
-					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepPeriod());
+					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepSize());
 				}
 			}
 			
@@ -171,7 +171,7 @@ public class Master {
 			// DE step
 			for (EventBComponent c : deList) {
 				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
-				c.doStep(currentTime, c.getStepPeriod());
+				c.doStep(currentTime, c.getStepSize());
 				c.writeOutputs();
 				
 				// evaluate any input CT

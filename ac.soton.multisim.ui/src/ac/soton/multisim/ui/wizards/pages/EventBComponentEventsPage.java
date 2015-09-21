@@ -39,7 +39,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	private EventBComponent component;
 	
 	// UI elements
-	private Text stepPeriodText;
+	private Text stepSizeText;
 	private EditableTableViewerContainer startStepEventsViewer;
 	private EditableTableViewerContainer endStepEventsViewer;
 	private DecoratedInputValidator stepPeriodValidator;
@@ -63,7 +63,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 		composite.setLayout(layout);
 
 		Composite group = fillLayoutComposite(new Composite(composite, SWT.NULL));
-		stepPeriodText = createLabeledText(group, "Step size (ms):", "Enter time period of one simulation step");
+		stepSizeText = createLabeledText(group, "Step size (ms):", "Enter time period of one simulation step");
 		group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		
 		group = fillLayoutComposite(new Composite(composite, SWT.NULL));
@@ -81,7 +81,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	 */
 	private void addValidators() {
 		stepPeriodValidator = new DecoratedInputValidator(
-				DecoratedInputValidator.createDecorator(stepPeriodText,
+				DecoratedInputValidator.createDecorator(stepSizeText,
 						"Please enter simulation step size (ms)",
 						FieldDecorationRegistry.DEC_ERROR, false)) {
 			@Override
@@ -102,11 +102,11 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 	 * Creates and adds listeners to UI controls.
 	 */
 	private void addListeners() {
-		stepPeriodText.addModifyListener(new ModifyListener() {
+		stepSizeText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (validateStepPeriod())
-					component.setStepPeriod(Integer.parseInt(stepPeriodText.getText()));
+					component.setStepSize(Integer.parseInt(stepSizeText.getText()));
 			}
 		});
 		startStepEventsViewer.setChangeListener(new Listener() {
@@ -125,7 +125,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 
 	protected boolean validateStepPeriod() {
 		if (stepPeriodValidator != null) {
-			stepPeriodValid = stepPeriodValidator.isValid(stepPeriodText.getText()) == null;
+			stepPeriodValid = stepPeriodValidator.isValid(stepSizeText.getText()) == null;
 		}
 		validatePage();
 		return stepPeriodValid;
@@ -161,7 +161,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 				return;
 			
 			// set input
-			stepPeriodText.setText(Integer.toString(component.getStepPeriod()));
+			stepSizeText.setText(Integer.toString(component.getStepSize()));
 			startStepEventsViewer.setInput(component.getMachine().getEvents(), component.getStartStepEvents());
 			endStepEventsViewer.setInput(component.getMachine().getEvents(), component.getEndStepEvents());
 			

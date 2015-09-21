@@ -82,7 +82,6 @@ import de.prob2.ui.eclipse.VersionController;
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getMachine <em>Machine</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isComposed <em>Composed</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getStartStepEvents <em>Start Step Events</em>}</li>
@@ -90,6 +89,7 @@ import de.prob2.ui.eclipse.VersionController;
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#isRecordTrace <em>Record Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getTraceFileName <em>Trace File Name</em>}</li>
+ *   <li>{@link ac.soton.multisim.impl.EventBComponentImpl#getStepSize <em>Step Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -124,7 +124,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The default value of the '{@link #getComment() <em>Comment</em>}' attribute.
@@ -183,26 +183,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
-
-	/**
-	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_PERIOD_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getMachine() <em>Machine</em>}' reference.
@@ -312,6 +292,25 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	protected String traceFileName = TRACE_FILE_NAME_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int STEP_SIZE_EDEFAULT = 0;
+	/**
+	 * The cached value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStepSize()
+	 * @generated
+	 * @ordered
+	 */
+	protected int stepSize = STEP_SIZE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -386,27 +385,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getStepPeriod() {
-		return stepPeriod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStepPeriod(int newStepPeriod) {
-		int oldStepPeriod = stepPeriod;
-		stepPeriod = newStepPeriod;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Trace getTrace() {
 		return trace;
 	}
@@ -463,6 +441,27 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		traceFileName = newTraceFileName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME, oldTraceFileName, traceFileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getStepSize() {
+		return stepSize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStepSize(int newStepSize) {
+		int oldStepSize = stepSize;
+		stepSize = newStepSize;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE, oldStepSize, stepSize));
 	}
 
 	/**
@@ -855,8 +854,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return getInputs();
 			case MultisimPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return getOutputs();
-			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return getStepPeriod();
 			case MultisimPackage.EVENT_BCOMPONENT__MACHINE:
 				if (resolve) return getMachine();
 				return basicGetMachine();
@@ -872,6 +869,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return isRecordTrace();
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
 				return getTraceFileName();
+			case MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE:
+				return getStepSize();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -899,9 +898,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod((Integer)newValue);
-				return;
 			case MultisimPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)newValue);
 				return;
@@ -924,6 +920,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
 				setTraceFileName((String)newValue);
+				return;
+			case MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE:
+				setStepSize((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -949,9 +948,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
-			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				setStepPeriod(STEP_PERIOD_EDEFAULT);
-				return;
 			case MultisimPackage.EVENT_BCOMPONENT__MACHINE:
 				setMachine((Machine)null);
 				return;
@@ -973,6 +969,9 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
 				setTraceFileName(TRACE_FILE_NAME_EDEFAULT);
 				return;
+			case MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE:
+				setStepSize(STEP_SIZE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -993,8 +992,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return inputs != null && !inputs.isEmpty();
 			case MultisimPackage.EVENT_BCOMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
-			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
-				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case MultisimPackage.EVENT_BCOMPONENT__MACHINE:
 				return machine != null;
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
@@ -1009,6 +1006,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 				return recordTrace != RECORD_TRACE_EDEFAULT;
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
 				return TRACE_FILE_NAME_EDEFAULT == null ? traceFileName != null : !TRACE_FILE_NAME_EDEFAULT.equals(traceFileName);
+			case MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE:
+				return stepSize != STEP_SIZE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1046,7 +1045,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (derivedFeatureID) {
 				case MultisimPackage.EVENT_BCOMPONENT__INPUTS: return MultisimPackage.COMPONENT__INPUTS;
 				case MultisimPackage.EVENT_BCOMPONENT__OUTPUTS: return MultisimPackage.COMPONENT__OUTPUTS;
-				case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD: return MultisimPackage.COMPONENT__STEP_PERIOD;
 				default: return -1;
 			}
 		}
@@ -1086,7 +1084,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 			switch (baseFeatureID) {
 				case MultisimPackage.COMPONENT__INPUTS: return MultisimPackage.EVENT_BCOMPONENT__INPUTS;
 				case MultisimPackage.COMPONENT__OUTPUTS: return MultisimPackage.EVENT_BCOMPONENT__OUTPUTS;
-				case MultisimPackage.COMPONENT__STEP_PERIOD: return MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD;
 				default: return -1;
 			}
 		}
@@ -1107,8 +1104,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		result.append(comment);
 		result.append(", name: ");
 		result.append(name);
-		result.append(", stepPeriod: ");
-		result.append(stepPeriod);
 		result.append(", composed: ");
 		result.append(composed);
 		result.append(", trace: ");
@@ -1117,6 +1112,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		result.append(recordTrace);
 		result.append(", traceFileName: ");
 		result.append(traceFileName);
+		result.append(", stepSize: ");
+		result.append(stepSize);
 		result.append(')');
 		return result.toString();
 	}

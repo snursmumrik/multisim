@@ -61,7 +61,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -324,7 +324,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentDiagram_StepSize() {
+	public EAttribute getComponentDiagram_Arguments() {
 		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -333,17 +333,8 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComponentDiagram_Arguments() {
-		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getComponentDiagram_RecordOutputs() {
-		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)componentDiagramEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -371,15 +362,6 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 */
 	public EReference getComponent_Outputs() {
 		return (EReference)componentEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getComponent_StepPeriod() {
-		return (EAttribute)componentEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -452,6 +434,15 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 	 */
 	public EAttribute getEventBComponent_TraceFileName() {
 		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEventBComponent_StepSize() {
+		return (EAttribute)eventBComponentEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -792,14 +783,12 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		createEReference(componentDiagramEClass, COMPONENT_DIAGRAM__COMPONENTS);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__STOP_TIME);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__START_TIME);
-		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__STEP_SIZE);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__ARGUMENTS);
 		createEAttribute(componentDiagramEClass, COMPONENT_DIAGRAM__RECORD_OUTPUTS);
 
 		componentEClass = createEClass(COMPONENT);
 		createEReference(componentEClass, COMPONENT__INPUTS);
 		createEReference(componentEClass, COMPONENT__OUTPUTS);
-		createEAttribute(componentEClass, COMPONENT__STEP_PERIOD);
 
 		eventBComponentEClass = createEClass(EVENT_BCOMPONENT);
 		createEReference(eventBComponentEClass, EVENT_BCOMPONENT__MACHINE);
@@ -809,6 +798,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__RECORD_TRACE);
 		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__TRACE_FILE_NAME);
+		createEAttribute(eventBComponentEClass, EVENT_BCOMPONENT__STEP_SIZE);
 
 		fmuComponentEClass = createEClass(FMU_COMPONENT);
 		createEAttribute(fmuComponentEClass, FMU_COMPONENT__PATH);
@@ -908,14 +898,12 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEReference(getComponentDiagram_Components(), this.getComponent(), null, "components", null, 0, -1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_StopTime(), ecorePackage.getEInt(), "stopTime", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_StartTime(), ecorePackage.getEInt(), "startTime", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComponentDiagram_StepSize(), theEcorePackage.getEInt(), "stepSize", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_Arguments(), ecorePackage.getEString(), "arguments", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentDiagram_RecordOutputs(), ecorePackage.getEBoolean(), "recordOutputs", null, 0, 1, ComponentDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponent_Inputs(), this.getPort(), null, "inputs", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponent_Outputs(), this.getPort(), null, "outputs", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComponent_StepPeriod(), ecorePackage.getEInt(), "stepPeriod", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(componentEClass, null, "instantiate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, this.getSimulationException());
@@ -948,6 +936,7 @@ public class MultisimPackageImpl extends EPackageImpl implements MultisimPackage
 		initEAttribute(getEventBComponent_Trace(), this.getProBTrace(), "trace", null, 0, 1, EventBComponent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_RecordTrace(), ecorePackage.getEBoolean(), "recordTrace", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEventBComponent_TraceFileName(), ecorePackage.getEString(), "traceFileName", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEventBComponent_StepSize(), ecorePackage.getEInt(), "stepSize", null, 0, 1, EventBComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fmuComponentEClass, FMUComponent.class, "FMUComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFMUComponent_Path(), ecorePackage.getEString(), "path", null, 1, 1, FMUComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

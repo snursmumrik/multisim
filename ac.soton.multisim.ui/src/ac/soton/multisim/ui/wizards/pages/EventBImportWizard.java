@@ -41,7 +41,7 @@ public class EventBImportWizard extends Wizard implements IImportWizard {
 		component = MultisimFactory.eINSTANCE.createEventBComponent();
 		component.setName(machine.getName());
 		component.setMachine(machine);
-		component.setStepPeriod(DEFAULT_STEP);
+		component.setStepSize(DEFAULT_STEP);
 		component.setComment(machine.getComment());
 	}
 

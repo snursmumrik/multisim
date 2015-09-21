@@ -11,6 +11,7 @@ package ac.soton.multisim.impl;
 
 import java.io.IOException;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.impl.EventBNamedCommentedElementImpl;
+
 import ac.soton.multisim.FMUComponent;
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
@@ -38,7 +40,6 @@ import de.prob.cosimulation.FMU;
  * <ul>
  *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getPath <em>Path</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.FMUComponentImpl#getFmu <em>Fmu</em>}</li>
@@ -53,7 +54,7 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
@@ -74,26 +75,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
-
-	/**
-	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_PERIOD_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
@@ -186,27 +167,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, MultisimPackage.FMU_COMPONENT__OUTPUTS);
 		}
 		return outputs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getStepPeriod() {
-		return stepPeriod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStepPeriod(int newStepPeriod) {
-		int oldStepPeriod = stepPeriod;
-		stepPeriod = newStepPeriod;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.FMU_COMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
 	}
 
 	/**
@@ -383,8 +343,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 				return getInputs();
 			case MultisimPackage.FMU_COMPONENT__OUTPUTS:
 				return getOutputs();
-			case MultisimPackage.FMU_COMPONENT__STEP_PERIOD:
-				return getStepPeriod();
 			case MultisimPackage.FMU_COMPONENT__PATH:
 				return getPath();
 			case MultisimPackage.FMU_COMPONENT__PARAMETERS:
@@ -411,9 +369,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 			case MultisimPackage.FMU_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
-				return;
-			case MultisimPackage.FMU_COMPONENT__STEP_PERIOD:
-				setStepPeriod((Integer)newValue);
 				return;
 			case MultisimPackage.FMU_COMPONENT__PATH:
 				setPath((String)newValue);
@@ -443,9 +398,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 			case MultisimPackage.FMU_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
-			case MultisimPackage.FMU_COMPONENT__STEP_PERIOD:
-				setStepPeriod(STEP_PERIOD_EDEFAULT);
-				return;
 			case MultisimPackage.FMU_COMPONENT__PATH:
 				setPath(PATH_EDEFAULT);
 				return;
@@ -471,8 +423,6 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 				return inputs != null && !inputs.isEmpty();
 			case MultisimPackage.FMU_COMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
-			case MultisimPackage.FMU_COMPONENT__STEP_PERIOD:
-				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case MultisimPackage.FMU_COMPONENT__PATH:
 				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
 			case MultisimPackage.FMU_COMPONENT__PARAMETERS:
@@ -493,9 +443,7 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (stepPeriod: ");
-		result.append(stepPeriod);
-		result.append(", path: ");
+		result.append(" (path: ");
 		result.append(path);
 		result.append(", fmu: ");
 		result.append(fmu);
@@ -505,16 +453,16 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 	
 
 	/**
-	 * Override of {@link org.eventb.emf.core.impl.EventBNamedImpl#setName(String)}
-	 * Removes the transform of : and . characters in the name attribute.
+	 * Override of {@link org.eventb.emf.core.impl.EventBNamedCommentedElementImpl.setName(String)}
+	 * Removes the replacement of : and . characters in the name attribute.
 	 * @custom
 	 */
-	@Override
 	public void setName(String newName) {
+		if (newName == null) return;
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EVENT_BNAMED__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT__NAME, oldName, name));
 	}
 
 } //FMUComponentImpl

@@ -212,14 +212,16 @@ public class ComponentCreateCommand extends EditElementCommand {
 		FMIModelDescription modelDescription;
 		try {
 			modelDescription = FMUFile.parseFMUFile(fmuFile.getAbsolutePath());
-			if (modelDescription.fmiVersion != "1.0")
+			if (Double.parseDouble(modelDescription.fmiVersion) != 1d)
 				throw new IOException("Wrong FMI version");
 		} catch (IOException e) {
 			e.printStackTrace();
 			Display.getCurrent().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "FMU Import Error", "FMU file cannot be parsed.\nCheck wether it is corrupt or not supported: only FMI 1.0 for Co-simulation files are supported for import.");
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+							"FMU Import Error", "FMU file cannot be parsed.\n" +
+							"Check wether it is corrupt or not supported: only FMI 1.0 for Co-simulation files are supported for import.");
 				}
 			});
 			return null;

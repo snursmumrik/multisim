@@ -24,7 +24,6 @@ import ac.soton.multisim.exception.SimulationException;
  * <ul>
  *   <li>{@link ac.soton.multisim.Component#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.multisim.Component#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.multisim.Component#getStepPeriod <em>Step Period</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,7 +37,7 @@ public interface Component extends EventBNamedCommentedElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
@@ -71,32 +70,6 @@ public interface Component extends EventBNamedCommentedElement {
 	 * @generated
 	 */
 	EList<Port> getOutputs();
-
-	/**
-	 * Returns the value of the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Step Period</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Step Period</em>' attribute.
-	 * @see #setStepPeriod(int)
-	 * @see ac.soton.multisim.MultisimPackage#getComponent_StepPeriod()
-	 * @model
-	 * @generated
-	 */
-	int getStepPeriod();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.multisim.Component#getStepPeriod <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Step Period</em>' attribute.
-	 * @see #getStepPeriod()
-	 * @generated
-	 */
-	void setStepPeriod(int value);
 
 	/**
 	 * <!-- begin-user-doc -->

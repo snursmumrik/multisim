@@ -21,6 +21,7 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eventb.emf.core.CorePackage;
 
+import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.diagram.edit.parts.EventBComponentNameEditPart;
 import ac.soton.multisim.diagram.edit.parts.FMUComponentNameEditPart;
 import ac.soton.multisim.diagram.parsers.MessageFormatParser;
@@ -53,19 +54,26 @@ public class MultisimParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser eventBComponentName_5004Parser;
+	private IParser eventBComponentNameStepSize_5004Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getEventBComponentName_5004Parser() {
-		if (eventBComponentName_5004Parser == null) {
-			EAttribute[] features = new EAttribute[] { CorePackage.eINSTANCE
+	private IParser getEventBComponentNameStepSize_5004Parser() {
+		if (eventBComponentNameStepSize_5004Parser == null) {
+			EAttribute[] features = new EAttribute[] {
+					CorePackage.eINSTANCE.getEventBNamed_Name(),
+					MultisimPackage.eINSTANCE.getEventBComponent_StepSize() };
+			EAttribute[] editableFeatures = new EAttribute[] { CorePackage.eINSTANCE
 					.getEventBNamed_Name() };
-			MessageFormatParser parser = new MessageFormatParser(features);
-			eventBComponentName_5004Parser = parser;
+			MessageFormatParser parser = new MessageFormatParser(features,
+					editableFeatures);
+			parser.setViewPattern("{0} [{1,number,integer}ms]"); //$NON-NLS-1$
+			parser.setEditorPattern("{0}"); //$NON-NLS-1$
+			parser.setEditPattern("{0}"); //$NON-NLS-1$
+			eventBComponentNameStepSize_5004Parser = parser;
 		}
-		return eventBComponentName_5004Parser;
+		return eventBComponentNameStepSize_5004Parser;
 	}
 
 	/**
@@ -76,7 +84,7 @@ public class MultisimParserProvider extends AbstractProvider implements
 		case FMUComponentNameEditPart.VISUAL_ID:
 			return getFMUComponentName_5003Parser();
 		case EventBComponentNameEditPart.VISUAL_ID:
-			return getEventBComponentName_5004Parser();
+			return getEventBComponentNameStepSize_5004Parser();
 		}
 		return null;
 	}

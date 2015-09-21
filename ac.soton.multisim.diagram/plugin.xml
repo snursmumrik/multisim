@@ -297,27 +297,11 @@ http://www.eclipse.org/legal/epl-v10.html
                tab="property.tab.overview">
          </propertySection>
          <propertySection
-               afterSection="property.section.type"
-               class="ac.soton.multisim.diagram.sheet.custom.CommentPropertySection"
-               enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.CommentPropertySectionFilter"
-               id="property.section.comment"
-               tab="property.tab.overview">
-         </propertySection>
-         <propertySection
                afterSection="property.section.name"
                class="ac.soton.multisim.diagram.sheet.custom.StartTimePropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentDiagramPropertySectionFilter"
                id="property.section.startTime"
-               tab="property.tab.overview">
-         </propertySection>
-         <propertySection
-               afterSection="property.section.stopTime"
-               class="ac.soton.multisim.diagram.sheet.custom.StepSizePropertySection"
-               enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.ComponentDiagramPropertySectionFilter"
-               id="property.section.stepSize"
                tab="property.tab.overview">
          </propertySection>
          <propertySection
@@ -330,14 +314,22 @@ http://www.eclipse.org/legal/epl-v10.html
          </propertySection>
          <propertySection
                afterSection="property.section.name"
-               class="ac.soton.multisim.diagram.sheet.custom.StepPeriodPropertySection"
+               class="ac.soton.multisim.diagram.sheet.custom.CommentPropertySection"
                enablesFor="1"
-               filter="ac.soton.multisim.diagram.sheet.custom.filter.NonDisplayComponentPropertySectionFilter"
-               id="property.section.stepPeriod"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.CommentPropertySectionFilter"
+               id="property.section.comment"
                tab="property.tab.overview">
          </propertySection>
          <propertySection
-               afterSection="property.section.stepPeriod"
+               afterSection="property.section.name"
+               class="ac.soton.multisim.diagram.sheet.custom.StepSizePropertySection"
+               enablesFor="1"
+               filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
+               id="property.section.stepSize"
+               tab="property.tab.overview">
+         </propertySection>
+         <propertySection
+               afterSection="property.section.stepSize"
                class="ac.soton.multisim.diagram.sheet.custom.StartStepPropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"
@@ -417,7 +409,7 @@ http://www.eclipse.org/legal/epl-v10.html
                tab="property.tab.overview">
          </propertySection>
          <propertySection
-               afterSection="property.section.stepPeriod"
+               afterSection="property.section.stepSize"
                class="ac.soton.multisim.diagram.sheet.custom.RecordTracePropertySection"
                enablesFor="1"
                filter="ac.soton.multisim.diagram.sheet.custom.filter.EventBComponentPropertySectionFilter"

@@ -36,7 +36,6 @@ import ac.soton.multisim.MultisimPackage;
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStartTime <em>Start Time</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getStepSize <em>Step Size</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.ComponentDiagramImpl#isRecordOutputs <em>Record Outputs</em>}</li>
  * </ul>
@@ -50,7 +49,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The cached value of the '{@link #getComponents() <em>Components</em>}' containment reference list.
@@ -101,26 +100,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * @ordered
 	 */
 	protected int startTime = START_TIME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepSize()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_SIZE_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getStepSize() <em>Step Size</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepSize()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepSize = STEP_SIZE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getArguments() <em>Arguments</em>}' attribute.
@@ -240,27 +219,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getStepSize() {
-		return stepSize;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStepSize(int newStepSize) {
-		int oldStepSize = stepSize;
-		stepSize = newStepSize;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE, oldStepSize, stepSize));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getArguments() {
 		return arguments;
 	}
@@ -326,8 +284,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return getStopTime();
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 				return getStartTime();
-			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
-				return getStepSize();
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				return getArguments();
 			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
@@ -354,9 +310,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return;
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 				setStartTime((Integer)newValue);
-				return;
-			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
-				setStepSize((Integer)newValue);
 				return;
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				setArguments((String)newValue);
@@ -385,9 +338,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 				setStartTime(START_TIME_EDEFAULT);
 				return;
-			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
-				setStepSize(STEP_SIZE_EDEFAULT);
-				return;
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				setArguments(ARGUMENTS_EDEFAULT);
 				return;
@@ -412,8 +362,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 				return stopTime != STOP_TIME_EDEFAULT;
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
 				return startTime != START_TIME_EDEFAULT;
-			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
-				return stepSize != STEP_SIZE_EDEFAULT;
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 				return ARGUMENTS_EDEFAULT == null ? arguments != null : !ARGUMENTS_EDEFAULT.equals(arguments);
 			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
@@ -436,8 +384,6 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 		result.append(stopTime);
 		result.append(", startTime: ");
 		result.append(startTime);
-		result.append(", stepSize: ");
-		result.append(stepSize);
 		result.append(", arguments: ");
 		result.append(arguments);
 		result.append(", recordOutputs: ");

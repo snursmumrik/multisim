@@ -44,7 +44,7 @@ public interface MultisimPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The package name.
@@ -125,22 +125,13 @@ public interface MultisimPackage extends EPackage {
 	int COMPONENT_DIAGRAM__START_TIME = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Step Size</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_DIAGRAM__STEP_SIZE = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Arguments</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM__ARGUMENTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
+	int COMPONENT_DIAGRAM__ARGUMENTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Record Outputs</b></em>' attribute.
@@ -149,7 +140,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM__RECORD_OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 5;
+	int COMPONENT_DIAGRAM__RECORD_OUTPUTS = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Component Diagram</em>' class.
@@ -158,7 +149,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 6;
+	int COMPONENT_DIAGRAM_FEATURE_COUNT = CorePackage.EVENT_BNAMED_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.multisim.Component <em>Component</em>}' class.
@@ -270,22 +261,13 @@ public interface MultisimPackage extends EPackage {
 	int COMPONENT__OUTPUTS = CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT__STEP_PERIOD = CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
 	 * The number of structural features of the '<em>Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT_FEATURE_COUNT + 3;
+	int COMPONENT_FEATURE_COUNT = CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link ac.soton.multisim.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -406,22 +388,13 @@ public interface MultisimPackage extends EPackage {
 	int EVENT_BCOMPONENT__OUTPUTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EVENT_BCOMPONENT__STEP_PERIOD = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
-
-	/**
 	 * The feature id for the '<em><b>Machine</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
+	int EVENT_BCOMPONENT__MACHINE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Composed</b></em>' attribute.
@@ -430,7 +403,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
+	int EVENT_BCOMPONENT__COMPOSED = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Start Step Events</b></em>' reference list.
@@ -439,7 +412,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__START_STEP_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
+	int EVENT_BCOMPONENT__START_STEP_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>End Step Events</b></em>' reference list.
@@ -448,7 +421,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__END_STEP_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
+	int EVENT_BCOMPONENT__END_STEP_EVENTS = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -457,7 +430,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
+	int EVENT_BCOMPONENT__TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Record Trace</b></em>' attribute.
@@ -466,7 +439,7 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
+	int EVENT_BCOMPONENT__RECORD_TRACE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Trace File Name</b></em>' attribute.
@@ -475,7 +448,16 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_BCOMPONENT__TRACE_FILE_NAME = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
+	int EVENT_BCOMPONENT__TRACE_FILE_NAME = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Step Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_BCOMPONENT__STEP_SIZE = CorePackage.ABSTRACT_EXTENSION_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of structural features of the '<em>Event BComponent</em>' class.
@@ -594,15 +576,6 @@ public interface MultisimPackage extends EPackage {
 	 * @ordered
 	 */
 	int FMU_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FMU_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
 
 	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
@@ -1475,15 +1448,6 @@ public interface MultisimPackage extends EPackage {
 	int DISPLAY_COMPONENT__OUTPUTS = COMPONENT__OUTPUTS;
 
 	/**
-	 * The feature id for the '<em><b>Step Period</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DISPLAY_COMPONENT__STEP_PERIOD = COMPONENT__STEP_PERIOD;
-
-	/**
 	 * The feature id for the '<em><b>Chart</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1817,17 +1781,6 @@ public interface MultisimPackage extends EPackage {
 	EAttribute getComponentDiagram_StartTime();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#getStepSize <em>Step Size</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Step Size</em>'.
-	 * @see ac.soton.multisim.ComponentDiagram#getStepSize()
-	 * @see #getComponentDiagram()
-	 * @generated
-	 */
-	EAttribute getComponentDiagram_StepSize();
-
-	/**
 	 * Returns the meta object for the attribute '{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1880,17 +1833,6 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComponent_Outputs();
-
-	/**
-	 * Returns the meta object for the attribute '{@link ac.soton.multisim.Component#getStepPeriod <em>Step Period</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Step Period</em>'.
-	 * @see ac.soton.multisim.Component#getStepPeriod()
-	 * @see #getComponent()
-	 * @generated
-	 */
-	EAttribute getComponent_StepPeriod();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.EventBComponent <em>Event BComponent</em>}'.
@@ -1978,6 +1920,17 @@ public interface MultisimPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEventBComponent_TraceFileName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link ac.soton.multisim.EventBComponent#getStepSize <em>Step Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Step Size</em>'.
+	 * @see ac.soton.multisim.EventBComponent#getStepSize()
+	 * @see #getEventBComponent()
+	 * @generated
+	 */
+	EAttribute getEventBComponent_StepSize();
 
 	/**
 	 * Returns the meta object for class '{@link ac.soton.multisim.FMUComponent <em>FMU Component</em>}'.
@@ -2400,14 +2353,6 @@ public interface MultisimPackage extends EPackage {
 		EAttribute COMPONENT_DIAGRAM__START_TIME = eINSTANCE.getComponentDiagram_StartTime();
 
 		/**
-		 * The meta object literal for the '<em><b>Step Size</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMPONENT_DIAGRAM__STEP_SIZE = eINSTANCE.getComponentDiagram_StepSize();
-
-		/**
 		 * The meta object literal for the '<em><b>Arguments</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2448,14 +2393,6 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPONENT__OUTPUTS = eINSTANCE.getComponent_Outputs();
-
-		/**
-		 * The meta object literal for the '<em><b>Step Period</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMPONENT__STEP_PERIOD = eINSTANCE.getComponent_StepPeriod();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.impl.EventBComponentImpl <em>Event BComponent</em>}' class.
@@ -2522,6 +2459,14 @@ public interface MultisimPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EVENT_BCOMPONENT__TRACE_FILE_NAME = eINSTANCE.getEventBComponent_TraceFileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Step Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_BCOMPONENT__STEP_SIZE = eINSTANCE.getEventBComponent_StepSize();
 
 		/**
 		 * The meta object literal for the '{@link ac.soton.multisim.impl.FMUComponentImpl <em>FMU Component</em>}' class.

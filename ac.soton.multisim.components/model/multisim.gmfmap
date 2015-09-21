@@ -116,10 +116,17 @@
       <domainMetaElement
           href="multisim.ecore#//EventBComponent"/>
       <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
+          xsi:type="gmfmap:FeatureLabelMapping"
+          viewPattern="{0} [{1,number,integer}ms]"
+          editorPattern="{0}"
+          editPattern="{0}">
         <diagramLabel
             href="multisim.gmfgraph#EventBComponentName"/>
         <features
+            href="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed/name"/>
+        <features
+            href="multisim.ecore#//EventBComponent/stepSize"/>
+        <editableFeatures
             href="../../org.eventb.emf.core/model/eventbcore.ecore#//EventBNamed/name"/>
       </labelMappings>
       <diagramNode

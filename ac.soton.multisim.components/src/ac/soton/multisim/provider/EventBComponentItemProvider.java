@@ -57,7 +57,7 @@ public class EventBComponentItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -82,7 +82,6 @@ public class EventBComponentItemProvider
 
 			addCommentPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
-			addStepPeriodPropertyDescriptor(object);
 			addMachinePropertyDescriptor(object);
 			addComposedPropertyDescriptor(object);
 			addStartStepEventsPropertyDescriptor(object);
@@ -90,6 +89,7 @@ public class EventBComponentItemProvider
 			addTracePropertyDescriptor(object);
 			addRecordTracePropertyDescriptor(object);
 			addTraceFileNamePropertyDescriptor(object);
+			addStepSizePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -134,28 +134,6 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Step Period feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addStepPeriodPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Component_stepPeriod_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Component_stepPeriod_feature", "_UI_Component_type"),
-				 MultisimPackage.Literals.COMPONENT__STEP_PERIOD,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -222,6 +200,28 @@ public class EventBComponentItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Step Size feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStepSizePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventBComponent_stepSize_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventBComponent_stepSize_feature", "_UI_EventBComponent_type"),
+				 MultisimPackage.Literals.EVENT_BCOMPONENT__STEP_SIZE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -384,10 +384,10 @@ public class EventBComponentItemProvider
 		switch (notification.getFeatureID(EventBComponent.class)) {
 			case MultisimPackage.EVENT_BCOMPONENT__COMMENT:
 			case MultisimPackage.EVENT_BCOMPONENT__NAME:
-			case MultisimPackage.EVENT_BCOMPONENT__STEP_PERIOD:
 			case MultisimPackage.EVENT_BCOMPONENT__COMPOSED:
 			case MultisimPackage.EVENT_BCOMPONENT__RECORD_TRACE:
 			case MultisimPackage.EVENT_BCOMPONENT__TRACE_FILE_NAME:
+			case MultisimPackage.EVENT_BCOMPONENT__STEP_SIZE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case MultisimPackage.EVENT_BCOMPONENT__INPUTS:

@@ -23,7 +23,6 @@ import org.eventb.emf.core.EventBNamed;
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getComponents <em>Components</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getStartTime <em>Start Time</em>}</li>
- *   <li>{@link ac.soton.multisim.ComponentDiagram#getStepSize <em>Step Size</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#getArguments <em>Arguments</em>}</li>
  *   <li>{@link ac.soton.multisim.ComponentDiagram#isRecordOutputs <em>Record Outputs</em>}</li>
  * </ul>
@@ -39,7 +38,7 @@ public interface ComponentDiagram extends EventBNamed {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * Returns the value of the '<em><b>Components</b></em>' containment reference list.
@@ -108,32 +107,6 @@ public interface ComponentDiagram extends EventBNamed {
 	 * @generated
 	 */
 	void setStartTime(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Step Size</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Step Size</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Step Size</em>' attribute.
-	 * @see #setStepSize(int)
-	 * @see ac.soton.multisim.MultisimPackage#getComponentDiagram_StepSize()
-	 * @model
-	 * @generated
-	 */
-	int getStepSize();
-
-	/**
-	 * Sets the value of the '{@link ac.soton.multisim.ComponentDiagram#getStepSize <em>Step Size</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Step Size</em>' attribute.
-	 * @see #getStepSize()
-	 * @generated
-	 */
-	void setStepSize(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Arguments</b></em>' attribute.

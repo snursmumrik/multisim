@@ -120,7 +120,7 @@ public abstract class AbstractTablePropertySection
 				EditingDomain editingDomain = ((DiagramEditor) getPart()).getEditingDomain();
 				Command cmd;
 				if (newChild instanceof Collection) {
-					cmd = AddCommand.create(editingDomain, eObject, getFeature(), (Collection) newChild);
+					cmd = AddCommand.create(editingDomain, eObject, getFeature(), (Collection<?>) newChild);
 				} else {
 					cmd = AddCommand.create(editingDomain, eObject, getFeature(), newChild);
 				}

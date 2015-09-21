@@ -12,6 +12,7 @@ package ac.soton.multisim.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eventb.emf.core.CorePackage;
 
 import ac.soton.multisim.FMUParameter;
 import ac.soton.multisim.MultisimPackage;
@@ -35,7 +36,7 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The default value of the '{@link #getStartValue() <em>Start Value</em>}' attribute.
@@ -169,6 +170,19 @@ public class FMUParameterImpl extends AbstractVariableImpl implements FMUParamet
 		result.append(startValue);
 		result.append(')');
 		return result.toString();
+	}
+	
+	/**
+	 * Override of {@link org.eventb.emf.core.impl.EventBNamedCommentedElementImpl.setName(String)}
+	 * Removes the replacement of : and . characters in the name attribute.
+	 * @custom
+	 */
+	public void setName(String newName) {
+		if (newName == null) return;
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EVENT_BNAMED_COMMENTED_ELEMENT__NAME, oldName, name));
 	}
 
 } //FMUParameterImpl

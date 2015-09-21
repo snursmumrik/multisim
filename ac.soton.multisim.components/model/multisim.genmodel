@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2014 University of Southampton.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2015 University of Southampton.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html"
     modelDirectory="/ac.soton.multisim/src" editDirectory="/ac.soton.multisim/src"
     editorDirectory="/ac.soton.multisim.editor/src" modelPluginID="ac.soton.multisim"
     templateDirectory="/org.eventb.emf.core/templates" dynamicTemplates="true" modelName="Multisim"
@@ -39,14 +39,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//ComponentDiagram/components"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stopTime"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/startTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/stepSize"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/arguments"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//ComponentDiagram/recordOutputs"/>
     </genClasses>
     <genClasses image="false" ecoreClass="multisim.ecore#//Component">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//Component/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisim.ecore#//Component/outputs"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//Component/stepPeriod"/>
       <genOperations ecoreOperation="multisim.ecore#//Component/instantiate"/>
       <genOperations ecoreOperation="multisim.ecore#//Component/initialise">
         <genParameters ecoreParameter="multisim.ecore#//Component/initialise/tStart"/>
@@ -68,6 +66,7 @@
       <genFeatures notify="false" createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/trace"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/recordTrace"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/traceFileName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//EventBComponent/stepSize"/>
     </genClasses>
     <genClasses ecoreClass="multisim.ecore#//FMUComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multisim.ecore#//FMUComponent/path"/>

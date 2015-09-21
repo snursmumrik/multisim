@@ -31,6 +31,7 @@ import de.prob.statespace.Trace;
  *   <li>{@link ac.soton.multisim.EventBComponent#getTrace <em>Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#isRecordTrace <em>Record Trace</em>}</li>
  *   <li>{@link ac.soton.multisim.EventBComponent#getTraceFileName <em>Trace File Name</em>}</li>
+ *   <li>{@link ac.soton.multisim.EventBComponent#getStepSize <em>Step Size</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,7 +45,7 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * Returns the value of the '<em><b>Machine</b></em>' reference.
@@ -207,5 +208,31 @@ public interface EventBComponent extends AbstractExtension, Component {
 	 * @generated
 	 */
 	void setTraceFileName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Step Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Step Size</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Step Size</em>' attribute.
+	 * @see #setStepSize(int)
+	 * @see ac.soton.multisim.MultisimPackage#getEventBComponent_StepSize()
+	 * @model
+	 * @generated
+	 */
+	int getStepSize();
+
+	/**
+	 * Sets the value of the '{@link ac.soton.multisim.EventBComponent#getStepSize <em>Step Size</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Step Size</em>' attribute.
+	 * @see #getStepSize()
+	 * @generated
+	 */
+	void setStepSize(int value);
 
 } // EventBComponent

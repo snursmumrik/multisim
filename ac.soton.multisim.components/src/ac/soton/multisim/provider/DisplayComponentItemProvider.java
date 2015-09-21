@@ -55,7 +55,7 @@ public class DisplayComponentItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -78,33 +78,10 @@ public class DisplayComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addStepPeriodPropertyDescriptor(object);
 			addChartPropertyDescriptor(object);
 			addBufferSizePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Step Period feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addStepPeriodPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Component_stepPeriod_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Component_stepPeriod_feature", "_UI_Component_type"),
-				 MultisimPackage.Literals.COMPONENT__STEP_PERIOD,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -219,9 +196,6 @@ public class DisplayComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DisplayComponent.class)) {
-			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
 			case MultisimPackage.DISPLAY_COMPONENT__INPUTS:
 			case MultisimPackage.DISPLAY_COMPONENT__OUTPUTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

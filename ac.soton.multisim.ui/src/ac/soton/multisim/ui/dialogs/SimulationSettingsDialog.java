@@ -45,7 +45,6 @@ public class SimulationSettingsDialog extends Dialog {
 	// default values
 	private static final int START_DEFAULT = 0;
 	private static final int STOP_DEFAULT = 1000;
-	private static final int STEP_DEFAULT = 100;
 	private static final String ARGUMENTS_DEFAULT = "CLPFD=FALSE,MEMO=TRUE,MAX_OPERATIONS=1";
 	private static final String ARGS_TOOLTIP = "Comma-separated <argument>=<value>\nExamples:\n"+
 				"IGNORE_HASH_COLLISIONS=TRUE\n"+
@@ -59,7 +58,6 @@ public class SimulationSettingsDialog extends Dialog {
 	// controls
 	private Text startTimeText;
 	private Text stopTimeText;
-	private Text stepSizeText;
 	private Text argsText;
 	private Button recordOutputs;
 	private ControlDecoration timeErrorDecorator;
@@ -68,17 +66,14 @@ public class SimulationSettingsDialog extends Dialog {
 	// validators
 	private DecoratedInputValidator startTimeValidator;
 	private DecoratedInputValidator stopTimeValidator;
-	private DecoratedInputValidator stepSizeValidator;
 	private boolean startTimeValid;
 	private boolean stopTimeValid;
-	private boolean stepSizeValid;
 	private boolean totalTimeValid;
 	private boolean stepTotalValid;
 	
 	// data
 	private int startTime;
 	private int stopTime;
-	private int stepSize;
 	private String args;
 	private boolean record;
 	
@@ -97,13 +92,11 @@ public class SimulationSettingsDialog extends Dialog {
 		
 		startTime = diagram.getStartTime() > 0 ? diagram.getStartTime() : START_DEFAULT;
 		stopTime = diagram.getStopTime() > 0 ? diagram.getStopTime() : STOP_DEFAULT;
-		stepSize = diagram.getStepSize() > 0 ? diagram.getStepSize() : STEP_DEFAULT;
 		args = diagram.getArguments() != null ? diagram.getArguments() : ARGUMENTS_DEFAULT;
 		record = diagram.isRecordOutputs();
 		
 		startTimeValid = true;
 		stopTimeValid = true;
-		stepSizeValid = true;
 		totalTimeValid = true;
 		stepTotalValid = true;
 	}
@@ -150,24 +143,10 @@ public class SimulationSettingsDialog extends Dialog {
 			}
 		});
 		
-		// step size
-		label = new Label(composite, SWT.NONE);
-		label.setText("Step size:");
-		label.setLayoutData(getAttachedData(stopTimeText, false));
-		stepSizeText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		stepSizeText.setLayoutData(getAttachedData(label, true));
-		stepSizeText.setText(Integer.toString(stepSize));
-		stepSizeText.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				validateStepSize();
-			}
-		});
-		
 		// ProB arguments
 		label = new Label(composite, SWT.NONE);
 		label.setText("ProB arguments:");
-		label.setLayoutData(getAttachedData(stepSizeText, false));
+		label.setLayoutData(getAttachedData(stopTimeText, false));
 		FormData layoutData = getAttachedData(label, true);
 		argsText = new Text(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
 		GC gc = new GC(argsText);
@@ -212,14 +191,9 @@ public class SimulationSettingsDialog extends Dialog {
 	private void addValidators() {
 		startTimeValidator = createTextValidator(startTimeText);
 		stopTimeValidator = createTextValidator2(stopTimeText);
-		stepSizeValidator = createTextValidator2(stepSizeText);
 		
 		timeErrorDecorator = DecoratedInputValidator.createDecorator(stopTimeText,
 				"Stop time should be after start time",
-				FieldDecorationRegistry.DEC_ERROR, false);
-		
-		stepTimeErrorDecorator = DecoratedInputValidator.createDecorator(stepSizeText,
-				"Step size cannot exceed simulation time",
 				FieldDecorationRegistry.DEC_ERROR, false);
 	}
 	
@@ -282,7 +256,6 @@ public class SimulationSettingsDialog extends Dialog {
 		if (buttonId == OK) {
 			startTime = Integer.parseInt(startTimeText.getText().trim());
 			stopTime = Integer.parseInt(stopTimeText.getText().trim());
-			stepSize = Integer.parseInt(stepSizeText.getText().trim());
 			args = argsText.getText().trim();
 			record = recordOutputs.getSelection();
 			saveToModel();
@@ -295,7 +268,6 @@ public class SimulationSettingsDialog extends Dialog {
 		CompoundCommand cc = new CompoundCommand();
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_StartTime(), startTime));
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_StopTime(), stopTime));
-		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_StepSize(), stepSize));
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_Arguments(), args));
 		cc.append(SetCommand.create(editingDomain, diagram, MultisimPackage.eINSTANCE.getComponentDiagram_RecordOutputs(), record));
 		editingDomain.getCommandStack().execute(cc);
@@ -320,16 +292,6 @@ public class SimulationSettingsDialog extends Dialog {
 		}
 		validateTime();
 	}
-
-	/**
-	 * Validates step size.
-	 */
-	protected void validateStepSize() {
-		if (stepSizeValidator != null) {
-			stepSizeValid = stepSizeValidator.isValid(stepSizeText.getText()) == null;
-		}
-		validateTime();
-	}
 	
 	/**
 	 * Validates start time against stop time
@@ -339,23 +301,15 @@ public class SimulationSettingsDialog extends Dialog {
 		if (timeErrorDecorator == null || stepTimeErrorDecorator == null)
 			return;
 		
-		if (startTimeValid && stopTimeValid && stepSizeValid) {
+		if (startTimeValid && stopTimeValid) {
 			long startTime = Long.parseLong(startTimeText.getText());
 			long stopTime = Long.parseLong(stopTimeText.getText());
-			long stepSize = Long.parseLong(stepSizeText.getText());
 			
 			totalTimeValid = stopTime > startTime;
 			if (totalTimeValid) {
 				timeErrorDecorator.hide();
 			} else {
 				timeErrorDecorator.show();
-			}
-			
-			stepTotalValid = stepSize <= (stopTime - startTime);
-			if (stepTotalValid) {
-				stepTimeErrorDecorator.hide();
-			} else {
-				stepTimeErrorDecorator.show();
 			}
 		}
 		update();
@@ -367,7 +321,7 @@ public class SimulationSettingsDialog extends Dialog {
 	private void update() {
 		Control button = getButton(IDialogConstants.OK_ID);
 		if (button != null) {
-			button.setEnabled(startTimeValid && stopTimeValid && stepSizeValid && totalTimeValid && stepTotalValid);
+			button.setEnabled(startTimeValid && stopTimeValid && totalTimeValid && stepTotalValid);
 		}
 	}
 

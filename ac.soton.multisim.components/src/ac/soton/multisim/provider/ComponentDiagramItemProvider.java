@@ -56,7 +56,7 @@ public class ComponentDiagramItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -81,7 +81,6 @@ public class ComponentDiagramItemProvider
 
 			addStopTimePropertyDescriptor(object);
 			addStartTimePropertyDescriptor(object);
-			addStepSizePropertyDescriptor(object);
 			addArgumentsPropertyDescriptor(object);
 			addRecordOutputsPropertyDescriptor(object);
 		}
@@ -124,28 +123,6 @@ public class ComponentDiagramItemProvider
 				 getString("_UI_ComponentDiagram_startTime_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_startTime_feature", "_UI_ComponentDiagram_type"),
 				 MultisimPackage.Literals.COMPONENT_DIAGRAM__START_TIME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Step Size feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addStepSizePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ComponentDiagram_stepSize_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentDiagram_stepSize_feature", "_UI_ComponentDiagram_type"),
-				 MultisimPackage.Literals.COMPONENT_DIAGRAM__STEP_SIZE,
 				 true,
 				 false,
 				 false,
@@ -267,7 +244,6 @@ public class ComponentDiagramItemProvider
 		switch (notification.getFeatureID(ComponentDiagram.class)) {
 			case MultisimPackage.COMPONENT_DIAGRAM__STOP_TIME:
 			case MultisimPackage.COMPONENT_DIAGRAM__START_TIME:
-			case MultisimPackage.COMPONENT_DIAGRAM__STEP_SIZE:
 			case MultisimPackage.COMPONENT_DIAGRAM__ARGUMENTS:
 			case MultisimPackage.COMPONENT_DIAGRAM__RECORD_OUTPUTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

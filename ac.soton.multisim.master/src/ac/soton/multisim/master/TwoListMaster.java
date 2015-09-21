@@ -62,7 +62,7 @@ public class TwoListMaster {
 		diagram = cd;
 		tStart = diagram.getStartTime();
 		tStop = diagram.getStopTime();
-		step = diagram.getStepSize();
+//		step = diagram.getStepSize();
 		updateList.clear();
 		evaluationList.clear();
 		int cStep;
@@ -119,7 +119,7 @@ public class TwoListMaster {
 				
 				// do step & update the update list
 				for (Component c : evaluationList) {
-					cStep = c.getStepPeriod() == 0 ? step : c.getStepPeriod();
+					cStep = 1;//c.getStepPeriod() == 0 ? step : c.getStepPeriod();
 					if (tCurrent + cStep <= tStop) {
 						c.doStep(tCurrent, cStep);
 						updateList.put(c, updateList.get(c) + cStep);

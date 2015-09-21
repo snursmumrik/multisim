@@ -10,6 +10,7 @@ package ac.soton.multisim.diagram.sheet.custom;
 import org.eclipse.emf.ecore.EObject;
 
 import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.diagram.sheet.custom.common.AbstractTextPropertySection;
 
 /**
@@ -28,7 +29,7 @@ public class StepSizePropertySection extends AbstractTextPropertySection {
 		assert object instanceof ComponentDiagram;
 		try {
 			int stepValue = Integer.parseInt((String) value);
-			((ComponentDiagram) object).setStepSize(stepValue);
+			((EventBComponent) object).setStepSize(stepValue);
 		} catch (NumberFormatException e) {
 			//ignore
 		}
@@ -36,7 +37,7 @@ public class StepSizePropertySection extends AbstractTextPropertySection {
 
 	@Override
 	protected String getPropertyValueString() {
-		return String.valueOf(((ComponentDiagram) getEObject()).getStepSize());
+		return String.valueOf(((EventBComponent) getEObject()).getStepSize());
 	}
 
 	@Override

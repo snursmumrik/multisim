@@ -46,7 +46,6 @@ import ac.soton.multisim.VariableType;
  * <ul>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getOutputs <em>Outputs</em>}</li>
- *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getStepPeriod <em>Step Period</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getChart <em>Chart</em>}</li>
  *   <li>{@link ac.soton.multisim.impl.DisplayComponentImpl#getBufferSize <em>Buffer Size</em>}</li>
  * </ul>
@@ -67,7 +66,7 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String copyright = "Copyright (c) 2014 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
+	public static final String copyright = "Copyright (c) 2015 University of Southampton.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v10.html";
 
 	/**
 	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
@@ -87,24 +86,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 	 * @ordered
 	 */
 	protected EList<Port> outputs;
-	/**
-	 * The default value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int STEP_PERIOD_EDEFAULT = 0;
-	/**
-	 * The cached value of the '{@link #getStepPeriod() <em>Step Period</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStepPeriod()
-	 * @generated
-	 * @ordered
-	 */
-	protected int stepPeriod = STEP_PERIOD_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getChart() <em>Chart</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -185,27 +166,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 			outputs = new EObjectContainmentEList.Resolving<Port>(Port.class, this, MultisimPackage.DISPLAY_COMPONENT__OUTPUTS);
 		}
 		return outputs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getStepPeriod() {
-		return stepPeriod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStepPeriod(int newStepPeriod) {
-		int oldStepPeriod = stepPeriod;
-		stepPeriod = newStepPeriod;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD, oldStepPeriod, stepPeriod));
 	}
 
 	/**
@@ -442,8 +402,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 				return getInputs();
 			case MultisimPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return getOutputs();
-			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-				return getStepPeriod();
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				return getChart();
 			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
@@ -469,9 +427,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 				getOutputs().clear();
 				getOutputs().addAll((Collection<? extends Port>)newValue);
 				return;
-			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-				setStepPeriod((Integer)newValue);
-				return;
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				setChart((Chart2D)newValue);
 				return;
@@ -496,9 +451,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 			case MultisimPackage.DISPLAY_COMPONENT__OUTPUTS:
 				getOutputs().clear();
 				return;
-			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-				setStepPeriod(STEP_PERIOD_EDEFAULT);
-				return;
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				setChart(CHART_EDEFAULT);
 				return;
@@ -521,8 +473,6 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 				return inputs != null && !inputs.isEmpty();
 			case MultisimPackage.DISPLAY_COMPONENT__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
-			case MultisimPackage.DISPLAY_COMPONENT__STEP_PERIOD:
-				return stepPeriod != STEP_PERIOD_EDEFAULT;
 			case MultisimPackage.DISPLAY_COMPONENT__CHART:
 				return CHART_EDEFAULT == null ? chart != null : !CHART_EDEFAULT.equals(chart);
 			case MultisimPackage.DISPLAY_COMPONENT__BUFFER_SIZE:
@@ -541,9 +491,7 @@ public class DisplayComponentImpl extends EventBNamedCommentedElementImpl implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (stepPeriod: ");
-		result.append(stepPeriod);
-		result.append(", chart: ");
+		result.append(" (chart: ");
 		result.append(chart);
 		result.append(", bufferSize: ");
 		result.append(bufferSize);
