@@ -130,21 +130,7 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			
 			((Composite) getControl()).layout(true, true);
 			
-//			Map<String, Parameter> paramMap = new HashMap<String, Parameter>();
-//			Event readEvent = component.getReadInputEvents().get(0);
-//			while (readEvent != null) {
-//				for (Parameter p : readEvent.getParameters())
-//					paramMap.put(p.getName(), p);
-//				
-//				if (readEvent.isExtended())
-//					readEvent = readEvent.getRefines().get(0);
-//				else
-//					readEvent = null;
-//			}
-			
-			// disable input port definition if read input events not defined
 			//FIXME: handle case if read event has been redefined and some of ports left are pointing to the wrong event (not read event anymore)
-			inputsViewer.setEnabled(component.getStartStepEvents().isEmpty() == false);
 		}
 	}
 

@@ -22,9 +22,11 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.EditElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eventb.core.basis.MachineRoot;
@@ -210,8 +212,16 @@ public class ComponentCreateCommand extends EditElementCommand {
 		FMIModelDescription modelDescription;
 		try {
 			modelDescription = FMUFile.parseFMUFile(fmuFile.getAbsolutePath());
+			if (modelDescription.fmiVersion != "1.0")
+				throw new IOException("Wrong FMI version");
 		} catch (IOException e) {
 			e.printStackTrace();
+			Display.getCurrent().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "FMU Import Error", "FMU file cannot be parsed.\nCheck wether it is corrupt or not supported: only FMI 1.0 for Co-simulation files are supported for import.");
+				}
+			});
 			return null;
 		}
 		
