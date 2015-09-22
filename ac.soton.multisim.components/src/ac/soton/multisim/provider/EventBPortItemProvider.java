@@ -153,11 +153,11 @@ public class EventBPortItemProvider
 	 * This returns EventBPort.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EventBPort"));
+		return super.getImage(object);	//overlayImage(object, getResourceLocator().getImage("full/obj16/EventBPort"));
 	}
 
 	/**

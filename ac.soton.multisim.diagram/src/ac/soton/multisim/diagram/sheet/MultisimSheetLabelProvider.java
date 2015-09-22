@@ -8,6 +8,8 @@
 package ac.soton.multisim.diagram.sheet;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.BaseLabelProvider;
@@ -15,15 +17,19 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.graphics.Image;
 
+import ac.soton.multisim.Port;
 import ac.soton.multisim.diagram.navigator.MultisimNavigatorGroup;
 import ac.soton.multisim.diagram.part.MultisimVisualIDRegistry;
 import ac.soton.multisim.diagram.providers.MultisimElementTypes;
+import ac.soton.multisim.provider.MultisimItemProviderAdapterFactory;
 
 /**
  * @generated
  */
 public class MultisimSheetLabelProvider extends BaseLabelProvider implements
 		ILabelProvider {
+	// @custom
+	AdapterFactoryLabelProvider factoryProvider = new AdapterFactoryLabelProvider(new MultisimItemProviderAdapterFactory());
 
 	/**
 	 * @generated
@@ -38,9 +44,15 @@ public class MultisimSheetLabelProvider extends BaseLabelProvider implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public Image getImage(Object element) {
+		
+		// use generated label provider for ports (to distinguish between input and output)
+		EObject eobject = getView(unwrap(element)).getElement();
+		if (eobject instanceof Port)
+			return factoryProvider.getImage(eobject);
+
 		IElementType etype = getElementType(getView(unwrap(element)));
 		return etype == null ? null : MultisimElementTypes.getImage(etype);
 	}
@@ -83,6 +95,12 @@ public class MultisimSheetLabelProvider extends BaseLabelProvider implements
 					: null;
 		}
 		return null;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		factoryProvider.dispose();
 	}
 
 }

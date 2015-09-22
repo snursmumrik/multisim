@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
+import ac.soton.multisim.VariableCausality;
 
 /**
  * This is the item provider adapter for a {@link ac.soton.multisim.Port} object.
@@ -163,4 +164,22 @@ public class PortItemProvider
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.ecore.provider.EObjectItemProvider#getImage(java.lang.Object)
+	 * @custom
+	 */
+	@Override
+	public Object getImage(Object object) {
+		Port port = (Port) object;
+		switch (port.getCausality()) {
+		case INPUT:
+			return overlayImage(object, getResourceLocator().getImage("full/obj16/InputPort"));
+		case OUTPUT:
+			return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputPort"));
+		default:
+			return super.getImage(object);
+		}
+	}
+
+	
 }
