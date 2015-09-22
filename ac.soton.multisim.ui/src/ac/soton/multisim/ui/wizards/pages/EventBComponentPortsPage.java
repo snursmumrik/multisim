@@ -8,6 +8,7 @@
 package ac.soton.multisim.ui.wizards.pages;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -65,22 +66,13 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 		inputsViewer.setSelectionDialogProvider(new SelectionDialogProvider() {
 			@Override
 			public SelectionDialog getDialog() {
-				Event event = component.getStartStepEvents().get(0);
-				EList<Parameter> parameters = new BasicEList<Parameter>();
-				while (event != null) {
-					parameters.addAll(event.getParameters());
-					if (event.isExtended())
-						event = event.getRefines().get(0);
-					else
-						event = null;
-				}
-				return new EventBPortDialog(getShell(), VariableCausality.INPUT, parameters);
+				return new EventBPortDialog(getShell(), VariableCausality.INPUT, inputsViewer.getInputSource(), (List<EventBPort>) inputsViewer.getInput());
 			}
 		});
 		outputsViewer.setSelectionDialogProvider(new SelectionDialogProvider() {
 			@Override
 			public SelectionDialog getDialog() {
-				return new EventBPortDialog(getShell(), VariableCausality.OUTPUT, component.getMachine().getVariables());
+				return new EventBPortDialog(getShell(), VariableCausality.OUTPUT, outputsViewer.getInputSource(), (List<EventBPort>) outputsViewer.getInput());
 			}
 		});
 	}
@@ -102,6 +94,7 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			public String getText(Object element) {
 				return ((EventBPort) element).getType().toString();
 			}}));
+		
 		if (causality == VariableCausality.INPUT) {
 			providers.add(new ColumnProvider("Parameter", 130, new ColumnLabelProvider() {
 				@Override
@@ -125,13 +118,30 @@ public class EventBComponentPortsPage extends AbstractWizardPage {
 			if (component == null)
 				return;
 			
-			inputsViewer.setInput(null, component.getInputs());
-			outputsViewer.setInput(null, component.getOutputs());
+			inputsViewer.setInput(getParametersForInputs(), component.getInputs());
+			outputsViewer.setInput(component.getMachine().getVariables(), component.getOutputs());
 			
 			((Composite) getControl()).layout(true, true);
 			
 			//FIXME: handle case if read event has been redefined and some of ports left are pointing to the wrong event (not read event anymore)
 		}
+	}
+
+	/**
+	 * Returns all parameters of the 'StartStep' events of the component.
+	 * @return
+	 */
+	private Collection<Parameter> getParametersForInputs() {
+		Event event = component.getStartStepEvents().get(0);
+		EList<Parameter> parameters = new BasicEList<Parameter>();
+		while (event != null) {
+			parameters.addAll(event.getParameters());
+			if (event.isExtended())
+				event = event.getRefines().get(0);
+			else
+				event = null;
+		}
+		return parameters;
 	}
 
 	public EventBComponent getModel() {

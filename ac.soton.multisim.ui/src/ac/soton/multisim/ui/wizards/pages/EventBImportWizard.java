@@ -24,7 +24,7 @@ import ac.soton.multisim.MultisimFactory;
  */
 public class EventBImportWizard extends Wizard implements IImportWizard {
 	
-	private static final int DEFAULT_STEP = 1000;
+	private static final int DEFAULT_STEP = 100;
 	
 	protected EventBComponentEventsPage eventsPage;
 	protected EventBComponentPortsPage portsPage;
@@ -60,7 +60,7 @@ public class EventBImportWizard extends Wizard implements IImportWizard {
 	public void addPages() {
 		eventsPage = new EventBComponentEventsPage("EventBComponentParamDefinitionPage", component);
 		eventsPage.setTitle("Parameters and Events");
-		eventsPage.setDescription("Specify simulation step size and I/O events");
+		eventsPage.setDescription("Specify simulation step size and events");
 		addPage(eventsPage);
 		
 		portsPage = new EventBComponentPortsPage("EventBComponentVariableDefinitionPage", component);

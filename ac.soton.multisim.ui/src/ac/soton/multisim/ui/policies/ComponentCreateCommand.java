@@ -186,7 +186,7 @@ public class ComponentCreateCommand extends EditElementCommand {
 	 * @return
 	 */
 	private Component importEventBComponent(Machine machine) {
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		Shell shell = Display.getCurrent().getActiveShell();
 		EventBImportWizard wiz = new EventBImportWizard(machine);
 		wiz.init(PlatformUI.getWorkbench(), null);
 		WizardDialog wd = new WizardDialog(shell, wiz);

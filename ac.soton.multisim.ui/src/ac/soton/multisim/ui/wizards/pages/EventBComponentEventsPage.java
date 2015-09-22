@@ -8,7 +8,10 @@
 package ac.soton.multisim.ui.wizards.pages;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -91,7 +94,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 					if (input <= 0)
 						return "Simulation step size must be greater that zero";
 				} catch (NumberFormatException e) {
-					return "Invalid number format";
+					return "Invalid number format (must be integer)";
 				}
 				return null;
 			}
@@ -107,6 +110,7 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 			public void modifyText(ModifyEvent e) {
 				if (validateStepPeriod())
 					component.setStepSize(Integer.parseInt(stepSizeText.getText()));
+				validatePage();
 			}
 		});
 		startStepEventsViewer.setChangeListener(new Listener() {
@@ -127,7 +131,6 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 		if (stepPeriodValidator != null) {
 			stepPeriodValid = stepPeriodValidator.isValid(stepSizeText.getText()) == null;
 		}
-		validatePage();
 		return stepPeriodValid;
 	}
 
@@ -160,10 +163,22 @@ public class EventBComponentEventsPage extends AbstractWizardPage {
 			if (component == null)
 				return;
 			
+			// remove INITIALISATION event from the input and sort events
+			Set<Event> events = new TreeSet<Event>(new Comparator<Event>() {
+				@Override
+				public int compare(Event e1, Event e2) {
+					return e1.getName().compareTo(e2.getName());
+				}
+			});
+			for (Event event : component.getMachine().getEvents()) {
+				if (event.getName().equals("INITIALISATION") == false)
+					events.add(event);
+			}
+			
 			// set input
 			stepSizeText.setText(Integer.toString(component.getStepSize()));
-			startStepEventsViewer.setInput(component.getMachine().getEvents(), component.getStartStepEvents());
-			endStepEventsViewer.setInput(component.getMachine().getEvents(), component.getEndStepEvents());
+			startStepEventsViewer.setInput(events, component.getStartStepEvents());
+			endStepEventsViewer.setInput(events, component.getEndStepEvents());
 			
 			((Composite) getControl()).layout(true, true);
 			

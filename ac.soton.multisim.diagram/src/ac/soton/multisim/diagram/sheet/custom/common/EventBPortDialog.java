@@ -11,7 +11,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -60,6 +63,7 @@ public class EventBPortDialog extends SelectionDialog {
 	private boolean elementValid;
 	private EventBPort port;
 	private VariableCausality causality;
+	private Set<EventBNamedCommentedElement> filterElements;
 	
 	/**
 	 * Creates Event-B port dialog.
@@ -67,14 +71,28 @@ public class EventBPortDialog extends SelectionDialog {
 	 * @param shell
 	 * @param causality
 	 * @param elements
+	 * @param list 
 	 */
-	public EventBPortDialog(Shell shell, VariableCausality causality, Collection<? extends EventBNamedCommentedElement> elements) {
+	public EventBPortDialog(Shell shell, VariableCausality causality,
+			Collection<? extends EventBNamedCommentedElement> elements,
+			List<EventBPort> filterPorts) {
 		super(shell);
-		this.setTitle("New "+ causality.getName() + " Port");
+		
+		this.setTitle("New " + causality.getName() + " Port");
 		this.causality = causality;
+		
 		elementMap = new HashMap<String, EventBNamedCommentedElement>(elements.size());
 		for (EventBNamedCommentedElement el : elements) {
 			elementMap.put(el.getName(), el);
+		}
+		
+		if (filterPorts != null) {
+			filterElements = new HashSet<EventBNamedCommentedElement>(filterPorts.size());
+			for (EventBPort port : filterPorts) {
+				EventBNamedCommentedElement element = port.getCausality() == VariableCausality.INPUT ? port.getParameter() : port.getVariable();
+				if (element != null)
+					filterElements.add(element);
+			}
 		}
 	}
 
@@ -106,7 +124,7 @@ public class EventBPortDialog extends SelectionDialog {
 			elementCombo = createCombo(plate, comboLabel, elementMap, new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					validateParameter();
+					validateLinkedElement();
 				}
 			});
 		}
@@ -162,9 +180,16 @@ public class EventBPortDialog extends SelectionDialog {
 						FieldDecorationRegistry.DEC_ERROR, 
 						false)) {
 			@Override
-			public String isValidInput(String parameter) {
-				if (parameter == null || parameter.isEmpty())
+			public String isValidInput(String elementName) {
+				if (elementName == null || elementName.isEmpty())
 					return "Selection cannot be empty";
+				
+				// check if a port for this element already exists
+				if (filterElements != null) {
+					EventBNamedCommentedElement element = elementMap.get(elementName);
+					if (element != null && filterElements.contains(element))
+						return "Port for this element already exists";
+				}
 				return null;
 			}
 		};
@@ -175,7 +200,7 @@ public class EventBPortDialog extends SelectionDialog {
 	 * 
 	 * @param parent parent
 	 * @param label label of the combo
-	 * @param map map of elements to populate combo
+	 * @param map map of elements to populate the combo
 	 * @param listener combo selection listener
 	 * @return
 	 */
@@ -214,9 +239,9 @@ public class EventBPortDialog extends SelectionDialog {
 	}
 
 	/**
-	 * Validates parameter.
+	 * Validates linked element.
 	 */
-	protected void validateParameter() {
+	protected void validateLinkedElement() {
 		if (elementValidator != null) {
 			elementValid = elementValidator.isValid(elementCombo.getText()) == null;
 		} else {

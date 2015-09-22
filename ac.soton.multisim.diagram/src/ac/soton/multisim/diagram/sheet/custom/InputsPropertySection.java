@@ -90,8 +90,12 @@ public class InputsPropertySection extends AbstractTablePropertySection {
 				event = null;
 		}
 		
+		List<EventBPort> existingPorts = new ArrayList<EventBPort>();
+		for (Port p : getOwnedRows())
+			existingPorts.add((EventBPort) p);
+		
 		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite().getShell(), 
-				VariableCausality.INPUT, paramMap.values());
+				VariableCausality.INPUT, paramMap.values(), existingPorts );
 		inputDialog.setTitle("New Input Port");
 		if (Dialog.OK == inputDialog.open()) {
 			Object[] result = inputDialog.getResult();

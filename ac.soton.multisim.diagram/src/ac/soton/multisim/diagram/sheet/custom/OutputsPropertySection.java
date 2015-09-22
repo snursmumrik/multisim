@@ -73,9 +73,13 @@ public class OutputsPropertySection extends AbstractTablePropertySection {
 		if (machine == null)
 			return null;
 
+		List<EventBPort> existingPorts = new ArrayList<EventBPort>();
+		for (Port p : getOwnedRows())
+			existingPorts.add((EventBPort) p);
+		
 		EventBPortDialog inputDialog = new EventBPortDialog(getPart().getSite()
 				.getShell(), VariableCausality.OUTPUT,
-				machine.getVariables());
+				machine.getVariables(), existingPorts);
 		inputDialog.setTitle("New Output Port");
 		if (Dialog.OK == inputDialog.open()) {
 			Object[] result = inputDialog.getResult();

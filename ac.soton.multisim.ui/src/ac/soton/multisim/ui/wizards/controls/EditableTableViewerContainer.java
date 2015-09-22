@@ -8,6 +8,7 @@
 package ac.soton.multisim.ui.wizards.controls;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.dialogs.SelectionDialog;
+import org.eventb.emf.core.EventBNamedCommentedElement;
 
 import ac.soton.multisim.ui.providers.ColumnProvider;
 
@@ -40,7 +42,7 @@ import ac.soton.multisim.ui.providers.ColumnProvider;
 public class EditableTableViewerContainer extends TableViewerContainer {
 
 	private Composite plate;
-	private List<?> inputSource;
+	private Collection<EventBNamedCommentedElement> inputSource;
 	int idColumnIndex;
 	private Button addButton;
 	private Button removeButton;
@@ -162,7 +164,7 @@ public class EditableTableViewerContainer extends TableViewerContainer {
 	 * 
 	 * @return
 	 */
-	protected List<?> getInputSource() {
+	public Collection<EventBNamedCommentedElement> getInputSource() {
 		return inputSource;
 	}
 
@@ -194,9 +196,9 @@ public class EditableTableViewerContainer extends TableViewerContainer {
 	 * @param source input source (can be null if a selection dialog is used as element source)
 	 * @param input current table content
 	 */
-	public void setInput(List<?> source, Object input) {
+	public void setInput(Collection<? extends EventBNamedCommentedElement> source, Object input) {
 		super.setInput(input);
-		inputSource = source;
+		inputSource = (Collection<EventBNamedCommentedElement>) source;
 	}
 	
 	/**
@@ -225,6 +227,7 @@ public class EditableTableViewerContainer extends TableViewerContainer {
 	 */
 	protected SelectionDialog getSelectionDialog() {
 		if (dialogProvider == null) {
+			//TODO: implement a FilteredItemsSelectionDialog
 			return new ListSelectionDialog(tableViewer.getControl().getShell(), getInputSource(), new ArrayContentProvider(), getInputLabelProvider(), null);
 		}
 		return dialogProvider.getDialog();
