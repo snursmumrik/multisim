@@ -462,7 +462,7 @@
         itemSemanticEditPolicyClassName="FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="FMUComponentFMUVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="FMUComponentFMUVariablesCompartmentCanonicalEditPolicy"
-        title="FMUVariablesCompartment"
+        canCollapse="false"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.1">
       <diagramRunTimeClass
@@ -482,7 +482,7 @@
         itemSemanticEditPolicyClassName="EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="EventBComponentEventBVariablesCompartmentViewFactory"
         canonicalEditPolicyClassName="EventBComponentEventBVariablesCompartmentCanonicalEditPolicy"
-        title="EventBVariablesCompartment"
+        canCollapse="false"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.2">
       <diagramRunTimeClass

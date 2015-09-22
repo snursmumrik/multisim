@@ -29,7 +29,8 @@ import ac.soton.multisim.provider.MultisimItemProviderAdapterFactory;
 public class MultisimSheetLabelProvider extends BaseLabelProvider implements
 		ILabelProvider {
 	// @custom
-	AdapterFactoryLabelProvider factoryProvider = new AdapterFactoryLabelProvider(new MultisimItemProviderAdapterFactory());
+	AdapterFactoryLabelProvider factoryProvider = new AdapterFactoryLabelProvider(
+			new MultisimItemProviderAdapterFactory());
 
 	/**
 	 * @generated
@@ -47,7 +48,7 @@ public class MultisimSheetLabelProvider extends BaseLabelProvider implements
 	 * @generated NOT
 	 */
 	public Image getImage(Object element) {
-		
+
 		// use generated label provider for ports (to distinguish between input and output)
 		EObject eobject = getView(unwrap(element)).getElement();
 		if (eobject instanceof Port)

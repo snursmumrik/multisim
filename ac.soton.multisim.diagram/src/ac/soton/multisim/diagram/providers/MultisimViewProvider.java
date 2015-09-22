@@ -363,7 +363,7 @@ public class MultisimViewProvider extends AbstractProvider implements
 				node,
 				MultisimVisualIDRegistry
 						.getType(FMUComponentFMUVariablesCompartmentEditPart.VISUAL_ID),
-				true, false, true, true);
+				false, false, true, true);
 		return node;
 	}
 
@@ -407,7 +407,7 @@ public class MultisimViewProvider extends AbstractProvider implements
 				node,
 				MultisimVisualIDRegistry
 						.getType(EventBComponentEventBVariablesCompartmentEditPart.VISUAL_ID),
-				true, false, true, true);
+				false, false, true, true);
 		return node;
 	}
 

@@ -48,10 +48,10 @@ public class EventBComponentEventBVariablesCompartmentEditPart extends
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public String getCompartmentName() {
-		return Messages.EventBComponentEventBVariablesCompartmentEditPart_title;
+		return null;//Messages.EventBComponentEventBVariablesCompartmentEditPart_title;
 	}
 
 	/**
@@ -69,8 +69,6 @@ public class EventBComponentEventBVariablesCompartmentEditPart extends
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
-		installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
-				new ResizableCompartmentEditPolicy());
 		installEditPolicy(
 				EditPolicyRoles.SEMANTIC_ROLE,
 				new EventBComponentEventBVariablesCompartmentItemSemanticEditPolicy());

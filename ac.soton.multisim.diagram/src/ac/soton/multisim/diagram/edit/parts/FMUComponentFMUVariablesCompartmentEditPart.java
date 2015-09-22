@@ -48,10 +48,10 @@ public class FMUComponentFMUVariablesCompartmentEditPart extends
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public String getCompartmentName() {
-		return Messages.FMUComponentFMUVariablesCompartmentEditPart_title;
+		return null;//Messages.FMUComponentFMUVariablesCompartmentEditPart_title;
 	}
 
 	/**
@@ -69,8 +69,6 @@ public class FMUComponentFMUVariablesCompartmentEditPart extends
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
-		installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
-				new ResizableCompartmentEditPolicy());
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
 				new FMUComponentFMUVariablesCompartmentItemSemanticEditPolicy());
 	}

@@ -255,16 +255,6 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String FMUComponentFMUVariablesCompartmentEditPart_title;
-
-	/**
-	 * @generated
-	 */
-	public static String EventBComponentEventBVariablesCompartmentEditPart_title;
-
-	/**
-	 * @generated
-	 */
 	public static String CommandName_OpenDiagram;
 
 	/**
