@@ -254,14 +254,14 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 	public void initialise(int tStart, int tStop) {
 		// initialise parameters that have non-default values
 		for (FMUParameter param : getParameters())
-			SimulationUtil.fmuSet(fmu, param, param.getStartValue());
+			SimulationUtil.fmiSet(fmu, param, param.getStartValue());
 		
 		// initialise FMU
 		fmu.initialize(tStart/1000.0, tStop/1000.0);
 		
 		// update outputs
 		for (Port p : getOutputs())
-			p.setValue(SimulationUtil.fmuGet(fmu, p));
+			p.setValue(SimulationUtil.fmiGet(fmu, p));
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 				continue;
 			}
 			
-			SimulationUtil.fmuSet(fmu, port, input.getValue());
+			SimulationUtil.fmiSet(fmu, port, input.getValue());
 		}
 	}
 
@@ -289,7 +289,7 @@ public class FMUComponentImpl extends EventBNamedCommentedElementImpl implements
 	 */
 	public void writeOutputs() {
 		for (Port port : getOutputs()) {
-			port.setValue(SimulationUtil.fmuGet(fmu, port));
+			port.setValue(SimulationUtil.fmiGet(fmu, port));
 		}
 	}
 

@@ -7,6 +7,11 @@
  */
 package ac.soton.multisim.master;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,32 +29,13 @@ import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
 import ac.soton.multisim.util.SimulationStatus;
+import ac.soton.multisim.util.SimulationUtil;
 
 /**
  * @author vitaly
  *
  */
 public class Master {
-	/**
-	 * Parameters
-	 */
-	public static final String PARAM_RECORD_TRACE = "ac.soton.multisim.parameters.recordTrace";
-	public static final String PARAM_COMPARE_TRACE = "ac.soton.multisim.parameters.compareTrace";
-	public static final String PARAM_CHECK_INVARIANTS = "ac.soton.multisim.parameters.checkInvariants";
-	public static final String PARAM_START = "ac.soton.multisim.parameters.start";
-	
-	// simulation data
-	private static List<Component> components;
-	private static int startTime;
-	private static int stopTime;
-	private static int currentTime;
-	
-	// component lists
-	private static Map<EventBComponent, Integer> updateList = new HashMap<>();
-	private static Set<EventBComponent> deList = new HashSet<>();
-	private static Set<FMUComponent> ctList = new HashSet<>();
-	private static Map<Component, Integer> lastEvalTime = new HashMap<>();
-	private static Map<Port, Object> preValue = new HashMap<>();
 	
 	/**
 	 * Simulate the diagram.
@@ -58,180 +44,137 @@ public class Master {
 	 * @param monitor progress monitor
 	 * @param params simulation parameters
 	 * @return
+	 * @throws IOException 
+	 * @throws ModelException 
+	 * @throws SimulationException 
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) {
+	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) throws IOException, SimulationException, ModelException {
 		IStatus status = SimulationStatus.OK_STATUS;
-		long simulationTime = System.currentTimeMillis();
+		long simStartTime = System.currentTimeMillis();
 		
-		updateList.clear();
-		deList.clear();
-		ctList .clear();
-		lastEvalTime.clear();
-		preValue.clear();
-		
-		components = diagram.getComponents();
-		startTime = diagram.getStartTime();
-		stopTime = diagram.getStopTime();
-		
-		status = initialise(monitor);
-
-		if (status == SimulationStatus.OK_STATUS)
-			status = doSteps(monitor);
-		
-		terminate();
-		
-		return getResultStatus(status, System.currentTimeMillis() - simulationTime);
-	}
-
-	/**
-	 * Creates final result status.
-	 * 
-	 * @param status original status
-	 * @param time elapsed time
-	 * @return
-	 */
-	private static IStatus getResultStatus(IStatus status, long time) {
-//		switch (status.getSeverity()) {
-//		case Status.OK:
-//			status = SimulationStatus.createOKStatus("Simulation finished in " + time/1000 + "s"); break;
-//		case Status.ERROR:
-//			status = SimulationStatus.createErrorStatus("Simulation terminated after " + time/1000 + "s" + "\nError: " + status.getMessage()); break;
-//		}
-		
-		return status;
-	}
-
-	/**
-	 * Instantiate and initialise components.
-	 * 
-	 * @param monitor
-	 * @return
-	 */
-	private static IStatus initialise(IProgressMonitor monitor) {
-		IStatus status = SimulationStatus.OK_STATUS;
-		try{
-			for (Component c : components) {
-				monitor.subTask("Initialising component '" + c.getName() + "'");
-				c.instantiate();
-				c.initialise(startTime, stopTime);
-				
-				// first evaluation of DE
-				if (c instanceof EventBComponent)
-					updateList.put((EventBComponent) c, startTime + ((EventBComponent) c).getStepSize());
-				else if (c instanceof FMUComponent)
-					lastEvalTime.put(c, 0);		// store eval time for CT
-				
-				// initial IO #1
-				c.writeOutputs();
-				
-				if (c instanceof EventBComponent)
-					for (Port y : c.getOutputs())
-						preValue.put(y, y.getValue());
-				
+		// data
+		int tStart = diagram.getStartTime();
+		int tStop = diagram.getStopTime();
+		List<EventBComponent> eventbComps = new ArrayList<EventBComponent>();
+		List<FMUComponent> fmuComps = new ArrayList<FMUComponent>();
+		Map<Component, Collection<Component>> fmuIO = new HashMap<Component, Collection<Component>>();
+		for (Component c : diagram.getComponents()) {
+			if (c instanceof EventBComponent) {
+				eventbComps.add((EventBComponent) c);
+				List<Component> connected = new ArrayList<Component>();
+				for (Port p : c.getInputs()) {
+					Component inputComp = (Component) p.getIn().eContainer();
+					if (inputComp instanceof FMUComponent)
+						connected.add(inputComp);
+				}
+				for (Port p : c.getOutputs()) {
+					for (Port p2 : p.getOut()) {
+						Component outputComp = (Component) p2.eContainer();
+						if (outputComp instanceof FMUComponent)
+							connected.add(outputComp);
+					}
+				}
+				fmuIO.put(c, connected);
+			} else if (c instanceof FMUComponent) {
+				fmuComps.add((FMUComponent) c);
 			}
-			// initial IO #2
-			for (Component c : components)
-				c.readInputs();
-		} catch (SimulationException | ModelException e) {
-			return SimulationStatus.createErrorStatus("Exception:", e);
 		}
-		return status;
-	}
+		
+		// recording
+		BufferedWriter resultWriter = null;
+		if (diagram.isRecordOutputs()) {
+			File outputFile = new File(System.getProperty("user.home")+"/results.csv");
+			resultWriter = SimulationUtil.createOutputWriter(outputFile);
+		}
+		
+		// instantiation & initialisation
+		for (Component c : diagram.getComponents()) {
+			c.instantiate();
+			c.initialise(tStart, tStop);
+		}
+		
+		// initial IO
+		for (Component c : eventbComps)
+			c.writeOutputs();
+		for (Component c : fmuComps) {
+			c.readInputs();
+			c.writeOutputs();
+		}
+		for (Component c : eventbComps)
+			c.readInputs();
 
-	/**
-	 * Perform simulation steps.
-	 * 
-	 * @param monitor
-	 * @return
-	 */
-	private static IStatus doSteps(IProgressMonitor monitor) {
-		monitor.beginTask("Simulation", stopTime - startTime);
-		int lastMonitorTick = startTime;
-		IStatus status = SimulationStatus.OK_STATUS;
-
-		try {
-		for (currentTime = startTime; currentTime <= stopTime; ++currentTime) {
+		// record header and initial values
+		if (diagram.isRecordOutputs()) {
+			SimulationUtil.writeColumns(diagram, resultWriter);
+			SimulationUtil.writeOutput(diagram, tStart, resultWriter);
+		}
+			
+		// first eval
+		Map<Component, Integer> updateList = new HashMap<Component, Integer>(eventbComps.size() + fmuComps.size());
+		for (EventBComponent c : eventbComps)
+			updateList .put(c, tStart + c.getStepSize());
+		for (FMUComponent c : fmuComps)
+			updateList.put(c, tStart);
+			
+		// simulation loop
+		List<EventBComponent> evalListB = new ArrayList<EventBComponent>(eventbComps.size());
+		Set<Component> evalListFMU = new HashSet<Component>(fmuComps.size());
+		for (int tCurrent = tStart+1; tCurrent <= tStop; ++tCurrent) {
 			if (monitor.isCanceled()) {
 				status = SimulationStatus.CANCEL_STATUS;
 				break;
 			}
 			
-			for (Component c : components) {
-				if (updateList.containsKey(c) && currentTime == updateList.get(c)) {
-					deList.add((EventBComponent) c);
-					updateList.put((EventBComponent) c, currentTime + ((EventBComponent) c).getStepSize());
+			// update eval list
+			for (EventBComponent c : eventbComps)
+				if (updateList.get(c) == tCurrent) {
+					evalListB.add(c);
+					evalListFMU.addAll(fmuIO.get(c));
 				}
-			}
 			
-			// skip the step if no DEs to evaluate
-			if (deList.isEmpty()) {
-				continue;
+			// evaluate
+			//XXX for Event-B components tCurrent and tStep do not matter (at the moment) for doStep()
+			for (EventBComponent c : evalListB) {
+				c.doStep(tCurrent, 0);
+				updateList.put(c, c.getStepSize());	// update the next eval record for the evaluated Event-B component
 			}
-			
-			// DE step
-			for (EventBComponent c : deList) {
-				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
-				c.doStep(currentTime, c.getStepSize());
-				c.writeOutputs();
-				
-				// evaluate any input CT
-				for (Port u : c.getInputs()) {
-					if (u.getIn() != null && u.getIn().eContainer() instanceof FMUComponent) {
-						ctList.add((FMUComponent) u.getIn().eContainer());
-					}
-				}
-				
-				// evaluate any output CT if DE output has changed
-				for (Port y : c.getOutputs()) {
-					if (y.getValue() != preValue.get(y)) {
-						preValue.put(y, y.getValue());
-						for (Port u : y.getOut()) {
-							if (u.eContainer() instanceof FMUComponent)
-								ctList.add((FMUComponent) u.eContainer());
-						}
-					}
-				}
-			}
-			
-			// CT step
-			for (FMUComponent c : ctList) {
-				monitor.subTask("Time=" + currentTime + "ms: step '" + c.getName() + "'");
-				int tEval = lastEvalTime .get(c);
-				c.doStep(tEval, currentTime - tEval);
-				c.writeOutputs();
-				lastEvalTime.put(c, currentTime);
+			for (Component c : evalListFMU) {
+				int tLast = updateList.get(c);
+				c.doStep(tLast, tCurrent - tLast);
+				updateList.put(c, tCurrent);	// update FMU component last eval record
 			}
 			
 			// IO
-			for (Component c : deList)
+			for (Component c : evalListB)
+				c.writeOutputs();
+			for (Component c : evalListFMU) {
 				c.readInputs();
-			for (Component c : ctList)
+				c.writeOutputs();
+			}
+			for (Component c : evalListB)
 				c.readInputs();
 			
-			deList.clear();
-			ctList.clear();
+			// record if any Event-B is evaluated (possible changes made)
+			//XXX: output may be better recorded at fixed interval irrespective of evaluation
+			if (resultWriter != null && !evalListB.isEmpty())
+				SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);
 			
-			monitor.worked(currentTime-lastMonitorTick);
-			lastMonitorTick = currentTime;
-		}
-		} catch (SimulationException | ModelException e) {
-			return SimulationStatus.createErrorStatus("Exception", e);
+			evalListB.clear();
+			evalListFMU.clear();
 		}
 		
-		return status;
-	}
-
-	/**
-	 * Terminate all components.
-	 */
-	private static void terminate() {
-		for (Component c : components) {
+		for (Component c : diagram.getComponents())
 			c.terminate();
+		
+		// stop recording
+		if (resultWriter != null) {
+			try {
+				resultWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-
-	public static void pause() {
-		// TODO Auto-generated method stub
-		//NOTE: not used
+		
+		return status;//getResultStatus(status, System.currentTimeMillis() - simulationTime);
 	}
 }

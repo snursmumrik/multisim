@@ -74,7 +74,7 @@ public class TwoListMaster {
 			if (diagram.isRecordOutputs()) {
 				if (outputFile == null)
 					outputFile = new File(System.getProperty("user.home")+"/results.csv");
-				resultWriter = SimulationUtil.apiCreateOutput(outputFile);
+				resultWriter = SimulationUtil.createOutputWriter(outputFile);
 			}
 
 			// instantiate components
@@ -90,7 +90,7 @@ public class TwoListMaster {
 			
 			// header output
 			if (diagram.isRecordOutputs())
-				SimulationUtil.apiOutputColumns(diagram, resultWriter);
+				SimulationUtil.writeColumns(diagram, resultWriter);
 	
 			// simulation loop
 			for (tCurrent = tStart; tCurrent <= tStop; ++tCurrent) {
@@ -131,7 +131,7 @@ public class TwoListMaster {
 				
 				// write file output
 				if (diagram.isRecordOutputs())
-					SimulationUtil.apiOutput(diagram, tCurrent, resultWriter);
+					SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);
 			}
 		} catch (SimulationException | ModelException | IOException e) {
 			status = SimulationStatus.createErrorStatus("Terminated due to an exception:\n" + e.getMessage(), e);

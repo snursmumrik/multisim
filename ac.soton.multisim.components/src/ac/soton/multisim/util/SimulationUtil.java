@@ -120,7 +120,7 @@ public class SimulationUtil {
 	 * @param variable
 	 * @param value
 	 */
-	public static void fmuSet(FMU fmu, AbstractVariable variable, Object value) {
+	public static void fmiSet(FMU fmu, AbstractVariable variable, Object value) {
 		String name = variable.getName();
 		switch (variable.getType()) {
 		case BOOLEAN:
@@ -143,12 +143,12 @@ public class SimulationUtil {
 	 * @param variable
 	 * @return
 	 */
-	public static Object fmuGet(FMU fmu, AbstractVariable variable) {
+	public static Object fmiGet(FMU fmu, AbstractVariable variable) {
 		String name = variable.getName();
 		Object value = null;
 		switch (variable.getType()) {
 		case BOOLEAN:
-			value  = fmu.getBoolean(name) == false; //XXX: hack to fix the bug with JFMI (returns negated value of actual boolean value)
+			value  = fmu.getBoolean(name) == false; //XXX: hack to fix the bug in JFMI (returns a negated value of the actual boolean value)
 			break;
 		case INTEGER:
 			value = fmu.getInt(name);
@@ -229,7 +229,7 @@ public class SimulationUtil {
 	 * @return
 	 * @throws IOException 
 	 */
-	public static BufferedWriter apiCreateOutput(File file) throws IOException {
+	public static BufferedWriter createOutputWriter(File file) throws IOException {
 		if (!file.exists())
 			file.createNewFile();
 		return new BufferedWriter(new FileWriter((File) file));
@@ -242,7 +242,7 @@ public class SimulationUtil {
 	 * @param writer
 	 * @throws IOException 
 	 */
-	public static void apiOutputColumns(ComponentDiagram diagram, BufferedWriter writer) throws IOException {
+	public static void writeColumns(ComponentDiagram diagram, BufferedWriter writer) throws IOException {
 		writer.write("time");
 		for (Component c : diagram.getComponents()) {
 			//XXX: current hack to ignore display component for outputs
@@ -264,7 +264,7 @@ public class SimulationUtil {
 	 * @param writer
 	 * @throws IOException 
 	 */
-	public static void apiOutput(ComponentDiagram diagram, long time, BufferedWriter writer) throws IOException {
+	public static void writeOutput(ComponentDiagram diagram, long time, BufferedWriter writer) throws IOException {
 		writer.write(Double.toString(time/1000.0));
 		for (Component c : diagram.getComponents()) {
 			//XXX: current hack to ignore display component for outputs
