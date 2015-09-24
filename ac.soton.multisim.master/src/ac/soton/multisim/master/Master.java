@@ -10,6 +10,8 @@ package ac.soton.multisim.master;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,19 +38,18 @@ import ac.soton.multisim.util.SimulationUtil;
  *
  */
 public class Master {
-	
+
 	/**
 	 * Simulate the diagram.
 	 * 
 	 * @param diagram
 	 * @param monitor progress monitor
-	 * @param params simulation parameters
 	 * @return
 	 * @throws IOException 
 	 * @throws ModelException 
 	 * @throws SimulationException 
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, IProgressMonitor monitor, Map<String, String> params) throws IOException, SimulationException, ModelException {
+	public static IStatus simulate(final ComponentDiagram diagram, final String diagramPath, IProgressMonitor monitor) throws IOException, SimulationException, ModelException {
 		IStatus status = SimulationStatus.OK_STATUS;
 		long simStartTime = System.currentTimeMillis();
 		
@@ -81,11 +82,8 @@ public class Master {
 		}
 		
 		// recording
-		BufferedWriter resultWriter = null;
-		if (diagram.isRecordOutputs()) {
-			File outputFile = new File(System.getProperty("user.home")+"/results.csv");
-			resultWriter = SimulationUtil.createOutputWriter(outputFile);
-		}
+		BufferedWriter resultWriter = diagram.isRecordOutputs() ?
+			SimulationUtil.createOutputWriter(new File(diagramPath + "/results.csv")) : null;
 		
 		// instantiation & initialisation
 		for (Component c : diagram.getComponents()) {
@@ -154,7 +152,7 @@ public class Master {
 			for (Component c : evalListB)
 				c.readInputs();
 			
-			// record if any Event-B is evaluated (possible changes made)
+			// record if any Event-B is evaluated (possible changes occurred)
 			//XXX: output may be better recorded at fixed interval irrespective of evaluation
 			if (resultWriter != null && !evalListB.isEmpty())
 				SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);

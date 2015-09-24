@@ -55,7 +55,7 @@ public class SimulateCommandHandler extends AbstractHandler {
 		
 		final ComponentDiagram diagram = (ComponentDiagram) ((DiagramEditor) editor).getDiagram().getElement();
 		
-		// input dialog for entering the time and step size
+		// input dialog for entering simulation parameters
 		SimulationSettingsDialog simulationInputDialog = new SimulationSettingsDialog(Display.getCurrent().getActiveShell(), diagram);
 		if (simulationInputDialog.open() != InputDialog.OK)
 			return null;
@@ -81,11 +81,11 @@ public class SimulateCommandHandler extends AbstractHandler {
 				return JOB_NAME.equals(getName());
 			}
 		};
-		
 		job.setUser(true);												// user UI job
 		job.setPriority(Job.LONG);										// long-running job scheduling (lower priority than interactive and short, but higher than build)
 		job.setProperty(IProgressConstants.KEEPONE_PROPERTY, true);		// keep only one job in progress monitor
-		job.setProperty(IProgressConstants.ICON_PROPERTY, MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_MULTISIM));	// job icon
+		job.setProperty(IProgressConstants.ICON_PROPERTY, 
+				MultisimUIActivator.getDefault().getImageRegistry().getDescriptor(MultisimUIActivator.IMAGE_MULTISIM));	// job icon
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {

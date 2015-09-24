@@ -113,12 +113,13 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	/**
 	 * @custom
 	 */
-	private Random random = new Random(System.currentTimeMillis());
+	private static DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
+	private static Random random = new Random(System.currentTimeMillis());
 	private Set<String> endStepSet = new HashSet<String>();
-	private DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
 	private LTL ltl;
 	private StringBuilder stringBuilder = new StringBuilder();
 	private BufferedWriter traceWriter;
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
