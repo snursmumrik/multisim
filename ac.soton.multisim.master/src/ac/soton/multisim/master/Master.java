@@ -49,7 +49,7 @@ public class Master {
 	 * @throws ModelException 
 	 * @throws SimulationException 
 	 */
-	public static IStatus simulate(final ComponentDiagram diagram, final String diagramPath, IProgressMonitor monitor) throws IOException, SimulationException, ModelException {
+	public static IStatus simulate(final ComponentDiagram diagram, final String outputPath, IProgressMonitor monitor) {
 		IStatus status = SimulationStatus.OK_STATUS;
 		long simStartTime = System.currentTimeMillis();
 		
@@ -80,89 +80,96 @@ public class Master {
 				fmuComps.add((FMUComponent) c);
 			}
 		}
+		BufferedWriter resultWriter = null;
 		
-		// recording
-		BufferedWriter resultWriter = diagram.isRecordOutputs() ?
-			SimulationUtil.createOutputWriter(new File(diagramPath + "/results.csv")) : null;
-		
-		// instantiation & initialisation
-		for (Component c : diagram.getComponents()) {
-			c.instantiate();
-			c.initialise(tStart, tStop);
-		}
-		
-		// initial IO
-		for (Component c : eventbComps)
-			c.writeOutputs();
-		for (Component c : fmuComps) {
-			c.readInputs();
-			c.writeOutputs();
-		}
-		for (Component c : eventbComps)
-			c.readInputs();
-
-		// record header and initial values
-		if (diagram.isRecordOutputs()) {
-			SimulationUtil.writeColumns(diagram, resultWriter);
-			SimulationUtil.writeOutput(diagram, tStart, resultWriter);
-		}
+		try {
 			
-		// first eval
-		Map<Component, Integer> updateList = new HashMap<Component, Integer>(eventbComps.size() + fmuComps.size());
-		for (EventBComponent c : eventbComps)
-			updateList .put(c, tStart + c.getStepSize());
-		for (FMUComponent c : fmuComps)
-			updateList.put(c, tStart);
+			// recording
+			if (outputPath != null)
+				resultWriter = SimulationUtil.createOutputWriter(new File(outputPath + "/results.csv"));
 			
-		// simulation loop
-		List<EventBComponent> evalListB = new ArrayList<EventBComponent>(eventbComps.size());
-		Set<Component> evalListFMU = new HashSet<Component>(fmuComps.size());
-		for (int tCurrent = tStart+1; tCurrent <= tStop; ++tCurrent) {
-			if (monitor.isCanceled()) {
-				status = SimulationStatus.CANCEL_STATUS;
-				break;
+			// instantiation & initialisation
+			for (Component c : diagram.getComponents()) {
+				c.instantiate();
+				c.initialise(tStart, tStop);
 			}
 			
-			// update eval list
+			// initial IO
+			for (Component c : eventbComps)
+				c.writeOutputs();
+			for (Component c : fmuComps) {
+				c.readInputs();
+				c.writeOutputs();
+			}
+			for (Component c : eventbComps)
+				c.readInputs();
+	
+			// record header and initial values
+			if (diagram.isRecordOutputs()) {
+				SimulationUtil.writeColumns(diagram, resultWriter);
+				SimulationUtil.writeOutput(diagram, tStart, resultWriter);
+			}
+				
+			// first eval
+			Map<Component, Integer> updateList = new HashMap<Component, Integer>(eventbComps.size() + fmuComps.size());
 			for (EventBComponent c : eventbComps)
-				if (updateList.get(c) == tCurrent) {
-					evalListB.add(c);
-					evalListFMU.addAll(fmuIO.get(c));
+				updateList .put(c, tStart + c.getStepSize());
+			for (FMUComponent c : fmuComps)
+				updateList.put(c, tStart);
+				
+			// simulation loop
+			List<EventBComponent> evalListB = new ArrayList<EventBComponent>(eventbComps.size());
+			Set<Component> evalListFMU = new HashSet<Component>(fmuComps.size());
+			for (int tCurrent = tStart+1; tCurrent <= tStop; ++tCurrent) {
+				if (monitor.isCanceled()) {
+					status = SimulationStatus.CANCEL_STATUS;
+					break;
 				}
-			
-			// evaluate
-			//XXX for Event-B components tCurrent and tStep do not matter (at the moment) for doStep()
-			for (EventBComponent c : evalListB) {
-				c.doStep(tCurrent, 0);
-				updateList.put(c, c.getStepSize());	// update the next eval record for the evaluated Event-B component
+				
+				// update eval list
+				for (EventBComponent c : eventbComps)
+					if (updateList.get(c) == tCurrent) {
+						evalListB.add(c);
+						evalListFMU.addAll(fmuIO.get(c));
+					}
+				
+				// evaluate
+				//XXX for Event-B components tCurrent and tStep do not matter (at the moment) for doStep()
+				for (EventBComponent c : evalListB) {
+					c.doStep(tCurrent, 0);
+					updateList.put(c, c.getStepSize());	// update the next eval record for the evaluated Event-B component
+				}
+				for (Component c : evalListFMU) {
+					int tLast = updateList.get(c);
+					c.doStep(tLast, tCurrent - tLast);
+					updateList.put(c, tCurrent);	// update FMU component last eval record
+				}
+				
+				// IO
+				for (Component c : evalListB)
+					c.writeOutputs();
+				for (Component c : evalListFMU) {
+					c.readInputs();
+					c.writeOutputs();
+				}
+				for (Component c : evalListB)
+					c.readInputs();
+				
+				// record if any Event-B is evaluated (possible changes occurred)
+				//XXX: output may be better recorded at fixed interval irrespective of evaluation
+				if (resultWriter != null && !evalListB.isEmpty())
+					SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);
+				
+				evalListB.clear();
+				evalListFMU.clear();
 			}
-			for (Component c : evalListFMU) {
-				int tLast = updateList.get(c);
-				c.doStep(tLast, tCurrent - tLast);
-				updateList.put(c, tCurrent);	// update FMU component last eval record
-			}
 			
-			// IO
-			for (Component c : evalListB)
-				c.writeOutputs();
-			for (Component c : evalListFMU) {
-				c.readInputs();
-				c.writeOutputs();
-			}
-			for (Component c : evalListB)
-				c.readInputs();
-			
-			// record if any Event-B is evaluated (possible changes occurred)
-			//XXX: output may be better recorded at fixed interval irrespective of evaluation
-			if (resultWriter != null && !evalListB.isEmpty())
-				SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);
-			
-			evalListB.clear();
-			evalListFMU.clear();
-		}
+			for (Component c : diagram.getComponents())
+				c.terminate();
 		
-		for (Component c : diagram.getComponents())
-			c.terminate();
+		} catch (IOException | SimulationException | ModelException e) {
+			status = SimulationStatus.createErrorStatus("Simulation terminated", e);
+		}
 		
 		// stop recording
 		if (resultWriter != null) {

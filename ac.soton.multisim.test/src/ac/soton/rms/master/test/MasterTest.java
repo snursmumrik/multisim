@@ -145,14 +145,14 @@ public class MasterTest extends AbstractEventBTests {
 		d1.setMachine(m);
 		for (Event e : m.getEvents()) {
 			if (e.getName().equals("read")) {
-				d1.getReadInputEvents().add(e);
+				d1.getStartStepEvents().add(e);
 				EventBPort u = MultisimFactory.eINSTANCE.createEventBPort();
 				u.setParameter(e.getParameters().get(0));
 				u.setType(VariableType.INTEGER);
 				u.setCausality(VariableCausality.INPUT);
 				d1.getInputs().add(u);
 			} else if (e.getName().equals("wait")) {
-				d1.getWaitEvents().add(e);
+				d1.getEndStepEvents().add(e);
 			}
 		}
 		EventBPort y = MultisimFactory.eINSTANCE.createEventBPort();
@@ -160,10 +160,10 @@ public class MasterTest extends AbstractEventBTests {
 		y.setType(VariableType.INTEGER);
 		y.setCausality(VariableCausality.OUTPUT);
 		d1.getOutputs().add(y);
-		d1.setStepPeriod(3);
+		d1.setStepSize(3);
 		
 		EventBComponent d2 = EcoreUtil.copy(d1);
-		d2.setStepPeriod(4);
+		d2.setStepSize(4);
 		
 		d1.getInputs().get(0).setIn(d2.getOutputs().get(0));
 		d2.getInputs().get(0).setIn(d1.getOutputs().get(0));
@@ -171,7 +171,7 @@ public class MasterTest extends AbstractEventBTests {
 		diagram.getComponents().add(d2);
 		diagram.setStartTime(0);
 		diagram.setStopTime(12);
-		Master.simulate(diagram, new NullProgressMonitor(), null);
+		Master.simulate(diagram, null, new NullProgressMonitor());
 		
 		Object y1 = d1.getOutputs().get(0).getValue();
 		Object y2 = d2.getOutputs().get(0).getValue();
@@ -233,14 +233,14 @@ public class MasterTest extends AbstractEventBTests {
 		de.setMachine(m);
 		for (Event e : m.getEvents()) {
 			if (e.getName().equals("read")) {
-				de.getReadInputEvents().add(e);
+				de.getStartStepEvents().add(e);
 				EventBPort u = MultisimFactory.eINSTANCE.createEventBPort();
 				u.setParameter(e.getParameters().get(0));
 				u.setType(VariableType.INTEGER);
 				u.setCausality(VariableCausality.INPUT);
 				de.getInputs().add(u);
 			} else if (e.getName().equals("wait")) {
-				de.getWaitEvents().add(e);
+				de.getEndStepEvents().add(e);
 			}
 		}
 		EventBPort y = MultisimFactory.eINSTANCE.createEventBPort();
@@ -248,7 +248,7 @@ public class MasterTest extends AbstractEventBTests {
 		y.setType(VariableType.INTEGER);
 		y.setCausality(VariableCausality.OUTPUT);
 		de.getOutputs().add(y);
-		de.setStepPeriod(3000);
+		de.setStepSize(3000);
 		
 		FMUComponent ct = MultisimFactory.eINSTANCE.createFMUComponent();
 		ct.setName(CT_NAME+"1");
@@ -270,7 +270,7 @@ public class MasterTest extends AbstractEventBTests {
 		diagram.getComponents().add(ct);
 		diagram.setStartTime(0);
 		diagram.setStopTime(12000);
-		Master.simulate(diagram, new NullProgressMonitor(), null);
+		Master.simulate(diagram, null, new NullProgressMonitor());
 		
 		Object y1 = de.getOutputs().get(0).getValue();
 		Object y2 = ct.getOutputs().get(0).getValue();

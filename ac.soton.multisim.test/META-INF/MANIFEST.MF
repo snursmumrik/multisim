@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Master Test
-Bundle-SymbolicName: ac.soton.rms.master.test
+Bundle-SymbolicName: ac.soton.multisim.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: ac.soton.multisim.master;bundle-version="1.0.0.qualifier"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
