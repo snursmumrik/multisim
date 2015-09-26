@@ -2,97 +2,97 @@
  * 
  */
 package ac.soton.multisim.master;
-//
-//import java.io.File;
-//import java.io.IOException;
-//import java.net.URL;
-//import java.util.Collections;
-//import java.util.HashMap;
-//
-//import org.apache.commons.io.FileUtils;
-//import org.eclipse.core.resources.IFile;
-//import org.eclipse.core.resources.IProject;
-//import org.eclipse.core.resources.IncrementalProjectBuilder;
-//import org.eclipse.core.resources.ResourcesPlugin;
-//import org.eclipse.core.runtime.CoreException;
-//import org.eclipse.core.runtime.FileLocator;
-//import org.eclipse.core.runtime.NullProgressMonitor;
-//import org.eclipse.core.runtime.Platform;
-//import org.eclipse.emf.common.util.URI;
-//import org.eclipse.emf.ecore.resource.Resource;
-//import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-//import org.eclipse.emf.ecore.util.EcoreUtil;
-//import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-//import org.eventb.core.IEvent;
-//import org.eventb.core.IEventBProject;
-//import org.eventb.core.IEventBRoot;
-//import org.eventb.core.IMachineRoot;
-//import org.eventb.emf.core.machine.Action;
-//import org.eventb.emf.core.machine.Event;
-//import org.eventb.emf.core.machine.Guard;
-//import org.eventb.emf.core.machine.Invariant;
-//import org.eventb.emf.core.machine.Machine;
-//import org.eventb.emf.core.machine.MachineFactory;
-//import org.eventb.emf.core.machine.Parameter;
-//import org.eventb.emf.core.machine.Variable;
-//import org.junit.Test;
-//import org.rodinp.core.IRodinFile;
-//import org.rodinp.core.RodinCore;
-//
-//import ac.soton.multisim.ComponentDiagram;
-//import ac.soton.multisim.EventBComponent;
-//import ac.soton.multisim.EventBPort;
-//import ac.soton.multisim.FMUComponent;
-//import ac.soton.multisim.FMUPort;
-//import ac.soton.multisim.MultisimFactory;
-//import ac.soton.multisim.VariableCausality;
-//import ac.soton.multisim.VariableType;
-//import ac.soton.multisim.master.Master;
-//
-//import com.google.inject.Injector;
-//
-//import de.be4.classicalb.core.parser.exceptions.BException;
-//import de.prob.Main;
-//import de.prob.model.eventb.EventBModel;
-//import de.prob.scripting.Api;
-//import de.prob.scripting.EventBFactory;
-//import de.prob.statespace.StateSpace;
-//import de.prob.statespace.Trace;
-//
-///**
-// *  Creates an example component connection graph:
-// * 		->	C1	->
-// * 		D1		D2
-// * 		<-	C2	<-
-// * 
-// * where Dn - discrete component (Event-B)
-// * 		 Cn - continuous component (FMU)
-// * 		 -> - direction of the data exchange (IO)
-// * 
-// * @author vitaly
-// *
-// */
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+
+import org.apache.commons.io.FileUtils;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+import org.eventb.core.IEvent;
+import org.eventb.core.IEventBProject;
+import org.eventb.core.IEventBRoot;
+import org.eventb.core.IMachineRoot;
+import org.eventb.emf.core.machine.Action;
+import org.eventb.emf.core.machine.Event;
+import org.eventb.emf.core.machine.Guard;
+import org.eventb.emf.core.machine.Invariant;
+import org.eventb.emf.core.machine.Machine;
+import org.eventb.emf.core.machine.MachineFactory;
+import org.eventb.emf.core.machine.Parameter;
+import org.eventb.emf.core.machine.Variable;
+import org.junit.Test;
+import org.rodinp.core.IRodinFile;
+import org.rodinp.core.RodinCore;
+
+import ac.soton.multisim.ComponentDiagram;
+import ac.soton.multisim.EventBComponent;
+import ac.soton.multisim.EventBPort;
+import ac.soton.multisim.FMUComponent;
+import ac.soton.multisim.FMUPort;
+import ac.soton.multisim.MultisimFactory;
+import ac.soton.multisim.VariableCausality;
+import ac.soton.multisim.VariableType;
+import ac.soton.multisim.master.Master;
+
+import com.google.inject.Injector;
+
+import de.be4.classicalb.core.parser.exceptions.BException;
+import de.prob.Main;
+import de.prob.model.eventb.EventBModel;
+import de.prob.scripting.Api;
+import de.prob.scripting.EventBFactory;
+import de.prob.statespace.StateSpace;
+import de.prob.statespace.Trace;
+
+/**
+ *  Creates an example component connection graph:
+ * 		->	C1	->
+ * 		D1		D2
+ * 		<-	C2	<-
+ * 
+ * where Dn - discrete component (Event-B)
+ * 		 Cn - continuous component (FMU)
+ * 		 -> - direction of the data exchange (IO)
+ * 
+ * @author vitaly
+ *
+ */
 public class MasterTest extends AbstractEventBTests {
-//	
-//	private static final String CT_NAME = "C";
-//	private static final String DE_NAME = "D";
-//	protected static final String CARTESIAN_PRODUCT = "\u00d7";
-//	protected static final String DIRECT_PRODUCT = "\u2297";
-//	protected static final String MEMBER_OF = " \u2208 ";
-//	protected static final String TOTAL_FUNCTION = "\u2192";
-//	protected static final String TOTAL_SURJECTION = "\u21a0";
-//	protected static final String TOTAL_INJECTION = "\u21a3";
-//	protected static final String TOTAL_BIJECTION = "\u2916";
-//	protected static final String LPAR = "(";
-//	protected static final String RPAR = ")";
-//	protected static final String FOR_ALL = "\u2200";
-//	protected static final String MID_DOT = " \u00b7 ";
-//	protected static final String MAPLET = "\u21a6";
-//	protected static final String EQUALS = " \u003d ";
-//	protected static final String ASSIGN = "\u2254";
-//	private static final String INT = "\u2124";
-//	private static final String BOOL = "BOOL";
-//
+	
+	private static final String CT_NAME = "C";
+	private static final String DE_NAME = "D";
+	protected static final String CARTESIAN_PRODUCT = "\u00d7";
+	protected static final String DIRECT_PRODUCT = "\u2297";
+	protected static final String MEMBER_OF = " \u2208 ";
+	protected static final String TOTAL_FUNCTION = "\u2192";
+	protected static final String TOTAL_SURJECTION = "\u21a0";
+	protected static final String TOTAL_INJECTION = "\u21a3";
+	protected static final String TOTAL_BIJECTION = "\u2916";
+	protected static final String LPAR = "(";
+	protected static final String RPAR = ")";
+	protected static final String FOR_ALL = "\u2200";
+	protected static final String MID_DOT = " \u00b7 ";
+	protected static final String MAPLET = "\u21a6";
+	protected static final String EQUALS = " \u003d ";
+	protected static final String ASSIGN = "\u2254";
+	private static final String INT = "\u2124";
+	private static final String BOOL = "BOOL";
+
 ////	/**
 ////	 * Test method for {@link ac.soton.rms.master.Master#simulate(ac.soton.rms.components.ComponentDiagram, org.eclipse.core.runtime.IProgressMonitor, boolean, boolean, boolean)}.
 ////	 * 
@@ -450,17 +450,17 @@ public class MasterTest extends AbstractEventBTests {
 //		trace = trace.anyEvent(null);
 //	}
 //	
-//	@Test
-//	public final void testFMUBuild() throws IOException, InterruptedException {
-//		URL base = Platform.getBundle("ac.soton.multisim.tests").getEntry("fmu/src/models");
-//		String command = "make";
-//		String[] envp = {};
-//		File dir = new File(FileLocator.toFileURL(base).getPath()) ;
-//		Process proc = Runtime.getRuntime().exec(command, envp, dir);
-//		assertTrue(proc.waitFor() == 0);
-//		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/inc.fmu"));
-//		assertTrue(fmuFile.exists());
-//		
-//		FileUtils.copyFileToDirectory(fmuFile, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()));
-//	}
+	@Test
+	public final void testFMUBuild() throws IOException, InterruptedException {
+		URL base = Platform.getBundle("ac.soton.multisim.tests").getEntry("fmu/src/models");
+		String command = "make";
+		String[] envp = {};
+		File dir = new File(FileLocator.toFileURL(base).getPath()) ;
+		Process proc = Runtime.getRuntime().exec(command, envp, dir);
+		assertTrue(proc.waitFor() == 0);
+		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/inc.fmu"));
+		assertTrue(fmuFile.exists());
+		
+		FileUtils.copyFileToDirectory(fmuFile, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()));
+	}
 }
