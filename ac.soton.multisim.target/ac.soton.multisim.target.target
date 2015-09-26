@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="rodin-3.2" sequenceNumber="6">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<repository location="http://download.eclipse.org/releases/luna"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.rodinp.platform.product" version="3.2.0.201506220911-ecacdcb"/>
+<repository location="http://rodin-b-sharp.sourceforge.net/core-updates"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="ac.soton.eventb.statemachines.feature.feature.group" version="3.3.1"/>
+<repository location="http://rodin-b-sharp.sourceforge.net/updates/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="de.prob2.ui.rodin.feature.feature.group" version="1.0.0.201501121517"/>
+<unit id="de.prob2.ui.eclipse.feature.feature.group" version="1.0.0.201501121517"/>
+<repository location="http://nightly.cobra.cs.uni-duesseldorf.de/prob2/updates/releases/advance-final/"/>
+</location>
+</locations>
+</target>

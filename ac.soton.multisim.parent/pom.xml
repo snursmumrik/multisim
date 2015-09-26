@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ac.soton.uk</groupId>
+	<groupId>ac.soton.multisim</groupId>
 	<artifactId>ac.soton.multisim.parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -10,17 +10,7 @@
 	<properties>
 		<tycho.version>0.23.1</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
 	</properties>
-
-	<repositories>
-		<!-- configure p2 repository to resolve against -->
-		<repository>
-			<id>eclipse-project-luna</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.4</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
@@ -31,6 +21,60 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>ac.soton.multisim</groupId>
+							<artifactId>ac.soton.multisim.target</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+					<environments>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                    </environments>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+	
+	<modules>
+		<module>../ac.soton.multisim.components</module>
+		<module>../ac.soton.multisim.target</module>
+		<module>../ac.soton.multisim.diagram</module>
+		<module>../ac.soton.multisim.master</module>
+		<module>../ac.soton.multisim.ui</module>
+		
+		<module>../ac.soton.multisim.feature</module>
+		<module>../ac.soton.multisim.branding</module>
+		
+		<module>../ac.soton.multisim.tests</module>
+	</modules>
 </project>
