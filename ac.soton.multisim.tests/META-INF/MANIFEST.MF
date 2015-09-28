@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Master Test
 Bundle-SymbolicName: ac.soton.multisim.tests
 Bundle-Version: 1.0.0.qualifier
-Fragment-Host: ac.soton.multisim.master;bundle-version="1.0.0.qualifier"
+Fragment-Host: ac.soton.multisim.master
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.core.resources,
  org.rodinp.core,
