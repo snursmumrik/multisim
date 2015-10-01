@@ -58,7 +58,7 @@ public class Master {
 		int tStop = diagram.getStopTime();
 		List<EventBComponent> eventbComps = new ArrayList<EventBComponent>();
 		List<FMUComponent> fmuComps = new ArrayList<FMUComponent>();
-		Map<Component, Collection<Component>> fmuIO = new HashMap<Component, Collection<Component>>();
+		Map<Component, Collection<Component>> connectedFMUs = new HashMap<Component, Collection<Component>>();
 		for (Component c : diagram.getComponents()) {
 			if (c instanceof EventBComponent) {
 				eventbComps.add((EventBComponent) c);
@@ -75,7 +75,7 @@ public class Master {
 							connected.add(outputComp);
 					}
 				}
-				fmuIO.put(c, connected);
+				connectedFMUs.put(c, connected);
 			} else if (c instanceof FMUComponent) {
 				fmuComps.add((FMUComponent) c);
 			}
@@ -113,7 +113,7 @@ public class Master {
 			// first eval
 			Map<Component, Integer> updateList = new HashMap<Component, Integer>(eventbComps.size() + fmuComps.size());
 			for (EventBComponent c : eventbComps)
-				updateList .put(c, tStart + c.getStepSize());
+				updateList.put(c, tStart + c.getStepSize());
 			for (FMUComponent c : fmuComps)
 				updateList.put(c, tStart);
 				
@@ -130,11 +130,11 @@ public class Master {
 				for (EventBComponent c : eventbComps)
 					if (updateList.get(c) == tCurrent) {
 						evalListB.add(c);
-						evalListFMU.addAll(fmuIO.get(c));
+						evalListFMU.addAll(connectedFMUs.get(c));	// add all components, connected to c via input/outputs
 					}
 				
 				// evaluate
-				//XXX for Event-B components tCurrent and tStep do not matter (at the moment) for doStep()
+				//XXX for Event-B components tCurrent and tStep do not matter (at the moment) for doStep(...)
 				for (EventBComponent c : evalListB) {
 					c.doStep(tCurrent, 0);
 					updateList.put(c, c.getStepSize());	// update the next eval record for the evaluated Event-B component

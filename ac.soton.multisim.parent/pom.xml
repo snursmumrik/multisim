@@ -66,7 +66,7 @@
 	</build>
 	
 	<modules>
-		<module>../ac.soton.multisim.components</module>
+		
 		<module>../ac.soton.multisim.target</module>
 		<module>../ac.soton.multisim.diagram</module>
 		<module>../ac.soton.multisim.master</module>
@@ -76,5 +76,6 @@
 		<module>../ac.soton.multisim.branding</module>
 		
 		<module>../ac.soton.multisim.tests</module>
+		<module>../ac.soton.multisim</module>
 	</modules>
 </project>

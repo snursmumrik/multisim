@@ -735,7 +735,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 */
 	public void doStep(int time, int step) throws ModelException, SimulationException {
 		// find enabled 'StartStep' event
-		List<String> enabled = new ArrayList<>();
+		List<String> enabled = new ArrayList<String>();
 		String predicate = stringBuilder.toString();
 		EList<Event> startStep = getStartStepEvents();
 		for (Event event : startStep) {
