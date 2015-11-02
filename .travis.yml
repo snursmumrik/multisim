@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk7
+ 
+before_script:
+  - cd ac.soton.multisim.parent
+ 
+script: mvn clean install -DskipTests
