@@ -1,5 +1,6 @@
 Rodin Multi-Simulation
 ======================
+[![Build Status](https://travis-ci.org/snursmumrik/multisim.svg?branch=master)](https://travis-ci.org/snursmumrik/multisim)
 
 Multi-simulation environment for the [Rodin](http://sourceforge.net/projects/rodin-b-sharp/) platform based on the [FMI 1.0](https://www.fmi-standard.org) standard.
 
