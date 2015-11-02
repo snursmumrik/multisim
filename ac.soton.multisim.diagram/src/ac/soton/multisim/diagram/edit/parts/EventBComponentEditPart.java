@@ -14,6 +14,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -36,6 +37,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.tooling.runtime.edit.policies.reparent.CreationEditPolicyWithCustomReparent;
 import org.eclipse.swt.graphics.Color;
 
+import ac.soton.multisim.EventBComponent;
 import ac.soton.multisim.diagram.edit.parts.custom.AbstractPortEditPart;
 import ac.soton.multisim.diagram.edit.policies.EventBComponentCanonicalEditPolicy;
 import ac.soton.multisim.diagram.edit.policies.EventBComponentItemSemanticEditPolicy;
@@ -248,7 +250,12 @@ public class EventBComponentEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createMainFigure() {
-		NodeFigure figure = createNodePlate();
+		EObject el = resolveSemanticElement();
+		EventBComponent comp = (EventBComponent) el;
+		int numPorts = Math.max(comp.getInputs().size(), comp.getOutputs().size());
+		if (numPorts > 0)
+			numPorts -= 1;
+		NodeFigure figure = new DefaultSizeNodeFigure(40, 40 + 15 * numPorts);//createNodePlate();
 		figure.setLayoutManager(new StackLayout());
 		IFigure shape = createNodeShape();
 		figure.add(shape);

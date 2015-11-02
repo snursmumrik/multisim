@@ -130,7 +130,7 @@ public class Master {
 				for (EventBComponent c : eventbComps)
 					if (updateList.get(c) == tCurrent) {
 						evalListB.add(c);
-						evalListFMU.addAll(connectedFMUs.get(c));	// add all components, connected to c via input/outputs
+						evalListFMU.addAll(connectedFMUs.get(c));	// add all components, connected to c via inputs/outputs
 					}
 				
 				// evaluate

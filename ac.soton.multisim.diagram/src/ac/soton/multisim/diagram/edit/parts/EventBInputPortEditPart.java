@@ -13,6 +13,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -119,6 +120,7 @@ public class EventBInputPortEditPart extends AbstractPortEditPart {
 
 		//FIXME: workaround for #154536
 		result.getBounds().setSize(result.getPreferredSize());
+		Point loc = result.getBounds().getLocation();
 		return result;
 	}
 
@@ -148,6 +150,7 @@ public class EventBInputPortEditPart extends AbstractPortEditPart {
 		IFigure shape = createNodeShape();
 		figure.add(shape);
 		contentPane = setupContentPane(shape);
+		Point loc = figure.getBounds().getLocation();
 		return figure;
 	}
 
