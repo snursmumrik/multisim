@@ -5,4 +5,5 @@ jdk:
 before_script:
   - cd ac.soton.multisim.parent
  
-script: mvn clean install
+install: true
+script: mvn clean test
