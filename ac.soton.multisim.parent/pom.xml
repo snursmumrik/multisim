@@ -75,7 +75,9 @@
 		<module>../ac.soton.multisim.feature</module>
 		<module>../ac.soton.multisim.branding</module>
 		
-		<module>../ac.soton.multisim.tests</module>
+		
 		<module>../ac.soton.multisim</module>
+		
+		<module>../ac.soton.multisim.test</module>
 	</modules>
 </project>
