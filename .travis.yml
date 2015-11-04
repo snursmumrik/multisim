@@ -1,7 +1,7 @@
-os: osx
 language: java
 jdk:
   - oraclejdk7
+os: osx
 
 branches:
   only:
