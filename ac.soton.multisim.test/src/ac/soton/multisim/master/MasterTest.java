@@ -6,8 +6,8 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
-import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -37,7 +37,7 @@ public class MasterTest {
 		String fmuFileName = project.getFile("ct.fmu").getLocation().toOSString();
 		try {
 			File fmuFile = new File(fmuFileName);
-			FileUtils.copyInputStreamToFile(is, fmuFile);
+			Files.copy(is, fmuFile.toPath());
 		} catch (IOException e) {
 			fail("Cannot copy FMU to the project");
 		}
@@ -53,20 +53,4 @@ public class MasterTest {
 		assertNotNull(description.modelName);
 		
 	}
-	
-//	@Test
-//	public final void testFMUBuild() throws IOException, InterruptedException {
-//		MasterTest.class.getClassLoader().
-//		URL base = Platform.getBundle("ac.soton.multisim.tests").getEntry("fmu/src/models");
-//		String command = "make";
-//		String[] envp = {};
-//		File dir = new File(FileLocator.toFileURL(base).getPath()) ;
-//		Process proc = Runtime.getRuntime().exec(command, envp, dir);
-//		assertTrue(proc.waitFor() == 0);
-//		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/inc.fmu"));
-//		assertTrue(fmuFile.exists());
-//		
-//		FileUtils.copyFileToDirectory(fmuFile, new File(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()));
-//	}
-
 }
