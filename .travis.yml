@@ -1,9 +1,14 @@
 language: java
 jdk:
   - oraclejdk7
- 
+
+branches:
+  only:
+    - master
+    - develop
+
 before_script:
   - cd ac.soton.multisim.parent
- 
+
 install: true
 script: mvn clean test

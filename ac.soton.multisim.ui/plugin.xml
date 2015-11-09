@@ -91,7 +91,7 @@
                name="Lowest">
          </Priority>
          <context
-               editparts="ComponentDiagramEditPart,EventBComponentEditPart,FMUComponentEditPart">
+               editparts="ComponentDiagramEditPart,EventBComponentEditPart,FMUComponentEditPart,DisplayComponentEditPart">
          </context>
          <object
                class="ac.soton.multisim.diagram.edit.parts.ComponentDiagramEditPart(ac.soton.multisim.diagram)"
@@ -104,6 +104,10 @@
          <object
                class="ac.soton.multisim.diagram.edit.parts.FMUComponentEditPart(ac.soton.multisim.diagram)"
                id="FMUComponentEditPart">
+         </object>
+         <object
+               class="ac.soton.multisim.diagram.edit.parts.EventBComponentEditPart(ac.soton.multisim.diagram)"
+               id="EventBComponentEditPart">
          </object>
       </editpolicyProvider>
    </extension>
