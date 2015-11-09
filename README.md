@@ -4,16 +4,24 @@ Rodin Multi-Simulation
 
 Multi-simulation environment for the [Rodin](http://sourceforge.net/projects/rodin-b-sharp/) platform based on the [FMI 1.0](https://www.fmi-standard.org) standard.
 
-Enables graphical composition and co-simulation of Event-B machines and imported FMUs.
+Enables graphical composition and co-simulation of Event-B machines and imported FMI units (FMUs).
 
 Installation
 ------------
-Currently can only be run from the source, i.e. an Eclipse workspace. To set up the development environment follow these steps:
 
-1. Download the latest version of [Rodin](http://sourceforge.net/projects/rodin-b-sharp/) (3.0) and intstall [ProB 2.0](https://github.com/bendisposto/prob2) according to the instructions on the prob2 repository. Ensure that ProB is up and running. An easy way to do this is to open a Groovy console and load an Event-B machine via command `api.eventb_load("/home/pathToFile/example.bum")`.
-2. In addition to ProB install the *GMF Tooling - Runtime Extensions* from the http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases/ update site. This is required by any GMF-based plug-in for Rodin.
-3. Clone this repository and import it into a new workspace of your Eclipse installation.
-4. In Eclipse *Preferences > Plug-in Development > Target Platform* add a new target that has a *Directory* content pointed at the Rodin with ProB 2.0, installed in step 1. Set the new target to be the active target. If you have build errors try to clean the workspace and rebuild it. Some missing dependency errors may require you to additionally install the *EMF SDK*, *EMF Compare SDK* and *GMF Runtime SDK* into your target Rodin installation - all of which are available from the *Indigo* update site of the *Install New Software* wizard.
+Currently can only be run from source, i.e. an Eclipse development environment workspace. First, make sure that you have the following prerequisites installed:
+* [Oracle JDK 7 or above](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Apache Maven](https://maven.apache.org)
+
+To set up the development environment follow these steps:
+
+1. Download the latest version of [Eclipse](https://eclipse.org/downloads/), preferrably the build for Java and DSL developers.
+2. Clone this repository and import it into a new workspace of your Eclipse installation.
+3. The initial build should produce a lot of errors. That's normal. At this point Eclipse is pointing to a default target platform. To fix that go to *Preferences > Plug-in Development > Target Platform* and select *rodin-3.2* target as the active target (if not there, go to your workspace, find the project *ac.soton.multisim.target*, open the *.target* file and click *Set as Target Platform* in the upper right corner). Eclipse will take a while to resolve the target, as it dowloads all the dependencies from the corresponding update sites, hence it is important to have the internet connection at this point!
+4. When the target is set there may be remaining errors due to the unresolved Tycho Maven tasks. Those can be fixed by either
+ - Opening a *.pom* file of the *ac.soton.multisim.target* project, finding the error and selecting *Discover m2e connectors* from the quick fix popup hint.
+ - Manually installing Tycho m2e connectors by going to *Help > Install New Software...* and intalling the Tycho Configurator from the (http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-tycho/0.9.0/N/LATEST/) update site.
+5. To build the workspace use Maven by tight-clicking on the *ac.soton.multisim.parent* project and selecting *Run As > Maven build*. As the goals you can enter any Maven goals, e.g. *clean verify*.
 
 Usage
 -----
@@ -34,4 +42,4 @@ Usage
 
 Bug Reports/Improvements
 ------------------------
-If you notice a bug or have a good idea on improvement, please add it to the [open issues](https://github.com/snursmumrik/rms2/issues?state=open).
+If you notice a bug or have a good idea on improvement, please add it to the [Issues page](https://github.com/snursmumrik/multisim/issues).
