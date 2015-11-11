@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-import org.eclipse.swt.widgets.Display;
 import org.eventb.core.IEventBRoot;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.EventBCommented;
@@ -45,6 +44,8 @@ import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 
+import com.google.inject.Injector;
+
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.EventBComponent;
@@ -54,9 +55,6 @@ import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
 import ac.soton.multisim.util.SimulationUtil;
-
-import com.google.inject.Injector;
-
 import de.be4.ltl.core.parser.LtlParseException;
 import de.prob.Main;
 import de.prob.animator.command.ExecuteUntilCommand;
@@ -70,7 +68,6 @@ import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 import de.prob.statespace.Transition;
-import de.prob2.ui.eclipse.VersionController;
 
 /**
  * <!-- begin-user-doc -->
@@ -580,11 +577,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void instantiate() throws SimulationException {
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				VersionController.ensureInstalled();
-			}});
 		
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
