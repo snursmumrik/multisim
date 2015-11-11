@@ -147,4 +147,105 @@ public class MasterTest extends SampleEventBTest {
 		varValue = ((EvalResult) evalResult).getValue();
 		assertEquals("FALSE", varValue);
 	}
+	
+	@Test
+	public void testSimulateDECT() throws CoreException, IOException, InterruptedException {
+//		IMachineRoot machine = createSampleMachineDE(eventBProject, "m0");
+//
+//		createVariable(machine, "y");
+//		createVariable(machine, "io");
+//		createInvariant(machine, "inv1", "y" + MEMBER_OF + INT, false);
+//		createInvariant(machine, "inv2", "io" + MEMBER_OF + BOOL, false);
+//
+//		IEvent init = createEvent(machine, "INITIALISATION");
+//		createAction(init, "act1", "y" + ASSIGN + "0");
+//		createAction(init, "act2", "io" + ASSIGN + "TRUE");
+//
+//		IEvent read = createEvent(machine, "read");
+//		createParameter(read, "u");
+//		createGuard(read, "grd1", "u" + MEMBER_OF + INT, false);
+//		createGuard(read, "grd2", "io = TRUE", false);
+//		createAction(read, "act1", "y" + ASSIGN + "u");
+//		createAction(read, "act2", "io" + ASSIGN + "FALSE");
+//
+//		IEvent wait = createEvent(machine, "wait");
+//		createGuard(wait, "grd1", "io = FALSE", false);
+//		createAction(wait, "act1", "io" + ASSIGN + "TRUE");
+//		createAction(wait, "act2", "y" + ASSIGN + "y+1");
+//
+//		// save file and build workspace - this triggers static check, and
+//		// generates missing files
+//		machine.getRodinFile().save(monitor, false);
+//		workspace.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+//		IProject projectRes = ResourcesPlugin.getWorkspace().getRoot().getProject("MATest");
+//
+//		// FMU
+//		URL base = Platform.getBundle("ac.soton.rms.master.test").getEntry("fmu/src/models");
+//		String command = "make";
+//		String[] envp = {};
+//		File dir = new File(FileLocator.toFileURL(base).getPath());
+//		Process proc = Runtime.getRuntime().exec(command, envp, dir);
+//		assertTrue(proc.waitFor() == 0);
+//		File fmuFile = new File(dir.getPath().replaceFirst("src/models", "fmu/ct.fmu"));
+//		assertTrue(fmuFile.exists());
+//		FileUtils.copyFileToDirectory(fmuFile, new File(projectRes.getLocation().toOSString()));
+//
+//		// EMF
+//		ResourceSetImpl rs = new ResourceSetImpl();
+//		IFile file = projectRes.getFile(DE_NAME + ".bum");
+//		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+//		Resource resource = rs.getResource(uri, true);
+//		Machine m = (Machine) resource.getContents().get(0);
+//
+//		ComponentDiagram diagram = MultisimFactory.eINSTANCE.createComponentDiagram();
+//
+//		EventBComponent de = MultisimFactory.eINSTANCE.createEventBComponent();
+//		de.setMachine(m);
+//		for (Event e : m.getEvents()) {
+//			if (e.getName().equals("read")) {
+//				de.getStartStepEvents().add(e);
+//				EventBPort u = MultisimFactory.eINSTANCE.createEventBPort();
+//				u.setParameter(e.getParameters().get(0));
+//				u.setType(VariableType.INTEGER);
+//				u.setCausality(VariableCausality.INPUT);
+//				de.getInputs().add(u);
+//			} else if (e.getName().equals("wait")) {
+//				de.getEndStepEvents().add(e);
+//			}
+//		}
+//		EventBPort y = MultisimFactory.eINSTANCE.createEventBPort();
+//		y.setVariable(m.getVariables().get(m.getVariables().get(0).getName().equals("y") ? 0 : 1));
+//		y.setType(VariableType.INTEGER);
+//		y.setCausality(VariableCausality.OUTPUT);
+//		de.getOutputs().add(y);
+//		de.setStepSize(3000);
+//
+//		FMUComponent ct = MultisimFactory.eINSTANCE.createFMUComponent();
+//		ct.setName(CT_NAME + "1");
+//		ct.setPath(fmuFile.getPath());
+//		FMUPort uc = MultisimFactory.eINSTANCE.createFMUPort();
+//		uc.setCausality(VariableCausality.INPUT);
+//		uc.setType(VariableType.INTEGER);
+//		uc.setName("u");
+//		ct.getInputs().add(uc);
+//		FMUPort yc = MultisimFactory.eINSTANCE.createFMUPort();
+//		yc.setCausality(VariableCausality.OUTPUT);
+//		yc.setType(VariableType.INTEGER);
+//		yc.setName("y");
+//		ct.getOutputs().add(yc);
+//
+//		de.getInputs().get(0).setIn(ct.getOutputs().get(0));
+//		ct.getInputs().get(0).setIn(de.getOutputs().get(0));
+//		diagram.getComponents().add(de);
+//		diagram.getComponents().add(ct);
+//		diagram.setStartTime(0);
+//		diagram.setStopTime(12000);
+//		Master.simulate(diagram, null, new NullProgressMonitor());
+//
+//		Object y1 = de.getOutputs().get(0).getValue();
+//		Object y2 = ct.getOutputs().get(0).getValue();
+//		System.out.println(de.getName() + ".y=" + y1);
+//		System.out.println(ct.getName() + ".y=" + y2);
+//		assertTrue((int) y1 == 6 && (int) y2 == 8);
+	}
 }
