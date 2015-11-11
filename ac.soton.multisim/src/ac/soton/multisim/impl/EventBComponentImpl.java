@@ -656,10 +656,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// while setting port value
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
-		
-		// add animation
-		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-		selector.addNewAnimation(trace);
 	}
 
 	/**
@@ -784,22 +780,26 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void terminate() {
-		trace.getStateSpace().endTransaction();
 		
 		// re-enable notifications
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		// save trace
-		if (isRecordTrace())
-			recordEnd();
-
-//		// show in ProB
-//		Injector injector = Main.getInjector();
-//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-//		selector.addNewAnimation(trace);
+		if (trace != null) {
+			trace.getStateSpace().endTransaction();
+			
+			// save trace
+			if (isRecordTrace())
+				recordEnd();
+	
+			// show in ProB
+			Injector injector = Main.getInjector();
+			AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+			selector.addNewAnimation(trace);
+			
+			trace = null;
+		}
 		
-		trace = null;
 		System.gc();
 	}
 
