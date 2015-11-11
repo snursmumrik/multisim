@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+import org.eclipse.swt.widgets.Display;
 import org.eventb.core.IEventBRoot;
 import org.eventb.emf.core.CorePackage;
 import org.eventb.emf.core.EventBCommented;
@@ -579,7 +580,11 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void instantiate() throws SimulationException {
-		VersionController.ensureInstalled();
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				VersionController.ensureInstalled();
+			}});
 		
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
