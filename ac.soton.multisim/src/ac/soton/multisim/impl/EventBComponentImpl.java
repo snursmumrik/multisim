@@ -645,9 +645,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (isRecordTrace()) {
 			traceFileName = WorkspaceSynchronizer
 					.getFile(machine.eResource()).getLocation()
-					.removeFileExtension().toOSString()
-					+ "_" + getName()
-					+ "_" + dateFormat.format(new java.util.Date()) + ".xml";
+					.removeLastSegments(1).addTrailingSeparator().toOSString()
+					+ getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
 			recordStart(fileName, traceFileName);
 		}
 
@@ -1133,7 +1132,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private String recordStart(String modelName, String traceFileName) throws SimulationException {
 		try {
 			traceWriter = new BufferedWriter(new FileWriter(traceFileName));
-			traceWriter.append("<trace><model>").append(modelName).append("</model>");
+			traceWriter.append("<trace><model>").append(modelName).append("</model>\n");
 		} catch (IOException e) {
 			throw new SimulationException("Cannot create a trace file", e);
 		}
