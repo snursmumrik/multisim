@@ -36,6 +36,9 @@ public class Master {
 	 * Simulate the diagram.
 	 * 
 	 * @param diagram
+	 * @param outputPath
+	 *            file path of the file for recording output values in a CSV
+	 *            format, or null if no recording required
 	 * @param monitor
 	 *            progress monitor
 	 * @return
@@ -45,7 +48,7 @@ public class Master {
 	 */
 	public static IStatus simulate(final ComponentDiagram diagram, final String outputPath, IProgressMonitor monitor) {
 		IStatus status = SimulationStatus.OK_STATUS;
-//		long simStartTime = System.currentTimeMillis();
+		long tMasterStart = System.currentTimeMillis();
 
 		// data
 		int tStart = diagram.getStartTime();
@@ -115,14 +118,18 @@ public class Master {
 
 				// evaluate
 				if (!evalList.isEmpty()) {
-					// XXX: in this semantics tCurrent and tStep do not matter for
+					// XXX: in this semantics tCurrent and tStep do not matter
+					// for
 					// the doStep(...) call on Event-B components
 					for (EventBComponent c : evalList) {
 						c.doStep(tCurrent, 0);
-						updateList.put(c, tCurrent + c.getStepSize()); // update the
-																		// next evaluation
+						updateList.put(c, tCurrent + c.getStepSize()); // update
+																		// the
+																		// next
+																		// evaluation
 																		// time
-																		// for the
+																		// for
+																		// the
 																		// evaluated
 																		// Event-B
 																		// component
@@ -130,10 +137,11 @@ public class Master {
 					for (Component c : compNotB) {
 						int tLast = updateList.get(c);
 						c.doStep(tLast, tCurrent - tLast);
-						updateList.put(c, tCurrent); // update non-B component's last
+						updateList.put(c, tCurrent); // update non-B component's
+														// last
 														// evaluation times
 					}
-	
+
 					// IO
 					for (Component c : evalList)
 						c.writeOutputs();
@@ -143,36 +151,44 @@ public class Master {
 					}
 					for (Component c : evalList)
 						c.readInputs();
-	
+
 					// record if any Event-B is evaluated (possible changes
 					// occurred)
 					// XXX: output may be better recorded at fixed intervals
 					// irrespective of evaluation
 					if (resultWriter != null)
 						SimulationUtil.writeOutput(diagram, tCurrent, resultWriter);
-	
+
 					evalList.clear();
 				}
 			}
 
-			// termination
-			for (Component c : diagram.getComponents())
-				c.terminate();
-
 		} catch (IOException | SimulationException | ModelException e) {
-			status = SimulationStatus.createErrorStatus("Simulation terminated", e);
+			status = SimulationStatus.createErrorStatus("Simulation terminated: " + e.getMessage(), e);
 		}
 
+		// termination
+		for (Component c : diagram.getComponents())
+			c.terminate();
+
+		long tMasterEnd = System.currentTimeMillis();
+
 		// stop recording
+		boolean saved = false;
 		if (resultWriter != null) {
 			try {
 				resultWriter.close();
+				saved = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return status;// getResultStatus(status, System.currentTimeMillis() -
-						// simulationTime);
+		if (status.getSeverity() == IStatus.OK) {
+			status = SimulationStatus.createOKStatus("Finished in " + (tMasterEnd - tMasterStart) + "ms"
+					+ (saved ? "\nOutput saved to '" + outputPath + "'\n" : "") + diagram.createStatusReport());
+		}
+
+		return status;
 	}
 }

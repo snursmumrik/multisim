@@ -39,7 +39,6 @@ import org.rodinp.core.IRodinFile;
 import org.rodinp.core.IRodinProject;
 import org.rodinp.core.RodinCore;
 import org.rodinp.core.RodinDBException;
-import org.rodinp.internal.core.debug.DebugHelpers;
 
 import com.google.inject.Injector;
 
@@ -86,9 +85,6 @@ public abstract class AbstractEventBTest {
 			wsDescription.setAutoBuilding(false);
 			workspace.setDescription(wsDescription);
 		}
-
-		// disable indexing
-		DebugHelpers.disableIndexing();
 
 		// Delete the old workspace
 		workspace.getRoot().delete(true, null);
