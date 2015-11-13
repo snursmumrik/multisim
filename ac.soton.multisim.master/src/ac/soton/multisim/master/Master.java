@@ -186,7 +186,7 @@ public class Master {
 
 		if (status.getSeverity() == IStatus.OK) {
 			status = SimulationStatus.createOKStatus("Finished in " + (tMasterEnd - tMasterStart) + "ms"
-					+ (saved ? "\nOutput saved to '" + outputPath + "'\n" : "") + diagram.createStatusReport());
+					+ (saved ? "\nOutput saved to:\n\t" + outputPath + "\n" : "") + diagram.createStatusReport());
 		}
 
 		return status;

@@ -112,7 +112,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @custom
 	 */
 	private static DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-	private static Random random = new Random(System.currentTimeMillis());
+	private static Random random = new Random(System.nanoTime());
 	private Set<String> endStepSet = new HashSet<String>();
 	private LTL ltl;
 	private StringBuilder stringBuilder = new StringBuilder();
