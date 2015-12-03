@@ -13,5 +13,7 @@ Require-Bundle: ac.soton.multisim;bundle-version="1.0.0",
  org.rodinp.core,
  org.eventb.core,
  de.prob2.ui.eclipse,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore,
+ ac.soton.multisim.ui;bundle-version="1.0.0",
+ org.eclipse.jface
 Bundle-ClassPath: .

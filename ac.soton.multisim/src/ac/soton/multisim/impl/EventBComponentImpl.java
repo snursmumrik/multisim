@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
